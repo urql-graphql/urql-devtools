@@ -1,0 +1,12 @@
+{
+  "name": "Urql devtools",
+  "version": "1.0.0",
+  "description": "Devtools for urql",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "devtools_page": "devtools.html",
+  "permissions": ["<all_urls>", "webNavigation"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "manifest_version": 2
+}
