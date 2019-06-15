@@ -6,7 +6,9 @@ module.exports = {
   entry: {
     background: `${__dirname}/src/background/background.ts`,
     devtools: `${__dirname}/src/devtools/devtools.ts`,
-    panel: `${__dirname}/src/panel/panel.tsx`
+    panel: `${__dirname}/src/panel/panel.tsx`,
+    content_script: `${__dirname}/src/content_script.ts`,
+    exchange: `${__dirname}/src/exchange.ts`
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"]
@@ -17,8 +19,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: "awesome-typescript-loader"
+        test: /\.*tsx?$/,
+        exclude: /exchange\.ts/,
+        loader: "awesome-typescript-loader",
+        options: {
+          configFileName: "tsconfig.devtools.json"
+        }
+      },
+      {
+        test: /exchange\.ts$/,
+        loader: "shell-loader",
+        options: {
+          script: "tsc src/exchange.ts --outDir dist"
+        }
       }
     ]
   },

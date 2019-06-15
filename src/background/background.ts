@@ -1,31 +1,51 @@
-let connections: Record<string, chrome.runtime.Port | undefined> = {};
+/** Connections from devtools.js */
+let devtoolsConnections: Record<string, chrome.runtime.Port> = {};
+/** Connections from content_script.js */
+let cscriptConnections: Record<string, chrome.runtime.Port> = {};
 
-const handleMessage = (message: any, port: chrome.runtime.Port) => {
-  console.log("background: received message", message);
+chrome.runtime.onConnect.addListener(port => {
+  // Devtools connection
+  if (port.name === "urql-devtools") {
+    return port.onMessage.addListener(handleDevtoolsPageMessage);
+  }
 
-  if (message.name === "init") {
-    connections = { ...connections, [message.tabId]: port };
+  // Hook connection
+  if (port.name === "urql-cscript") {
+    // @ts-ignore
+    const tabId = port.sender.tab.id as number;
+
+    console.log("new client connection on tab", tabId);
+    cscriptConnections = { ...cscriptConnections, [tabId]: port };
+
+    port.onMessage.addListener(handleClientMessage(tabId));
+  }
+});
+
+/** Message from devtools to background.js */
+const handleDevtoolsPageMessage = (data: any, port: chrome.runtime.Port) => {
+  // Devtools declares itself
+  if (data.message === "init" && data.tabId !== null) {
+    const tabId = data.tabId;
+
+    console.log("New devtools connection to tab", tabId);
+    devtoolsConnections = { ...devtoolsConnections, [tabId]: port };
+
+    console.log("executing content script on tab");
+    chrome.tabs.executeScript(tabId, { file: "content_script.js" });
   }
 };
 
-const handleDisconnect = (port: chrome.runtime.Port) => {
-  port.onMessage.removeListener(handleMessage);
+/** Message from client for devtools.js */
+const handleClientMessage = (tabId: number) => (
+  data: any,
+  port: chrome.runtime.Port
+) => {
+  console.log("message from tabId", tabId);
+  if (devtoolsConnections[tabId] === undefined) {
+    return;
+  }
 
-  // Remove from connections
-  Object.entries(connections).some(([key, value]) => {
-    if (value === port) {
-      connections = { ...connections, [key]: undefined };
-      return true;
-    }
-
-    return false;
-  });
+  // Forward message to devtool
+  const devtoolsConn = devtoolsConnections[tabId];
+  devtoolsConn.postMessage(data);
 };
-
-chrome.runtime.onConnect.addListener(port => {
-  console.log("on connect", port);
-  port.onMessage.addListener(handleMessage);
-  port.onDisconnect.addListener(handleDisconnect);
-});
-
-chrome.runtime.onMessage.addListener(console.log);
