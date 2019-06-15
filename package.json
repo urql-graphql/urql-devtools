@@ -13,6 +13,7 @@
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "stacktrace-js": "^2.0.0",
     "styled-components": "^4.3.1",
     "typescript": "^3.5.1",
     "wonka": "^3.0.0"
@@ -22,6 +23,7 @@
     "@types/graphql": "^14.2.0",
     "@types/react": "^16.8.19",
     "@types/react-dom": "^16.8.4",
+    "@types/styled-components": "^4.1.16",
     "awesome-typescript-loader": "^5.2.1",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.3",
