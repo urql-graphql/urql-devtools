@@ -27,7 +27,7 @@ export const App = () => (
 );
 
 const Background = styled.div`
-  background-color: ${props => props.theme.bg};
+  background-color: ${(props: any) => props.theme.bg};
   position: fixed;
   left: 0;
   right: 0;

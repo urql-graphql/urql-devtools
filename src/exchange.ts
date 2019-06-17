@@ -38,7 +38,7 @@ const handleOperation = (op: Operation) => {
   const operationEvent = {
     type: "operation",
     data: op,
-    timestamp: new Date()
+    timestamp: new Date().valueOf()
   } as const;
 
   // Dispatch for panel
