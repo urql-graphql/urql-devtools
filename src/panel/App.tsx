@@ -9,7 +9,18 @@ const theme = {
   purple: "#8F629F",
   green: "#649F62",
   grey: "#3E3F3E",
-  lightBlue: "#448BB4"
+  lightBlue: "#448BB4",
+  orange: "orange",
+  breakpoints: {
+    sm: {
+      max: "399px",
+      min: "0px"
+    },
+    md: {
+      max: "700px",
+      min: "400px"
+    }
+  }
 };
 
 export const App = () => (
@@ -38,6 +49,8 @@ const Background = styled.div`
 const GlobalStyle = (
   <style
     children={`
+@import 'codemirror/lib/codemirror.css';
+@import 'codemirror/theme/material.css';
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
 body {
   font-family: 'Roboto Mono', monospace;

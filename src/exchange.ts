@@ -1,7 +1,6 @@
 import { pipe, tap } from "wonka";
 import { Exchange, Client, Operation } from "urql";
 import { OperationEvent } from "./types";
-
 declare global {
   interface Window {
     __urql__: {
@@ -24,6 +23,7 @@ export const devtoolsExchange: Exchange = ({ client, forward }) => {
     client,
     operations: []
   };
+  sendToContentScript("init");
 
   return ops$ => {
     return pipe(
@@ -48,5 +48,7 @@ const handleOperation = (op: Operation) => {
   window.__urql__.operations = [...window.__urql__.operations, operationEvent];
 };
 
-const sendToContentScript = (oe: OperationEvent) =>
+const sendToContentScript = (oe: ContentScriptEvent) =>
   window.dispatchEvent(new CustomEvent("urql", { detail: oe }));
+
+type ContentScriptEvent = OperationEvent | "init";

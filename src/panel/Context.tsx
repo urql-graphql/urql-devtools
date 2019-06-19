@@ -5,7 +5,7 @@ export const DevtoolsContext = createContext<any>(null);
 
 /** Connection to background.js */
 const connection = chrome.runtime.connect({
-  name: "urql-devtools-page"
+  name: "urql-devtools"
 });
 
 export const Provider: FC = ({ children }) => {
@@ -27,6 +27,7 @@ export const Provider: FC = ({ children }) => {
 
     // Listen for message from exchange (via content_script and background)
     connection.onMessage.addListener(msg => {
+      console.log("received operation", msg);
       setOperations(o => [...o, msg]);
     });
   }, []);

@@ -1,9 +1,22 @@
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useCallback } from "react";
 import styled, { ThemeContext } from "styled-components";
 import { OperationEvent } from "../../types";
+import { OperationContext } from "./OperationContext";
 
 export const Operation: FC<{ operation: OperationEvent }> = ({ operation }) => {
-  const theme = useContext(ThemeContext) as Record<string, string>;
+  const theme = useContext(ThemeContext);
+  const {
+    selectedOperation,
+    selectOperation,
+    clearSelectedOperation
+  } = useContext(OperationContext);
+
+  const handleContainerClick = useCallback(() => {
+    selectedOperation !== undefined &&
+    selectedOperation.data.key === operation.data.key
+      ? clearSelectedOperation()
+      : selectOperation(operation);
+  }, [operation, selectedOperation, selectOperation]);
 
   const colors = {
     subscription: theme.orange,
@@ -12,15 +25,16 @@ export const Operation: FC<{ operation: OperationEvent }> = ({ operation }) => {
     query: theme.lightBlue
   };
 
-  console.log(operation);
   return (
-    <Container>
+    <Container onClick={handleContainerClick}>
       <Indicator
         style={{ backgroundColor: colors[operation.data.operationName] }}
       />
       <OperationName>{capitalize(operation.data.operationName)}</OperationName>
       <OperationTime>{formatDate(operation.timestamp)}</OperationTime>
-      <OperationAddInfo>{operation.source || "Placeholder"}</OperationAddInfo>
+      <OperationAddInfo>
+        {operation.data.context.devtools.source || "Unknown"}
+      </OperationAddInfo>
       <OperationKey>{operation.data.key}</OperationKey>
     </Container>
   );
@@ -41,15 +55,19 @@ const OperationName = styled.h3`
   color: rgba(255, 255, 255, 0.9);
   font-size: 15px;
   margin: 0;
-  margin-bottom: 10px;
   width: 50%;
 
-  @media (min-width: 400px) {
+  @media (max-width: ${props => props.theme.breakpoints.sm.max}) {
+    margin-bottom: 10px;
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.md.min}) {
     color: rgba(255, 255, 255, 0.8);
     order: 1;
     font-size: 13px;
     width: auto;
     flex-basis: 4;
+    width: 20%;
   }
 `;
 
@@ -58,16 +76,12 @@ const OperationTime = styled.p`
   font-size: 14px;
   margin: 0;
   width: 50%;
+  text-align: right;
 
-  @media (max-width: 399px) {
-    text-align: right;
-  }
-
-  @media (min-width: 400px) {
+  @media (min-width: ${props => props.theme.breakpoints.md.min}) {
     order: 4;
     font-size: 13px;
-    width: auto;
-    flex-basis: 4;
+    width: 20%;
   }
 `;
 
@@ -76,30 +90,28 @@ const OperationAddInfo = styled.p`
   margin: 0;
   width: 50%;
 
-  @media (min-width: 400px) {
+  @media (min-width: ${props => props.theme.breakpoints.md.min}) {
     color: rgba(255, 255, 255, 0.8);
     order: 2;
     font-size: 13px;
-    width: auto;
-    flex-basis: 4;
+    width: 25%;
   }
 `;
 
 const OperationKey = styled.p`
   margin: 0;
 
-  @media (max-width: 399px) {
+  @media (max-width: ${props => props.theme.breakpoints.sm.max}) {
     color: rgba(255, 255, 255, 0.7);
     width: 50%;
     text-align: right;
   }
 
-  @media (min-width: 400px) {
+  @media (min-width: ${props => props.theme.breakpoints.md.min}) {
     color: rgba(255, 255, 255, 0.8);
     order: 3;
     font-size: 13px;
-    width: auto;
-    flex-basis: 1;
+    width: 25%;
   }
 `;
 
@@ -113,7 +125,7 @@ const Indicator = styled.div`
 
 const Container = styled.div`
   position: relative;
-  background-color: ${(props: any) => props.theme.cardBg};
+  background-color: ${props => props.theme.cardBg};
   width: auto;
   height: auto;
   display: flex;
@@ -121,12 +133,12 @@ const Container = styled.div`
   padding: 10px 15px;
   margin: 10px 0;
 
-  @media (max-width: 399px) {
+  @media (max-width: ${props => props.theme.breakpoints.sm.max}) {
     flex-wrap: wrap;
     align-items: baseline;
   }
 
-  @media (min-width: 400px) {
+  @media (min-width: ${props => props.theme.breakpoints.md.min}) {
     align-items: center;
     justify-content: space-between;
   }

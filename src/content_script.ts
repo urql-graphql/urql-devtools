@@ -1,13 +1,18 @@
-const main = () => {
-  /** Connection to background.js */
-  const connection = chrome.runtime.connect({ name: "urql-cscript" });
+/** Connection to background.js */
+let connection: chrome.runtime.Port;
 
-  /** Handle message from exchange and forward to background.js */
-  window.addEventListener("urql", e =>
-    connection.postMessage((e as CustomEvent).detail)
-  );
-};
+// Listen for init message
+window.addEventListener("urql", e => {
+  const data = (e as CustomEvent).detail;
 
-if (window.hasOwnProperty("__urql__")) {
-  main();
-}
+  // @ts-ignore
+  if (data === "init") {
+    connection = chrome.runtime.connect({ name: "urql-cscript" });
+  }
+
+  try {
+    connection.postMessage(data);
+  } catch (err) {
+    console.error("Error in Tipple content script: ", err);
+  }
+});

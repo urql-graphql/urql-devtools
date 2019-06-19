@@ -25,6 +25,10 @@ module.exports = {
         options: {
           configFileName: "tsconfig.devtools.json"
         }
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       }
       // {
       //   test: /exchange\.ts$/,
@@ -36,7 +40,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ["**/*", "!exchange.js"]
+    }),
     new CopyWebpackPlugin([
       {
         from: "src/manifest.json",
