@@ -1,5 +1,5 @@
 import { pipe, tap } from "wonka";
-import { Exchange, Client, Operation } from "urql";
+import { Exchange, Client, Operation, OperationResult } from "urql";
 import { OperationEvent } from "./types";
 declare global {
   interface Window {
@@ -29,15 +29,19 @@ export const devtoolsExchange: Exchange = ({ client, forward }) => {
     return pipe(
       ops$,
       tap(handleOperation),
-      forward
+      forward,
+      tap(handleOperation)
     );
   };
 };
 
-const handleOperation = (op: Operation) => {
+const handleOperation = (op: Operation | OperationResult) => {
+  const typedOp = isOperation(op)
+    ? ({ type: "operation", data: op } as const)
+    : ({ type: "response", data: op } as const);
+
   const operationEvent = {
-    type: "operation",
-    data: op,
+    ...typedOp,
     timestamp: new Date().valueOf()
   } as const;
 
@@ -47,6 +51,10 @@ const handleOperation = (op: Operation) => {
   // Add to window cache
   window.__urql__.operations = [...window.__urql__.operations, operationEvent];
 };
+
+/** Type guard. */
+const isOperation = (o: any): o is Operation =>
+  o["operationName"] !== undefined;
 
 const sendToContentScript = (oe: ContentScriptEvent) =>
   window.dispatchEvent(new CustomEvent("urql", { detail: oe }));

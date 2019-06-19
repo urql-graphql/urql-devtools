@@ -12,8 +12,7 @@ export const Operation: FC<{ operation: OperationEvent }> = ({ operation }) => {
   } = useContext(OperationContext);
 
   const handleContainerClick = useCallback(() => {
-    selectedOperation !== undefined &&
-    selectedOperation.data.key === operation.data.key
+    selectedOperation === operation
       ? clearSelectedOperation()
       : selectOperation(operation);
   }, [operation, selectedOperation, selectOperation]);
@@ -22,20 +21,29 @@ export const Operation: FC<{ operation: OperationEvent }> = ({ operation }) => {
     subscription: theme.orange,
     teardown: theme.grey,
     mutation: theme.purple,
-    query: theme.lightBlue
+    query: theme.lightBlue,
+    response: theme.green
   };
+
+  const name =
+    operation.type === "operation" ? operation.data.operationName : "response";
+  const date = formatDate(operation.timestamp);
+  const info =
+    operation.type === "operation"
+      ? operation.data.context.devtools.source
+      : operation.data.operation.context.devtools.source;
+  const key =
+    operation.type === "operation"
+      ? operation.data.key
+      : operation.data.operation.key;
 
   return (
     <Container onClick={handleContainerClick}>
-      <Indicator
-        style={{ backgroundColor: colors[operation.data.operationName] }}
-      />
-      <OperationName>{capitalize(operation.data.operationName)}</OperationName>
-      <OperationTime>{formatDate(operation.timestamp)}</OperationTime>
-      <OperationAddInfo>
-        {operation.data.context.devtools.source || "Unknown"}
-      </OperationAddInfo>
-      <OperationKey>{operation.data.key}</OperationKey>
+      <Indicator style={{ backgroundColor: colors[name] }} />
+      <OperationName>{capitalize(name)}</OperationName>
+      <OperationTime>{date}</OperationTime>
+      <OperationAddInfo>{info || "Unknown"}</OperationAddInfo>
+      <OperationKey>{key}</OperationKey>
     </Container>
   );
 };

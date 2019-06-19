@@ -28,7 +28,6 @@ export const App = () => (
     <ThemeProvider theme={theme}>
       <Provider>
         <Background>
-          <p>Hello from react</p>
           <Operations />
         </Background>
       </Provider>

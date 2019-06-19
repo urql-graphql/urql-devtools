@@ -16,7 +16,7 @@ export const Provider: FC = ({ children }) => {
     // Set initial operations state from cache
     window.chrome.devtools.inspectedWindow.eval(
       `window.__urql__.operations`,
-      setOperations
+      (ops: OperationEvent[]) => setOperations(ops.reverse())
     );
 
     // Relay the tab ID to the background page
@@ -27,8 +27,7 @@ export const Provider: FC = ({ children }) => {
 
     // Listen for message from exchange (via content_script and background)
     connection.onMessage.addListener(msg => {
-      console.log("received operation", msg);
-      setOperations(o => [...o, msg]);
+      setOperations(o => [msg, ...o]);
     });
   }, []);
 
