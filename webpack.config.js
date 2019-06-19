@@ -11,8 +11,9 @@ module.exports = {
     // exchange: `${__dirname}/src/exchange.ts`
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"]
+    extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx"]
   },
+  mode: "development",
   output: {
     path: `${__dirname}/dist`
   },
@@ -20,7 +21,7 @@ module.exports = {
     rules: [
       {
         test: /\.*tsx?$/,
-        exclude: /exchange\.ts/,
+        exclude: /(exchange\.ts|node_modules)/,
         loader: "awesome-typescript-loader",
         options: {
           configFileName: "tsconfig.devtools.json"

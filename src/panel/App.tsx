@@ -2,6 +2,7 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { Operations } from "./operations/Operations";
 import { Provider } from "./Context";
+import "./App.css";
 
 const theme = {
   bg: "#121212",
@@ -32,7 +33,6 @@ export const App = () => (
         </Background>
       </Provider>
     </ThemeProvider>
-    {GlobalStyle}
   </>
 );
 
@@ -44,16 +44,3 @@ const Background = styled.div`
   top: 0;
   bottom: 0;
 `;
-
-const GlobalStyle = (
-  <style
-    children={`
-@import 'codemirror/lib/codemirror.css';
-@import 'codemirror/theme/material.css';
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
-body {
-  font-family: 'Roboto Mono', monospace;
-}
-  `}
-  />
-);

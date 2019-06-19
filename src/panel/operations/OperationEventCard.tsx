@@ -3,7 +3,10 @@ import styled, { ThemeContext } from "styled-components";
 import { OperationEvent } from "../../types";
 import { OperationContext } from "./OperationContext";
 
-export const Operation: FC<{ operation: OperationEvent }> = ({ operation }) => {
+/** Shows basic information about an operation. */
+export const OperationEventCard: FC<{ operation: OperationEvent }> = ({
+  operation
+}) => {
   const theme = useContext(ThemeContext);
   const {
     selectedOperation,
