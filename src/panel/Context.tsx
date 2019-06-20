@@ -1,7 +1,10 @@
-import React, { createContext, useEffect, useState, FC } from "react";
-import { OperationEvent } from "../types";
+import React, { createContext, useEffect, FC, useRef } from "react";
+import { OperationEvent, ContentScriptMessage } from "../types";
 
-export const DevtoolsContext = createContext<any>(null);
+export const DevtoolsContext = createContext<{
+  sendMessage: (message: any) => void;
+  addMessageHandler: (cb: (message: ContentScriptMessage) => void) => void;
+}>(null as any);
 
 /** Connection to background.js */
 const connection = chrome.runtime.connect({
@@ -10,29 +13,37 @@ const connection = chrome.runtime.connect({
 
 export const Provider: FC = ({ children }) => {
   /** Collection of operation events */
-  const [operations, setOperations] = useState<OperationEvent[]>([]);
+  const messageHandlers = useRef<
+    Array<(message: ContentScriptMessage) => void>
+  >([]);
+  const sendMessage = connection.postMessage;
+
+  const addMessageHandler = (callback: (msg: ContentScriptMessage) => void) => {
+    messageHandlers.current = [...messageHandlers.current, callback];
+
+    return () => {
+      messageHandlers.current = messageHandlers.current.filter(
+        cb => cb === callback
+      );
+    };
+  };
 
   useEffect(() => {
-    // Set initial operations state from cache
-    window.chrome.devtools.inspectedWindow.eval(
-      `window.__urql__.operations`,
-      (ops: OperationEvent[]) => setOperations(ops.reverse())
-    );
-
     // Relay the tab ID to the background page
     connection.postMessage({
       message: "init",
       tabId: chrome.devtools.inspectedWindow.tabId
     });
 
-    // Listen for message from exchange (via content_script and background)
-    connection.onMessage.addListener(msg => {
-      setOperations(o => [msg, ...o]);
-    });
+    const handleMessage = (msg: ContentScriptMessage) =>
+      messageHandlers.current.forEach(h => h(msg));
+
+    connection.onMessage.addListener(handleMessage);
+    return () => connection.onMessage.removeListener(handleMessage);
   }, []);
 
   return (
-    <DevtoolsContext.Provider value={{ operations }}>
+    <DevtoolsContext.Provider value={{ sendMessage, addMessageHandler }}>
       {children}
     </DevtoolsContext.Provider>
   );

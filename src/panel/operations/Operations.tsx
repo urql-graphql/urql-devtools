@@ -1,38 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
-import { DevtoolsContext } from "../Context";
 import { OperationEventCard } from "./OperationEventCard";
 import { OperationEventPanel } from "./OperationEventPanel";
-import { OperationProvider } from "./OperationContext";
+import { OperationContext } from "./OperationContext";
+import { Background } from "../components/Background";
 
 export const Operations = () => {
-  const { operations } = useContext(DevtoolsContext);
+  const { operations } = useContext(OperationContext);
 
   return (
-    <OperationProvider>
-      <Container>
-        <OperationsList>
-          {operations.map((op: any, i: any) => (
-            <OperationEventCard key={i} operation={op} />
-          ))}
-        </OperationsList>
-        <OperationEventPanel />
-      </Container>
-    </OperationProvider>
+    <Container>
+      <OperationsList>
+        {operations.map((op: any, i: any) => (
+          <OperationEventCard key={i} operation={op} />
+        ))}
+      </OperationsList>
+      <OperationEventPanel />
+    </Container>
   );
 };
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  margin-bottom: 50px;
-
+const Container = styled(Background)`
   @media (min-aspect-ratio: 1/1) {
-    flex-direction: row;
-    margin-bottom: 0;
-    margin-left: 40px;
-
     & > * {
       width: 50%;
     }
@@ -49,7 +38,8 @@ const OperationsList = styled.div`
   overflow: scroll;
   margin: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
   flex-basis: 0;
   flex-grow: 1;
 `;

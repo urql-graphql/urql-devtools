@@ -5,6 +5,9 @@ import { Operations } from "./operations/Operations";
 import { Provider } from "./Context";
 import "./App.css";
 import { Navigation } from "./Navigation";
+import { Request } from "./request/Request";
+import { OperationProvider } from "./operations/OperationContext";
+import { RequestProvider } from "./request/RequestContext";
 
 const theme = {
   bg: "#121212",
@@ -26,30 +29,40 @@ const theme = {
   }
 };
 
-export const App = () => (
-  <>
-    <ThemeProvider theme={theme}>
-      <Provider>
-        <HashRouter>
-          <Background>
-            <Switch>
-              <Route path={"/operations"} component={Operations} />
-              <Route path={"/request"} component={() => <div>Hello</div>} />
-            </Switch>
-          </Background>
-          <Navigation />
-        </HashRouter>
-      </Provider>
-    </ThemeProvider>
-  </>
-);
+export const App = () => {
+  const routes = [
+    {
+      path: "/operations",
+      component: () => (
+        <OperationProvider>
+          <Operations />
+        </OperationProvider>
+      )
+    },
+    {
+      path: "/request",
+      component: () => (
+        <RequestProvider>
+          <Request />
+        </RequestProvider>
+      )
+    }
+  ];
 
-const Background = styled.div`
-  display: flex;
-  background-color: ${(props: any) => props.theme.bg};
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-`;
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+        <Provider>
+          <HashRouter>
+            <Switch>
+              {routes.map(r => (
+                <Route key={r.path} {...r} />
+              ))}
+            </Switch>
+            <Navigation />
+          </HashRouter>
+        </Provider>
+      </ThemeProvider>
+    </>
+  );
+};

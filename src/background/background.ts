@@ -32,6 +32,13 @@ const handleDevtoolsPageMessage = (data: any, port: chrome.runtime.Port) => {
 
     console.log("executing content script on tab");
     chrome.tabs.executeScript(tabId, { file: "content_script.js" });
+
+    // Listen for messages and forward to content script
+    port.onMessage.addListener(msg => {
+      if (cscriptConnections[tabId] !== undefined) {
+        cscriptConnections[tabId].postMessage(msg);
+      }
+    });
   }
 };
 

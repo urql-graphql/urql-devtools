@@ -1,7 +1,15 @@
-import React, { createContext, FC, useState } from "react";
+import React, {
+  createContext,
+  FC,
+  useState,
+  useEffect,
+  useContext
+} from "react";
 import { OperationEvent } from "../../types";
+import { DevtoolsContext } from "../Context";
 
 interface OperationContextValue {
+  operations: OperationEvent[];
   selectedOperation?: OperationEvent;
   selectOperation: (op: OperationEvent) => void;
   clearSelectedOperation: () => void;
@@ -12,6 +20,8 @@ export const OperationContext = createContext<OperationContextValue>(
 );
 
 export const OperationProvider: FC = ({ children }) => {
+  const { addMessageHandler } = useContext(DevtoolsContext);
+  const [operations, setOperations] = useState<OperationEvent[]>([]);
   const [selectedOperation, setSelectedOperation] = useState<
     OperationEvent | undefined
   >(undefined);
@@ -19,7 +29,24 @@ export const OperationProvider: FC = ({ children }) => {
   const selectOperation = (op: OperationEvent) => setSelectedOperation(op);
   const clearSelectedOperation = () => setSelectedOperation(undefined);
 
+  useEffect(() => {
+    return addMessageHandler(msg => {
+      if (msg.type === "operation" || msg.type === "response") {
+        setOperations(o => [...o, msg]);
+      }
+    });
+  }, [addMessageHandler]);
+
+  // Set initial operations state from cache
+  useEffect(() => {
+    window.chrome.devtools.inspectedWindow.eval(
+      `window.__urql__.operations`,
+      (ops: OperationEvent[]) => setOperations(ops.reverse())
+    );
+  }, []);
+
   const value = {
+    operations,
     selectedOperation,
     selectOperation,
     clearSelectedOperation

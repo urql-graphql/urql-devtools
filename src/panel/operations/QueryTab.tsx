@@ -17,8 +17,6 @@ export const QueryTab: FC<QueryTabProps> = ({ operation }) => {
       ? operation.data.query
       : operation.data.operation.query;
 
-  console.log(doc);
-
   return (
     <CodeMirror
       options={{

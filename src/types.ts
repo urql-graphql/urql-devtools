@@ -13,3 +13,5 @@ export interface IncomingResponse {
   data: OperationResult;
   timestamp: number;
 }
+
+export type ContentScriptMessage = OperationEvent;
