@@ -1,23 +1,14 @@
-import React, {
-  FC,
-  useContext,
-  useRef,
-  useState,
-  useMemo,
-  useCallback,
-  useEffect
-} from "react";
+import React, { FC, useContext, useState, useMemo, useEffect } from "react";
 import styled from "styled-components";
-import { OperationContext } from "./OperationContext";
-import { RawOperation } from "./RawOperation";
-import { QueryTab } from "./QueryTab";
 import { Tabs } from "../components/Tabs";
-import { JsonTab } from "./JsonTab";
 import {
   OutgoingOperation,
   OperationEvent,
   IncomingResponse
 } from "../../types";
+import { OperationContext } from "./OperationContext";
+import { QueryTab } from "./QueryTab";
+import { JsonTab } from "./JsonTab";
 
 /** Pane shows additional information about a selected operation event. */
 export const OperationEventPanel: FC = () => {

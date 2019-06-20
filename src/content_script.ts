@@ -3,6 +3,7 @@ let connection: chrome.runtime.Port;
 
 // Listen for init message
 window.addEventListener("urql", e => {
+  console.log("urql event")
   const data = (e as CustomEvent).detail;
 
   if (data === "init") {

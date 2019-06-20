@@ -1,7 +1,10 @@
-import styled, { ThemedStyledInterface } from "styled-components";
+import styled, { ThemedStyledInterface } from "styled-components"; //  eslint-disable-line
 
 declare module "styled-components" {
-  type Breakpoint = { min: string; max: string };
+  interface Breakpoint {
+    min: string;
+    max: string;
+  }
 
   export interface DefaultTheme {
     bg: string;

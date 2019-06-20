@@ -1,8 +1,10 @@
 import React from "react";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { Operations } from "./operations/Operations";
 import { Provider } from "./Context";
 import "./App.css";
+import { Navigation } from "./Navigation";
 
 const theme = {
   bg: "#121212",
@@ -28,15 +30,22 @@ export const App = () => (
   <>
     <ThemeProvider theme={theme}>
       <Provider>
-        <Background>
-          <Operations />
-        </Background>
+        <HashRouter>
+          <Background>
+            <Switch>
+              <Route path={["/", "/operations"]} exact component={Operations} />
+              <Route path={"/request"} component={() => <div>Hello</div>} />
+            </Switch>
+          </Background>
+          <Navigation />
+        </HashRouter>
       </Provider>
     </ThemeProvider>
   </>
 );
 
 const Background = styled.div`
+  display: flex;
   background-color: ${(props: any) => props.theme.bg};
   position: fixed;
   left: 0;

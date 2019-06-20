@@ -3,3 +3,7 @@
 body {
   font-family: "Roboto Mono", monospace;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

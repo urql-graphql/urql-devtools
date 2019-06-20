@@ -36,10 +36,7 @@ const handleDevtoolsPageMessage = (data: any, port: chrome.runtime.Port) => {
 };
 
 /** Message from client for devtools.js */
-const handleClientMessage = (tabId: number) => (
-  data: any,
-  port: chrome.runtime.Port
-) => {
+const handleClientMessage = (tabId: number) => (data: any) => {
   console.log("message from tabId", tabId);
   if (devtoolsConnections[tabId] === undefined) {
     return;

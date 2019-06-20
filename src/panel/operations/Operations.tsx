@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
+import styled from "styled-components";
+import { DevtoolsContext } from "../Context";
 import { OperationEventCard } from "./OperationEventCard";
 import { OperationEventPanel } from "./OperationEventPanel";
-import { DevtoolsContext } from "../Context";
 import { OperationProvider } from "./OperationContext";
-import styled from "styled-components";
 
 export const Operations = () => {
   const { operations } = useContext(DevtoolsContext);
@@ -25,10 +25,13 @@ export const Operations = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex-grow: 1;
+  margin-bottom: 50px;
 
   @media (min-aspect-ratio: 1/1) {
     flex-direction: row;
+    margin-bottom: 0;
+    margin-left: 40px;
 
     & > * {
       width: 50%;

@@ -3,9 +3,9 @@ import "codemirror/theme/material.css";
 import "codemirror/lib/codemirror.js";
 import "codemirror/mode/javascript/javascript";
 import { UnControlled as CodeMirror } from "react-codemirror2";
-import { OperationEvent } from "../../types";
 import React, { FC } from "react";
 import { print } from "graphql";
+import { OperationEvent } from "../../types";
 
 interface QueryTabProps {
   operation: OperationEvent;

@@ -10,7 +10,11 @@ interface TabsProps<T = any> {
 export const Tabs: FC<TabsProps> = ({ active, options, setActive }) => (
   <Container>
     {options.map(o => (
-      <Tab data-active={o.value === active} onClick={() => setActive(o.value)}>
+      <Tab
+        key={o.value}
+        data-active={o.value === active}
+        onClick={() => setActive(o.value)}
+      >
         {o.label}
       </Tab>
     ))}
