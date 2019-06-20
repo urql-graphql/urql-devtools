@@ -9,6 +9,8 @@ import {
 import { OperationContext } from "./OperationContext";
 import { QueryTab } from "./QueryTab";
 import { JsonTab } from "./JsonTab";
+import { Route } from "react-router-dom";
+import { __RouterContext, Switch, Redirect } from "react-router";
 
 /** Pane shows additional information about a selected operation event. */
 export const OperationEventPanel: FC = () => {
@@ -22,33 +24,62 @@ export const OperationEventPanel: FC = () => {
 const OperationEventPanelContent: FC<{ event: OperationEvent }> = ({
   event
 }) => {
-  const [activeTab, setActiveTab] = useState(0);
+  const { match, history } = useContext(__RouterContext);
+
+  /** Prefix current route to child routes */
+  const prefixPath = function<T extends { to: string | string[] }>(ob: T) {
+    return {
+      ...ob,
+      to:
+        typeof ob.to === "string"
+          ? `${match.path}${ob.to}`
+          : ob.to.map(t => `${match.path}${t}`)
+    };
+  };
+
+  /** Args for tabs */
+  const tabOptions = useMemo(() => {
+    const opts =
+      event.type === "operation"
+        ? [
+            { label: "Query", to: `/query` },
+            { label: "Variables", to: `/variables` },
+            { label: "Meta", to: `/meta` }
+          ]
+        : [
+            { label: "Response", to: "/response" },
+            { label: "Meta", to: "/meta" }
+          ];
+
+    return opts.map(prefixPath);
+  }, [event]);
+
+  /** Update history when redirecting to parent */
+  useEffect(
+    () => () => {
+      if (/\/operations\/.+/.test(history.location.pathname)) {
+        history.push("/operations");
+      }
+    },
+    []
+  );
 
   useEffect(() => {
-    setActiveTab(0);
-  }, [event]);
+    history.push(tabOptions[0].to);
+  }, [tabOptions, history]);
 
-  const tabOptions = useMemo(() => {
-    return event.type === "operation"
-      ? [
-          { label: "Query", value: 0 },
-          { label: "Variables", value: 1 },
-          { label: "Meta", value: 2 }
-        ]
-      : [{ label: "Response", value: 0 }, { label: "Meta", value: 1 }];
-  }, [event]);
-
-  const getOperationContent = (op: OutgoingOperation) => {
-    if (activeTab === 0) {
-      return <QueryTab operation={op} />;
-    }
-
-    if (activeTab === 1) {
-      return <JsonTab json={op.data.variables || {}} />;
-    }
-
-    if (activeTab === 2) {
-      return (
+  const operationRoutes = (op: OutgoingOperation) => [
+    {
+      to: [`/`, `/query`],
+      component: () => <QueryTab operation={op} />
+    },
+    {
+      to: `/variables`,
+      component: () => <JsonTab json={op.data.variables || {}} />
+    },
+    {
+      to: `/meta`,
+      component: () => (
         <JsonTab
           json={{
             key: op.data.key,
@@ -57,19 +88,18 @@ const OperationEventPanelContent: FC<{ event: OperationEvent }> = ({
             context: { ...op.data.context, devtools: undefined }
           }}
         />
-      );
+      )
     }
+  ];
 
-    return null;
-  };
-
-  const getResponseContent = (op: IncomingResponse) => {
-    if (activeTab === 0) {
-      return <JsonTab json={op.data.data} />;
-    }
-
-    if (activeTab === 1) {
-      return (
+  const responseRoutes = (op: IncomingResponse) => [
+    {
+      to: [`/`, `/response`],
+      component: () => <JsonTab json={op.data.data} />
+    },
+    {
+      to: `/meta`,
+      component: () => (
         <JsonTab
           json={{
             key: op.data.operation.key,
@@ -78,24 +108,25 @@ const OperationEventPanelContent: FC<{ event: OperationEvent }> = ({
             context: { ...op.data.operation.context, devtools: undefined }
           }}
         />
-      );
+      )
     }
-  };
+  ];
 
-  const content = () =>
-    event.type === "operation"
-      ? getOperationContent(event)
-      : getResponseContent(event);
+  const routes = (event.type === "operation"
+    ? operationRoutes(event)
+    : responseRoutes(event)
+  ).map(prefixPath);
 
   return (
     <>
       <Container>
-        <Tabs
-          active={activeTab}
-          options={tabOptions}
-          setActive={setActiveTab}
-        />
-        {content()}
+        <Tabs options={tabOptions} />
+        <Switch>
+          {routes.map(r => (
+            <Route path={r.to} component={r.component} exact />
+          ))}
+          <Redirect to={tabOptions[0].to} />
+        </Switch>
       </Container>
     </>
   );

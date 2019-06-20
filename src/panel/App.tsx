@@ -33,7 +33,7 @@ export const App = () => (
         <HashRouter>
           <Background>
             <Switch>
-              <Route path={["/", "/operations"]} exact component={Operations} />
+              <Route path={"/operations"} component={Operations} />
               <Route path={"/request"} component={() => <div>Hello</div>} />
             </Switch>
           </Background>

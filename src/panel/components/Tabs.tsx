@@ -1,20 +1,15 @@
 import React, { FC } from "react";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 interface TabsProps<T = any> {
-  active: T;
-  options: { label: string; value: T }[];
-  setActive: (active: T) => void;
+  options: { label: string; to: T }[];
 }
 
-export const Tabs: FC<TabsProps> = ({ active, options, setActive }) => (
+export const Tabs: FC<TabsProps> = ({ options }) => (
   <Container>
     {options.map(o => (
-      <Tab
-        key={o.value}
-        data-active={o.value === active}
-        onClick={() => setActive(o.value)}
-      >
+      <Tab key={o.label} to={o.to}>
         {o.label}
       </Tab>
     ))}
@@ -25,14 +20,15 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Tab = styled.h3`
+const Tab = styled(NavLink)`
   margin: 0;
   padding: 10px;
   font-size: 12px;
   color: #fff;
   opacity: 0.6;
+  text-decoration: none;
 
-  &[data-active="true"] {
+  &.active {
     opacity: 1;
   }
 
