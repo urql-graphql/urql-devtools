@@ -1,22 +1,18 @@
 import React, { FC, useContext, useCallback } from "react";
 import styled, { ThemeContext } from "styled-components";
-import { OperationEvent } from "../../types";
-import { OperationContext } from "../context";
+import { UrqlEvent } from "../../types";
+import { EventsContext } from "../context";
 
 /** Shows basic information about an operation. */
-export const EventCard: FC<{ operation: OperationEvent }> = ({ operation }) => {
+export const EventCard: FC<{ operation: UrqlEvent }> = ({ operation }) => {
   const theme = useContext(ThemeContext);
-  const {
-    selectedOperation,
-    selectOperation,
-    clearSelectedOperation
-  } = useContext(OperationContext);
+  const { selectedEvent, selectEvent, clearSelectedEvent } = useContext(
+    EventsContext
+  );
 
   const handleContainerClick = useCallback(() => {
-    selectedOperation === operation
-      ? clearSelectedOperation()
-      : selectOperation(operation);
-  }, [operation, selectedOperation, selectOperation]);
+    selectedEvent === operation ? clearSelectedEvent() : selectEvent(operation);
+  }, [operation, selectedEvent, selectEvent]);
 
   const colors = {
     subscription: theme.orange,

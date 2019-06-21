@@ -1,9 +1,6 @@
 import { Operation, OperationResult } from "urql";
 
-export type OperationEvent =
-  | OutgoingOperation
-  | IncomingResponse
-  | IncomingError;
+export type UrqlEvent = OutgoingOperation | IncomingResponse | IncomingError;
 
 export interface OutgoingOperation {
   type: "operation";
@@ -23,7 +20,7 @@ export interface IncomingError {
   timestamp: number;
 }
 
-export type ContentScriptMessage = OperationEvent;
+export type ContentScriptMessage = UrqlEvent;
 
 interface InitMessage {
   type: "init";

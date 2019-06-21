@@ -2,16 +2,16 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { EventCard } from "./EventCard";
 import { Panel } from "./panels";
-import { OperationContext } from "../context";
+import { EventsContext } from "../context";
 import { Background } from "../components/Background";
 
 export const Events = () => {
-  const { operations } = useContext(OperationContext);
+  const { events } = useContext(EventsContext);
 
   return (
     <Container>
       <EventsList>
-        {operations.map((op: any, i: any) => (
+        {events.map((op: any, i: any) => (
           <EventCard key={i} operation={op} />
         ))}
       </EventsList>

@@ -1,12 +1,12 @@
 import React, { FC, useContext } from "react";
 import styled from "styled-components";
-import { OperationContext } from "../../context";
+import { EventsContext } from "../../context";
 import { OperationPanel } from "./OperationPanel";
 import { ResponsePanel } from "./ResponsePanel";
 
 /** Pane shows additional information about a selected operation event. */
 export const Panel: FC = () => {
-  const { selectedOperation } = useContext(OperationContext);
+  const { selectedEvent: selectedOperation } = useContext(EventsContext);
 
   if (selectedOperation === undefined) {
     return null;

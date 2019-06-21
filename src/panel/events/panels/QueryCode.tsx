@@ -5,10 +5,10 @@ import "codemirror/mode/javascript/javascript";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import React, { FC } from "react";
 import { print } from "graphql";
-import { OperationEvent } from "../../../types";
+import { UrqlEvent } from "../../../types";
 
 interface QueryCodeProps {
-  operation: OperationEvent;
+  operation: UrqlEvent;
 }
 
 export const QueryCode: FC<QueryCodeProps> = ({ operation }) => {

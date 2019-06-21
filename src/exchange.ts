@@ -6,13 +6,13 @@ import {
   OperationResult,
   createRequest
 } from "urql";
-import { OperationEvent, DevtoolsMessage } from "./types";
+import { UrqlEvent, DevtoolsMessage } from "./types";
 
 declare global {
   interface Window {
     __urql__: {
       client: Client;
-      operations: OperationEvent[];
+      events: UrqlEvent[];
     };
   }
 }
@@ -28,7 +28,7 @@ export const devtoolsExchange: Exchange = ({ client, forward }) => {
 
   window.__urql__ = {
     client,
-    operations: []
+    events: []
   };
 
   // Initialize
@@ -57,7 +57,7 @@ const handleOperation = <T extends Operation | OperationResult>(op: T) => {
   sendToContentScript(event);
 
   // Add to window cache
-  window.__urql__.operations = [...window.__urql__.operations, event];
+  window.__urql__.events = [...window.__urql__.events, event];
 };
 
 const handleMessage = (client: Client) => (message: DevtoolsMessage) => {
@@ -92,4 +92,4 @@ const parseStreamData = <T extends Operation | OperationResult>(op: T) => {
 const sendToContentScript = (oe: ContentScriptEvent) =>
   window.dispatchEvent(new CustomEvent("urql-out", { detail: oe }));
 
-type ContentScriptEvent = OperationEvent | "init";
+type ContentScriptEvent = UrqlEvent | "init";

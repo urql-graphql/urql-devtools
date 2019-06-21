@@ -1,11 +1,11 @@
-import { Client, createRequest } from "urql";
-import { DevtoolsMessage, OperationEvent } from "./types";
+import { Client } from "urql";
+import { DevtoolsMessage, UrqlEvent } from "./types";
 
 declare global {
   interface Window {
     __urql__: {
       client: Client;
-      operations: OperationEvent[];
+      operations: UrqlEvent[];
     };
   }
 }
