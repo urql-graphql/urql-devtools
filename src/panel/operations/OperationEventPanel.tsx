@@ -6,7 +6,7 @@ import {
   OperationEvent,
   IncomingResponse
 } from "../../types";
-import { OperationContext } from "./OperationContext";
+import { OperationContext } from "../context";
 import { QueryTab } from "./QueryTab";
 import { JsonTab } from "./JsonTab";
 import { Route } from "react-router-dom";

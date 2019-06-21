@@ -1,13 +1,15 @@
 import React from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import { Operations } from "./operations/Operations";
-import { Provider } from "./Context";
 import "./App.css";
 import { Navigation } from "./Navigation";
 import { Request } from "./request/Request";
-import { OperationProvider } from "./operations/OperationContext";
-import { RequestProvider } from "./request/RequestContext";
+import {
+  DevtoolsProvider,
+  OperationProvider,
+  RequestProvider
+} from "./context";
 
 const theme = {
   bg: "#121212",
@@ -30,39 +32,19 @@ const theme = {
 };
 
 export const App = () => {
-  const routes = [
-    {
-      path: "/operations",
-      component: () => (
-        <OperationProvider>
-          <Operations />
-        </OperationProvider>
-      )
-    },
-    {
-      path: "/request",
-      component: () => (
-        <RequestProvider>
-          <Request />
-        </RequestProvider>
-      )
-    }
-  ];
-
   return (
-    <>
+    <DevtoolsProvider>
       <ThemeProvider theme={theme}>
-        <Provider>
-          <HashRouter>
-            <Switch>
-              {routes.map(r => (
-                <Route key={r.path} {...r} />
-              ))}
-            </Switch>
-            <Navigation />
-          </HashRouter>
-        </Provider>
+        <HashRouter>
+          <OperationProvider>
+            <Route path="/operations" component={Operations} />
+          </OperationProvider>
+          <RequestProvider>
+            <Route path="/request" component={Request} />
+          </RequestProvider>
+          <Navigation />
+        </HashRouter>
       </ThemeProvider>
-    </>
+    </DevtoolsProvider>
   );
 };

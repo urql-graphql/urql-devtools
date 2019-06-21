@@ -6,7 +6,7 @@ import React, {
   useContext
 } from "react";
 import { OperationEvent } from "../../types";
-import { DevtoolsContext } from "../Context";
+import { DevtoolsContext } from "./Devtools";
 
 interface OperationContextValue {
   operations: OperationEvent[];
@@ -31,17 +31,21 @@ export const OperationProvider: FC = ({ children }) => {
 
   useEffect(() => {
     return addMessageHandler(msg => {
+      console.log("message received in OperationProvider", msg);
       if (msg.type === "operation" || msg.type === "response") {
         setOperations(o => [...o, msg]);
       }
     });
-  }, [addMessageHandler]);
+  }, []);
 
   // Set initial operations state from cache
   useEffect(() => {
     window.chrome.devtools.inspectedWindow.eval(
       `window.__urql__.operations`,
-      (ops: OperationEvent[]) => setOperations(ops.reverse())
+      (ops: OperationEvent[]) => {
+        console.log(ops);
+        setOperations(ops);
+      }
     );
   }, []);
 

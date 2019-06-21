@@ -1,4 +1,11 @@
-import React, { createContext, FC, useState } from "react";
+import React, {
+  createContext,
+  FC,
+  useState,
+  useContext,
+  useEffect
+} from "react";
+import { DevtoolsContext } from ".";
 
 interface RequestContextValue {
   query: string;
@@ -9,11 +16,16 @@ interface RequestContextValue {
 
 export const RequestContext = createContext<RequestContextValue>(null as any);
 
+const key = 100001;
+
 export const RequestProvider: FC = ({ children }) => {
+  const { sendMessage } = useContext(DevtoolsContext);
   const [query, setQuery] = useState("");
   const [response, setResponse] = useState<object | undefined>();
 
-  const execute = () => {};
+  const execute = () => {
+    sendMessage({ type: "request", query });
+  };
 
   const value = {
     query,

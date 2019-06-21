@@ -15,3 +15,16 @@ export interface IncomingResponse {
 }
 
 export type ContentScriptMessage = OperationEvent;
+
+interface InitMessage {
+  type: "init";
+  tabId: number;
+}
+
+interface ExecuteRequestMessage {
+  type: "request";
+  query: string;
+  vars?: any;
+}
+
+export type DevtoolsMessage = InitMessage | ExecuteRequestMessage;

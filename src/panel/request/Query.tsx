@@ -1,11 +1,18 @@
 import { Controlled as CodeMirror } from "react-codemirror2";
-import React, { useState, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
-import { RequestContext } from "./RequestContext";
+import { RequestContext } from "../context";
 
 export const Query = () => {
-  const { query, setQuery } = useContext(RequestContext);
+  const { query, setQuery, execute } = useContext(RequestContext);
   const handleTextChange = (a: any, b: any, value: string) => setQuery(value);
+
+  setQuery("{ todos { id } }");
+
+  console.log(query);
+  useEffect(() => {
+    execute();
+  }, []);
 
   return (
     <Container>

@@ -1,3 +1,5 @@
+import { DevtoolsMessage, ContentScriptMessage } from "../types";
+
 /** Connections from devtools.js */
 let devtoolsConnections: Record<string, chrome.runtime.Port> = {};
 /** Connections from content_script.js */
@@ -22,10 +24,13 @@ chrome.runtime.onConnect.addListener(port => {
 });
 
 /** Message from devtools to background.js */
-const handleDevtoolsPageMessage = (data: any, port: chrome.runtime.Port) => {
+const handleDevtoolsPageMessage = (
+  msg: DevtoolsMessage,
+  port: chrome.runtime.Port
+) => {
   // Devtools declares itself
-  if (data.message === "init" && data.tabId !== null) {
-    const tabId = data.tabId;
+  if (msg.type === "init") {
+    const tabId = msg.tabId;
 
     console.log("New devtools connection to tab", tabId);
     devtoolsConnections = { ...devtoolsConnections, [tabId]: port };
@@ -33,19 +38,27 @@ const handleDevtoolsPageMessage = (data: any, port: chrome.runtime.Port) => {
     console.log("executing content script on tab");
     chrome.tabs.executeScript(tabId, { file: "content_script.js" });
 
-    // Listen for messages and forward to content script
+    // Forward message to content script
     port.onMessage.addListener(msg => {
-      if (cscriptConnections[tabId] !== undefined) {
-        cscriptConnections[tabId].postMessage(msg);
+      if (cscriptConnections[tabId] === undefined) {
+        return;
       }
+
+      console.log("sending message to content script", msg);
+      cscriptConnections[tabId].postMessage(msg);
     });
   }
 };
 
 /** Message from client for devtools.js */
-const handleClientMessage = (tabId: number) => (data: any) => {
-  console.log("message from tabId", tabId);
+const handleClientMessage = (tabId: number) => (data: ContentScriptMessage) => {
+  console.log("message from content script on tabId", tabId);
+  console.log("message contents", data);
+
   if (devtoolsConnections[tabId] === undefined) {
+    console.warn(
+      "Unable to forward from content script - no devtools connection to tab"
+    );
     return;
   }
 

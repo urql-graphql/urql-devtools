@@ -3,16 +3,13 @@ import styled from "styled-components";
 import { Query } from "./Query";
 import { Background } from "../components/Background";
 import { Response } from "./Response";
-import { RequestProvider } from "./RequestContext";
 
 export const Request = () => {
   return (
-    <RequestProvider>
-      <Container>
-        <Query />
-        <Response />
-      </Container>
-    </RequestProvider>
+    <Container>
+      <Query />
+      <Response />
+    </Container>
   );
 };
 

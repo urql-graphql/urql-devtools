@@ -1,7 +1,7 @@
 import React, { FC, useContext, useCallback } from "react";
 import styled, { ThemeContext } from "styled-components";
 import { OperationEvent } from "../../types";
-import { OperationContext } from "./OperationContext";
+import { OperationContext } from "../context";
 
 /** Shows basic information about an operation. */
 export const OperationEventCard: FC<{ operation: OperationEvent }> = ({

@@ -2,11 +2,14 @@ import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { OperationEventCard } from "./OperationEventCard";
 import { OperationEventPanel } from "./OperationEventPanel";
-import { OperationContext } from "./OperationContext";
+import { OperationContext } from "../context";
 import { Background } from "../components/Background";
 
 export const Operations = () => {
+  console.log(useContext(OperationContext));
   const { operations } = useContext(OperationContext);
+
+  console.log(operations);
 
   return (
     <Container>
