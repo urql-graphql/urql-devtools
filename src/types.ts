@@ -1,6 +1,9 @@
 import { Operation, OperationResult } from "urql";
 
-export type OperationEvent = OutgoingOperation | IncomingResponse;
+export type OperationEvent =
+  | OutgoingOperation
+  | IncomingResponse
+  | IncomingError;
 
 export interface OutgoingOperation {
   type: "operation";
@@ -10,6 +13,12 @@ export interface OutgoingOperation {
 
 export interface IncomingResponse {
   type: "response";
+  data: OperationResult;
+  timestamp: number;
+}
+
+export interface IncomingError {
+  type: "error";
   data: OperationResult;
   timestamp: number;
 }

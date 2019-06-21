@@ -4,9 +4,7 @@ import { OperationEvent } from "../../types";
 import { OperationContext } from "../context";
 
 /** Shows basic information about an operation. */
-export const OperationEventCard: FC<{ operation: OperationEvent }> = ({
-  operation
-}) => {
+export const EventCard: FC<{ operation: OperationEvent }> = ({ operation }) => {
   const theme = useContext(ThemeContext);
   const {
     selectedOperation,
@@ -25,11 +23,14 @@ export const OperationEventCard: FC<{ operation: OperationEvent }> = ({
     teardown: theme.grey,
     mutation: theme.purple,
     query: theme.lightBlue,
-    response: theme.green
+    response: theme.green,
+    error: theme.red
   };
 
   const name =
-    operation.type === "operation" ? operation.data.operationName : "response";
+    operation.type === "operation"
+      ? operation.data.operationName
+      : operation.type;
   const date = formatDate(operation.timestamp);
   const info =
     operation.type === "operation"

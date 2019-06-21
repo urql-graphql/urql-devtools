@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const navItems = [
-  { link: "/operations", icon: faStream },
+  { link: "/events", icon: faStream },
   { link: "/request", icon: faGlobe }
 ];
 

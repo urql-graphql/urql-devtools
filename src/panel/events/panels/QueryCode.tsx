@@ -5,13 +5,13 @@ import "codemirror/mode/javascript/javascript";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import React, { FC } from "react";
 import { print } from "graphql";
-import { OperationEvent } from "../../types";
+import { OperationEvent } from "../../../types";
 
-interface QueryTabProps {
+interface QueryCodeProps {
   operation: OperationEvent;
 }
 
-export const QueryTab: FC<QueryTabProps> = ({ operation }) => {
+export const QueryCode: FC<QueryCodeProps> = ({ operation }) => {
   const doc =
     operation.type === "operation"
       ? operation.data.query

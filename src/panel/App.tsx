@@ -1,7 +1,7 @@
 import React from "react";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { Operations } from "./operations/Operations";
+import { Events } from "./events";
 import "./App.css";
 import { Navigation } from "./Navigation";
 import { Request } from "./request/Request";
@@ -19,6 +19,7 @@ const theme = {
   grey: "#3E3F3E",
   lightBlue: "#448BB4",
   orange: "orange",
+  red: "#b44444",
   breakpoints: {
     sm: {
       max: "399px",
@@ -37,7 +38,7 @@ export const App = () => {
       <ThemeProvider theme={theme}>
         <HashRouter>
           <OperationProvider>
-            <Route path="/operations" component={Operations} />
+            <Route path="/events" component={Events} />
           </OperationProvider>
           <RequestProvider>
             <Route path="/request" component={Request} />

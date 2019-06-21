@@ -1,24 +1,21 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { OperationEventCard } from "./OperationEventCard";
-import { OperationEventPanel } from "./OperationEventPanel";
+import { EventCard } from "./EventCard";
+import { Panel } from "./panels";
 import { OperationContext } from "../context";
 import { Background } from "../components/Background";
 
-export const Operations = () => {
-  console.log(useContext(OperationContext));
+export const Events = () => {
   const { operations } = useContext(OperationContext);
-
-  console.log(operations);
 
   return (
     <Container>
-      <OperationsList>
+      <EventsList>
         {operations.map((op: any, i: any) => (
-          <OperationEventCard key={i} operation={op} />
+          <EventCard key={i} operation={op} />
         ))}
-      </OperationsList>
-      <OperationEventPanel />
+      </EventsList>
+      <Panel />
     </Container>
   );
 };
@@ -37,7 +34,7 @@ const Container = styled(Background)`
   }
 `;
 
-const OperationsList = styled.div`
+const EventsList = styled.div`
   overflow: scroll;
   margin: 10px;
   display: flex;

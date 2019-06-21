@@ -7,11 +7,11 @@ import "codemirror/mode/javascript/javascript";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import React, { FC } from "react";
 
-interface JsonTabProps {
+interface JsonCodeProps {
   json: object;
 }
 
-export const JsonTab: FC<JsonTabProps> = ({ json }) => (
+export const JsonCode: FC<JsonCodeProps> = ({ json }) => (
   <CodeMirror
     options={{
       theme: "material",

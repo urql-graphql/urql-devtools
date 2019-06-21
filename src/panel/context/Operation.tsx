@@ -32,7 +32,11 @@ export const OperationProvider: FC = ({ children }) => {
   useEffect(() => {
     return addMessageHandler(msg => {
       console.log("message received in OperationProvider", msg);
-      if (msg.type === "operation" || msg.type === "response") {
+      if (
+        msg.type === "operation" ||
+        msg.type === "response" ||
+        msg.type === "error"
+      ) {
         setOperations(o => [...o, msg]);
       }
     });

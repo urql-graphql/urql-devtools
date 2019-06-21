@@ -51,11 +51,7 @@ export const devtoolsExchange: Exchange = ({ client, forward }) => {
 
 /** Handle operation or response from stream. */
 const handleOperation = <T extends Operation | OperationResult>(op: T) => {
-  const timestamp = new Date().valueOf();
-  const event =
-    op["operationName"] !== undefined
-      ? ({ type: "operation", data: op as Operation, timestamp } as const)
-      : ({ type: "response", data: op as OperationResult, timestamp } as const);
+  const event = JSON.parse(JSON.stringify(parseStreamData(op))); // Serialization required for some events (such as error)
 
   // Dispatch for panel
   sendToContentScript(event);
@@ -74,6 +70,23 @@ const handleMessage = (client: Client) => (message: DevtoolsMessage) => {
       toPromise
     );
   }
+};
+
+const parseStreamData = <T extends Operation | OperationResult>(op: T) => {
+  const timestamp = new Date().valueOf();
+
+  // Outgoing operation
+  if (op["operationName"] !== undefined) {
+    return { type: "operation", data: op as Operation, timestamp } as const;
+  }
+
+  // Incoming error
+  if ((op as OperationResult).error !== undefined) {
+    return { type: "error", data: op as OperationResult, timestamp } as const;
+  }
+
+  // Incoming response
+  return { type: "response", data: op as OperationResult, timestamp } as const;
 };
 
 const sendToContentScript = (oe: ContentScriptEvent) =>
