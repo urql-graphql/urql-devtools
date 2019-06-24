@@ -1,19 +1,30 @@
+const EventHooksPlugin = require("event-hooks-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { spawn } = require("child_process");
+
+let tsBuild;
+
+// Kill ts watch
+process.on("exit", () => {
+  if (tsBuild !== undefined && process.env.NODE_ENV !== "production") {
+    tsBuild.kill();
+  }
+});
 
 module.exports = {
+  devtool: "source-map",
   entry: {
     background: `${__dirname}/src/background/background.ts`,
     devtools: `${__dirname}/src/devtools/devtools.ts`,
     panel: `${__dirname}/src/panel/panel.tsx`,
     content_script: `${__dirname}/src/content_script.ts`
-    // exchange: `${__dirname}/src/exchange.ts`
   },
   resolve: {
     extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx"]
   },
-  mode: "development",
+  mode: process.env.NODE_ENV === "production" ? "production" : "development",
   output: {
     path: `${__dirname}/dist`
   },
@@ -31,13 +42,6 @@ module.exports = {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
       }
-      // {
-      //   test: /exchange\.ts$/,
-      //   loader: "shell-loader",
-      //   options: {
-      //     script: "tsc src/exchange.ts --outDir dist"
-      //   }
-      // }
     ]
   },
   plugins: [
@@ -71,6 +75,23 @@ module.exports = {
       template: `${__dirname}/src/panel/panel.html`,
       filename: "panel.html",
       chunks: ["panel"]
+    }),
+    new EventHooksPlugin({
+      compile: () => {
+        // Start tsc for exchange on first compile
+        if (tsBuild !== undefined) {
+          return;
+        }
+
+        const args = [
+          ...["src/exchange.ts", "--outDir", "dist"],
+          ...(process.env.NODE_ENV === "production" ? [] : ["--watch"])
+        ];
+        tsBuild = spawn("tsc", args);
+        tsBuild.stdout.on("data", d => console.log(d.toString()));
+        tsBuild.stderr.on("data", d => console.log(d.toString()));
+        tsBuild.on("exit", () => console.log("spawned process killed"));
+      }
     })
   ]
 };
