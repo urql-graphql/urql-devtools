@@ -7,7 +7,9 @@
     "build": "npm run build:devtools && npm run build:exchange",
     "build:devtools": "webpack",
     "build:exchange": "tsc src/exchange.ts --outDir dist",
-    "lint": "eslint --ext .ts,.tsx src"
+    "postinstall": "rm -r node_modules/@types/react-native",
+    "lint": "eslint --ext .ts,.tsx src",
+    "prettier-check": "prettier -c src/** README.md"
   },
   "author": "",
   "license": "ISC",
@@ -51,6 +53,8 @@
     "eslint-plugin-react": "^7.13.0",
     "graphql": "^14.3.1",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^2.4.1",
+    "lint-staged": "^8.2.1",
     "microbundle": "^0.11.0",
     "prettier": "^1.18.2",
     "shell-loader": "^1.1.2",
