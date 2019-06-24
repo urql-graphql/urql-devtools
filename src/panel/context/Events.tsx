@@ -35,7 +35,7 @@ export const OperationProvider: FC = ({ children }) => {
         msg.type === "response" ||
         msg.type === "error"
       ) {
-        setEvents(o => [...o, msg]);
+        setEvents(o => [msg, ...o]);
       }
     });
   }, []);

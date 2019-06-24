@@ -1,11 +1,17 @@
 import { UnControlled as CodeMirror } from "react-codemirror2";
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { RequestContext } from "../context";
 
 export const Response = () => {
+  const { fetching, response, error } = useContext(RequestContext);
+
+  const className =
+    error !== undefined ? "error" : response !== undefined ? "success" : "";
+
   return (
     <Container>
-      <Heading className="success">Response</Heading>
+      <Heading className={className}>Response</Heading>
       <CodeMirror
         options={{
           theme: "material",
@@ -13,7 +19,10 @@ export const Response = () => {
           readOnly: true,
           foldGutter: true
         }}
-        value={JSON.stringify({}, null, 2).replace(/\"([^(\")"]+)\":/g, "$1:")}
+        value={JSON.stringify(error || response || {}, null, 2).replace(
+          /\"([^(\")"]+)\":/g,
+          "$1:"
+        )}
       />
     </Container>
   );
@@ -32,7 +41,11 @@ const Heading = styled.h2`
   font-size: 12px;
   color: #fff;
 
-  .success {
+  &.success {
     background: ${props => props.theme.green};
+  }
+
+  &.error {
+    background: ${props => props.theme.red};
   }
 `;
