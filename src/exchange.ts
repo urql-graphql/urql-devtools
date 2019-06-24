@@ -8,15 +8,6 @@ import {
 } from "urql";
 import { UrqlEvent, DevtoolsMessage } from "./types";
 
-declare global {
-  interface Window {
-    __urql__: {
-      client: Client;
-      events: UrqlEvent[];
-    };
-  }
-}
-
 export const devtoolsExchange: Exchange = ({ client, forward }) => {
   if (process.env.NODE_ENV === "production") {
     return ops$ =>
@@ -76,7 +67,7 @@ const parseStreamData = <T extends Operation | OperationResult>(op: T) => {
   const timestamp = new Date().valueOf();
 
   // Outgoing operation
-  if (op["operationName"] !== undefined) {
+  if ("operationName" in op) {
     return { type: "operation", data: op as Operation, timestamp } as const;
   }
 

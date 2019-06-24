@@ -1,14 +1,4 @@
-import { Client } from "urql";
-import { DevtoolsMessage, UrqlEvent } from "./types";
-
-declare global {
-  interface Window {
-    __urql__: {
-      client: Client;
-      operations: UrqlEvent[];
-    };
-  }
-}
+import { DevtoolsMessage } from "./types";
 
 /** Connection to background.js */
 let connection: chrome.runtime.Port;
@@ -30,7 +20,7 @@ window.addEventListener("urql-out", e => {
   }
 });
 
-const handleMessage = (message: DevtoolsMessage, port: chrome.runtime.Port) => {
+const handleMessage = (message: DevtoolsMessage) => {
   console.log("message", message);
   window.dispatchEvent(new CustomEvent("urql-in", { detail: message }));
 };

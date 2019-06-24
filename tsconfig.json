@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "target": "esnext" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */,
-    "module": "esnext",
+    "target": "es2015",
+    "module": "commonjs",
     "lib": ["dom"],
     "jsx": "react",
-    "outDir": "dist",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/exchanges/**.ts*"],
-  "exclude": ["node_modules"]
+  "include": ["src/globals.d.ts", "src/exchange.ts"]
 }
