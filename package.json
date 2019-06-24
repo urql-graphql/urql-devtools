@@ -7,8 +7,9 @@
     "build": "npm run build:devtools && npm run build:exchange",
     "build:devtools": "webpack",
     "build:exchange": "tsc src/exchange.ts --outDir dist",
+    "postinstall": "rm -r node_modules/@types/react-native",
     "lint": "eslint --ext .ts,.tsx src",
-    "postinstall": "rm -r node_modules/@types/react-native"
+    "prettier-check": "prettier -c src/** README.md"
   },
   "author": "",
   "license": "ISC",
