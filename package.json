@@ -6,8 +6,6 @@
   "scripts": {
     "start": "webpack --watch",
     "build": "NODE_ENV=\"production\" webpack",
-    "build:devtools": "webpack",
-    "build:exchange": "tsc src/exchange.ts --outDir dist",
     "postinstall": "rm -r node_modules/@types/react-native",
     "lint": "eslint --ext .ts,.tsx src",
     "prettier-check": "prettier -c src/** README.md"
