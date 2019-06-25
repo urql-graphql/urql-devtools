@@ -14,6 +14,7 @@ interface JsonCodeProps {
 export const JsonCode: FC<JsonCodeProps> = ({ json }) => (
   <CodeMirror
     options={{
+      mode: "javascript",
       theme: "material",
       lineNumbers: true,
       readOnly: true,

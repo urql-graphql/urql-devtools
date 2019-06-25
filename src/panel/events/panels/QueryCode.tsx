@@ -1,7 +1,7 @@
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/lib/codemirror.js";
-import "codemirror/mode/javascript/javascript";
+import "codemirror-graphql/mode";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import React, { FC } from "react";
 import { print } from "graphql";
@@ -20,6 +20,7 @@ export const QueryCode: FC<QueryCodeProps> = ({ operation }) => {
   return (
     <CodeMirror
       options={{
+        mode: "graphql",
         theme: "material",
         lineNumbers: true,
         readOnly: true,

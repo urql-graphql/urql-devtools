@@ -8,5 +8,5 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/globals.d.ts", "src/exchange.ts"]
+  "include": ["src/**/*.ts"]
 }

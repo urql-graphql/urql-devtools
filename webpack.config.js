@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { spawn } = require("child_process");
+const webpack = require("webpack");
 
 let tsBuild;
 
@@ -33,10 +34,7 @@ module.exports = {
       {
         test: /\.*tsx?$/,
         exclude: /(exchange\.ts|node_modules)/,
-        loader: "awesome-typescript-loader",
-        options: {
-          configFileName: "tsconfig.devtools.json"
-        }
+        loader: "awesome-typescript-loader"
       },
       {
         test: /\.css$/,
@@ -45,13 +43,17 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.ContextReplacementPlugin(
+      /graphql-language-service-interface[\/\\]dist/,
+      /\.js$/
+    ),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ["**/*", "!exchange.js"]
     }),
     new CopyWebpackPlugin([
       {
         from: "src/manifest.json",
-        transform: function(content, path) {
+        transform: function(content) {
           return Buffer.from(
             JSON.stringify(
               {
@@ -84,7 +86,7 @@ module.exports = {
         }
 
         const args = [
-          ...["src/exchange.ts", "--outDir", "dist"],
+          ...["--project", "tsconfig.exchange.json", "--outDir", "dist"],
           ...(process.env.NODE_ENV === "production" ? [] : ["--watch"])
         ];
         tsBuild = spawn("tsc", args);
