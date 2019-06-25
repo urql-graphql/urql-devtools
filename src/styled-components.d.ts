@@ -1,4 +1,4 @@
-import styled, { ThemedStyledInterface } from "styled-components"; //  eslint-disable-line
+import styled, { DefaultTheme } from "styled-components"; //  eslint-disable-line
 
 declare module "styled-components" {
   interface Breakpoint {
@@ -20,7 +20,4 @@ declare module "styled-components" {
       md: Breakpoint;
     };
   }
-
-  // @ts-ignore
-  export type StyledInterface = ThemedStyledInterface<DefaultTheme>;
 }

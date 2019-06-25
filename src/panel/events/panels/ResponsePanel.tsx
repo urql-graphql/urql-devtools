@@ -1,7 +1,7 @@
 import React, { useState, useMemo, FC } from "react";
 import { IncomingResponse } from "../../../types";
-import { JsonCode } from "./JsonCode";
 import { Tabs } from "../../components/Tabs";
+import { JsonCode } from "./JsonCode";
 
 export const ResponsePanel: FC<{ event: IncomingResponse }> = ({ event }) => {
   const [activeTab, setActiveTab] = useState<tabs>("response");

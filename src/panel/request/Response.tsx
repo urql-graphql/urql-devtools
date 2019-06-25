@@ -1,10 +1,16 @@
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/material.css";
+import "codemirror/lib/codemirror.js";
+import "codemirror/addon/fold/foldcode";
+import "codemirror/addon/fold/brace-fold";
+import "codemirror/mode/javascript/javascript";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { RequestContext } from "../context";
 
 export const Response = () => {
-  const { fetching, response, error } = useContext(RequestContext);
+  const { response, error } = useContext(RequestContext);
 
   const className =
     error !== undefined ? "error" : response !== undefined ? "success" : "";
@@ -14,6 +20,7 @@ export const Response = () => {
       <Heading className={className}>Response</Heading>
       <CodeMirror
         options={{
+          mode: "javascript",
           theme: "material",
           lineNumbers: true,
           readOnly: true,

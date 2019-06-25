@@ -1,37 +1,80 @@
-import { Controlled as CodeMirror } from "react-codemirror2";
-import React, { useContext, useCallback } from "react";
+import "codemirror/lib/codemirror";
+import "codemirror/addon/hint/show-hint";
+import "codemirror/addon/edit/closebrackets";
+import "codemirror/addon/edit/matchbrackets";
+import "codemirror/addon/hint/show-hint.css";
+import "codemirror/addon/lint/lint";
+import "codemirror/addon/lint/lint.css";
+import "codemirror-graphql/lint";
+import "codemirror-graphql/hint";
+import "codemirror-graphql/mode";
+import CodeMirror from "codemirror";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { RequestContext } from "../context";
 
+type CodemirrorEventHandler<T extends Event = Event> = (
+  ed: CodeMirror.Editor,
+  ev: T
+) => void;
+
+/** Query editor
+ * Inspired by Graphiql's query editor - https://github.com/graphql/graphiql/blob/master/packages/graphiql/src/components/QueryEditor.js
+ */
 export const Query = () => {
-  const { query, setQuery, execute } = useContext(RequestContext);
-  const handleTextChange = (a: any, b: any, value: string) => setQuery(value);
+  const [codemirror, setCodeMirror] = useState<CodeMirror.Editor | undefined>();
+  const { query, setQuery, execute, schema } = useContext(RequestContext);
 
-  console.log(query);
+  useEffect(() => {
+    if (codemirror === undefined) {
+      return;
+    }
 
-  const handleKeyDown = useCallback(
-    (k: CodeMirror.Editor, e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.code === "Enter") {
-        console.log("query is", query);
-        execute();
-      }
-    },
-    [execute, query]
-  );
+    codemirror.setOption("extraKeys", {
+      ...codemirror.getOption("extraKeys"),
+      "Ctrl-Enter": execute,
+      "Cmd-Enter": execute
+    });
+  }, [codemirror, execute]);
+
+  // Update on schema change
+  useEffect(() => {
+    if (codemirror === undefined || schema === undefined) {
+      return;
+    }
+
+    codemirror.setOption("lint", { schema });
+    codemirror.setOption("hintOptions", { schema });
+    codemirror.setOption("extraKeys", {
+      // @ts-ignore
+      "Ctrl-Space": () => codemirror.showHint({ completeSingle: true })
+    });
+  }, [codemirror, schema]);
+
+  const handleRef = (ref: HTMLTextAreaElement) => {
+    if (ref === null || codemirror !== undefined) {
+      return;
+    }
+
+    const editor = CodeMirror.fromTextArea(ref, {
+      value: query || "",
+      mode: "graphql",
+      theme: "material",
+      tabSize: 2,
+      lineNumbers: true,
+      autoCloseBrackets: "{}[]\"\"''",
+      matchBrackets: true
+    });
+
+    editor.on("change", () => setQuery(editor.getValue()));
+
+    setCodeMirror(editor);
+  };
 
   return (
     <Container>
       <Heading>Query</Heading>
-      <CodeMirror
-        options={{
-          theme: "material",
-          lineNumbers: true,
-          foldGutter: true
-        }}
-        value={query}
-        onBeforeChange={handleTextChange}
-        onKeyDown={handleKeyDown}
-      />
+      <textarea ref={handleRef} value={query} />
     </Container>
   );
 };

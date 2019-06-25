@@ -7,3 +7,17 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.CodeMirror {
+  font-size: 12px;
+}
+
+.CodeMirror-hints.material {
+  font-size: 12px;
+  background: #222;
+  border: none;
+}
+
+.CodeMirror-hints .CodeMirror-hint {
+  color: #eee;
+}

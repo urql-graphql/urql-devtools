@@ -1,8 +1,8 @@
 import React, { useState, useMemo, FC } from "react";
 import { OutgoingOperation } from "../../../types";
+import { Tabs } from "../../components/Tabs";
 import { QueryCode } from "./QueryCode";
 import { JsonCode } from "./JsonCode";
-import { Tabs } from "../../components/Tabs";
 
 export const OperationPanel: FC<{ event: OutgoingOperation }> = ({ event }) => {
   const [activeTab, setActiveTab] = useState<tabs>("query");
