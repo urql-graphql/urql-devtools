@@ -13,7 +13,7 @@ import { HttpLink } from "apollo-link-http";
 import { DevtoolsContext } from ".";
 
 interface RequestContextValue {
-  query: string;
+  query?: string;
   setQuery: (s: string) => void;
   fetching: boolean;
   response?: object;
@@ -27,17 +27,16 @@ export const RequestContext = createContext<RequestContextValue>(null as any);
 export const RequestProvider: FC = ({ children }) => {
   const { sendMessage, addMessageHandler } = useContext(DevtoolsContext);
   const [fetching, setFetching] = useState(false);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>();
   const [response, setResponse] = useState<object | undefined>();
   const [error, setError] = useState<object | undefined>();
   const [schema, setSchema] = useState<GraphQLSchema>();
 
   const execute = useCallback(() => {
-    console.log("query", query);
     setFetching(true);
     setResponse(undefined);
     setError(undefined);
-    sendMessage({ type: "request", query });
+    sendMessage({ type: "request", query: query || "" });
   }, [query, sendMessage]);
 
   // Listen for response for devtools

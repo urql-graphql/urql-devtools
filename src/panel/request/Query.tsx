@@ -57,7 +57,6 @@ export const Query = () => {
     }
 
     const editor = CodeMirror.fromTextArea(ref, {
-      value: query || "",
       mode: "graphql",
       theme: "material",
       tabSize: 2,
@@ -74,7 +73,13 @@ export const Query = () => {
   return (
     <Container>
       <Heading>Query</Heading>
-      <textarea ref={handleRef} value={query} />
+      <textarea
+        ref={handleRef}
+        value={
+          query ||
+          "# Type your query here then hit 'Ctrl+Enter' to execute it.\n"
+        }
+      />
     </Container>
   );
 };
