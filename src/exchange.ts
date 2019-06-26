@@ -48,7 +48,7 @@ const handleOperation = <T extends Operation | OperationResult>(op: T) => {
   sendToContentScript(event);
 
   // Add to window cache
-  window.__urql__.events = [...window.__urql__.events, event];
+  window.__urql__.events = [event, ...window.__urql__.events];
 };
 
 const handleMessage = (client: Client) => (message: DevtoolsMessage) => {
