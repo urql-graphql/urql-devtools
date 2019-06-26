@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { EventsContext } from "../../context";
 import { OperationPanel } from "./OperationPanel";
 import { ResponsePanel } from "./ResponsePanel";
+import { ErrorPanel } from "./ErrorPanel";
 
 /** Pane shows additional information about a selected operation event. */
 export const Panel: FC = () => {
@@ -19,6 +20,9 @@ export const Panel: FC = () => {
 
       case "response":
         return <ResponsePanel event={selectedOperation} />;
+
+      case "error":
+        return <ErrorPanel event={selectedOperation} />;
     }
   };
 
