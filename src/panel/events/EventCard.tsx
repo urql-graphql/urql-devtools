@@ -4,7 +4,10 @@ import { UrqlEvent } from "../../types";
 import { EventsContext } from "../context";
 
 /** Shows basic information about an operation. */
-export const EventCard: FC<{ operation: UrqlEvent }> = ({ operation }) => {
+export const EventCard: FC<{ operation: UrqlEvent; active: boolean }> = ({
+  operation,
+  active = false
+}) => {
   const theme = useContext(ThemeContext);
   const { selectedEvent, selectEvent, clearSelectedEvent } = useContext(
     EventsContext
@@ -38,7 +41,7 @@ export const EventCard: FC<{ operation: UrqlEvent }> = ({ operation }) => {
       : operation.data.operation.key;
 
   return (
-    <Container onClick={handleContainerClick}>
+    <Container onClick={handleContainerClick} aria-selected={active}>
       <Indicator style={{ backgroundColor: colors[name] }} />
       <OperationName>{capitalize(name)}</OperationName>
       <OperationTime>{date}</OperationTime>
@@ -144,13 +147,17 @@ const Container = styled.div`
   flex-direction: row;
   padding: 10px 15px;
 
+  &:nth-child(2n):not(:hover) {
+    background-color: ${props => props.theme.dark["-1"]};
+  }
+
   &:hover {
     cursor: pointer;
     background-color: ${props => props.theme.dark["-2"]};
   }
 
-  &:nth-child(2n):not(:hover) {
-    background-color: ${props => props.theme.dark["-1"]};
+  &[aria-selected="true"]:not(:hover) {
+    background-color: ${props => props.theme.dark["-3"]};
   }
 
   @media (max-width: ${smMax}) {

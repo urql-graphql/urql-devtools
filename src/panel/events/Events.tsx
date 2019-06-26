@@ -6,13 +6,13 @@ import { EventCard } from "./EventCard";
 import { Panel } from "./panels";
 
 export const Events = () => {
-  const { events } = useContext(EventsContext);
+  const { events, selectedEvent } = useContext(EventsContext);
 
   return (
     <Container>
       <EventsList>
         {events.map((op: any, i: any) => (
-          <EventCard key={i} operation={op} />
+          <EventCard key={i} operation={op} active={op === selectedEvent} />
         ))}
       </EventsList>
       <Panel />
