@@ -36,10 +36,14 @@ export const Response = () => {
 };
 
 const Container = styled.div`
-  margin: 10px;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
+
+  .cm-s-material,
+  .CodeMirror-gutters {
+    background: ${props => props.theme.dark["-2"]} !important;
+  }
 `;
 
 const Heading = styled.h2`
@@ -47,12 +51,13 @@ const Heading = styled.h2`
   padding: 10px;
   font-size: 12px;
   color: #fff;
+  background: ${props => props.theme.dark["-2"]} !important;
 
   &.success {
-    background: ${props => props.theme.green};
+    background: ${props => props.theme.green["0"]};
   }
 
   &.error {
-    background: ${props => props.theme.red};
+    background: ${props => props.theme.red["0"]};
   }
 `;

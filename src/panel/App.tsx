@@ -12,23 +12,30 @@ import {
 } from "./context";
 
 const theme = {
-  bg: "#121212",
-  cardBg: "#1e1e1e",
-  purple: "#8F629F",
-  green: "#649F62",
-  grey: "#3E3F3E",
-  lightBlue: "#448BB4",
-  orange: "orange",
-  red: "#b44444",
-  breakpoints: {
-    sm: {
-      max: "399px",
-      min: "0px"
-    },
-    md: {
-      max: "700px",
-      min: "400px"
-    }
+  grey: {
+    "0": "#AAADB1"
+  },
+  dark: {
+    "-3": "#0F151E",
+    "-2": "#151D29",
+    "-1": "#1C2535",
+    "0": "#212D40",
+    "+1": "#495362"
+  },
+  blue: {
+    "0": "#00A1FF"
+  },
+  green: {
+    "0": "#2DAF7E"
+  },
+  red: {
+    "0": "#EE6352"
+  },
+  orange: {
+    "0": "#EB9028"
+  },
+  purple: {
+    "0": "#7469F4"
   }
 };
 

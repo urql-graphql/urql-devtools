@@ -53,11 +53,13 @@ const handleOperation = <T extends Operation | OperationResult>(op: T) => {
 
 const handleMessage = (client: Client) => (message: DevtoolsMessage) => {
   if (message.type === "request") {
-    const stream = client.executeQuery(createRequest(message.query), {
-      devtools: { source: "Devtools" }
-    });
+    const isMutation = /^mutation .*/.test(message.query);
+    const execFn = isMutation ? client.executeMutation : client.executeQuery;
+
     pipe(
-      stream,
+      execFn(createRequest(message.query), {
+        devtools: { source: "Devtools" }
+      }),
       toPromise
     );
   }

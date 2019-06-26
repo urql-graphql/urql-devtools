@@ -4,6 +4,7 @@ import "codemirror/lib/codemirror.js";
 import "codemirror-graphql/mode";
 import { UnControlled as CodeMirror } from "react-codemirror2";
 import React, { FC } from "react";
+import styled from "styled-components";
 import { print } from "graphql";
 import { UrqlEvent } from "../../../types";
 
@@ -18,7 +19,7 @@ export const QueryCode: FC<QueryCodeProps> = ({ operation }) => {
       : operation.data.operation.query;
 
   return (
-    <CodeMirror
+    <StyledCodeMirror
       options={{
         mode: "graphql",
         theme: "material",
@@ -30,3 +31,10 @@ export const QueryCode: FC<QueryCodeProps> = ({ operation }) => {
     />
   );
 };
+
+const StyledCodeMirror = styled(CodeMirror)`
+  .cm-s-material,
+  .CodeMirror-gutters {
+    background: ${props => props.theme.dark["-2"]} !important;
+  }
+`;

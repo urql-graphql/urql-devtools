@@ -27,7 +27,6 @@ const Container = styled(Background)`
     }
 
     & > *:nth-child(2) {
-      margin: 10px;
       height: unset;
       max-height: unset;
     }
@@ -36,7 +35,6 @@ const Container = styled(Background)`
 
 const EventsList = styled.div`
   overflow: scroll;
-  margin: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

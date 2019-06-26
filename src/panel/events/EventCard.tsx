@@ -15,12 +15,12 @@ export const EventCard: FC<{ operation: UrqlEvent }> = ({ operation }) => {
   }, [operation, selectedEvent, selectEvent]);
 
   const colors = {
-    subscription: theme.orange,
-    teardown: theme.grey,
-    mutation: theme.purple,
-    query: theme.lightBlue,
-    response: theme.green,
-    error: theme.red
+    subscription: theme.orange[0],
+    teardown: theme.grey[0],
+    mutation: theme.purple[0],
+    query: theme.blue[0],
+    response: theme.green[0],
+    error: theme.red[0]
   };
 
   const name =
@@ -59,17 +59,21 @@ const formatDate = (date: number) => {
 
 const capitalize = (s: string) => `${s.charAt(0).toUpperCase()}${s.slice(1)}`;
 
+// Breakpoints
+const smMax = "399px";
+const mdMin = "400px";
+
 const OperationName = styled.h3`
   color: rgba(255, 255, 255, 0.9);
   font-size: 15px;
   margin: 0;
   width: 50%;
 
-  @media (max-width: ${props => props.theme.breakpoints.sm.max}) {
+  @media (max-width: ${smMax}) {
     margin-bottom: 10px;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.md.min}) {
+  @media (min-width: ${mdMin}) {
     color: rgba(255, 255, 255, 0.8);
     order: 1;
     font-size: 13px;
@@ -86,7 +90,7 @@ const OperationTime = styled.p`
   width: 50%;
   text-align: right;
 
-  @media (min-width: ${props => props.theme.breakpoints.md.min}) {
+  @media (min-width: ${mdMin}) {
     order: 4;
     font-size: 13px;
     width: 20%;
@@ -98,7 +102,7 @@ const OperationAddInfo = styled.p`
   margin: 0;
   width: 50%;
 
-  @media (min-width: ${props => props.theme.breakpoints.md.min}) {
+  @media (min-width: ${mdMin}) {
     color: rgba(255, 255, 255, 0.8);
     order: 2;
     font-size: 13px;
@@ -109,13 +113,13 @@ const OperationAddInfo = styled.p`
 const OperationKey = styled.p`
   margin: 0;
 
-  @media (max-width: ${props => props.theme.breakpoints.sm.max}) {
+  @media (max-width: ${smMax}) {
     color: rgba(255, 255, 255, 0.7);
     width: 50%;
     text-align: right;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.md.min}) {
+  @media (min-width: ${mdMin}) {
     color: rgba(255, 255, 255, 0.8);
     order: 3;
     font-size: 13px;
@@ -133,20 +137,28 @@ const Indicator = styled.div`
 
 const Container = styled.div`
   position: relative;
-  background-color: ${props => props.theme.cardBg};
+  background-color: ${props => props.theme.dark[0]};
   width: auto;
   height: auto;
   display: flex;
   flex-direction: row;
   padding: 10px 15px;
-  margin: 10px 0;
 
-  @media (max-width: ${props => props.theme.breakpoints.sm.max}) {
+  &:hover {
+    cursor: pointer;
+    background-color: ${props => props.theme.dark["-2"]};
+  }
+
+  &:nth-child(2n):not(:hover) {
+    background-color: ${props => props.theme.dark["-1"]};
+  }
+
+  @media (max-width: ${smMax}) {
     flex-wrap: wrap;
     align-items: baseline;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.md.min}) {
+  @media (min-width: ${mdMin}) {
     align-items: center;
     justify-content: space-between;
   }

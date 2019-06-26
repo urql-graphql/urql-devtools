@@ -28,7 +28,7 @@ export const Panel: FC = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background: ${props => props.theme.cardBg};
+  background: ${props => props.theme.dark["-2"]};
   width: 100%;
   height: 400px;
   max-height: 400px;

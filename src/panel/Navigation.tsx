@@ -1,19 +1,17 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStream, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const navItems = [
-  { link: "/events", icon: faStream },
-  { link: "/request", icon: faGlobe }
+  { link: "/events", label: "Events" },
+  { link: "/request", label: "Request" }
 ];
 
 export const Navigation = () => (
   <Container>
     {navItems.map((item, index) => (
       <NavLink key={index} to={item.link}>
-        <FontAwesomeIcon icon={item.icon} />
+        {item.label}
       </NavLink>
     ))}
   </Container>
@@ -23,36 +21,29 @@ const Container = styled.div`
   position: fixed;
   display: flex;
   align-items: center;
-  background-color: ${props => props.theme.cardBg};
-  height: 50px;
-  bottom: 0;
+  background-color: ${props => props.theme.dark["-1"]};
+  height: 35px;
+  top: 0;
   left: 0;
   right: 0;
 
   a {
-    color: #fff;
-    font-size: 20px;
-    margin: 0 30px;
-    opacity: 0.6;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 0 20px;
 
     &.active {
-      opacity: 0.9;
+      color: rgba(255, 255, 255, 0.9);
+      background-color: ${props => props.theme.dark["0"]};
     }
 
     &:hover:not(.active) {
       opacity: 0.8;
-    }
-  }
-
-  @media (min-aspect-ratio: 1/1) {
-    flex-direction: column;
-    top: 0;
-    right: unset;
-    width: 40px;
-    height: auto;
-
-    a {
-      margin: 20px 0;
     }
   }
 `;

@@ -80,10 +80,14 @@ export const Query = () => {
 };
 
 const Container = styled.div`
-  margin: 10px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+
+  .cm-s-material,
+  .CodeMirror-gutters {
+    background: ${props => props.theme.dark["0"]} !important;
+  }
 `;
 
 const Heading = styled.h2`
@@ -91,4 +95,5 @@ const Heading = styled.h2`
   padding: 10px;
   font-size: 12px;
   color: #fff;
+  background: ${props => props.theme.dark["0"]} !important;
 `;
