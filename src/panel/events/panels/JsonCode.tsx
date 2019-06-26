@@ -9,7 +9,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 
 interface JsonCodeProps {
-  json: object;
+  json: object | string;
 }
 
 export const JsonCode: FC<JsonCodeProps> = ({ json }) => (
