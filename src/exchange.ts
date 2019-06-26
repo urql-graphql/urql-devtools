@@ -53,7 +53,7 @@ const handleOperation = <T extends Operation | OperationResult>(op: T) => {
 
 const handleMessage = (client: Client) => (message: DevtoolsMessage) => {
   if (message.type === "request") {
-    const isMutation = /^mutation .*/.test(message.query);
+    const isMutation = /(^|\W)+mutation\W/.test(message.query);
     const execFn = isMutation ? client.executeMutation : client.executeQuery;
 
     pipe(
