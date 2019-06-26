@@ -12,7 +12,5 @@ export const Background = styled.div`
 
   @media (min-aspect-ratio: 1/1) {
     flex-direction: row;
-    left: 40px;
-    bottom: 0;
   }
 `;

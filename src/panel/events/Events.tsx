@@ -27,7 +27,6 @@ const Container = styled(Background)`
     }
 
     & > *:nth-child(2) {
-      margin: 10px;
       height: unset;
       max-height: unset;
     }

@@ -46,16 +46,4 @@ const Container = styled.div`
       opacity: 0.8;
     }
   }
-
-  @media (min-aspect-ratio: 1/1) {
-    flex-direction: column;
-    top: 0;
-    right: unset;
-    width: 40px;
-    height: auto;
-
-    a {
-      margin: 20px 0;
-    }
-  }
 `;
