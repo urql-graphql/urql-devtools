@@ -1,7 +1,8 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap");
 
 body {
-  font-family: "Roboto Mono", monospace;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
 }
 
 ::-webkit-scrollbar {
