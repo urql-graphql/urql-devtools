@@ -43,6 +43,7 @@ export const RequestProvider: FC = ({ children }) => {
   useEffect(() => {
     return addMessageHandler(e => {
       if (
+        !fetching ||
         e.type === "operation" ||
         e.data.operation.context.devtools.source !== "Devtools"
       ) {
@@ -57,7 +58,7 @@ export const RequestProvider: FC = ({ children }) => {
 
       setFetching(false);
     });
-  }, [addMessageHandler]);
+  }, [fetching, addMessageHandler]);
 
   // Get schema
   useEffect(() => {
