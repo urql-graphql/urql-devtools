@@ -1,5 +1,6 @@
 import React, { FC, useContext } from "react";
 import styled from "styled-components";
+import { IncomingError, IncomingResponse } from "../../../types";
 import { EventsContext } from "../../context";
 import { OperationPanel } from "./OperationPanel";
 import { ResponsePanel } from "./ResponsePanel";
@@ -7,22 +8,41 @@ import { ErrorPanel } from "./ErrorPanel";
 
 /** Pane shows additional information about a selected operation event. */
 export const Panel: FC = () => {
-  const { selectedEvent: selectedOperation } = useContext(EventsContext);
+  const { selectedEvent, events } = useContext(EventsContext);
 
-  if (selectedOperation === undefined) {
+  if (selectedEvent === undefined) {
     return null;
   }
 
   const content = () => {
-    switch (selectedOperation.type) {
+    switch (selectedEvent.type) {
       case "operation":
-        return <OperationPanel event={selectedOperation} />;
+        const responseState = events
+          // Only events after the request
+          .filter(
+            e => e.type !== "operation" && e.timestamp > selectedEvent.timestamp
+          )
+          // First response for mutation, latest response for query
+          .sort((a, b) =>
+            selectedEvent.data.operationName === "mutation"
+              ? a.timestamp - b.timestamp
+              : b.timestamp - a.timestamp
+          )
+          .find(
+            e =>
+              (e as IncomingError | IncomingResponse).data.operation.key ===
+              selectedEvent.data.key
+          ) as IncomingError | IncomingResponse | undefined;
+
+        return (
+          <OperationPanel event={selectedEvent} response={responseState} />
+        );
 
       case "response":
-        return <ResponsePanel event={selectedOperation} />;
+        return <ResponsePanel event={selectedEvent} />;
 
       case "error":
-        return <ErrorPanel event={selectedOperation} />;
+        return <ErrorPanel event={selectedEvent} />;
     }
   };
 

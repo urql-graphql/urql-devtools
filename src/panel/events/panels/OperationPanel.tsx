@@ -1,19 +1,54 @@
 import React, { useState, useMemo, FC } from "react";
-import { OutgoingOperation } from "../../../types";
+import {
+  OutgoingOperation,
+  IncomingError,
+  IncomingResponse
+} from "../../../types";
 import { Tabs } from "../../components/Tabs";
 import { QueryCode } from "./QueryCode";
 import { JsonCode } from "./JsonCode";
 
-export const OperationPanel: FC<{ event: OutgoingOperation }> = ({ event }) => {
-  const [activeTab, setActiveTab] = useState<tabs>("query");
+export const OperationPanel: FC<{
+  event: OutgoingOperation;
+  response?: IncomingError | IncomingResponse;
+}> = ({ event, response }) => {
+  const tabOptions = [
+    { label: "Query", value: "query" },
+    { label: "Variables", value: "variables" },
+    event.data.operationName === "mutation"
+      ? { label: "Response", value: "response" }
+      : { label: "State", value: "state" },
+    { label: "Meta", value: "meta" }
+  ] as const;
+
+  const [activeTab, setActiveTab] = useState<
+    typeof tabOptions[number]["value"]
+  >("query");
+
+  // Resets tab to query if activeTab is non-existent (on operationName change)
+  const visibleTab = useMemo(
+    () =>
+      tabOptions.find(o => o.value === activeTab) === undefined
+        ? "query"
+        : activeTab,
+    [activeTab, tabOptions]
+  );
 
   const content = useMemo(() => {
-    switch (activeTab) {
+    switch (visibleTab) {
       case "query":
         return <QueryCode operation={event} />;
 
       case "variables":
         return <JsonCode json={event.data.variables || {}} />;
+
+      case "state":
+      case "response":
+        const data =
+          response === undefined
+            ? "Fetching"
+            : { data: response.data.data, error: response.data.error };
+        return <JsonCode json={data} />;
 
       case "meta":
         return (
@@ -27,20 +62,12 @@ export const OperationPanel: FC<{ event: OutgoingOperation }> = ({ event }) => {
           />
         );
     }
-  }, [activeTab, event]);
+  }, [visibleTab, event, response]);
 
   return (
     <>
-      <Tabs active={activeTab} options={tabOptions} setActive={setActiveTab} />
+      <Tabs active={visibleTab} options={tabOptions} setActive={setActiveTab} />
       {content}
     </>
   );
 };
-
-const tabOptions = [
-  { label: "Query", value: "query" },
-  { label: "Variables", value: "variables" },
-  { label: "Meta", value: "meta" }
-] as const;
-
-type tabs = typeof tabOptions[number]["value"];
