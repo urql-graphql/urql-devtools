@@ -1,52 +1,17 @@
-import React, {
-  useContext,
-  useReducer,
-  Reducer,
-  useEffect,
-  useState
-} from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { useTransition, animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { UrqlEvent } from "../../types";
-import { EventsContext } from "../context";
+import { EventsContext, FilterContext, FilterType } from "../context";
 import { Background } from "../components/Background";
 import { Panel } from "./panels";
 import { EventCard } from "./EventCard";
 
-enum FilterType {
-  Name = "name",
-  Key = "key",
-  Info = "info"
-}
 interface Filter {
   value: string;
   propName: FilterType;
   propGetter: (e: UrqlEvent) => string | number;
-}
-
-enum FilterActionType {
-  Add = "add",
-  Remove = "remove"
-}
-
-interface FilterState {
-  filters: Filter[];
-  filteredEvents: UrqlEvent[];
-}
-
-interface FilterAction {
-  type: FilterActionType;
-  payload: {
-    filter: Filter;
-  };
-}
-
-function initialState(initialEvents: UrqlEvent[]): FilterState {
-  return {
-    filters: [],
-    filteredEvents: initialEvents
-  };
 }
 
 function filterEvents(events: UrqlEvent[], filters: Filter[]) {
@@ -55,54 +20,14 @@ function filterEvents(events: UrqlEvent[], filters: Filter[]) {
   });
 }
 
-function filterFilters(filters: Filter[], incomingFilter: Filter) {
-  return filters.filter(
-    f =>
-      f.value !== incomingFilter.value && f.propName !== incomingFilter.propName
-  );
-}
-
 export const Events = () => {
   const { events, selectedEvent } = useContext(EventsContext);
+  const { filters, removeFilter } = useContext(FilterContext);
+  const [filteredEvents, setFilteredEvents] = useState(events);
 
-  const reducer: Reducer<FilterState, FilterAction> = (state, action) => {
-    switch (action.type) {
-      case FilterActionType.Add: {
-        const newFilter = action.payload.filter;
-        const newFilters = [
-          action.payload.filter,
-          ...filterFilters(state.filters, newFilter)
-        ];
-
-        return {
-          filteredEvents: filterEvents(events, newFilters),
-          filters: newFilters
-        };
-      }
-
-      case FilterActionType.Remove: {
-        const oldFilter = action.payload.filter;
-        const newFilters = filterFilters(state.filters, oldFilter);
-
-        const newEvents = newFilters.length
-          ? filterEvents(events, newFilters)
-          : events;
-
-        return {
-          filteredEvents: newEvents,
-          filters: newFilters
-        };
-      }
-      default: {
-        return state;
-      }
-    }
-  };
-
-  const [state, dispatch] = useReducer<Reducer<FilterState, FilterAction>>(
-    reducer,
-    initialState(events)
-  );
+  useEffect(() => {
+    setFilteredEvents(filterEvents(events, filters));
+  }, [filters]);
 
   const [pressed, setPressed] = useState(false);
 
@@ -122,8 +47,6 @@ export const Events = () => {
     };
   }, []);
 
-  const { filters, filteredEvents } = state;
-
   const transitionFilters = useTransition(filters, filter => filter.value, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -133,28 +56,36 @@ export const Events = () => {
   return (
     <Container>
       <FiltersContainer>
-        {transitionFilters.map(({ item, key, props }) => (
-          <FilterButton
-            key={key}
-            style={props}
-            buttonType={item.propName}
-            onClick={() =>
-              dispatch({
-                type: FilterActionType.Remove,
-                payload: { filter: item }
-              })
-            }
-          >
-            <span>{`${item.propName}:${item.value}`}</span>
-          </FilterButton>
-        ))}
+        {transitionFilters.length ? (
+          transitionFilters.map(({ item, key, props }) => (
+            <FilterButton
+              key={key}
+              style={props}
+              buttonType={item.propName}
+              onClick={() => removeFilter(item)}
+            >
+              <Cross viewBox="0 0 17 17" width="8px" height="8px">
+                <path
+                  d="M10.377 8.142l5.953-5.954-2.234-2.234-5.954 5.954L2.188-.046-.046 2.188l5.954 5.954-5.954 5.954 2.234 2.234 5.954-5.953 5.954 5.953 2.234-2.234z"
+                  fill="currentColor"
+                  fillRule="evenodd"
+                />
+              </Cross>
+              <span>{item.value}</span>
+            </FilterButton>
+          ))
+        ) : (
+          <TextContainer>
+            <Title>No filters active</Title>
+            <span>cmd+click an entry to toggle a filter</span>
+          </TextContainer>
+        )}
       </FiltersContainer>
       <EventsList>
         {filteredEvents.map((op: UrqlEvent, i: number) => (
           <EventCard
             key={i}
             operation={op}
-            setFilter={dispatch}
             canFilter={pressed}
             active={op === selectedEvent}
           />
@@ -184,7 +115,8 @@ const Container = styled(Background)`
 
 const FiltersContainer = styled.div`
   display: flex;
-  margin: 0 5px;
+  margin: 10px;
+  text-align: center;
 `;
 
 const getButtonColor = (type: FilterType) => {
@@ -192,17 +124,20 @@ const getButtonColor = (type: FilterType) => {
     case FilterType.Key: {
       return css`
         background-color: #fcfaa7;
+        color: black;
       `;
     }
     case FilterType.Info: {
       return css`
-        background-color: #c7f0d2;
+        background-color: #239dd7;
+        color: white;
       `;
     }
 
     case FilterType.Name: {
       return css`
-        background-color: #b8dbf2;
+        background-color: #695fd6;
+        color: white;
       `;
     }
 
@@ -214,20 +149,42 @@ const getButtonColor = (type: FilterType) => {
   }
 };
 
+const Cross = styled.svg`
+  color: currentColor;
+  margin-right: 6px;
+`;
+
 const FilterButton = styled(animated.button)`
-  display: inline-block;
+  display: flex;
+  align-items: center;
   border: none;
-  margin: 5px 0px 5px 5px;
-  font-family: "Dank Mono", monospace;
+  margin: 5px 8px 5px 5px;
+  padding: 5px 8px;
   font-size: 0.8rem;
   cursor: pointer;
   text-align: center;
+  text-transform: capitalize;
 
   &:last-of-type {
     margin-right: 0;
   }
 
   ${(p: FilterButtonProps) => getButtonColor(p.buttonType)};
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  color: white;
+`;
+
+const Title = styled.strong`
+  font-size: 15px;
+  margin-bottom: 8px;
 `;
 
 const EventsList = styled.div`

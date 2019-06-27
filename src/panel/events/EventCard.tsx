@@ -1,19 +1,20 @@
 import React, { FC, useContext, useCallback } from "react";
 import styled, { ThemeContext, css } from "styled-components";
 import { UrqlEvent } from "../../types";
-import { EventsContext } from "../context";
+import { EventsContext, FilterContext, FilterType } from "../context";
 
 /** Shows basic information about an operation. */
 export const EventCard: FC<{
   operation: UrqlEvent;
   active: boolean;
-  setFilter: any;
   canFilter: boolean;
-}> = ({ operation, setFilter, canFilter, active = false }) => {
+}> = ({ operation, canFilter, active = false }) => {
   const theme = useContext(ThemeContext);
   const { selectedEvent, selectEvent, clearSelectedEvent } = useContext(
     EventsContext
   );
+
+  const { addFilter } = useContext(FilterContext);
 
   const handleContainerClick = useCallback(() => {
     // if we're currently in filtering mode, ignore container clicks
@@ -51,18 +52,13 @@ export const EventCard: FC<{
     date: formatDate(operation.timestamp)
   };
 
-  const makeSetFilter = (type: string) => {
+  const makeSetFilter = (type: FilterType) => {
     return () =>
       canFilter
-        ? setFilter({
-            payload: {
-              filter: {
-                value: values[type],
-                propName: type,
-                propGetter: valueGetters[type]
-              }
-            },
-            type: "add"
+        ? addFilter({
+            value: values[type],
+            propName: type,
+            propGetter: valueGetters[type]
           })
         : () => {
             /*noop*/
@@ -72,16 +68,25 @@ export const EventCard: FC<{
   return (
     <Container onClick={handleContainerClick} aria-selected={active}>
       <Indicator
-        style={{ backgroundColor: colors[values["name"].toString()] }}
+        style={{ backgroundColor: colors[values[FilterType.Name].toString()] }}
       />
-      <OperationName onClick={makeSetFilter("name")} isActive={canFilter}>
+      <OperationName
+        onClick={makeSetFilter(FilterType.Name)}
+        isActive={canFilter}
+      >
         {values["name"]}
       </OperationName>
       <OperationTime>{values["date"]}</OperationTime>
-      <OperationAddInfo onClick={makeSetFilter("info")} isActive={canFilter}>
+      <OperationAddInfo
+        onClick={makeSetFilter(FilterType.Info)}
+        isActive={canFilter}
+      >
         {values["info"] || "Unknown"}
       </OperationAddInfo>
-      <OperationKey onClick={makeSetFilter("key")} isActive={canFilter}>
+      <OperationKey
+        onClick={makeSetFilter(FilterType.Key)}
+        isActive={canFilter}
+      >
         {values["key"]}
       </OperationKey>
     </Container>
@@ -131,7 +136,9 @@ const OperationName = styled.h3`
     width: 20%;
   }
 
-  ${getActiveStyles}
+  &:hover {
+    ${getActiveStyles}
+  }
 `;
 
 const OperationTime = styled.p`
@@ -160,7 +167,9 @@ const OperationAddInfo = styled.p`
     width: 25%;
   }
 
-  ${getActiveStyles}
+  &:hover {
+    ${getActiveStyles}
+  }
 `;
 
 const OperationKey = styled.p`
@@ -179,7 +188,9 @@ const OperationKey = styled.p`
     width: 25%;
   }
 
-  ${getActiveStyles}
+  &:hover {
+    ${getActiveStyles}
+  }
 `;
 
 const Indicator = styled.div`
