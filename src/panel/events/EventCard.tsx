@@ -1,23 +1,30 @@
 import React, { FC, useContext, useCallback } from "react";
-import styled, { ThemeContext } from "styled-components";
+import styled, { ThemeContext, css } from "styled-components";
 import { UrqlEvent } from "../../types";
 import { EventsContext } from "../context";
 
 /** Shows basic information about an operation. */
-export const EventCard: FC<{ operation: UrqlEvent; active: boolean }> = ({
-  operation,
-  active = false
-}) => {
+export const EventCard: FC<{
+  operation: UrqlEvent;
+  active: boolean;
+  setFilter: any;
+  canFilter: boolean;
+}> = ({ operation, setFilter, canFilter, active = false }) => {
   const theme = useContext(ThemeContext);
   const { selectedEvent, selectEvent, clearSelectedEvent } = useContext(
     EventsContext
   );
 
   const handleContainerClick = useCallback(() => {
-    selectedEvent === operation ? clearSelectedEvent() : selectEvent(operation);
-  }, [operation, selectedEvent, selectEvent]);
+    // if we're currently in filtering mode, ignore container clicks
+    if (canFilter) {
+      return;
+    }
 
-  const colors = {
+    selectedEvent === operation ? clearSelectedEvent() : selectEvent(operation);
+  }, [operation, selectedEvent, selectEvent, canFilter]);
+
+  const colors: { [key: string]: string } = {
     subscription: theme.orange[0],
     teardown: theme.grey[0],
     mutation: theme.purple[0],
@@ -26,27 +33,57 @@ export const EventCard: FC<{ operation: UrqlEvent; active: boolean }> = ({
     error: theme.red[0]
   };
 
-  const name =
-    operation.type === "operation"
-      ? operation.data.operationName
-      : operation.type;
-  const date = formatDate(operation.timestamp);
-  const info =
-    operation.type === "operation"
-      ? operation.data.context.devtools.source
-      : operation.data.operation.context.devtools.source;
-  const key =
-    operation.type === "operation"
-      ? operation.data.key
-      : operation.data.operation.key;
+  const valueGetters: { [key: string]: (e: UrqlEvent) => string | number } = {
+    name: (e: UrqlEvent) =>
+      e.type === "operation" ? e.data.operationName : e.type,
+    key: (e: UrqlEvent) =>
+      e.type === "operation" ? e.data.key : e.data.operation.key,
+    info: (e: UrqlEvent) =>
+      e.type === "operation"
+        ? e.data.context.devtools.source
+        : e.data.operation.context.devtools.source
+  };
+
+  const values: { [key: string]: any } = {
+    key: valueGetters["key"](operation),
+    info: valueGetters["info"](operation),
+    name: valueGetters["name"](operation),
+    date: formatDate(operation.timestamp)
+  };
+
+  const makeSetFilter = (type: string) => {
+    return () =>
+      canFilter
+        ? setFilter({
+            payload: {
+              filter: {
+                value: values[type],
+                propName: type,
+                propGetter: valueGetters[type]
+              }
+            },
+            type: "add"
+          })
+        : () => {
+            /*noop*/
+          };
+  };
 
   return (
     <Container onClick={handleContainerClick} aria-selected={active}>
-      <Indicator style={{ backgroundColor: colors[name] }} />
-      <OperationName>{capitalize(name)}</OperationName>
-      <OperationTime>{date}</OperationTime>
-      <OperationAddInfo>{info || "Unknown"}</OperationAddInfo>
-      <OperationKey>{key}</OperationKey>
+      <Indicator
+        style={{ backgroundColor: colors[values["name"].toString()] }}
+      />
+      <OperationName onClick={makeSetFilter("name")} isActive={canFilter}>
+        {values["name"]}
+      </OperationName>
+      <OperationTime>{values["date"]}</OperationTime>
+      <OperationAddInfo onClick={makeSetFilter("info")} isActive={canFilter}>
+        {values["info"] || "Unknown"}
+      </OperationAddInfo>
+      <OperationKey onClick={makeSetFilter("key")} isActive={canFilter}>
+        {values["key"]}
+      </OperationKey>
     </Container>
   );
 };
@@ -60,17 +97,26 @@ const formatDate = (date: number) => {
   )}`;
 };
 
-const capitalize = (s: string) => `${s.charAt(0).toUpperCase()}${s.slice(1)}`;
-
 // Breakpoints
 const smMax = "399px";
 const mdMin = "400px";
+
+const getActiveStyles = (p: { isActive: boolean }) => {
+  return (
+    p.isActive &&
+    css`
+      text-decoration: underline;
+      cursor: pointer;
+    `
+  );
+};
 
 const OperationName = styled.h3`
   color: rgba(255, 255, 255, 0.9);
   font-size: 15px;
   margin: 0;
   width: 50%;
+  text-transform: capitalize;
 
   @media (max-width: ${smMax}) {
     margin-bottom: 10px;
@@ -84,6 +130,8 @@ const OperationName = styled.h3`
     flex-basis: 4;
     width: 20%;
   }
+
+  ${getActiveStyles}
 `;
 
 const OperationTime = styled.p`
@@ -111,6 +159,8 @@ const OperationAddInfo = styled.p`
     font-size: 13px;
     width: 25%;
   }
+
+  ${getActiveStyles}
 `;
 
 const OperationKey = styled.p`
@@ -128,6 +178,8 @@ const OperationKey = styled.p`
     font-size: 13px;
     width: 25%;
   }
+
+  ${getActiveStyles}
 `;
 
 const Indicator = styled.div`
