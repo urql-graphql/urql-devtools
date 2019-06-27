@@ -2,16 +2,17 @@ import React, {
   useContext,
   useReducer,
   Reducer,
-  ReactNode,
   useEffect,
   useState
 } from "react";
+
+import { useTransition, animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { EventCard } from "./EventCard";
-import { Panel } from "./panels";
+import { UrqlEvent } from "../../types";
 import { EventsContext } from "../context";
 import { Background } from "../components/Background";
-import { UrqlEvent } from "../../types";
+import { Panel } from "./panels";
+import { EventCard } from "./EventCard";
 
 enum FilterType {
   Name = "name",
@@ -21,7 +22,7 @@ enum FilterType {
 interface Filter {
   value: string;
   propName: FilterType;
-  propGetter: any;
+  propGetter: (e: UrqlEvent) => string | number;
 }
 
 enum FilterActionType {
@@ -31,7 +32,7 @@ enum FilterActionType {
 
 interface FilterState {
   filters: Filter[];
-  filteredEvents: any[];
+  filteredEvents: UrqlEvent[];
 }
 
 interface FilterAction {
@@ -41,7 +42,7 @@ interface FilterAction {
   };
 }
 
-function initialState(initialEvents: any[]): FilterState {
+function initialState(initialEvents: UrqlEvent[]): FilterState {
   return {
     filters: [],
     filteredEvents: initialEvents
@@ -84,9 +85,7 @@ export const Events = () => {
         const newFilters = filterFilters(state.filters, oldFilter);
 
         const newEvents = newFilters.length
-          ? events.filter(event => {
-              return newFilters.every(f => f.propGetter(event) === f.value);
-            })
+          ? filterEvents(events, newFilters)
           : events;
 
         return {
@@ -125,28 +124,33 @@ export const Events = () => {
 
   const { filters, filteredEvents } = state;
 
+  const transitionFilters = useTransition(filters, filter => filter.value, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 }
+  });
+
   return (
     <Container>
       <FiltersContainer>
-        {filters.map(
-          (filter: Filter, i: number): ReactNode => (
-            <FilterButton
-              key={i}
-              buttonType={filter.propName}
-              onClick={() =>
-                dispatch({
-                  type: FilterActionType.Remove,
-                  payload: { filter }
-                })
-              }
-            >
-              <span>{`${filter.propName}:${filter.value}`}</span>
-            </FilterButton>
-          )
-        )}
+        {transitionFilters.map(({ item, key, props }) => (
+          <FilterButton
+            key={key}
+            style={props}
+            buttonType={item.propName}
+            onClick={() =>
+              dispatch({
+                type: FilterActionType.Remove,
+                payload: { filter: item }
+              })
+            }
+          >
+            <span>{`${item.propName}:${item.value}`}</span>
+          </FilterButton>
+        ))}
       </FiltersContainer>
       <EventsList>
-        {filteredEvents.map((op: any, i: any) => (
+        {filteredEvents.map((op: UrqlEvent, i: number) => (
           <EventCard
             key={i}
             operation={op}
@@ -210,7 +214,7 @@ const getButtonColor = (type: FilterType) => {
   }
 };
 
-const FilterButton = styled.button`
+const FilterButton = styled(animated.button)`
   display: inline-block;
   border: none;
   margin: 5px 0px 5px 5px;
