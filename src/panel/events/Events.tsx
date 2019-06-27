@@ -48,6 +48,19 @@ function initialState(initialEvents: any[]): FilterState {
   };
 }
 
+function filterEvents(events: UrqlEvent[], filters: Filter[]) {
+  return events.filter(event => {
+    return filters.every(f => f.propGetter(event) === f.value);
+  });
+}
+
+function filterFilters(filters: Filter[], incomingFilter: Filter) {
+  return filters.filter(
+    f =>
+      f.value !== incomingFilter.value && f.propName !== incomingFilter.propName
+  );
+}
+
 export const Events = () => {
   const { events, selectedEvent } = useContext(EventsContext);
 
@@ -57,27 +70,18 @@ export const Events = () => {
         const newFilter = action.payload.filter;
         const newFilters = [
           action.payload.filter,
-          ...state.filters.filter(
-            f =>
-              f.value !== newFilter.value && f.propName !== newFilter.propName
-          )
+          ...filterFilters(state.filters, newFilter)
         ];
 
-        const newEvents = events.filter(event => {
-          return newFilters.every(f => f.propGetter(event) === f.value);
-        });
-
         return {
-          filteredEvents: newEvents,
+          filteredEvents: filterEvents(events, newFilters),
           filters: newFilters
         };
       }
 
       case FilterActionType.Remove: {
         const oldFilter = action.payload.filter;
-        const newFilters = state.filters.filter(
-          f => f.value !== oldFilter.value && f.propName !== oldFilter.propName
-        );
+        const newFilters = filterFilters(state.filters, oldFilter);
 
         const newEvents = newFilters.length
           ? events.filter(event => {
@@ -103,32 +107,28 @@ export const Events = () => {
 
   const [pressed, setPressed] = useState(false);
 
-  const setPressedState = (e?: KeyboardEvent) => {
-    if (!e) {
-      return setPressed(false);
-    }
-    /* TODO: this maps to the command key currently
-     but the keycode might not match on non-webkit browsers */
-    return setPressed(e.keyCode === 91);
-  };
+  /* TODO: this maps to the command key currently
+  but the keycode might not match on non-webkit browsers */
+
+  const handleKeydown = (e: KeyboardEvent) => setPressed(e.keyCode === 91);
+  const handleKeyUp = () => setPressed(false);
 
   useEffect(() => {
-    window.addEventListener("keydown", setPressedState);
-    window.addEventListener("keyup", () => setPressedState());
+    window.addEventListener("keydown", handleKeydown);
+    window.addEventListener("keyup", handleKeyUp);
 
     () => {
-      window.removeEventListener("keydown", setPressedState);
-      window.removeEventListener("keyup", () => setPressedState());
+      window.removeEventListener("keydown", handleKeydown);
+      window.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
 
-  const renderFilters: Filter[] | [] = state.filters || [];
-  const renderEvents: any[] | [] = state.filteredEvents || [];
+  const { filters, filteredEvents } = state;
 
   return (
     <Container>
       <FiltersContainer>
-        {renderFilters.map(
+        {filters.map(
           (filter: Filter, i: number): ReactNode => (
             <FilterButton
               key={i}
@@ -136,24 +136,17 @@ export const Events = () => {
               onClick={() =>
                 dispatch({
                   type: FilterActionType.Remove,
-                  payload: {
-                    filter: {
-                      value: filter.value,
-                      propName: filter.propName,
-                      propGetter: filter.propGetter
-                    }
-                  }
+                  payload: { filter }
                 })
               }
             >
-              <strong>{filter.propName}:</strong>
-              <span>{filter.value}</span>
+              <span>{`${filter.propName}:${filter.value}`}</span>
             </FilterButton>
           )
         )}
       </FiltersContainer>
       <EventsList>
-        {renderEvents.map((op: any, i: any) => (
+        {filteredEvents.map((op: any, i: any) => (
           <EventCard
             key={i}
             operation={op}
@@ -168,9 +161,6 @@ export const Events = () => {
   );
 };
 
-interface StyleProps {
-  isPressed: boolean;
-}
 interface FilterButtonProps {
   buttonType: FilterType;
 }
@@ -190,8 +180,7 @@ const Container = styled(Background)`
 
 const FiltersContainer = styled.div`
   display: flex;
-  padding: 10px 15px;
-  margin: 10px 0;
+  margin: 0 5px;
 `;
 
 const getButtonColor = (type: FilterType) => {
@@ -216,7 +205,6 @@ const getButtonColor = (type: FilterType) => {
     default: {
       return css`
         background-color: white;
-        color: black;
       `;
     }
   }
@@ -225,14 +213,11 @@ const getButtonColor = (type: FilterType) => {
 const FilterButton = styled.button`
   display: inline-block;
   border: none;
-  margin-right: 5px;
-  text-decoration: none;
+  margin: 5px 0px 5px 5px;
   font-family: "Dank Mono", monospace;
   font-size: 0.8rem;
   cursor: pointer;
   text-align: center;
-  -webkit-appearance: none;
-  -moz-appearance: none;
 
   &:last-of-type {
     margin-right: 0;

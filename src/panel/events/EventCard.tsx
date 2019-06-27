@@ -16,8 +16,13 @@ export const EventCard: FC<{
   );
 
   const handleContainerClick = useCallback(() => {
+    // if we're currently in filtering mode, ignore container clicks
+    if (canFilter) {
+      return;
+    }
+
     selectedEvent === operation ? clearSelectedEvent() : selectEvent(operation);
-  }, [operation, selectedEvent, selectEvent]);
+  }, [operation, selectedEvent, selectEvent, canFilter]);
 
   const colors: { [key: string]: string } = {
     subscription: theme.orange[0],
@@ -96,6 +101,16 @@ const formatDate = (date: number) => {
 const smMax = "399px";
 const mdMin = "400px";
 
+const getActiveStyles = (p: { isActive: boolean }) => {
+  return (
+    p.isActive &&
+    css`
+      text-decoration: underline;
+      cursor: pointer;
+    `
+  );
+};
+
 const OperationName = styled.h3`
   color: rgba(255, 255, 255, 0.9);
   font-size: 15px;
@@ -116,8 +131,7 @@ const OperationName = styled.h3`
     width: 20%;
   }
 
-  text-decoration: ${(p: { isActive: boolean }) =>
-    p.isActive ? "underline" : "none"};
+  ${getActiveStyles}
 `;
 
 const OperationTime = styled.p`
@@ -146,8 +160,7 @@ const OperationAddInfo = styled.p`
     width: 25%;
   }
 
-  text-decoration: ${(p: { isActive: boolean }) =>
-    p.isActive ? "underline" : "none"};
+  ${getActiveStyles}
 `;
 
 const OperationKey = styled.p`
@@ -166,8 +179,7 @@ const OperationKey = styled.p`
     width: 25%;
   }
 
-  text-decoration: ${(p: { isActive: boolean }) =>
-    p.isActive ? "underline" : "none"};
+  ${getActiveStyles}
 `;
 
 const Indicator = styled.div`
