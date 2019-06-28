@@ -8,7 +8,8 @@ import { Request } from "./request/Request";
 import {
   DevtoolsProvider,
   OperationProvider,
-  RequestProvider
+  RequestProvider,
+  FilterProvider
 } from "./context";
 
 const theme = {
@@ -46,13 +47,15 @@ export const App = () => {
     <DevtoolsProvider>
       <ThemeProvider theme={theme}>
         <HashRouter>
-          <OperationProvider>
-            <Route path="/events" component={Events} />
-          </OperationProvider>
-          <RequestProvider>
-            <Route path="/request" component={Request} />
-          </RequestProvider>
-          <Navigation />
+          <FilterProvider>
+            <OperationProvider>
+              <Route path="/events" component={Events} />
+            </OperationProvider>
+            <RequestProvider>
+              <Route path="/request" component={Request} />
+            </RequestProvider>
+            <Navigation />
+          </FilterProvider>
         </HashRouter>
       </ThemeProvider>
     </DevtoolsProvider>
