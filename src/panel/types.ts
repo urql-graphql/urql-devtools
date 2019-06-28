@@ -3,7 +3,8 @@ export type EventType =
   | "query"
   | "mutation"
   | "response"
-  | "error";
+  | "error"
+  | "teardown";
 
 export interface EventPanel<T = any> {
   name: string;
@@ -38,6 +39,14 @@ export interface ParsedQueryEvent extends ParsedEventBase {
   ];
 }
 
+export interface ParsedSubscriptionEvent extends ParsedEventBase {
+  type: "subscription";
+}
+
+export interface ParsedTeardownEvent extends ParsedEventBase {
+  type: "teardown";
+}
+
 export interface ParsedResponseEvent extends ParsedEventBase {
   type: "response";
   panels: [{ name: "response"; data: object }, { name: "meta"; data: object }];
@@ -55,4 +64,6 @@ export type ParsedEvent =
   | ParsedMutationEvent
   | ParsedQueryEvent
   | ParsedResponseEvent
-  | ParsedErrorEvent;
+  | ParsedErrorEvent
+  | ParsedSubscriptionEvent
+  | ParsedTeardownEvent;

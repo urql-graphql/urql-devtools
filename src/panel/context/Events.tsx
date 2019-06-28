@@ -14,7 +14,9 @@ import {
   ParsedQueryEvent,
   ParsedResponseEvent,
   ParsedErrorEvent,
-  EventType
+  EventType,
+  ParsedSubscriptionEvent,
+  ParsedTeardownEvent
 } from "../types";
 import {
   UrqlEvent,
@@ -150,7 +152,11 @@ export const EventsProvider: FC = ({ children }) => {
 const parseOperation = (
   allEvents: UrqlEvent[],
   event: OutgoingOperation
-): ParsedQueryEvent | ParsedMutationEvent => {
+):
+  | ParsedQueryEvent
+  | ParsedMutationEvent
+  | ParsedSubscriptionEvent
+  | ParsedTeardownEvent => {
   const shared = {
     key: event.data.key,
     source: event.data.context.meta.source,
@@ -167,7 +173,7 @@ const parseOperation = (
     }
   } as const;
 
-  const type = event.data.operationName as "mutation" | "query";
+  const type = event.data.operationName;
 
   /**
    * Conditionals can't be called during object construction
@@ -182,13 +188,19 @@ const parseOperation = (
   }
 
   // TODO: Fix
-  if (type === "query" || true) {
+  if (type === "query") {
     return {
       type,
       ...shared,
       panels: [queryPanel, varsPanel, { name: "state", data: {} }, metaPanel]
     };
   }
+
+  return {
+    type,
+    ...shared,
+    panels: [metaPanel]
+  };
 };
 
 const parseResponse = (

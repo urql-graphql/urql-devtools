@@ -58,7 +58,7 @@ const handleMessage = (client: Client) => (message: DevtoolsMessage) => {
 
     pipe(
       execFn(createRequest(message.query), {
-        devtools: { source: "Devtools" }
+        meta: { source: "Devtools" }
       }),
       toPromise
     );
