@@ -23,15 +23,12 @@ export const Filters: FC = () => {
     [] as FilterEntry[]
   );
 
-  const transitionFilters = useTransition(
-    flattenedFilters,
-    (filter: any) => filter.value,
-    {
-      from: { opacity: 0 },
-      enter: { opacity: 1 },
-      leave: { opacity: 0 }
-    }
-  );
+  const transitionFilters = useTransition(flattenedFilters, i => i.value, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: { duration: 100 }
+  });
 
   const handleFilterClick = useCallback(
     (filter: FilterEntry) => () => removeFilter(filter.type, filter.value),
