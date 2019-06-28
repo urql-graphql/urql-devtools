@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { EventsContext } from "../context";
 import { Background } from "../components/Background";
@@ -8,6 +8,22 @@ import { Filters } from "./Filters";
 
 export const Events = () => {
   const { events, selectedEvent } = useContext(EventsContext);
+  const [filteringOn, setFilteringOn] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) =>
+      (e.metaKey || e.ctrlKey) && setFilteringOn(true);
+    const handleKeyUp = (e: KeyboardEvent) =>
+      (e.key === "Meta" || e.key == "Control") && setFilteringOn(false);
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
 
   return (
     <Container>
@@ -17,7 +33,7 @@ export const Events = () => {
           <EventCard
             key={i}
             event={event}
-            canFilter={true}
+            canFilter={filteringOn}
             active={event === selectedEvent}
           />
         ))}
