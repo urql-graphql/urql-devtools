@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { HashRouter, Route } from "react-router-dom";
+import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { Events } from "./events";
 import { Navigation } from "./Navigation";
@@ -48,6 +48,7 @@ export const App = () => {
           <RequestProvider>
             <Route path="/request" component={Request} />
           </RequestProvider>
+          <Route path="/" exact component={() => <Redirect to="/events" />} />
           <Navigation />
         </HashRouter>
       </ThemeProvider>
