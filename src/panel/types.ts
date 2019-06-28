@@ -24,7 +24,7 @@ export interface ParsedMutationEvent extends ParsedEventBase {
   panels: [
     { name: "query"; data: string },
     { name: "variables"; data: object | undefined },
-    { name: "response"; data: object },
+    { name: "response"; data: object | undefined },
     { name: "meta"; data: object }
   ];
 }
@@ -34,7 +34,7 @@ export interface ParsedQueryEvent extends ParsedEventBase {
   panels: [
     { name: "query"; data: string },
     { name: "variables"; data: object | undefined },
-    { name: "state"; data: object },
+    { name: "state"; data: object | undefined },
     { name: "meta"; data: object }
   ];
 }

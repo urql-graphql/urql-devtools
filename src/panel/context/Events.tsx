@@ -175,6 +175,25 @@ const parseOperation = (
 
   const type = event.data.operationName;
 
+  const responseEvent = allEvents
+    // Only events after the request
+    .filter(e => e.type !== "operation" && e.timestamp > event.timestamp)
+    // First response for mutation, latest response for query
+    .sort((a, b) =>
+      type === "mutation"
+        ? a.timestamp - b.timestamp
+        : b.timestamp - a.timestamp
+    )
+    .find(
+      e =>
+        (e as IncomingError | IncomingResponse).data.operation.key ===
+        event.data.key
+    ) as IncomingError | IncomingResponse | undefined;
+  const responseData =
+    responseEvent === undefined
+      ? {}
+      : { data: responseEvent.data.data, error: responseEvent.data.error };
+
   /**
    * Conditionals can't be called during object construction
    * if we want to keep implicit type safety :(
@@ -183,16 +202,25 @@ const parseOperation = (
     return {
       type,
       ...shared,
-      panels: [queryPanel, varsPanel, { name: "response", data: {} }, metaPanel]
+      panels: [
+        queryPanel,
+        varsPanel,
+        { name: "response", data: responseData },
+        metaPanel
+      ]
     };
   }
 
-  // TODO: Fix
   if (type === "query") {
     return {
       type,
       ...shared,
-      panels: [queryPanel, varsPanel, { name: "state", data: {} }, metaPanel]
+      panels: [
+        queryPanel,
+        varsPanel,
+        { name: "state", data: responseData },
+        metaPanel
+      ]
     };
   }
 
