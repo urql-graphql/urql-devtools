@@ -1,33 +1,36 @@
-workflow:  
+workflow:
   - install
-  - sail:parallel:
-    - formatting
-    - lint
-  - build
+  # - sail:parallel:
+  #     - formatting
+  #     - lint
+  # - build
+  # - deploy
 
 tasks:
   install: &base
     image: node:12
     command:
-      - npm
-    args:
-      - i
-      - --ci
-     
-  formatting:
-    <<: *base
-    args:
-      - run
-      - prettier-check
-      
-  lint:
-    <<: *base
-    args:
-      - run
-      - lint
-
-  build:
-    <<: *base
-    args:
-      - run
-      - build
+      - echo "$SAIL_COMMIT_BRANCH"
+    env:
+      - SAIL_COMMIT_BRANCH
+  # formatting:
+  #   <<: *base
+  #   args:
+  #     - run
+  #     - prettier-check
+  # lint:
+  #   <<: *base
+  #   args:
+  #     - run
+  #     - lint
+  # build:
+  #   <<: *base
+  #   args:
+  #     - run
+  #     - build
+  # deploy:
+  #   <<: *base
+  #   command:
+  #     - echo "$SAIL_COMMIT_BRANCH"
+  #   env:
+  #     - SAIL_COMMIT_BRANCH
