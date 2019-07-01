@@ -1,0 +1,13 @@
+jobs:
+  build:
+    docker:
+      - image: node:12
+    steps:
+      - checkout
+      - run: env
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
