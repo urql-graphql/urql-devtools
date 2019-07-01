@@ -1,16 +1,11 @@
+import "./App.css";
 import React from "react";
-import { HashRouter, Route } from "react-router-dom";
+import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { Events } from "./events";
-import "./App.css";
 import { Navigation } from "./Navigation";
 import { Request } from "./request/Request";
-import {
-  DevtoolsProvider,
-  OperationProvider,
-  RequestProvider,
-  FilterProvider
-} from "./context";
+import { DevtoolsProvider, EventsProvider, RequestProvider } from "./context";
 
 const theme = {
   grey: {
@@ -47,15 +42,14 @@ export const App = () => {
     <DevtoolsProvider>
       <ThemeProvider theme={theme}>
         <HashRouter>
-          <FilterProvider>
-            <OperationProvider>
-              <Route path="/events" component={Events} />
-            </OperationProvider>
-            <RequestProvider>
-              <Route path="/request" component={Request} />
-            </RequestProvider>
-            <Navigation />
-          </FilterProvider>
+          <EventsProvider>
+            <Route path="/events" component={Events} />
+          </EventsProvider>
+          <RequestProvider>
+            <Route path="/request" component={Request} />
+          </RequestProvider>
+          <Route path="/" exact component={() => <Redirect to="/events" />} />
+          <Navigation />
         </HashRouter>
       </ThemeProvider>
     </DevtoolsProvider>

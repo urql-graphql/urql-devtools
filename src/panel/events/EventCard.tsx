@@ -1,29 +1,21 @@
-import React, { FC, useContext, useCallback } from "react";
+import React, { FC, useContext, useCallback, MouseEventHandler } from "react";
 import styled, { ThemeContext, css } from "styled-components";
-import { UrqlEvent } from "../../types";
-import { EventsContext, FilterContext, FilterType } from "../context";
+import { EventsContext } from "../context";
+import { ParsedEvent } from "../types";
 
 /** Shows basic information about an operation. */
 export const EventCard: FC<{
-  operation: UrqlEvent;
+  event: ParsedEvent;
   active: boolean;
   canFilter: boolean;
-}> = ({ operation, canFilter, active = false }) => {
+}> = ({ event, canFilter, active = false }) => {
   const theme = useContext(ThemeContext);
-  const { selectedEvent, selectEvent, clearSelectedEvent } = useContext(
-    EventsContext
-  );
-
-  const { addFilter } = useContext(FilterContext);
-
-  const handleContainerClick = useCallback(() => {
-    // if we're currently in filtering mode, ignore container clicks
-    if (canFilter) {
-      return;
-    }
-
-    selectedEvent === operation ? clearSelectedEvent() : selectEvent(operation);
-  }, [operation, selectedEvent, selectEvent, canFilter]);
+  const {
+    selectedEvent,
+    selectEvent,
+    clearSelectedEvent,
+    addFilter
+  } = useContext(EventsContext);
 
   const colors: { [key: string]: string } = {
     subscription: theme.orange[0],
@@ -34,60 +26,45 @@ export const EventCard: FC<{
     error: theme.red[0]
   };
 
-  const valueGetters: { [key: string]: (e: UrqlEvent) => string | number } = {
-    name: (e: UrqlEvent) =>
-      e.type === "operation" ? e.data.operationName : e.type,
-    key: (e: UrqlEvent) =>
-      e.type === "operation" ? e.data.key : e.data.operation.key,
-    info: (e: UrqlEvent) =>
-      e.type === "operation"
-        ? e.data.context.devtools.source
-        : e.data.operation.context.devtools.source
-  };
+  const handleContainerClick = useCallback<MouseEventHandler<HTMLDivElement>>(
+    e => {
+      if (e.ctrlKey || e.metaKey) {
+        return;
+      }
 
-  const values: { [key: string]: any } = {
-    key: valueGetters["key"](operation),
-    info: valueGetters["info"](operation),
-    name: valueGetters["name"](operation),
-    date: formatDate(operation.timestamp)
-  };
+      selectedEvent === event ? clearSelectedEvent() : selectEvent(event);
+    },
+    [event, selectedEvent, clearSelectedEvent]
+  );
 
-  const makeSetFilter = (type: FilterType) => {
-    return () =>
-      canFilter
-        ? addFilter({
-            value: values[type],
-            propName: type,
-            propGetter: valueGetters[type]
-          })
-        : () => {
-            /*noop*/
-          };
-  };
+  const handleFilterClick = useCallback(
+    (
+      property: Parameters<typeof addFilter>[0]
+    ): MouseEventHandler<HTMLDivElement> => e => {
+      if (!e.ctrlKey && !e.metaKey) {
+        return;
+      }
+
+      addFilter(property, event[property]);
+    },
+    [event]
+  );
 
   return (
     <Container onClick={handleContainerClick} aria-selected={active}>
-      <Indicator
-        style={{ backgroundColor: colors[values[FilterType.Name].toString()] }}
-      />
-      <OperationName
-        onClick={makeSetFilter(FilterType.Name)}
-        isActive={canFilter}
-      >
-        {values["name"]}
+      <Indicator style={{ backgroundColor: colors[event.type] }} />
+      <OperationName onClick={handleFilterClick("type")} isActive={canFilter}>
+        {event.type}
       </OperationName>
-      <OperationTime>{values["date"]}</OperationTime>
+      <OperationTime>{formatDate(event.timestamp)}</OperationTime>
       <OperationAddInfo
-        onClick={makeSetFilter(FilterType.Info)}
+        onClick={handleFilterClick("source")}
         isActive={canFilter}
       >
-        {values["info"] || "Unknown"}
+        {event.source}
       </OperationAddInfo>
-      <OperationKey
-        onClick={makeSetFilter(FilterType.Key)}
-        isActive={canFilter}
-      >
-        {values["key"]}
+      <OperationKey onClick={handleFilterClick("key")} isActive={canFilter}>
+        {event.key}
       </OperationKey>
     </Container>
   );

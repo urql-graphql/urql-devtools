@@ -42,10 +42,11 @@ export const RequestProvider: FC = ({ children }) => {
   // Listen for response for devtools
   useEffect(() => {
     return addMessageHandler(e => {
+      console.log("source", e.data);
       if (
         !fetching ||
         e.type === "operation" ||
-        e.data.operation.context.devtools.source !== "Devtools"
+        e.data.operation.context.meta.source !== "Devtools"
       ) {
         return;
       }

@@ -1,52 +1,54 @@
-import React, { FC, useContext } from "react";
+import React, { FC, useState, useMemo, useLayoutEffect } from "react";
 import styled from "styled-components";
-import { IncomingError, IncomingResponse } from "../../../types";
-import { EventsContext } from "../../context";
-import { OperationPanel } from "./OperationPanel";
-import { ResponsePanel } from "./ResponsePanel";
-import { ErrorPanel } from "./ErrorPanel";
+import { Tabs } from "../../components/Tabs";
+import { EventPanel, ParsedEvent } from "../../types";
+import { QueryPanel } from "./QueryPanel";
+import { JsonCode } from "./JsonCode";
 
 /** Pane shows additional information about a selected operation event. */
-export const Panel: FC = () => {
-  const { selectedEvent, events } = useContext(EventsContext);
+export const Panel: FC<{ event: ParsedEvent }> = ({ event }) => {
+  const [activeTab, setActiveTab] = useState<number>(0);
 
-  if (selectedEvent === undefined) {
-    return null;
-  }
+  useLayoutEffect(() => {
+    return () => setActiveTab(0);
+  }, [event]);
 
-  const content = () => {
-    switch (selectedEvent.type) {
-      case "operation":
-        const responseState = events
-          // Only events after the request
-          .filter(
-            e => e.type !== "operation" && e.timestamp > selectedEvent.timestamp
-          )
-          // First response for mutation, latest response for query
-          .sort((a, b) =>
-            selectedEvent.data.operationName === "mutation"
-              ? a.timestamp - b.timestamp
-              : b.timestamp - a.timestamp
-          )
-          .find(
-            e =>
-              (e as IncomingError | IncomingResponse).data.operation.key ===
-              selectedEvent.data.key
-          ) as IncomingError | IncomingResponse | undefined;
+  // Type cast panels
+  const panels = useMemo(() => event.panels as EventPanel[], [event]);
 
-        return (
-          <OperationPanel event={selectedEvent} response={responseState} />
-        );
+  const tabOptions = useMemo(
+    () =>
+      panels.map((p, i) => ({
+        label: p.name,
+        value: i
+      })),
+    [panels]
+  );
 
-      case "response":
-        return <ResponsePanel event={selectedEvent} />;
+  const selectedTab = activeTab < tabOptions.length ? activeTab : 0;
 
-      case "error":
-        return <ErrorPanel event={selectedEvent} />;
+  const panelContent = useMemo(() => {
+    const activePanel = panels[selectedTab];
+
+    switch (activePanel.name) {
+      case "query":
+        return <QueryPanel query={activePanel.data} />;
+
+      default:
+        return <JsonCode json={activePanel.data || {}} />;
     }
-  };
+  }, [panels, selectedTab]);
 
-  return <Container>{content()}</Container>;
+  return (
+    <Container>
+      <Tabs
+        active={selectedTab}
+        options={tabOptions}
+        setActive={setActiveTab}
+      />
+      {panelContent}
+    </Container>
+  );
 };
 
 const Container = styled.div`
