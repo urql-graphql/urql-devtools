@@ -10,6 +10,7 @@ tasks:
   install: &base
     image: node:12
     command:
+      - env
       - echo "$SAIL_COMMIT_BRANCH"
     env:
       - SAIL_COMMIT_BRANCH
