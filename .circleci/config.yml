@@ -24,9 +24,7 @@ jobs:
       - restore_cache:
           keys:
             - node-cache-{{ checksum "package-lock.json" }}
-      - run:
-          command: |
-            npm run lint
+      - run: npm run lint
 
   prettier:
     docker:
@@ -36,9 +34,7 @@ jobs:
       - restore_cache:
           keys:
             - node-cache-{{ checksum "package-lock.json" }}
-      - run:
-          command: |
-            npm run prettier-check
+      - run: npm run prettier-check
 
   build:
     docker:
@@ -48,9 +44,7 @@ jobs:
       - restore_cache:
           keys:
             - node-cache-{{ checksum "package-lock.json" }}
-      - run:
-          command: |
-            npm run build || exit 0 # Delete this once types are fixed
+      - run: npm run build
       - save_cache:
           key: build-cache-{{ .BuildNum }}
           paths:
@@ -61,6 +55,9 @@ jobs:
       - image: node:12
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - build-cache-{{ .BuildNum }}
       - run:
           command: |
             node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error('Tag version does not line up with version in package.json') || process.exit(1))"
