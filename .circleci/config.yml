@@ -1,9 +1,3 @@
-vars:
-  - &deps
-    restore_cache:
-      keys:
-        - node-cache-{{ checksum "package-lock.json" }}
-
 jobs:
   install:
     docker:
@@ -15,7 +9,7 @@ jobs:
             npm ci
             npm run postinstall # Required for @types/styled-components dependency issues
       - save_cache:
-          key: node-cache-{{ checksum "package-lock.json" }}
+          key: node-cache-{{ .Revision }}
           paths:
             - "node_modules"
 
@@ -26,7 +20,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-cache-{{ checksum "package-lock.json" }}
+            - node-cache-{{ .Revision }}
       - run: npm run lint
 
   prettier:
@@ -36,7 +30,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-cache-{{ checksum "package-lock.json" }}
+            - node-cache-{{ .Revision }}
       - run: npm run prettier-check
 
   build:
@@ -46,7 +40,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-cache-{{ checksum "package-lock.json" }}
+            - node-cache-{{ .Revision }}
       - run: npm run build
       - save_cache:
           key: build-cache-{{ .BuildNum }}
