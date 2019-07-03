@@ -63,8 +63,8 @@ jobs:
       - checkout
       - run:
           command: |
-            echo "$CIRCLE_TAG"
-            node -e "process.env.CIRCLE_TAG === `v${require(\'./package.json\').version}` || process.exit(1)"
+            node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error('Tag version does not line up with version in package.json') || process.exit(1))"
+            # npm publish
 
 workflows:
   version: 2
@@ -72,25 +72,34 @@ workflows:
     jobs:
       - install:
           filters:
-            # tags:
-            #   only: /^v.*/
+            tags:
+              only: /.*/
       - lint:
           requires:
             - install
+          filters:
+            tags:
+              only: /.*/
       - prettier:
           requires:
             - install
+          filters:
+            tags:
+              only: /.*/
       - build:
           requires:
             - install
           filters:
-            # tags:
-            #   only: /^v.*/
+            tags:
+              only: /.*/
       - deploy:
-          # requires:
-          #   - build
+          requires:
+            - install
+            - lint
+            - prettier
+            - build
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
             branches:
               ignore: /.*/
