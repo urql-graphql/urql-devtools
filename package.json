@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@types/chrome": "0.0.86",
-    "@types/codemirror": "0.0.75",
+    "@types/codemirror": "0.0.76",
     "@types/graphql": "^14.2.2",
     "@types/react": "^16.8.22",
     "@types/react-dom": "^16.8.4",
