@@ -10,7 +10,10 @@ jobs:
       - image: node:12
     steps:
       - checkout
-      - run: npm ci
+      - run:
+          command: |
+            npm ci
+            npm run postinstall # Required for @types/styled-components dependency issues
       - save_cache:
           key: node-cache-{{ checksum "package-lock.json" }}
           paths:
