@@ -51,15 +51,15 @@ module.exports = {
       cleanOnceBeforeBuildPatterns: ["**/*", "!exchange.js"]
     }),
     new CopyWebpackPlugin([
+      { from: "src/assets/", to: "assets/" },
       {
         from: "src/manifest.json",
         transform: function(content) {
           return Buffer.from(
             JSON.stringify(
               {
-                description: process.env.npm_package_description,
-                version: process.env.npm_package_version,
-                ...JSON.parse(content.toString())
+                ...JSON.parse(content.toString()),
+                version: process.env.npm_package_version
               },
               null,
               2
