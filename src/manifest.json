@@ -1,7 +1,5 @@
 {
   "name": "Urql devtools",
-  "version": "1.0.0",
-  "description": "Devtools for urql",
   "background": {
     "scripts": ["background.js"]
   },
