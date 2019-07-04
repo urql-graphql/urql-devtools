@@ -1,7 +1,7 @@
 {
   "name": "urql-devtools",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "The devtools exchange for use with Urql",
   "main": "dist/exhange.js",
   "scripts": {
     "start": "webpack --watch",
@@ -10,8 +10,13 @@
     "lint": "eslint --ext .ts,.tsx src",
     "prettier-check": "prettier -c src/** README.md"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Formidable",
+  "license": "MIT",
+  "repository": "https://www.github.com/FormidableLabs/urql-devtools",
+  "bugs": {
+    "url": "https://github.com/FormidableLabs/urql-devtools/issues"
+  },
+  "homepage": "https://www.github.com/FormidableLabs/urql-devtools",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
