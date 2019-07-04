@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="logo" src="https://raw.githubusercontent.com/FormidableLabs/urql-devtools/master/src/assets/icon-256.png" />
+  <img alt="logo" src="https://raw.githubusercontent.com/FormidableLabs/urql-devtools/master/src/assets/icon.svg?sanitize=true" />
   <h1>Urql Devtools</h1>
 </div>
 
