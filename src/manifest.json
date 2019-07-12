@@ -1,23 +1,11 @@
 {
   "name": "Urql devtools",
-  "description": "A devtools extensions for usage with Urql",
-  "icons": [
-    {
-      "src": "/assets/icon-128.png",
-      "type": "image/png",
-      "sizes": "128x128"
-    },
-    {
-      "src": "/assets/icon-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/images/icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
+  "description": "The official Urql chrome extension",
+  "icons": {
+    "128": "/assets/icon-128.png",
+    "192": "/assets/icon-192.png",
+    "512": "/assets/icon-512.png"
+  },
   "background": {
     "scripts": ["background.js"]
   },
