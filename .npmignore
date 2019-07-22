@@ -1,0 +1,15 @@
+/.*
+.DS_STORE
+/webpack.config.js
+/src/assets
+/src/background
+/src/content_script*
+/src/devtools
+/src/manifest.json
+/src/panel
+/dist/assets/*
+/dist/background*
+/dist/content_script*
+/dist/devtools*
+/dist/panel*
+/dist/manifest.json
