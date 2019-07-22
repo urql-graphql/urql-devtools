@@ -13,7 +13,7 @@ Features:
 
 ### Requirements
 
-- [Urql](https://github.com/FormidableLabs/urql) _v1.1.4_ (or later)
+- [Urql](https://github.com/FormidableLabs/urql) _v1.2.0_ (or later)
 - [Chrome extension]()
 
 ### Usage
