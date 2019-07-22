@@ -56,7 +56,7 @@ jobs:
           command: |
             node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error('Tag version does not line up with version in package.json') || process.exit(1))"
             npm config set "//registry.npmjs.org/:_authToken" "$npm_TOKEN"
-            npm publish
+            npm publish --access=public
 
 workflows:
   version: 2

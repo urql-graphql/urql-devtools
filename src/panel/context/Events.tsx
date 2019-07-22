@@ -159,7 +159,7 @@ const parseOperation = (
   | ParsedTeardownEvent => {
   const shared = {
     key: event.data.key,
-    source: event.data.context.meta.source,
+    source: (event.data.context.meta as any).source,
     timestamp: event.timestamp
   } as const;
   const queryPanel = { name: "query", data: print(event.data.query) } as const;
@@ -236,7 +236,7 @@ const parseResponse = (
 ): ParsedResponseEvent | ParsedErrorEvent => {
   const shared = {
     key: event.data.operation.key,
-    source: event.data.operation.context.meta.source,
+    source: (event.data.operation.context.meta as any).source,
     timestamp: event.timestamp
   };
   const metaPanel = {
