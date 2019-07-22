@@ -4,10 +4,7 @@ jobs:
       - image: node:12
     steps:
       - checkout
-      - run:
-          command: |
-            npm ci
-            npm run postinstall # Required for @types/styled-components dependency issues
+      - run: yarn
       - save_cache:
           key: node-cache-{{ .Revision }}
           paths:
@@ -21,7 +18,7 @@ jobs:
       - restore_cache:
           keys:
             - node-cache-{{ .Revision }}
-      - run: npm run lint
+      - run: yarn run lint
 
   prettier:
     docker:
@@ -31,7 +28,7 @@ jobs:
       - restore_cache:
           keys:
             - node-cache-{{ .Revision }}
-      - run: npm run prettier-check
+      - run: yarn run prettier-check
 
   build:
     docker:
@@ -41,7 +38,7 @@ jobs:
       - restore_cache:
           keys:
             - node-cache-{{ .Revision }}
-      - run: npm run build
+      - run: yarn run build
       - save_cache:
           key: build-cache-{{ .BuildNum }}
           paths:

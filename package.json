@@ -6,7 +6,6 @@
   "scripts": {
     "start": "webpack --watch",
     "build": "NODE_ENV=\"production\" webpack",
-    "postinstall": "rm -r node_modules/@types/react-native",
     "lint": "eslint --ext .ts,.tsx src",
     "prettier-check": "prettier -c src/** README.md"
   },
@@ -47,7 +46,7 @@
     "@types/react-json-tree": "^0.6.11",
     "@types/react-router": "^5.0.2",
     "@types/react-router-dom": "^4.3.4",
-    "@types/styled-components": "^4.1.16",
+    "@types/styled-components": "^4.1.18",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
     "awesome-typescript-loader": "^5.2.1",
@@ -74,6 +73,6 @@
     "webpack-cli": "^3.3.5"
   },
   "peerDependencies": {
-    "urql": ">= 1.1.4"
+    "urql": ">= 1.2.0"
   }
 }
