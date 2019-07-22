@@ -4,6 +4,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { spawn } = require("child_process");
 const webpack = require("webpack");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 let tsBuild;
 
@@ -26,6 +27,14 @@ module.exports = {
     extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx"]
   },
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        test: /\.js(\?.*)?$/i,
+        exclude: "panel.js"
+      })
+    ]
+  },
   output: {
     path: `${__dirname}/dist`
   },

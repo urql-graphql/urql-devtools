@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es5",
     "module": "commonjs",
     "lib": ["dom"],
     "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true
   },
   "include": ["src/**/*.ts"]
 }
