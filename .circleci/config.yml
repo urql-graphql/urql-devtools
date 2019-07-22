@@ -58,7 +58,7 @@ jobs:
       - run:
           command: |
             node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error('Tag version does not line up with version in package.json') || process.exit(1))"
-            # npm publish
+            npm publish
 
 workflows:
   version: 2
