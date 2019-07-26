@@ -2,7 +2,8 @@
   "name": "@urql/devtools",
   "version": "0.0.1",
   "description": "The devtools exchange for use with Urql",
-  "main": "dist/exhange.js",
+  "main": "dist/exchange/exchange/index.js",
+  "types": "dist/exchange/exchange/index.d.ts",
   "scripts": {
     "start": "webpack --watch",
     "build": "NODE_ENV=\"production\" webpack",

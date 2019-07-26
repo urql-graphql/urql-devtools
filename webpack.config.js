@@ -36,7 +36,7 @@ module.exports = {
     ]
   },
   output: {
-    path: `${__dirname}/dist`
+    path: `${__dirname}/dist/extension`
   },
   module: {
     rules: [
@@ -95,7 +95,7 @@ module.exports = {
         }
 
         const args = [
-          ...["--project", "tsconfig.exchange.json", "--outDir", "dist"],
+          ...["-p", `${__dirname}/tsconfig.exchange.json`],
           ...(process.env.NODE_ENV === "production" ? [] : ["--watch"])
         ];
         tsBuild = spawn("tsc", args);

@@ -6,7 +6,7 @@ import {
   OperationResult,
   createRequest
 } from "urql";
-import { UrqlEvent, DevtoolsMessage } from "./types";
+import { UrqlEvent, DevtoolsMessage } from "../types";
 
 export const devtoolsExchange: Exchange = ({ client, forward }) => {
   if (process.env.NODE_ENV === "production") {
