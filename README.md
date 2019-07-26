@@ -14,7 +14,7 @@ Features:
 ### Requirements
 
 - [Urql](https://github.com/FormidableLabs/urql) _v1.2.0_ (or later)
-- [Chrome extension]()
+- [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
 
 ### Usage
 
