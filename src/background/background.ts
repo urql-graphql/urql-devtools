@@ -18,8 +18,13 @@ chrome.runtime.onConnect.addListener(port => {
 
     console.log("new client connection on tab", tabId);
     cscriptConnections = { ...cscriptConnections, [tabId]: port };
-
     port.onMessage.addListener(handleClientMessage(tabId));
+
+    // Show extension icon
+    chrome.pageAction.setIcon({ tabId, path: "/assets/icon-32.png" });
+    port.onDisconnect.addListener(() =>
+      chrome.pageAction.setIcon({ tabId, path: "/assets/icon-disabled-32.png" })
+    );
   }
 });
 
