@@ -1,26 +1,29 @@
 import { DevtoolsMessage } from "./types";
 
 /** Connection to background.js */
-let connection: chrome.runtime.Port;
+let connection: chrome.runtime.Port | undefined;
 
-// Listen for init message
+// Listen for init message from exchange
 window.addEventListener("urql-out", e => {
-  console.log("exchange -> content script", e);
   const data = (e as CustomEvent).detail;
 
-  if (data === "init") {
+  if (connection === undefined && data === "init") {
     connection = chrome.runtime.connect({ name: "urql-cscript" });
     connection.onMessage.addListener(handleMessage);
+    connection.onDisconnect.addListener(handleDisconnect);
+    return;
   }
 
-  try {
-    connection.postMessage(data);
-  } catch (err) {
-    console.error(err);
+  if (connection === undefined) {
+    return console.warn("Unable to send message to Urql Devtools extension");
   }
+
+  connection.postMessage(data);
 });
 
-const handleMessage = (message: DevtoolsMessage) => {
-  console.log("message", message);
+const handleMessage = (message: DevtoolsMessage) =>
   window.dispatchEvent(new CustomEvent("urql-in", { detail: message }));
+
+const handleDisconnect = () => {
+  connection = undefined;
 };

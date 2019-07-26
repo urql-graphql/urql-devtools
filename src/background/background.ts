@@ -35,9 +35,6 @@ const handleDevtoolsPageMessage = (
     console.log("New devtools connection to tab", tabId);
     devtoolsConnections = { ...devtoolsConnections, [tabId]: port };
 
-    console.log("executing content script on tab");
-    chrome.tabs.executeScript(tabId, { file: "content_script.js" });
-
     // Forward message to content script
     port.onMessage.addListener(msg => {
       if (cscriptConnections[tabId] === undefined) {
