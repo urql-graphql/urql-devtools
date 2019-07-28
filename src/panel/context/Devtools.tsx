@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, FC, useRef } from "react";
-import { ContentScriptMessage, DevtoolsMessage } from "../../types";
+import { ContentScriptMessage, DevtoolsMessage } from "../../types-old";
+import { DevtoolsPanelConnectionName } from "../../types";
 
 export const DevtoolsContext = createContext<{
   sendMessage: (message: DevtoolsMessage) => void;
@@ -9,7 +10,9 @@ export const DevtoolsContext = createContext<{
 }>(null as any);
 
 export const DevtoolsProvider: FC = ({ children }) => {
-  const connection = useRef(chrome.runtime.connect({ name: "urql-devtools" }));
+  const connection = useRef(
+    chrome.runtime.connect({ name: DevtoolsPanelConnectionName })
+  );
 
   /** Collection of operation events */
   const messageHandlers = useRef<
@@ -35,8 +38,10 @@ export const DevtoolsProvider: FC = ({ children }) => {
       tabId: chrome.devtools.inspectedWindow.tabId
     });
 
-    const handleMessage = (msg: ContentScriptMessage) =>
+    const handleMessage = (msg: ContentScriptMessage) => {
+      console.log(msg);
       Object.values(messageHandlers.current).forEach(h => h(msg));
+    };
 
     connection.current.onMessage.addListener(handleMessage);
     return () => connection.current.onMessage.removeListener(handleMessage);

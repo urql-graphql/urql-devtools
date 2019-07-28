@@ -21,7 +21,7 @@ module.exports = {
     background: `${__dirname}/src/background/background.ts`,
     devtools: `${__dirname}/src/devtools/devtools.ts`,
     panel: `${__dirname}/src/panel/panel.tsx`,
-    content_script: `${__dirname}/src/content_script.ts`
+    content_script: `${__dirname}/src/content_script/index.ts`
   },
   resolve: {
     extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx"]
@@ -42,7 +42,6 @@ module.exports = {
     rules: [
       {
         test: /\.*tsx?$/,
-        exclude: /(exchange\.ts|node_modules)/,
         loader: "awesome-typescript-loader"
       },
       {

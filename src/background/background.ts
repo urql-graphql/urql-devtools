@@ -1,70 +1,57 @@
-import { DevtoolsMessage, ContentScriptMessage } from "../types";
+import { DevtoolsMessage, ContentScriptMessage } from "../types-old";
+import { BackgroundEventTarget } from "./EventBus";
+import {
+  ContentScriptConnectionName,
+  DevtoolsPanelConnectionName
+} from "../types";
 
-/** Connections from devtools.js */
-let devtoolsConnections: Record<string, chrome.runtime.Port> = {};
-/** Connections from content_script.js */
-let cscriptConnections: Record<string, chrome.runtime.Port> = {};
+const targets: Record<number, BackgroundEventTarget> = {};
+
+/** Ensures all messages are forwarded to and from tab connections. */
+const addToTarget = (tabId: number, port: chrome.runtime.Port) => {
+  if (targets[tabId] === undefined) {
+    targets[tabId] = new BackgroundEventTarget();
+  }
+
+  const target = targets[tabId];
+  target.addEventListener(port.name, a => port.postMessage(a));
+  port.onDisconnect.addListener(() => target.removeEventListener(port.name));
+  port.onMessage.addListener(e => target.dispatchEvent(port.name, e));
+};
+
+const handleContentScriptConnection = (port: chrome.runtime.Port) => {
+  const tabId = port!.sender!.tab!.id as number;
+
+  addToTarget(tabId, port);
+
+  chrome.pageAction.setIcon({ tabId, path: "/assets/icon-32.png" });
+  port.onDisconnect.addListener(() =>
+    chrome.pageAction.setIcon({ tabId, path: "/assets/icon-disabled-32.png" })
+  );
+};
+
+const handleDevtoolsPanelConnection = (port: chrome.runtime.Port) => {
+  const initialListener = (msg: any) => {
+    if (msg.type !== "init") {
+      return;
+    }
+
+    const tabId = msg.tabId;
+    addToTarget(msg.tabId, port);
+    port.onMessage.removeListener(initialListener);
+  };
+
+  port.onMessage.addListener(initialListener);
+};
+
+const connectionHandlers: Record<string, (p: chrome.runtime.Port) => void> = {
+  [ContentScriptConnectionName]: handleContentScriptConnection,
+  [DevtoolsPanelConnectionName]: handleDevtoolsPanelConnection
+};
 
 chrome.runtime.onConnect.addListener(port => {
-  // Devtools connection
-  if (port.name === "urql-devtools") {
-    return port.onMessage.addListener(handleDevtoolsPageMessage);
-  }
-
-  // Hook connection
-  if (port.name === "urql-cscript") {
-    // @ts-ignore
-    const tabId = port.sender.tab.id as number;
-
-    console.log("new client connection on tab", tabId);
-    cscriptConnections = { ...cscriptConnections, [tabId]: port };
-    port.onMessage.addListener(handleClientMessage(tabId));
-
-    // Show extension icon
-    chrome.pageAction.setIcon({ tabId, path: "/assets/icon-32.png" });
-    port.onDisconnect.addListener(() =>
-      chrome.pageAction.setIcon({ tabId, path: "/assets/icon-disabled-32.png" })
-    );
-  }
+  console.log(port);
+  console.log(connectionHandlers);
+  const handler = connectionHandlers[port.name];
+  return handler && handler(port);
 });
-
-/** Message from devtools to background.js */
-const handleDevtoolsPageMessage = (
-  msg: DevtoolsMessage,
-  port: chrome.runtime.Port
-) => {
-  // Devtools declares itself
-  if (msg.type === "init") {
-    const tabId = msg.tabId;
-
-    console.log("New devtools connection to tab", tabId);
-    devtoolsConnections = { ...devtoolsConnections, [tabId]: port };
-
-    // Forward message to content script
-    port.onMessage.addListener(msg => {
-      if (cscriptConnections[tabId] === undefined) {
-        return;
-      }
-
-      console.log("sending message to content script", msg);
-      cscriptConnections[tabId].postMessage(msg);
-    });
-  }
-};
-
-/** Message from client for devtools.js */
-const handleClientMessage = (tabId: number) => (data: ContentScriptMessage) => {
-  console.log("message from content script on tabId", tabId);
-  console.log("message contents", data);
-
-  if (devtoolsConnections[tabId] === undefined) {
-    console.warn(
-      "Unable to forward from content script - no devtools connection to tab"
-    );
-    return;
-  }
-
-  // Forward message to devtool
-  const devtoolsConn = devtoolsConnections[tabId];
-  devtoolsConn.postMessage(data);
-};

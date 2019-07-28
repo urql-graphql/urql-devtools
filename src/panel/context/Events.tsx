@@ -23,7 +23,7 @@ import {
   OutgoingOperation,
   IncomingResponse,
   IncomingError
-} from "../../types";
+} from "../../types-old";
 import { DevtoolsContext } from "./Devtools";
 
 export interface EventsContextValue {
@@ -62,16 +62,16 @@ export const EventsProvider: FC = ({ children }) => {
     key: []
   });
 
-  /** Set initial state from cache */
-  useEffect(() => {
-    window.chrome.devtools.inspectedWindow.eval(
-      `window.__urql__.events`,
-      (ops: UrqlEvent[]) => {
-        console.log(ops);
-        setRawEvents(ops);
-      }
-    );
-  }, []);
+  // /** Set initial state from cache */
+  // useEffect(() => {
+  //   window.chrome.devtools.inspectedWindow.eval(
+  //     `window.__urql__.events`,
+  //     (ops: UrqlEvent[]) => {
+  //       console.log(ops);
+  //       setRawEvents(ops);
+  //     }
+  //   );
+  // }, []);
 
   /** Handle incoming events */
   useEffect(() => {
