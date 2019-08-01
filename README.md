@@ -1,47 +1,38 @@
-<div align="center">
-  <img alt="logo" src="https://raw.githubusercontent.com/FormidableLabs/urql-devtools/master/src/assets/icon.svg?sanitize=true" />
-  <h1>Urql Devtools</h1>
-</div>
+<p align="center"><img alt="urql devtools" src="https://raw.githubusercontent.com/FormidableLabs/urql-devtools/master/src/assets/icon.svg?sanitize=true" /></p>
+<h2 align="center"><code>@urql/devtools</code></h2>
+<p align="center">
+<strong>A Chrome devtools extension for <code>urql</code> for monitoring and debugging.</strong>
+</p>
+<br />
 
-A chrome devtools extension for Urql.
+- 🏎️ See operations and responses in real time
+- ❣️ Easily trigger requests via the client
+- 🔍 Test your exchanges in a browser environment
 
-Features:
+## Quick Start Guide
 
-- See operations and responses in real time
-- Easily trigger requests via the client
-- Test your exchanges in a browser environment
-
-### Requirements
-
-- [Urql](https://github.com/FormidableLabs/urql) _v1.2.0_ (or later)
-- [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
-
-### Usage
-
-Install the devtools exchange
+Install [`urql`](https://github.com/FormidableLabs/urql) (>= v1.2) and the [Chrome Extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm).
+Then install the devtools exchange package:
 
 ```sh
-# Yarn
-yarn add -D @urql/devtools
-
-# Npm
-npm i -D @urql/devtools
+yarn add --dev @urql/devtools
+# or
+npm install --save-dev @urql/devtools
 ```
 
-Add the devtools exchange to your Urql client
+And add the devtools exchange to your `urql` client:
 
 ```tsx
 // ...
-import { createClient, fetchExchange, cacheExchange } from "urql";
+import { createClient, defaultExchanges } from "urql";
 import { devtoolsExchange } from "@urql/devtools";
 
-// ...
 const client = createClient({
   url: "http://localhost:3001/graphql",
-  exchanges: [devtoolsExchange, cacheExchange, fetchExchange]
+  exchanges: [devtoolsExchange, ...defaultExchanges]
 });
 ```
 
-### Contributing
+## Contributing
 
 Have experience working with devtools extensions or want to get involved? Check out our [development](./docs/Development.md) docs to get started.
