@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { spawn } = require("child_process");
 const webpack = require("webpack");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 
 let tsBuild;
 
@@ -29,10 +29,16 @@ module.exports = {
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         test: /\.js(\?.*)?$/i,
-        exclude: "panel.js"
-      })
+        parallel: true,
+        sourceMap: true,
+        terserOptions: {
+          output: {
+            comments: false,
+          }
+        },
+      }),
     ]
   },
   output: {
