@@ -44,4 +44,4 @@ const client = createClient({
 
 ### Contributing
 
-Have experience working with devtools extensions or want to get involved? Check out our [development](./docs/Development.md) docs to get started.
+Have experience working with devtools extensions or want to get involved? Check out our [contributing](./CONTRIBUTING.md) docs to get started.
