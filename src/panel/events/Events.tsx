@@ -5,6 +5,7 @@ import { Background } from "../components/Background";
 import { Panel } from "./panels";
 import { EventCard } from "./EventCard";
 import { Filters } from "./Filters";
+import { Headers } from "./Headers";
 
 export const Events = () => {
   const { events, selectedEvent } = useContext(EventsContext);
@@ -29,6 +30,7 @@ export const Events = () => {
     <Container>
       <EventsList>
         <Filters />
+        <Headers />
         {events.map((event, i) => (
           <EventCard
             key={i}

@@ -2,6 +2,7 @@ import React, { FC, useContext, useCallback, MouseEventHandler } from "react";
 import styled, { ThemeContext, css } from "styled-components";
 import { EventsContext } from "../context";
 import { ParsedEvent } from "../types";
+import { smMax, mdMin } from "./constants";
 
 /** Shows basic information about an operation. */
 export const EventCard: FC<{
@@ -78,10 +79,6 @@ const formatDate = (date: number) => {
     d.getSeconds()
   )}`;
 };
-
-// Breakpoints
-const smMax = "399px";
-const mdMin = "400px";
 
 const getActiveStyles = (p: { isActive: boolean }) => {
   return (
