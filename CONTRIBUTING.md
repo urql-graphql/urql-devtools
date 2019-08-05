@@ -22,7 +22,8 @@ Run `yarn start` to initiate the Webpack and TypeScript build (for the extension
 yarn start
 ```
 
-Navigate to [chrome://extensions](chrome://extensions), choose _Load unpacked_ and select the _dist_ folder in the root of the repo.
+Navigate to [chrome://extensions](chrome://extensions), toggle `Developer mode` on,
+choose _Load unpacked_ and select the _dist_ folder in the root of the repo.
 
 ### Start an urql example repo
 
