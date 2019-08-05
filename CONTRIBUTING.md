@@ -23,7 +23,7 @@ yarn start
 ```
 
 Navigate to [chrome://extensions](chrome://extensions), toggle `Developer mode` on,
-choose _Load unpacked_ and select the _dist_ folder in the root of the repo.
+choose _Load unpacked_ and select the _dist/extension_ folder in the root of the repo.
 
 ### Start an urql example repo
 
