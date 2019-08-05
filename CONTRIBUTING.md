@@ -35,13 +35,13 @@ Change the client configuration in the example to look like this:
 
 ```tsx
 // ...
-import { createClient, fetchExchange, cacheExchange } from "urql";
+import { createClient, defaultExchanges } from "urql";
 import { devtoolsExchange } from "<path-to-devtools-dist>/exchange";
 
 // ...
 const client = createClient({
   url: "http://localhost:3001/graphql",
-  exchanges: [devtoolsExchange, cacheExchange, fetchExchange]
+  exchanges: [devtoolsExchange, ...defaultExchanges]
 });
 ```
 
