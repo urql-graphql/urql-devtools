@@ -35,6 +35,7 @@ module.exports = {
         sourceMap: true,
         terserOptions: {
           output: {
+            ascii_only: true,
             comments: false,
           }
         },
