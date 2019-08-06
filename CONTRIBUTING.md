@@ -22,7 +22,8 @@ Run `yarn start` to initiate the Webpack and TypeScript build (for the extension
 yarn start
 ```
 
-Navigate to [chrome://extensions](chrome://extensions), choose _Load unpacked_ and select the _dist_ folder in the root of the repo.
+Navigate to [chrome://extensions](chrome://extensions), toggle `Developer mode` on,
+choose _Load unpacked_ and select the _dist/extension_ folder in the root of the repo.
 
 ### Start an urql example repo
 
@@ -34,13 +35,18 @@ Change the client configuration in the example to look like this:
 
 ```tsx
 // ...
-import { createClient, fetchExchange, cacheExchange } from "urql";
+import {
+  cacheExchange,
+  createClient,
+  dedupExchange,
+  fetchExchange
+} from "urql";
 import { devtoolsExchange } from "<path-to-devtools-dist>/exchange";
 
 // ...
 const client = createClient({
   url: "http://localhost:3001/graphql",
-  exchanges: [devtoolsExchange, cacheExchange, fetchExchange]
+  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange]
 });
 ```
 

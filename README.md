@@ -32,16 +32,21 @@ Add the devtools exchange to your Urql client
 
 ```tsx
 // ...
-import { createClient, fetchExchange, cacheExchange } from "urql";
+import {
+  cacheExchange,
+  createClient,
+  dedupExchange,
+  fetchExchange
+} from "urql";
 import { devtoolsExchange } from "@urql/devtools";
 
 // ...
 const client = createClient({
   url: "http://localhost:3001/graphql",
-  exchanges: [devtoolsExchange, cacheExchange, fetchExchange]
+  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange]
 });
 ```
 
 ### Contributing
 
-Have experience working with devtools extensions or want to get involved? Check out our [development](./docs/Development.md) docs to get started.
+Have experience working with devtools extensions or want to get involved? Check out our [contributing](./CONTRIBUTING.md) docs to get started.
