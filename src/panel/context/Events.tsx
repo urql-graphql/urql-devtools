@@ -18,16 +18,12 @@ import {
   ParsedSubscriptionEvent,
   ParsedTeardownEvent
 } from "../types";
-import {
-  UrqlEvent,
-  OutgoingOperation,
-  IncomingResponse,
-  IncomingError
-} from "../../types-old";
 import { DevtoolsContext } from "./Devtools";
 import {
   DevtoolsExchangeOutgoingMessage,
   OperationMessage,
+  OperationResponseMessage,
+  OperationErrorMessage,
   InitMessage
 } from "@urql/devtools";
 
@@ -158,7 +154,7 @@ export const EventsProvider: FC = ({ children }) => {
 
 const parseOperation = (
   allEvents: PresentedEvent[],
-  event: OutgoingOperation
+  event: OperationMessage
 ):
   | ParsedQueryEvent
   | ParsedMutationEvent
@@ -193,9 +189,9 @@ const parseOperation = (
     )
     .find(
       e =>
-        (e as IncomingError | IncomingResponse).data.operation.key ===
-        event.data.key
-    ) as IncomingError | IncomingResponse | undefined;
+        (e as OperationErrorMessage | OperationResponseMessage).data.operation
+          .key === event.data.key
+    ) as OperationErrorMessage | OperationResponseMessage | undefined;
   const responseData =
     responseEvent === undefined
       ? {}
@@ -239,7 +235,7 @@ const parseOperation = (
 };
 
 const parseResponse = (
-  event: IncomingResponse | IncomingError
+  event: OperationResponseMessage | OperationErrorMessage
 ): ParsedResponseEvent | ParsedErrorEvent => {
   const shared = {
     key: event.data.operation.key,
