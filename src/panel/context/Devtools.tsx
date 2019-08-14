@@ -1,35 +1,50 @@
-import React, { createContext, useEffect, FC, useRef } from "react";
-import { ContentScriptMessage, DevtoolsMessage } from "../../types-old";
-import { DevtoolsPanelConnectionName } from "../../types";
+import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
+import React, {
+  createContext,
+  useEffect,
+  FC,
+  useRef,
+  useCallback,
+  useState
+} from "react";
+import { DevtoolsPanelConnectionName, PanelOutgoingMessage } from "../../types";
 
-export const DevtoolsContext = createContext<{
-  sendMessage: (message: DevtoolsMessage) => void;
+interface DevtoolsContextType {
+  sendMessage: (message: PanelOutgoingMessage) => void;
   addMessageHandler: (
-    cb: (message: ContentScriptMessage) => void
+    cb: (message: DevtoolsExchangeOutgoingMessage) => void
   ) => () => void;
-}>(null as any);
+  clientConnected: boolean;
+}
+
+export const DevtoolsContext = createContext<DevtoolsContextType>(null as any);
 
 export const DevtoolsProvider: FC = ({ children }) => {
+  const [clientConnected, setClientConnected] = useState(false);
   const connection = useRef(
     chrome.runtime.connect({ name: DevtoolsPanelConnectionName })
   );
 
   /** Collection of operation events */
   const messageHandlers = useRef<
-    Record<string, (msg: ContentScriptMessage) => void>
+    Record<string, (msg: DevtoolsExchangeOutgoingMessage) => void>
   >({});
 
-  const sendMessage = (msg: DevtoolsMessage) =>
-    connection.current.postMessage(msg);
+  const sendMessage = useCallback<DevtoolsContextType["sendMessage"]>(
+    msg => connection.current.postMessage(msg),
+    []
+  );
 
-  const addMessageHandler = (callback: (msg: ContentScriptMessage) => void) => {
+  const addMessageHandler = useCallback<
+    DevtoolsContextType["addMessageHandler"]
+  >(callback => {
     const i = index++;
     messageHandlers.current[i] = callback;
 
     return () => {
       delete messageHandlers.current[i];
     };
-  };
+  }, []);
 
   useEffect(() => {
     // Relay the tab ID to the background page
@@ -38,17 +53,25 @@ export const DevtoolsProvider: FC = ({ children }) => {
       tabId: chrome.devtools.inspectedWindow.tabId
     });
 
-    const handleMessage = (msg: ContentScriptMessage) => {
-      console.log(msg);
+    const handleMessage = (msg: DevtoolsExchangeOutgoingMessage) =>
       Object.values(messageHandlers.current).forEach(h => h(msg));
-    };
 
     connection.current.onMessage.addListener(handleMessage);
     return () => connection.current.onMessage.removeListener(handleMessage);
   }, []);
 
+  // Listen for client init connection
+  useEffect(() => {
+    addMessageHandler(
+      message => message.type === "init" && setClientConnected(true)
+    );
+  }, [addMessageHandler, setClientConnected]);
+  console.log(clientConnected);
+
   return (
-    <DevtoolsContext.Provider value={{ sendMessage, addMessageHandler }}>
+    <DevtoolsContext.Provider
+      value={{ sendMessage, addMessageHandler, clientConnected }}
+    >
       {children}
     </DevtoolsContext.Provider>
   );

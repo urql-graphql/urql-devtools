@@ -25,6 +25,11 @@ import {
   IncomingError
 } from "../../types-old";
 import { DevtoolsContext } from "./Devtools";
+import {
+  DevtoolsExchangeOutgoingMessage,
+  OperationMessage,
+  InitMessage
+} from "@urql/devtools";
 
 export interface EventsContextValue {
   events: ParsedEvent[];
@@ -48,11 +53,13 @@ interface FilterState {
   key: number[];
 }
 
+type PresentedEvent = Exclude<DevtoolsExchangeOutgoingMessage, InitMessage>;
+
 export const EventsContext = createContext<EventsContextValue>(null as any);
 
 export const EventsProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
-  const [rawEvents, setRawEvents] = useState<UrqlEvent[]>([]);
+  const [rawEvents, setRawEvents] = useState<PresentedEvent[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<ParsedEvent | undefined>(
     undefined
   );
@@ -80,7 +87,7 @@ export const EventsProvider: FC = ({ children }) => {
         return;
       }
 
-      setRawEvents(o => [msg, ...o]);
+      setRawEvents(o => [msg as PresentedEvent, ...o]);
     });
   }, []);
 
@@ -150,7 +157,7 @@ export const EventsProvider: FC = ({ children }) => {
 };
 
 const parseOperation = (
-  allEvents: UrqlEvent[],
+  allEvents: PresentedEvent[],
   event: OutgoingOperation
 ):
   | ParsedQueryEvent

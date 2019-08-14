@@ -1,8 +1,8 @@
-import { DevtoolsMessage, ContentScriptMessage } from "../types-old";
 import { BackgroundEventTarget } from "./EventBus";
 import {
   ContentScriptConnectionName,
-  DevtoolsPanelConnectionName
+  DevtoolsPanelConnectionName,
+  PanelOutgoingMessage
 } from "../types";
 
 const targets: Record<number, BackgroundEventTarget> = {};
@@ -31,14 +31,22 @@ const handleContentScriptConnection = (port: chrome.runtime.Port) => {
 };
 
 const handleDevtoolsPanelConnection = (port: chrome.runtime.Port) => {
-  const initialListener = (msg: any) => {
+  const initialListener = (msg: PanelOutgoingMessage) => {
     if (msg.type !== "init") {
       return;
     }
 
-    const tabId = msg.tabId;
     addToTarget(msg.tabId, port);
     port.onMessage.removeListener(initialListener);
+
+    // Simulate contentscript connection if CS is already connected
+    if (
+      targets[msg.tabId]
+        .connectedSources()
+        .includes(ContentScriptConnectionName)
+    ) {
+      port.postMessage({ type: "init" });
+    }
   };
 
   port.onMessage.addListener(initialListener);
@@ -50,8 +58,6 @@ const connectionHandlers: Record<string, (p: chrome.runtime.Port) => void> = {
 };
 
 chrome.runtime.onConnect.addListener(port => {
-  console.log(port);
-  console.log(connectionHandlers);
   const handler = connectionHandlers[port.name];
   return handler && handler(port);
 });
