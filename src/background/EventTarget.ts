@@ -1,3 +1,4 @@
+/** A shared EventTarget for dispatching messages to connected peers. */
 export class BackgroundEventTarget<T extends any = any> {
   private listeners: Record<string, Handler<T> | undefined> = {};
 

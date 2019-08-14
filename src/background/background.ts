@@ -1,10 +1,11 @@
-import { BackgroundEventTarget } from "./EventBus";
+import { BackgroundEventTarget } from "./EventTarget";
 import {
   ContentScriptConnectionName,
   DevtoolsPanelConnectionName,
   PanelOutgoingMessage
 } from "../types";
 
+/** Collection of targets grouped by tabId. */
 const targets: Record<number, BackgroundEventTarget> = {};
 
 /** Ensures all messages are forwarded to and from tab connections. */
@@ -19,6 +20,7 @@ const addToTarget = (tabId: number, port: chrome.runtime.Port) => {
   port.onMessage.addListener(e => target.dispatchEvent(port.name, e));
 };
 
+/** Handles initial connection from content script. */
 const handleContentScriptConnection = (port: chrome.runtime.Port) => {
   const tabId = port!.sender!.tab!.id as number;
 
@@ -30,6 +32,7 @@ const handleContentScriptConnection = (port: chrome.runtime.Port) => {
   );
 };
 
+/** Handles initial connection from devtools panel */
 const handleDevtoolsPanelConnection = (port: chrome.runtime.Port) => {
   const initialListener = (msg: PanelOutgoingMessage) => {
     if (msg.type !== "init") {
