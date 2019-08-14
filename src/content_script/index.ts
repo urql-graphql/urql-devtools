@@ -2,7 +2,7 @@ import {
   DevtoolsExchangeOutgoingMessage,
   DevtoolsExchangeOutgoingEventType,
   DevtoolsExchangeIncomingEventType
-} from "@urql/devtools/dist/index";
+} from "@urql/devtools";
 import { ContentScriptConnectionName } from "../types";
 
 /** Connection to background.js */
