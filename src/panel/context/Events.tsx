@@ -54,7 +54,7 @@ type PresentedEvent = Exclude<DevtoolsExchangeOutgoingMessage, InitMessage>;
 export const EventsContext = createContext<EventsContextValue>(null as any);
 
 export const EventsProvider: FC = ({ children }) => {
-  const { addMessageHandler, clientConnected } = useContext(DevtoolsContext);
+  const { addMessageHandler } = useContext(DevtoolsContext);
   const [rawEvents, setRawEvents] = useState<PresentedEvent[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<ParsedEvent | undefined>(
     undefined
@@ -65,15 +65,16 @@ export const EventsProvider: FC = ({ children }) => {
     key: []
   });
 
-  useEffect(() => {
-    if (!clientConnected) {
-      setRawEvents([]);
-    }
-  }, [clientConnected]);
-
   /** Handle incoming events */
   useEffect(() => {
     return addMessageHandler(msg => {
+      // When using an effect on client connection true --> false
+      // something in the lifecycle seems to get lost... That's why
+      // I opted for this solution.
+      if (msg.type === "disconnect") {
+        setRawEvents(() => []);
+      }
+
       if (!["operation", "response", "error"].includes(msg.type)) {
         return;
       }
