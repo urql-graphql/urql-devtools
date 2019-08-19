@@ -9,6 +9,13 @@ import React, {
   useCallback
 } from "react";
 import {
+  DevtoolsExchangeOutgoingMessage,
+  OperationMessage,
+  OperationResponseMessage,
+  OperationErrorMessage,
+  InitMessage
+} from "@urql/devtools";
+import {
   ParsedEvent,
   ParsedMutationEvent,
   ParsedQueryEvent,
@@ -19,13 +26,6 @@ import {
   ParsedTeardownEvent
 } from "../types";
 import { DevtoolsContext } from "./Devtools";
-import {
-  DevtoolsExchangeOutgoingMessage,
-  OperationMessage,
-  OperationResponseMessage,
-  OperationErrorMessage,
-  InitMessage
-} from "@urql/devtools";
 
 export interface EventsContextValue {
   events: ParsedEvent[];
@@ -54,7 +54,7 @@ type PresentedEvent = Exclude<DevtoolsExchangeOutgoingMessage, InitMessage>;
 export const EventsContext = createContext<EventsContextValue>(null as any);
 
 export const EventsProvider: FC = ({ children }) => {
-  const { addMessageHandler } = useContext(DevtoolsContext);
+  const { addMessageHandler, clientConnected } = useContext(DevtoolsContext);
   const [rawEvents, setRawEvents] = useState<PresentedEvent[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<ParsedEvent | undefined>(
     undefined
@@ -65,16 +65,11 @@ export const EventsProvider: FC = ({ children }) => {
     key: []
   });
 
-  // /** Set initial state from cache */
-  // useEffect(() => {
-  //   window.chrome.devtools.inspectedWindow.eval(
-  //     `window.__urql__.events`,
-  //     (ops: UrqlEvent[]) => {
-  //       console.log(ops);
-  //       setRawEvents(ops);
-  //     }
-  //   );
-  // }, []);
+  useEffect(() => {
+    if (!clientConnected) {
+      setRawEvents([]);
+    }
+  }, [clientConnected]);
 
   /** Handle incoming events */
   useEffect(() => {

@@ -64,7 +64,7 @@ export const RequestProvider: FC = ({ children }) => {
   // Get schema
   useEffect(() => {
     chrome.devtools.inspectedWindow.eval(
-      "window.__urql__.client.url",
+      "window.__urql__.url",
       async endpoint => {
         const link = new HttpLink({
           uri: endpoint as string,
