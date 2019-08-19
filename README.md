@@ -1,6 +1,13 @@
 <div align="center">
   <img alt="logo" src="https://raw.githubusercontent.com/FormidableLabs/urql-devtools/master/src/assets/icon.svg?sanitize=true" />
   <h1>Urql Devtools</h1>
+  
+  <a href="https://spectrum.chat/urql">
+    <img alt="Spectrum badge" src="https://withspectrum.github.io/badge/badge.svg" />
+  </a>
+
+  <br />
+  <br />
 </div>
 
 A chrome devtools extension for Urql.
