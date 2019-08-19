@@ -1,9 +1,9 @@
-import { BackgroundEventTarget } from "./EventTarget";
 import {
   ContentScriptConnectionName,
   DevtoolsPanelConnectionName,
   PanelOutgoingMessage
 } from "../types";
+import { BackgroundEventTarget } from "./EventTarget";
 
 /** Collection of targets grouped by tabId. */
 const targets: Record<number, BackgroundEventTarget> = {};
@@ -15,21 +15,24 @@ const addToTarget = (tabId: number, port: chrome.runtime.Port) => {
   }
 
   const target = targets[tabId];
-  target.addEventListener(port.name, a => port.postMessage(a));
-  port.onDisconnect.addListener(() => target.removeEventListener(port.name));
-  port.onMessage.addListener(e => target.dispatchEvent(port.name, e));
+  const portName = port.name;
+  target.addEventListener(portName, a => port.postMessage(a));
+  port.onMessage.addListener(e => target.dispatchEvent(portName, e));
+  port.onDisconnect.addListener(() => {
+    target.dispatchEvent(portName, { type: "disconnect" });
+    chrome.pageAction.setIcon({ tabId, path: "/assets/icon-disabled-32.png" });
+  });
 };
 
 /** Handles initial connection from content script. */
 const handleContentScriptConnection = (port: chrome.runtime.Port) => {
-  const tabId = port!.sender!.tab!.id as number;
+  if (port && port.sender && port.sender.tab && port.sender.tab.id) {
+    const tabId = port.sender.tab.id as number;
 
-  addToTarget(tabId, port);
+    addToTarget(tabId, port);
 
-  chrome.pageAction.setIcon({ tabId, path: "/assets/icon-32.png" });
-  port.onDisconnect.addListener(() =>
-    chrome.pageAction.setIcon({ tabId, path: "/assets/icon-disabled-32.png" })
-  );
+    chrome.pageAction.setIcon({ tabId, path: "/assets/icon-32.png" });
+  }
 };
 
 /** Handles initial connection from devtools panel */
