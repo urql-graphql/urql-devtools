@@ -1,4 +1,5 @@
 import { map, pipe, tap, toPromise } from "wonka";
+
 import {
   Exchange,
   Client,
@@ -6,12 +7,12 @@ import {
   OperationResult,
   createRequest
 } from "urql";
+
 import {
   DevtoolsExchangeOutgoingMessage,
-  DevtoolsExchangeOutgoingEventType,
-  ExecuteRequestMessage,
-  DevtoolsExchangeIncomingEventType
+  ExecuteRequestMessage
 } from "./types";
+
 import { getDisplayName } from "./getDisplayName";
 
 export const devtoolsExchange: Exchange = ({ client, forward }) => {
@@ -24,16 +25,16 @@ export const devtoolsExchange: Exchange = ({ client, forward }) => {
   }
 
   // Expose graphql url for introspection
-  window.__urql__.url = client.url;
+  window.__urql__ = {
+    client,
+    events: []
+  };
 
   // Listen for messages from content script
-  window.addEventListener(
-    DevtoolsExchangeIncomingEventType,
-    (e: CustomEvent) => {
-      const handler = messageHandlers[e.detail.type];
-      handler && handler(client)(e.detail);
-    }
-  );
+  window.addEventListener("urql-in", (e: any) => {
+    const handler = (messageHandlers as any)[e.detail.type];
+    handler && handler(client)(e.detail);
+  });
   sendToContentScript({ type: "init" });
 
   return ops$ => {
@@ -84,6 +85,7 @@ const addOperationContext = (op: Operation): Operation => {
 const handleOperation = <T extends Operation | OperationResult>(op: T) => {
   const event = JSON.parse(JSON.stringify(parseStreamData(op))); // Serialization required for some events (such as error)
   sendToContentScript(event);
+  window.__urql__.events = [event, ...window.__urql__.events];
 };
 
 /** Handles execute request messages. */
@@ -131,6 +133,4 @@ const parseStreamData = <T extends Operation | OperationResult>(op: T) => {
 };
 
 const sendToContentScript = (detail: DevtoolsExchangeOutgoingMessage) =>
-  window.dispatchEvent(
-    new CustomEvent(DevtoolsExchangeOutgoingEventType, { detail })
-  );
+  window.dispatchEvent(new CustomEvent("urql-out", { detail }));
