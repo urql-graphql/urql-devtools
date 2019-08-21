@@ -8,10 +8,7 @@ import {
   createRequest
 } from "urql";
 
-import {
-  DevtoolsExchangeOutgoingMessage,
-  ExecuteRequestMessage
-} from "./types";
+import { DevtoolsExchangeOutgoingMessage } from "./types";
 
 import { getDisplayName } from "./getDisplayName";
 
@@ -30,12 +27,12 @@ export const devtoolsExchange: Exchange = ({ client, forward }) => {
     events: []
   };
 
-  // Listen for messages from content script
-  window.addEventListener("urql-in", (e: any) => {
-    const handler = (messageHandlers as any)[e.detail.type];
-    handler && handler(client)(e.detail);
-  });
   sendToContentScript({ type: "init" });
+
+  // Listen for messages
+  window.addEventListener("urql-in", e =>
+    handleMessage(client)((e as CustomEvent).detail)
+  );
 
   return ops$ => {
     return pipe(
@@ -88,23 +85,19 @@ const handleOperation = <T extends Operation | OperationResult>(op: T) => {
   window.__urql__.events = [event, ...window.__urql__.events];
 };
 
-/** Handles execute request messages. */
-const requestHandler = (client: Client) => (message: ExecuteRequestMessage) => {
-  const isMutation = /(^|\W)+mutation\W/.test(message.query);
-  const execFn = isMutation ? client.executeMutation : client.executeQuery;
+const handleMessage = (client: Client) => (message: any) => {
+  if (message.type === "request") {
+    const isMutation = /(^|\W)+mutation\W/.test(message.query);
+    const execFn = isMutation ? client.executeMutation : client.executeQuery;
 
-  pipe(
-    execFn(createRequest(message.query), {
-      meta: { source: "Devtools" }
-    }),
-    toPromise
-  );
+    pipe(
+      execFn(createRequest(message.query), {
+        meta: { source: "Devtools" }
+      }),
+      toPromise
+    );
+  }
 };
-
-/** Map of handlers for incoming messages. */
-const messageHandlers = {
-  request: requestHandler
-} as const;
 
 /** Creates a DevtoolsExchangeOutgoingMessage from operations/responses. */
 const parseStreamData = <T extends Operation | OperationResult>(op: T) => {
