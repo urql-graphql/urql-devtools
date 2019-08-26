@@ -1,10 +1,10 @@
+const { spawn } = require("child_process");
 const EventHooksPlugin = require("event-hooks-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const { spawn } = require("child_process");
 const webpack = require("webpack");
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 let tsBuild;
 
@@ -36,14 +36,14 @@ module.exports = {
         terserOptions: {
           output: {
             ascii_only: true,
-            comments: false,
+            comments: false
           }
-        },
-      }),
+        }
+      })
     ]
   },
   output: {
-    path: `${__dirname}/dist/extension`
+    path: `${__dirname}/dist`
   },
   module: {
     rules: [
@@ -62,9 +62,7 @@ module.exports = {
       /graphql-language-service-interface[\/\\]dist/,
       /\.js$/
     ),
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ["**/*", "!exchange.js"]
-    }),
+    new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       { from: "src/assets/", to: "assets/" },
       {
@@ -92,23 +90,6 @@ module.exports = {
       template: `${__dirname}/src/panel/panel.html`,
       filename: "panel.html",
       chunks: ["panel"]
-    }),
-    new EventHooksPlugin({
-      compile: () => {
-        // Start tsc for exchange on first compile
-        if (tsBuild !== undefined) {
-          return;
-        }
-
-        const args = [
-          ...["-p", `${__dirname}/tsconfig.exchange.json`],
-          ...(process.env.NODE_ENV === "production" ? [] : ["--watch"])
-        ];
-        tsBuild = spawn("tsc", args);
-        tsBuild.stdout.on("data", d => console.log(d.toString()));
-        tsBuild.stderr.on("data", d => console.log(d.toString()));
-        tsBuild.on("exit", () => console.log("spawned process killed"));
-      }
     })
   ]
 };

@@ -2,8 +2,6 @@
   "name": "@urql/devtools-chrome-extension",
   "version": "0.0.3",
   "description": "The Urql devtools chrome extension",
-  "main": "dist/exchange/exchange/index.js",
-  "types": "dist/exchange/exchange/index.d.ts",
   "scripts": {
     "start": "webpack --watch",
     "build": "NODE_ENV=\"production\" webpack",
