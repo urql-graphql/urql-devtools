@@ -1,6 +1,13 @@
 <div align="center">
   <img alt="logo" src="https://raw.githubusercontent.com/FormidableLabs/urql-devtools/master/src/assets/icon.svg?sanitize=true" />
   <h1>Urql Devtools</h1>
+  
+  <a href="https://spectrum.chat/urql">
+    <img alt="Spectrum badge" src="https://withspectrum.github.io/badge/badge.svg" />
+  </a>
+
+  <br />
+  <br />
 </div>
 
 A chrome devtools extension for Urql.
@@ -32,16 +39,21 @@ Add the devtools exchange to your Urql client
 
 ```tsx
 // ...
-import { createClient, fetchExchange, cacheExchange } from "urql";
+import {
+  cacheExchange,
+  createClient,
+  dedupExchange,
+  fetchExchange
+} from "urql";
 import { devtoolsExchange } from "@urql/devtools";
 
 // ...
 const client = createClient({
   url: "http://localhost:3001/graphql",
-  exchanges: [devtoolsExchange, cacheExchange, fetchExchange]
+  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange]
 });
 ```
 
 ### Contributing
 
-Have experience working with devtools extensions or want to get involved? Check out our [development](./docs/Development.md) docs to get started.
+Have experience working with devtools extensions or want to get involved? Check out our [contributing](./CONTRIBUTING.md) docs to get started.
