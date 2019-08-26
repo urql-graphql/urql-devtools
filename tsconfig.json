@@ -9,5 +9,5 @@
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src"]
 }

@@ -9,6 +9,14 @@ import React, {
   useCallback
 } from "react";
 import {
+  DevtoolsExchangeOutgoingMessage,
+  OperationMessage,
+  OperationResponseMessage,
+  OperationErrorMessage,
+  DisconnectMessage,
+  InitMessage
+} from "@urql/devtools";
+import {
   ParsedEvent,
   ParsedMutationEvent,
   ParsedQueryEvent,
@@ -18,12 +26,6 @@ import {
   ParsedSubscriptionEvent,
   ParsedTeardownEvent
 } from "../types";
-import {
-  UrqlEvent,
-  OutgoingOperation,
-  IncomingResponse,
-  IncomingError
-} from "../../types";
 import { DevtoolsContext } from "./Devtools";
 
 export interface EventsContextValue {
@@ -48,11 +50,16 @@ interface FilterState {
   key: number[];
 }
 
+type PresentedEvent = Exclude<
+  DevtoolsExchangeOutgoingMessage,
+  InitMessage | DisconnectMessage
+>;
+
 export const EventsContext = createContext<EventsContextValue>(null as any);
 
 export const EventsProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
-  const [rawEvents, setRawEvents] = useState<UrqlEvent[]>([]);
+  const [rawEvents, setRawEvents] = useState<PresentedEvent[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<ParsedEvent | undefined>(
     undefined
   );
@@ -62,25 +69,21 @@ export const EventsProvider: FC = ({ children }) => {
     key: []
   });
 
-  /** Set initial state from cache */
-  useEffect(() => {
-    window.chrome.devtools.inspectedWindow.eval(
-      `window.__urql__.events`,
-      (ops: UrqlEvent[]) => {
-        console.log(ops);
-        setRawEvents(ops);
-      }
-    );
-  }, []);
-
   /** Handle incoming events */
   useEffect(() => {
     return addMessageHandler(msg => {
+      // When using an effect on client connection true --> false
+      // something in the lifecycle seems to get lost... That's why
+      // I opted for this solution.
+      if (msg.type === "disconnect") {
+        setRawEvents(() => []);
+      }
+
       if (!["operation", "response", "error"].includes(msg.type)) {
         return;
       }
 
-      setRawEvents(o => [msg, ...o]);
+      setRawEvents(o => [msg as PresentedEvent, ...o]);
     });
   }, []);
 
@@ -150,8 +153,8 @@ export const EventsProvider: FC = ({ children }) => {
 };
 
 const parseOperation = (
-  allEvents: UrqlEvent[],
-  event: OutgoingOperation
+  allEvents: PresentedEvent[],
+  event: OperationMessage
 ):
   | ParsedQueryEvent
   | ParsedMutationEvent
@@ -186,9 +189,9 @@ const parseOperation = (
     )
     .find(
       e =>
-        (e as IncomingError | IncomingResponse).data.operation.key ===
-        event.data.key
-    ) as IncomingError | IncomingResponse | undefined;
+        (e as OperationErrorMessage | OperationResponseMessage).data.operation
+          .key === event.data.key
+    ) as OperationErrorMessage | OperationResponseMessage | undefined;
   const responseData =
     responseEvent === undefined
       ? {}
@@ -232,7 +235,7 @@ const parseOperation = (
 };
 
 const parseResponse = (
-  event: IncomingResponse | IncomingError
+  event: OperationResponseMessage | OperationErrorMessage
 ): ParsedResponseEvent | ParsedErrorEvent => {
   const shared = {
     key: event.data.operation.key,

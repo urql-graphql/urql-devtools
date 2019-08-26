@@ -42,10 +42,11 @@ export const RequestProvider: FC = ({ children }) => {
   // Listen for response for devtools
   useEffect(() => {
     return addMessageHandler(e => {
-      console.log("source", e.data);
       if (
         !fetching ||
         e.type === "operation" ||
+        e.type === "init" ||
+        e.type === "disconnect" ||
         (e.data.operation.context.meta as any).source !== "Devtools"
       ) {
         return;
@@ -64,7 +65,7 @@ export const RequestProvider: FC = ({ children }) => {
   // Get schema
   useEffect(() => {
     chrome.devtools.inspectedWindow.eval(
-      "window.__urql__.client.url",
+      "window.__urql__.url",
       async endpoint => {
         const link = new HttpLink({
           uri: endpoint as string,
