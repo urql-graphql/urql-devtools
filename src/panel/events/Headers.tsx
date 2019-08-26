@@ -27,6 +27,7 @@ const OperationName = styled(BaseTitle)`
 const OperationTime = styled(BaseTitle)`
   font-size: 13px;
   order: 4;
+  text-align: right;
   width: 20%;
 `;
 
