@@ -481,8 +481,12 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@urql/devtools@../urql-devtools-exchange/":
-  version "1.0.0"
+"@urql/devtools@~0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@urql/devtools/-/devtools-0.0.3.tgz#55d88a4ef3aa1585242ea62b3bae5b0f5e1c0bc0"
+  integrity sha512-gHBYgJavlfObYKJchvJD7iQuWfO/mzM+rZZCovb+Rqvlu3uOxgOr2ek1Ogk0QaT123OSdD4GNozQe5deT6UKPg==
+  dependencies:
+    wonka "^3.2.0"
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
@@ -8102,6 +8106,11 @@ wonka@^3.0.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/wonka/-/wonka-3.1.1.tgz#c948e8299468dd87eb0d6fc9b5647f7848a85af2"
   integrity sha512-UT65glpq1Bl9DaLwMJp6/EvsL+juqdkvJpAb2xsmUqmWLPkwIGB0/kIh8DHr3dem0UXHcgIDBizmH3xnnScguA==
+
+wonka@^3.2.0:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/wonka/-/wonka-3.2.1.tgz#f66123fabbb260f23a4e89f1526317169203e258"
+  integrity sha512-LpquZ9PJtYJ31AlMPp5tEba1y+S+wUmY7OyFLGZCmGSNO1ZOTTZGp/HbieFzP5fVJ9fWXCus3ecgDjwAssHSGg==
 
 wordwrap@~1.0.0:
   version "1.0.0"
