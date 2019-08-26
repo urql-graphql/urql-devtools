@@ -46,6 +46,7 @@ export const RequestProvider: FC = ({ children }) => {
         !fetching ||
         e.type === "operation" ||
         e.type === "init" ||
+        e.type === "disconnect" ||
         (e.data.operation.context.meta as any).source !== "Devtools"
       ) {
         return;

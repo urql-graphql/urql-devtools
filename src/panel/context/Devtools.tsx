@@ -69,7 +69,6 @@ export const DevtoolsProvider: FC = ({ children }) => {
       message => message.type === "disconnect" && setClientConnected(false)
     );
   }, [addMessageHandler, setClientConnected]);
-  console.log(clientConnected);
 
   return (
     <DevtoolsContext.Provider

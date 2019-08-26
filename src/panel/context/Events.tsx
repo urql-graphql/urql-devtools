@@ -13,6 +13,7 @@ import {
   OperationMessage,
   OperationResponseMessage,
   OperationErrorMessage,
+  DisconnectMessage,
   InitMessage
 } from "@urql/devtools";
 import {
@@ -49,7 +50,10 @@ interface FilterState {
   key: number[];
 }
 
-type PresentedEvent = Exclude<DevtoolsExchangeOutgoingMessage, InitMessage>;
+type PresentedEvent = Exclude<
+  DevtoolsExchangeOutgoingMessage,
+  InitMessage | DisconnectMessage
+>;
 
 export const EventsContext = createContext<EventsContextValue>(null as any);
 
