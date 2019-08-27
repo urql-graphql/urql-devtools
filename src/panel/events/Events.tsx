@@ -28,7 +28,6 @@ export const Events = () => {
 
   const body = React.useMemo(() => {
     if (events.length !== 0) {
-      // TODO
       return <NoEvents>No Events</NoEvents>;
     }
 
