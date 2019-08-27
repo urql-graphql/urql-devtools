@@ -21,38 +21,8 @@ Features:
 ### Requirements
 
 - [Urql](https://github.com/FormidableLabs/urql) _v1.2.0_ (or later)
+- [Devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange)
 - [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
-
-### Usage
-
-Install the devtools exchange
-
-```sh
-# Yarn
-yarn add -D @urql/devtools
-
-# Npm
-npm i -D @urql/devtools
-```
-
-Add the devtools exchange to your Urql client
-
-```tsx
-// ...
-import {
-  cacheExchange,
-  createClient,
-  dedupExchange,
-  fetchExchange
-} from "urql";
-import { devtoolsExchange } from "@urql/devtools";
-
-// ...
-const client = createClient({
-  url: "http://localhost:3001/graphql",
-  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange]
-});
-```
 
 ### Contributing
 
