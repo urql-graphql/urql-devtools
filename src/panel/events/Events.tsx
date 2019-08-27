@@ -26,9 +26,14 @@ export const Events = () => {
     };
   }, []);
 
-  return (
-    <Container>
-      <EventsList>
+  const body = React.useMemo(() => {
+    if (events.length !== 0) {
+      // TODO
+      return <NoEvents>No Events</NoEvents>;
+    }
+
+    return (
+      <React.Fragment>
         <Filters />
         <Headers />
         {events.map((event, i) => (
@@ -39,7 +44,13 @@ export const Events = () => {
             active={event === selectedEvent}
           />
         ))}
-      </EventsList>
+      </React.Fragment>
+    );
+  }, [events, filteringOn, selectedEvent]);
+
+  return (
+    <Container>
+      <EventsList>{body}</EventsList>
       {selectedEvent !== undefined && <Panel event={selectedEvent} />}
     </Container>
   );
@@ -65,4 +76,13 @@ const EventsList = styled.div`
   justify-content: flex-start;
   flex-basis: 0;
   flex-grow: 1;
+`;
+
+const NoEvents = styled.h2`
+  color: white;
+  margin: 0;
+  margin-top: 12px;
+  font-style: italic;
+  text-align: center;
+  width: 100%;
 `;
