@@ -6,6 +6,9 @@
     "start": "webpack --watch",
     "build": "NODE_ENV=\"production\" webpack",
     "lint": "eslint --ext .ts,.tsx src",
+    "check": "tsc --noEmit",
+    "test": "jest",
+    "coverage": "jest --coverage",
     "prettier-check": "prettier -c src/** README.md",
     "prepublishOnly": "run-s lint build"
   },
@@ -16,7 +19,45 @@
     "url": "https://github.com/FormidableLabs/urql-devtools/issues"
   },
   "homepage": "https://www.github.com/FormidableLabs/urql-devtools",
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "testRegex": "(src/.*(\\.|/)(test|spec))\\.tsx?$",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx",
+      "json",
+      "node"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{ts,tsx}"
+    ]
+  },
+  "lint-staged": {
+    "*.{json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "dependencies": {
+    "fast-json-stable-stringify": "^2.0.0",
+    "invariant": "^2.2.4",
     "wonka": "^3.2.0"
   },
   "devDependencies": {
@@ -25,7 +66,9 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@types/chrome": "0.0.86",
     "@types/codemirror": "0.0.76",
+    "@types/fast-json-stable-stringify": "^2.0.0",
     "@types/graphql": "^14.2.2",
+    "@types/jest": "^24.0.18",
     "@types/react": "^16.8.22",
     "@types/react-dom": "^16.8.4",
     "@types/react-json-tree": "^0.6.11",
@@ -53,8 +96,9 @@
     "graphql": "^14.3.1",
     "graphql-tools": "^4.0.5",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^2.5.0",
-    "lint-staged": "^8.2.1",
+    "husky": "^3.0.4",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.2.4",
     "microbundle": "^0.11.0",
     "mini-css-extract-plugin": "^0.7.0",
     "npm-run-all": "^4.1.5",
@@ -70,6 +114,7 @@
     "style-loader": "^0.23.1",
     "styled-components": "^4.3.2",
     "terser-webpack-plugin": "^1.4.1",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.5.2",
     "urql": "^1.1.3",
     "webpack": "^4.35.0",

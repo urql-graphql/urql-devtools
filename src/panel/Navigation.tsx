@@ -4,7 +4,8 @@ import { NavLink } from "react-router-dom";
 
 const navItems = [
   { link: "/events", label: "Events" },
-  { link: "/request", label: "Request" }
+  { link: "/request", label: "Request" },
+  { link: "/explorer", label: "Explorer" }
 ];
 
 export const Navigation = () => (

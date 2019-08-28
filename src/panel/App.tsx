@@ -3,9 +3,15 @@ import React from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { Events } from "./events";
+import { Explorer } from "./explorer";
 import { Navigation } from "./Navigation";
 import { Request } from "./request/Request";
-import { DevtoolsProvider, EventsProvider, RequestProvider } from "./context";
+import {
+  DevtoolsProvider,
+  EventsProvider,
+  RequestProvider,
+  ExplorerContextProvider
+} from "./context";
 
 const theme = {
   grey: {
@@ -49,6 +55,9 @@ export const App = () => {
             <Route path="/request" component={Request} />
           </RequestProvider>
           <Route path="/" exact component={() => <Redirect to="/events" />} />
+          <ExplorerContextProvider>
+            <Route path="/explorer" exact component={Explorer} />
+          </ExplorerContextProvider>
           <Navigation />
         </HashRouter>
       </ThemeProvider>
