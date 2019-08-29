@@ -4,11 +4,23 @@ import { Background } from "../components/Background";
 import { ExplorerContext } from "../context";
 
 export function Explorer() {
-  const {} = useContext(ExplorerContext);
+  const { data } = useContext(ExplorerContext);
+
+  const renderRoot = data => {
+    return data.map(el => {
+      const keys = Object.keys(el);
+      return keys.map(key => (
+        <li>
+          {el[key].displayName} {el[key].value ? `: ${el[key].value}` : null}
+          {el[key].children ? <ul>{renderRoot(el[key].children)}</ul> : null}
+        </li>
+      ));
+    });
+  };
 
   return (
     <Container>
-      <h1>Explorer goes here</h1>
+      <List>{renderRoot(data)}</List>
     </Container>
   );
 }
@@ -23,5 +35,15 @@ const Container = styled(Background)`
       height: unset;
       max-height: unset;
     }
+  }
+`;
+
+const List = styled.ul`
+  color: white;
+  font-size: 18px;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 `;

@@ -1,5 +1,3 @@
-import stringify from "fast-json-stable-stringify";
-
 import React, {
   createContext,
   useState,
@@ -8,23 +6,9 @@ import React, {
   ReactNode
 } from "react";
 
-import { DocumentNode } from "graphql";
-import { OperationResult } from "urql";
 import { UrqlEvent } from "../../../types";
 import { DevtoolsContext } from "../Devtools";
-import { Scalar, SelectionSet, Variables } from "./ast/types";
-
-import {
-  getName,
-  getSelectionSet,
-  isFieldNode,
-  isInlineFragment,
-  getFieldAlias
-} from "./ast/node";
-
-import { getFieldArguments, normalizeVariables } from "./ast/variables";
-
-import { getMainOperation, getFragments } from "./ast/traversal";
+import { startQuery, NodeMap } from "./ast";
 
 interface ExplorerContextValue {
   data?: any;
@@ -40,30 +24,33 @@ interface Props {
 
 export function ExplorerContextProvider({ children }: Props) {
   const { addMessageHandler } = useContext(DevtoolsContext);
-  const [operations, setOperations] = useState<UrqlEvent[]>([]);
-  /** Set initial state from cache */
+  const [operations, setOperations] = useState<NodeMap[]>([]);
+
   useEffect(() => {
     window.chrome.devtools.inspectedWindow.eval(
       `window.__urql__.events`,
       (ops: UrqlEvent[]) => {
         ops.forEach(o => {
           if (o.type === "response") {
-            parseNode(o.data.data, startQuery(o.data.operation));
+            return setOperations(operations => {
+              return [
+                ...operations,
+                startQuery(o.data.operation, o.data.data, {})
+              ];
+            });
           }
-
-          return;
         });
       }
     );
   }, []);
 
   useEffect(() => {
-    return addMessageHandler(msg => {
-      if (["response"].includes(msg.type)) {
-        setOperations(o => [msg, ...o]);
+    return addMessageHandler((o: UrqlEvent) => {
+      if (o.type === "response") {
+        return setOperations(operations => {
+          return [...operations, startQuery(o.data.operation, o.data.data, {})];
+        });
       }
-
-      console.log("incoming Explorer EVENT:", msg);
     });
   }, []);
 
@@ -76,168 +63,4 @@ export function ExplorerContextProvider({ children }: Props) {
       {children}
     </ExplorerContext.Provider>
   );
-}
-
-type DataField = Scalar | (Scalar | null)[] | null;
-
-interface FieldNode {
-  name: string;
-  args: Variables | null;
-  value?: DataField;
-  children?: NodeMap;
-  map?: NodeMap;
-}
-
-interface NodeMap {
-  [key: string]: FieldNode;
-}
-
-interface Data {
-  [fieldName: string]: Data | DataField;
-}
-
-export interface OperationRequest {
-  query: DocumentNode;
-  variables?: object;
-}
-
-interface QueryResult {
-  data: Data;
-}
-
-export const startQuery = (request: any) => {
-  const operation = getMainOperation(request.query);
-  const root = {};
-  const result: QueryResult = {
-    data: root
-  };
-  const map = {};
-
-  const ctx: any = {
-    variables: normalizeVariables(operation, request.variables),
-    fragments: getFragments(request.query),
-    result
-  };
-
-  copyFromData(ctx, map, getSelectionSet(operation), root);
-
-  return result.data;
-};
-
-export const keyOfField = (fieldName: string, args?: null | Variables) =>
-  args ? `${fieldName}(${stringify(args)})` : fieldName;
-
-export const joinKeys = (parentKey: string, key: string) =>
-  `${parentKey}.${key}`;
-
-function copyFromData(
-  ctx: any,
-  map: NodeMap,
-  selection: SelectionSet,
-  data: Data
-) {
-  selection.forEach(fieldNode => {
-    if (isFieldNode(fieldNode)) {
-      const fieldName = getName(fieldNode);
-      const fieldArgs = getFieldArguments(fieldNode, ctx.variables);
-      const fieldAlias = getFieldAlias(fieldNode);
-      const fieldKey = keyOfField(fieldAlias, fieldArgs);
-
-      const node =
-        map[fieldKey] ||
-        (map[fieldKey] = {
-          name: fieldName,
-          args: fieldArgs
-        });
-
-      if (fieldNode.selectionSet !== undefined) {
-        const fieldNodeMap = (node.children = {});
-        const innerMap = fieldNodeMap;
-        //@ts-ignore
-        data[fieldKey] = { ...node };
-        //@ts-ignore
-
-        data[fieldKey].children = innerMap;
-
-        copyFromData(
-          ctx,
-          innerMap,
-          getSelectionSet(fieldNode),
-          //@ts-ignore
-
-          data[fieldKey].children
-        );
-      } else {
-        data[fieldKey] = node;
-      }
-    } else {
-      const fragmentNode = isInlineFragment(fieldNode)
-        ? fieldNode
-        : ctx.fragments[getName(fieldNode)];
-      copyFromData(ctx, map, getSelectionSet(fragmentNode), data);
-    }
-  });
-}
-
-type Request = {
-  [key: string]:
-    | {
-        name: string;
-        args: { [key: string]: any };
-        children: { [key: string]: Request };
-      }
-    | {
-        name: string;
-        args: { [key: string]: any };
-        children: { [key: string]: Request };
-      };
-};
-
-interface Result {
-  [key: string]: {
-    name: string;
-    args: { [key: string]: any };
-    children: [{ [key: string]: Result }];
-  };
-}
-
-export function parseNode(
-  request: Request,
-  response: OperationResult["data"]
-): Result {
-  if (!Array.isArray || typeof response !== "object") {
-    return response;
-  }
-
-  if (request.hasOwnProperty("children")) {
-    //@ts-ignore
-    let data = [];
-
-    for (let child of response) {
-      //@ts-ignore
-      data = [...data, { ...parseNode(request["children"], child) }];
-    }
-    //@ts-ignore
-    return { children: data };
-  } else {
-    const data = {};
-
-    const reservedKeys = ["name", "args", "children"];
-    const requestKeys = Object.keys(request);
-
-    requestKeys.forEach(key => {
-      if (!reservedKeys.includes(key)) {
-        const currentReqField = request[key]["name"];
-        const innerData = parseNode(
-          //@ts-ignore
-          { ...request[key] },
-          response[currentReqField]
-        );
-        //@ts-ignore
-        data[key] = innerData;
-      }
-    });
-
-    return data;
-  }
 }

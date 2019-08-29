@@ -58,6 +58,7 @@
   "dependencies": {
     "fast-json-stable-stringify": "^2.0.0",
     "invariant": "^2.2.4",
+    "react-treebeard": "^3.2.4",
     "wonka": "^3.2.0"
   },
   "devDependencies": {
