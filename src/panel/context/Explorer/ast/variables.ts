@@ -1,3 +1,5 @@
+/** Copied from https://github.com/FormidableLabs/urql-exchange-graphcache/blob/master/src/ast/variables.ts */
+
 import { FieldNode, ValueNode, OperationDefinitionNode, Kind } from "graphql";
 
 import { getName } from "./node";

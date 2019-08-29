@@ -1,3 +1,49 @@
+export const queryResult = {
+  todos: [
+    {
+      id: [{ number: 0 }],
+      complete: false,
+      text: "Go to the shops",
+      __typename: "Todo"
+    }
+  ]
+};
+
+export const request = {
+  'todos({"initValue":false})': {
+    name: "todos",
+    args: {
+      initValue: false
+    },
+    children: {
+      'id({"isNumber":true})': {
+        name: "id",
+        args: {
+          isNumber: true
+        },
+        children: {
+          number: {
+            name: "number",
+            args: null
+          }
+        }
+      },
+      text: {
+        name: "text",
+        args: null
+      },
+      complete: {
+        name: "complete",
+        args: null
+      },
+      __typename: {
+        name: "__typename",
+        args: null
+      }
+    }
+  }
+};
+
 export const operation = {
   key: 545079261,
   query: {
@@ -14,6 +60,24 @@ export const operation = {
               name: {
                 kind: "Name",
                 value: "initValue"
+              }
+            },
+            type: {
+              kind: "NamedType",
+              name: {
+                kind: "Name",
+                value: "Boolean"
+              }
+            },
+            directives: []
+          },
+          {
+            kind: "VariableDefinition",
+            variable: {
+              kind: "Variable",
+              name: {
+                kind: "Name",
+                value: "isNumber"
               }
             },
             type: {
@@ -62,7 +126,22 @@ export const operation = {
                       kind: "Name",
                       value: "id"
                     },
-                    arguments: [],
+                    arguments: [
+                      {
+                        kind: "Argument",
+                        name: {
+                          kind: "Name",
+                          value: "isNumber"
+                        },
+                        value: {
+                          kind: "Variable",
+                          name: {
+                            kind: "Name",
+                            value: "isNumber"
+                          }
+                        }
+                      }
+                    ],
                     directives: [],
                     selectionSet: {
                       kind: "SelectionSet",
@@ -144,7 +223,8 @@ export const operation = {
     __key: 355711915
   },
   variables: {
-    initValue: false
+    initValue: false,
+    isNumber: true
   },
   operationName: "query",
   context: {

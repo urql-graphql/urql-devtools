@@ -1,3 +1,4 @@
+/** Copied from https://github.com/FormidableLabs/urql-exchange-graphcache/blob/master/src/ast/traversal.ts */
 import {
   DefinitionNode,
   DocumentNode,
