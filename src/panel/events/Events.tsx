@@ -26,7 +26,6 @@ export const Events = () => {
     };
   }, []);
 
-  console.log(events.length);
   return (
     <Container>
       <EventsList>
