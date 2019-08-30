@@ -26,30 +26,25 @@ export const Events = () => {
     };
   }, []);
 
-  const body = React.useMemo(() => {
-    if (events.length === 0) {
-      return <NoEvents>No Events</NoEvents>;
-    }
-
-    return (
-      <React.Fragment>
-        <Filters />
-        <Headers />
-        {events.map((event, i) => (
-          <EventCard
-            key={i}
-            event={event}
-            canFilter={filteringOn}
-            active={event === selectedEvent}
-          />
-        ))}
-      </React.Fragment>
-    );
-  }, [events, filteringOn, selectedEvent]);
-
+  console.log(events.length);
   return (
     <Container>
-      <EventsList>{body}</EventsList>
+      <EventsList>
+        <Filters />
+        <Headers />
+        {events.length === 0 ? (
+          <NoEvents>No Events</NoEvents>
+        ) : (
+          events.map((event, i) => (
+            <EventCard
+              key={i}
+              event={event}
+              canFilter={filteringOn}
+              active={event === selectedEvent}
+            />
+          ))
+        )}
+      </EventsList>
       {selectedEvent !== undefined && <Panel event={selectedEvent} />}
     </Container>
   );
