@@ -31,14 +31,18 @@ export const Events = () => {
       <EventsList>
         <Filters />
         <Headers />
-        {events.map((event, i) => (
-          <EventCard
-            key={i}
-            event={event}
-            canFilter={filteringOn}
-            active={event === selectedEvent}
-          />
-        ))}
+        {events.length === 0 ? (
+          <NoEvents>No Events</NoEvents>
+        ) : (
+          events.map((event, i) => (
+            <EventCard
+              key={i}
+              event={event}
+              canFilter={filteringOn}
+              active={event === selectedEvent}
+            />
+          ))
+        )}
       </EventsList>
       {selectedEvent !== undefined && <Panel event={selectedEvent} />}
     </Container>
@@ -65,4 +69,13 @@ const EventsList = styled.div`
   justify-content: flex-start;
   flex-basis: 0;
   flex-grow: 1;
+`;
+
+const NoEvents = styled.h2`
+  color: white;
+  margin: 0;
+  margin-top: 12px;
+  font-style: italic;
+  text-align: center;
+  width: 100%;
 `;
