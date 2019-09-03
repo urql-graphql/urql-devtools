@@ -23,7 +23,7 @@ import { getMainOperation, getFragments } from "./traversal";
 
 type DataField = Scalar | NullArray<Scalar> | null;
 
-interface FieldNode {
+export interface FieldNode {
   name: string;
   displayName: string;
   args: Variables | null;
@@ -54,7 +54,12 @@ export const startQuery = (
     fragments: getFragments(request.query)
   };
 
-  return copyFromData(ctx, map, getSelectionSet(operation), data);
+  return copyFromData(ctx, copyMap(map), getSelectionSet(operation), data);
+};
+
+const copyMap = (map: null | NodeMap): NodeMap => {
+  const newMap = Object.create(null);
+  return map ? Object.assign(newMap, map) : newMap;
 };
 
 function copyFromData(
@@ -96,7 +101,7 @@ function copyFromData(
               return null;
             }
 
-            const map: NodeMap = prevChildren[index] || Object.create(null);
+            const map = copyMap(prevChildren[index]);
             return copyFromData(ctx, map, fieldSelection, childData);
           });
         } else {

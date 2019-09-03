@@ -3,6 +3,7 @@ import {
   DevtoolsExchangeOutgoingEventType,
   DevtoolsExchangeIncomingEventType
 } from "@urql/devtools";
+
 import { ContentScriptConnectionName } from "../types";
 
 /** Connection to background.js */
@@ -11,10 +12,12 @@ let connection: chrome.runtime.Port | undefined;
 // Listen for init message from exchange
 window.addEventListener(DevtoolsExchangeOutgoingEventType, e => {
   const data = (e as CustomEvent<DevtoolsExchangeOutgoingMessage>).detail;
+  console.log(data);
 
   if (data.type === "init") {
     connection = chrome.runtime.connect({ name: ContentScriptConnectionName });
     connection.onMessage.addListener(handleMessage);
+    connection.onMessage.addListener(console.log);
     connection.onDisconnect.addListener(handleDisconnect);
     return;
   }

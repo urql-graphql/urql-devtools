@@ -7,9 +7,9 @@ import React, {
   useCallback,
   useMemo
 } from "react";
+import { print, ExecutionResult } from "graphql";
 import { GraphQLSchema } from "graphql";
 import { introspectSchema } from "graphql-tools";
-import { HttpLink } from "apollo-link-http";
 import { DevtoolsContext } from ".";
 
 interface RequestContextValue {
@@ -66,12 +66,19 @@ export const RequestProvider: FC = ({ children }) => {
   useEffect(() => {
     chrome.devtools.inspectedWindow.eval(
       "window.__urql__.url",
-      async endpoint => {
-        const link = new HttpLink({
-          uri: endpoint as string,
-          fetch
+      async (endpoint: string) => {
+        const schema = await introspectSchema(({ query, variables }) => {
+          return fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json"
+            },
+            body: JSON.stringify({ query: print(query), variables })
+          })
+            .then(data => data.json())
+            .catch(error => ({ data: null, error }));
         });
-        const schema = await introspectSchema(link);
+
         setSchema(schema);
       }
     );

@@ -6,7 +6,7 @@ import React, {
   ReactNode
 } from "react";
 
-import { UrqlEvent } from "../../../types";
+import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
 import { DevtoolsContext } from "../Devtools";
 import { startQuery, NodeMap } from "./ast";
 
@@ -24,31 +24,13 @@ interface Props {
 
 export function ExplorerContextProvider({ children }: Props) {
   const { addMessageHandler } = useContext(DevtoolsContext);
-  const [operations, setOperations] = useState<NodeMap[]>([]);
+  const [operations, setOperations] = useState<NodeMap>({});
 
   useEffect(() => {
-    window.chrome.devtools.inspectedWindow.eval(
-      `window.__urql__.events`,
-      (ops: UrqlEvent[]) => {
-        ops.forEach(o => {
-          if (o.type === "response") {
-            return setOperations(operations => {
-              return [
-                ...operations,
-                startQuery(o.data.operation, o.data.data, {})
-              ];
-            });
-          }
-        });
-      }
-    );
-  }, []);
-
-  useEffect(() => {
-    return addMessageHandler((o: UrqlEvent) => {
+    return addMessageHandler((o: DevtoolsExchangeOutgoingMessage) => {
       if (o.type === "response") {
         return setOperations(operations => {
-          return [...operations, startQuery(o.data.operation, o.data.data, {})];
+          return startQuery(o.data.operation, o.data.data, operations);
         });
       }
     });
