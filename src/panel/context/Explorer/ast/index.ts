@@ -25,7 +25,6 @@ type DataField = Scalar | NullArray<Scalar> | null;
 
 export interface FieldNode {
   name: string;
-  displayName: string;
   args: Variables | null;
   value?: DataField;
   children?: NodeMap | NullArray<NodeMap>;
@@ -79,8 +78,7 @@ function copyFromData(
         map[fieldKey] ||
         (map[fieldKey] = {
           name: fieldName,
-          args: fieldArgs,
-          displayName: fieldKey
+          args: fieldArgs
         });
 
       if (
@@ -126,63 +124,3 @@ function copyFromData(
 
   return map;
 }
-
-// type Request = {
-//   [key: string]:
-//     | {
-//         name: string;
-//         args: { [key: string]: any };
-//         children: { [key: string]: Request };
-//       }
-//     | {
-//         name: string;
-//         args: { [key: string]: any };
-//         children: { [key: string]: Request };
-//       };
-// };
-
-// interface Result {
-//   [key: string]: {
-//     name: string;
-//     args: { [key: string]: any };
-//     children: [{ [key: string]: Result }];
-//   };
-// }
-
-// function parseNode(request: Data, response: OperationResult["data"]): Result {
-//   if (!Array.isArray || typeof response !== "object") {
-//     return response;
-//   }
-
-//   if (request.hasOwnProperty("children")) {
-//     //@ts-ignore
-//     let data = [];
-
-//     for (let child of response) {
-//       //@ts-ignore
-//       data = [...data, { ...parseNode(request["children"], child) }];
-//     }
-//     //@ts-ignore
-//     return { children: data };
-//   } else {
-//     const data = {};
-
-//     const reservedKeys = ["name", "args", "children"];
-//     const requestKeys = Object.keys(request);
-
-//     requestKeys.forEach(key => {
-//       if (!reservedKeys.includes(key)) {
-//         const currentReqField = request[key]["name"];
-//         const innerData = parseNode(
-//           //@ts-ignore
-//           { ...request[key] },
-//           response[currentReqField]
-//         );
-//         //@ts-ignore
-//         data[key] = innerData;
-//       }
-//     });
-
-//     return data;
-//   }
-// }

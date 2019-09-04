@@ -11,11 +11,12 @@ body {
 
 .CodeMirror {
   font-size: 12px;
+  background-color: #151d29 !important;
 }
 
 .CodeMirror-hints.material {
   font-size: 12px;
-  background: #222;
+  background: #1c2529;
   border: none;
 }
 
