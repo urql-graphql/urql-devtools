@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "fast-json-stable-stringify": "^2.0.0",
+    "nanoid": "^2.1.0",
     "wonka": "^3.2.0"
   },
   "devDependencies": {

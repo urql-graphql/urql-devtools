@@ -17,11 +17,11 @@ declare module "styled-components" {
   };
 
   export interface DefaultTheme {
-    grey: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+2" | "+3">;
+    grey: Omit<ColorRange, "-3" | "-2" | "+3">;
     dark: Omit<ColorRange, "+2" | "+3">;
     blue: Omit<ColorRange, "-3" | "+1" | "+2" | "+3">;
     green: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+2" | "+3">;
-    red: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+2" | "+3">;
+    red: Omit<ColorRange, "-3" | "-2" | "-1" | "+2" | "+3">;
     orange: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+2" | "+3">;
     purple: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+2" | "+3">;
   }

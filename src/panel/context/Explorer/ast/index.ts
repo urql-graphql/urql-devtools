@@ -27,6 +27,7 @@ export interface FieldNode {
   name: string;
   args: Variables | null;
   value?: DataField;
+  id?: string;
   children?: NodeMap | NullArray<NodeMap>;
 }
 
@@ -99,14 +100,16 @@ function copyFromData(
               return null;
             }
 
-            const map = copyMap(prevChildren[index]);
+            let map = copyMap(prevChildren[index]);
+
             return copyFromData(ctx, map, fieldSelection, childData);
           });
         } else {
-          const innerMap =
+          let innerMap =
             node.children && !Array.isArray(node.children)
               ? node.children
               : (node.children = Object.create(null));
+
           copyFromData(ctx, innerMap, fieldSelection, childValue);
         }
       } else {

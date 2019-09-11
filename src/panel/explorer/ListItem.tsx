@@ -1,17 +1,60 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { NodeMap, FieldNode } from "../context/explorer/ast";
-import { ArrowIcon, SeeMoreIcon } from "./Icons";
+import { ArrowIcon } from "./Icons";
+import { Arguments } from "./Arguments";
+import { Value } from "./Value";
 
 interface ItemProps {
   node: FieldNode;
-  renderChildren: (node: NodeMap) => any;
-  openDetailView: (node: FieldNode) => any;
+  renderChildren: (node: NodeMap, index?: number) => any;
+  setFocusedNode: (node: FieldNode) => any;
+  setDetailView: (node: FieldNode | null) => any;
+  focusedNodeId: string | undefined;
+  index?: number;
 }
 
-export function ListItem({ node, renderChildren, openDetailView }: ItemProps) {
-  const [displayChildren, setDisplayChildren] = useState(false);
-  const [displayAllArgs, setDisplayAllArgs] = useState(false);
+const sortFields = (map: NodeMap): NodeMap => {
+  if (!map) {
+    return {};
+  }
+
+  const odering = Object.keys(map).sort((a, b) => {
+    if (map[a].name === "__typename" && map[b].name !== "__typename") {
+      return -1;
+    }
+
+    if (map[a].children && !map[b].children) {
+      return 1;
+    }
+
+    return -1;
+  });
+
+  return odering.reduce(
+    (acc, key) => ({ ...acc, [key]: map[key] }),
+    {} as typeof map
+  );
+};
+
+export function ListItem({
+  node,
+  renderChildren,
+  focusedNodeId,
+  setFocusedNode,
+  setDetailView,
+  index
+}: ItemProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    if (isExpanded) {
+      setDetailView(node);
+      setFocusedNode(node);
+    } else {
+      setDetailView(null);
+    }
+  }, [isExpanded]);
 
   const hasChildren = Array.isArray(node.children)
     ? node.children.length > 0
@@ -19,113 +62,60 @@ export function ListItem({ node, renderChildren, openDetailView }: ItemProps) {
   const children = node.children as NodeMap;
 
   const nodeChildren = !Array.isArray(children) ? (
-    <List>{renderChildren(children)}</List>
+    <List role="group">{renderChildren(sortFields(children))}</List>
   ) : (
-    children.map(child => <List>{renderChildren(child)}</List>)
+    children.map((child, index) => (
+      <List role="group">{renderChildren(sortFields(child), index)}</List>
+    ))
   );
 
+  const isActive = node.id === focusedNodeId && isExpanded;
+
+  console.log(focusedNodeId);
+
   const handleOnClick = () => {
-    setDisplayChildren(display => !display);
-  };
-
-  const handleExpandClick = () => {
-    setDisplayAllArgs(true);
-    openDetailView(node);
-  };
-
-  const renderValue = (value: FieldNode["value"]) =>
-    useMemo(() => {
-      if (Array.isArray(value) || Array.isArray(node.children)) {
-        if (node.children && node.children.length === 0) {
-          return "[]";
-        } else {
-          return (
-            <IconContainer onClick={handleExpandClick}>
-              {`[`}
-              <SeeMore />
-              {`]`}
-            </IconContainer>
-          );
-        }
-      } else if (typeof value === "object" && !!value) {
-        if (Object.keys(value).length > 0) {
-          return (
-            <IconContainer onClick={handleExpandClick}>
-              {`{`}
-              <SeeMore />
-              {`}`}
-            </IconContainer>
-          );
-        } else {
-          return "{}";
-        }
-      } else if (typeof value === "string") {
-        return `"${value}"`;
-      } else if (typeof value === "number") {
-        return `${value}`;
-      } else {
-        return `${value}`;
-      }
-    }, [node]);
-
-  const renderArguments = (args: FieldNode["args"]) => {
-    if (!args) {
-      return null;
-    }
-
-    args = { blah: { foo: "bar" }, something: ["array"], ...args };
-    let content = [];
-    const entries = Object.entries(args);
-
-    for (const [key, val] of entries) {
-      content.push(
-        <ArgWrapper>
-          <ArgKey>{key}: </ArgKey>
-          {renderValue(val)}
-          {content.length === entries.length - 1 ? "" : ","}
-        </ArgWrapper>
-      );
-    }
-
-    if (!displayAllArgs) {
-      content = [...content.slice(0, 3)];
-      content.push(
-        <ExpandContainer onClick={handleExpandClick}>
-          <SeeMore />
-        </ExpandContainer>
-      );
-    }
-
-    return content ? <ArgsContainer>({content})</ArgsContainer> : null;
+    setIsExpanded(isExpanded => !isExpanded);
   };
 
   return (
-    <Item role="treeitem">
+    <>
       {hasChildren ? (
-        <>
-          <FieldContainer active={displayAllArgs}>
-            <Button onClick={handleOnClick}>
-              <Arrow active={displayChildren} />
+        <Item role="treeitem" hasChildren>
+          <FieldContainer onClick={handleOnClick} isActive={isActive}>
+            <Button>
+              <Arrow active={isExpanded} />
               {node.name}
             </Button>
-            {renderArguments(node.args)}
+            <Arguments node={node} displayAll={isExpanded} />
           </FieldContainer>
-          {displayChildren ? nodeChildren : null}
-        </>
+          {isExpanded ? nodeChildren : null}
+        </Item>
       ) : (
         <>
-          <Name>{node.name}:</Name> {renderValue(node.value)}
+          {node.name !== "__typename" ? (
+            <Item role="treeitem" hasChildren={false}>
+              <Name>{`${node.name}: `}</Name>
+              <Value node={node} value={node.value} />
+            </Item>
+          ) : (
+            <Item hasChildren>
+              <Typename>
+                {`${node.value}`}
+                {typeof index === "number" ? ` #${index}` : null}
+              </Typename>
+            </Item>
+          )}
         </>
       )}
-    </Item>
+    </>
   );
 }
 
 export const List = styled.ul`
   margin: 0;
   padding-bottom: 1rem;
-  padding-left: 0;
-  margin-left: 3.5px;
+  padding-left: 0.5rem;
+  margin-left: 5px;
   margin-top: 3.5px;
   border-left: 3px solid #cae3f212;
   list-style: none;
@@ -138,6 +128,7 @@ export const List = styled.ul`
 
   &[role="tree"] {
     border-left: none;
+    padding-left: 0;
 
     & > li {
       border-left: none;
@@ -146,31 +137,46 @@ export const List = styled.ul`
   }
 `;
 
-const Item = styled.li`
-  padding-left: 1rem;
-`;
-
-const FieldContainer = styled.div`
+const FieldContainer = styled.button`
   width: 100%;
   padding: 3px;
-
-  ${({ active }: { active: boolean }) => {
-    return (
-      active &&
-      css`
-        border: 1px dashed ${p => p.theme.purple[0]};
-        background-color: ${p => p.theme.dark["-1"]};
-      `
-    );
-  }}
-`;
-
-const Button = styled.button`
-  padding: 0;
-  margin-right: 3px;
+  margin: 0;
   background-color: transparent;
   border: none;
   outline: none;
+
+  color: ${p => p.theme.grey["-1"]};
+  text-align: left;
+  font-size: 14px;
+
+  ${({ isActive }: { isActive: boolean }) =>
+    isActive &&
+    css`
+      background-color: ${p => p.theme.dark["-1"]};
+      transition: background-color 0.3s linear;
+    `};
+`;
+
+const Item = styled.li`
+  padding-left: 1rem;
+  line-height: 1.5rem;
+
+  ${({ hasChildren }: { hasChildren: boolean }) =>
+    hasChildren &&
+    css`
+      padding-left: 0;
+    `}
+`;
+
+const Name = styled.span`
+  color: ${p => p.theme.grey["+2"]};
+`;
+
+const Button = styled.div`
+  position: relative;
+  margin-right: 3px;
+  display: inline-block;
+
   color: ${p => p.theme.grey["-1"]};
 
   font-weight: bold;
@@ -179,7 +185,7 @@ const Button = styled.button`
 
 const Arrow = styled(ArrowIcon)`
   display: inline-block;
-  margin-right: 3px;
+  margin: 3px 3px 0 0;
   transform: ${({ active }: { active: boolean }) =>
     active ? "rotate(90deg)" : "rotate(0deg)"};
   color: ${({ active, theme }: { active: boolean }) =>
@@ -187,56 +193,11 @@ const Arrow = styled(ArrowIcon)`
   transition: all 0.1s;
 `;
 
-const SeeMore = styled(SeeMoreIcon)`
-  margin: 3px;
-`;
-
-const Name = styled.span`
+const Typename = styled.button`
+  border: 1px solid #32444d;
+  background-color: #11171a;
+  border-radius: 2px;
+  padding: 3px 5px;
+  margin-left: 3px;
   color: ${p => p.theme.grey["+2"]};
-`;
-
-const ArgsContainer = styled.div`
-  display: inline-flex;
-  max-width: 400px;
-  flex-wrap: wrap;
-`;
-
-const ArgKey = styled.span`
-  color: ${p => p.theme.purple["0"]};
-`;
-
-const ArgWrapper = styled.span`
-  margin-right: 5px;
-
-  &:last-of-type {
-    margin-right: 0;
-  }
-`;
-
-const String = styled.span`
-  color: #608f83;
-`;
-
-const Keyword = styled.span`
-  color: #8f606e;
-`;
-
-const Number = styled.span`
-  color: #8f8a60;
-`;
-
-const IconContainer = styled.button`
-  display: inline-flex;
-  align-items: flex-end;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  padding: 0;
-  color: ${p => p.theme.grey["-1"]};
-  font-size: 14px;
-  cursor: pointer;
-`;
-
-const ExpandContainer = styled(IconContainer)`
-  margin: 5px 5px 0;
 `;

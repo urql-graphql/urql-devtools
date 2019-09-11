@@ -22,7 +22,13 @@ export function DetailView({ node }: Props) {
       {node.value ? (
         <>
           <Title>Value</Title>
-          <Code>{node.value}</Code>
+          <Code>{JSON.stringify(node.value, null, 2)}</Code>
+        </>
+      ) : null}
+      {node.children ? (
+        <>
+          <Title>Children</Title>
+          <Code>{JSON.stringify(node.children, null, 2)}</Code>
         </>
       ) : null}
     </>
@@ -48,4 +54,20 @@ const TextContainer = styled.div`
 const Text = styled.p`
   text-align: center;
   color: #b4bfd170;
+`;
+
+const Name = styled.span`
+  color: ${p => p.theme.grey["+2"]};
+`;
+
+const String = styled.span`
+  color: #608f83;
+`;
+
+const Keyword = styled.span`
+  color: #8f606e;
+`;
+
+const Number = styled.span`
+  color: #8f8a60;
 `;
