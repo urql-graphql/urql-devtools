@@ -1,11 +1,12 @@
 import stringify from "fast-json-stable-stringify";
+import nanoid from "nanoid";
+import { Operation } from "urql";
 
 import {
   Scalar,
   SelectionSet,
   Variables,
   ResolveInfo,
-  OperationRequest,
   NullArray
 } from "./types";
 
@@ -24,10 +25,12 @@ import { getMainOperation, getFragments } from "./traversal";
 type DataField = Scalar | NullArray<Scalar> | null;
 
 export interface FieldNode {
+  _id: string;
+  key: string;
   name: string;
   args: Variables | null;
+  owner: {};
   value?: DataField;
-  id?: string;
   children?: NodeMap | NullArray<NodeMap>;
 }
 
@@ -43,10 +46,14 @@ export const keyOfField = (fieldName: string, args?: null | Variables) =>
   args ? `${fieldName}(${stringify(args)})` : fieldName;
 
 export const startQuery = (
-  request: OperationRequest,
+  request: Operation,
   data: Data,
   map: NodeMap = Object.create(null)
 ) => {
+  if (request.operationName !== "query") {
+    return map;
+  }
+
   const operation = getMainOperation(request.query);
 
   const ctx = {
@@ -54,7 +61,7 @@ export const startQuery = (
     fragments: getFragments(request.query)
   };
 
-  return copyFromData(ctx, copyMap(map), getSelectionSet(operation), data);
+  return copyFromData(ctx, copyMap(map), getSelectionSet(operation), data, {});
 };
 
 const copyMap = (map: null | NodeMap): NodeMap => {
@@ -62,25 +69,40 @@ const copyMap = (map: null | NodeMap): NodeMap => {
   return map ? Object.assign(newMap, map) : newMap;
 };
 
+const makeNode = (owner: {}, node: undefined | FieldNode) => {
+  if (node === undefined || node.owner !== owner) {
+    const node = {};
+  }
+};
+
 function copyFromData(
   ctx: ResolveInfo,
   map: NodeMap,
   selection: SelectionSet,
-  data: Data
+  data: Data,
+  owner: {}
 ) {
   selection.forEach(fieldNode => {
     if (isFieldNode(fieldNode)) {
-      const fieldName = getName(fieldNode);
+      const fieldName = getName(fieldNode) || "query";
       const fieldArgs = getFieldArguments(fieldNode, ctx.variables);
       const fieldKey = keyOfField(fieldName, fieldArgs);
       const fieldValue = data[getFieldAlias(fieldNode)];
 
-      const node =
-        map[fieldKey] ||
-        (map[fieldKey] = {
+      let node: FieldNode;
+      if (map[fieldKey] === undefined) {
+        node = map[fieldKey] = {
+          _id: nanoid(),
+          key: fieldKey,
           name: fieldName,
-          args: fieldArgs
-        });
+          args: fieldArgs,
+          owner
+        };
+      } else if (map[fieldKey].owner !== owner) {
+        node = map[fieldKey] = { ...map[fieldKey], owner };
+      } else {
+        node = map[fieldKey];
+      }
 
       if (
         fieldNode.selectionSet !== undefined &&
@@ -102,7 +124,7 @@ function copyFromData(
 
             let map = copyMap(prevChildren[index]);
 
-            return copyFromData(ctx, map, fieldSelection, childData);
+            return copyFromData(ctx, map, fieldSelection, childData, {});
           });
         } else {
           let innerMap =
@@ -110,7 +132,7 @@ function copyFromData(
               ? node.children
               : (node.children = Object.create(null));
 
-          copyFromData(ctx, innerMap, fieldSelection, childValue);
+          return copyFromData(ctx, innerMap, fieldSelection, childValue, {});
         }
       } else {
         node.value = fieldValue === undefined ? null : fieldValue;
@@ -120,7 +142,7 @@ function copyFromData(
         ? ctx.fragments[getName(fieldNode)]
         : fieldNode;
       if (fragmentNode !== undefined) {
-        copyFromData(ctx, map, getSelectionSet(fragmentNode), data);
+        copyFromData(ctx, map, getSelectionSet(fragmentNode), data, {});
       }
     }
   });

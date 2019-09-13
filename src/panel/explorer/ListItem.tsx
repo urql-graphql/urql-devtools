@@ -1,49 +1,25 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import { NodeMap, FieldNode } from "../context/explorer/ast";
+import { FieldNode } from "../context/explorer/ast";
 import { ArrowIcon } from "./Icons";
 import { Arguments } from "./Arguments";
 import { Value } from "./Value";
+import { Tree } from "./Tree";
 
 interface ItemProps {
   node: FieldNode;
-  renderChildren: (node: NodeMap, index?: number) => any;
   setFocusedNode: (node: FieldNode) => any;
   setDetailView: (node: FieldNode | null) => any;
-  focusedNodeId: string | undefined;
-  index?: number;
+  activeId: string | undefined;
+  depth?: number;
 }
-
-const sortFields = (map: NodeMap): NodeMap => {
-  if (!map) {
-    return {};
-  }
-
-  const odering = Object.keys(map).sort((a, b) => {
-    if (map[a].name === "__typename" && map[b].name !== "__typename") {
-      return -1;
-    }
-
-    if (map[a].children && !map[b].children) {
-      return 1;
-    }
-
-    return -1;
-  });
-
-  return odering.reduce(
-    (acc, key) => ({ ...acc, [key]: map[key] }),
-    {} as typeof map
-  );
-};
 
 export function ListItem({
   node,
-  renderChildren,
-  focusedNodeId,
+  activeId,
   setFocusedNode,
   setDetailView,
-  index
+  depth = 0
 }: ItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -59,19 +35,18 @@ export function ListItem({
   const hasChildren = Array.isArray(node.children)
     ? node.children.length > 0
     : !!node.children;
-  const children = node.children as NodeMap;
 
-  const nodeChildren = !Array.isArray(children) ? (
-    <List role="group">{renderChildren(sortFields(children))}</List>
-  ) : (
-    children.map((child, index) => (
-      <List role="group">{renderChildren(sortFields(child), index)}</List>
-    ))
+  const nodeChildren = (
+    <Tree
+      nodeMap={node.children}
+      activeId={activeId}
+      setFocusedNode={setFocusedNode}
+      setDetailView={setDetailView}
+      depth={depth + 1}
+    />
   );
 
-  const isActive = node.id === focusedNodeId && isExpanded;
-
-  console.log(focusedNodeId);
+  const isActive = node._id === activeId && isExpanded;
 
   const handleOnClick = () => {
     setIsExpanded(isExpanded => !isExpanded);
@@ -80,43 +55,49 @@ export function ListItem({
   return (
     <>
       {hasChildren ? (
-        <Item role="treeitem" hasChildren>
+        <Item role="treeitem" withChildren>
           <FieldContainer onClick={handleOnClick} isActive={isActive}>
-            <Button>
-              <Arrow active={isExpanded} />
-              {node.name}
-            </Button>
-            <Arguments node={node} displayAll={isExpanded} />
+            <Arrow active={isExpanded} />
+            <ChildrenName>{node.name}</ChildrenName>
+            <Arguments args={node.args} displayAll={isExpanded} />
           </FieldContainer>
           {isExpanded ? nodeChildren : null}
         </Item>
       ) : (
-        <>
-          {node.name !== "__typename" ? (
-            <Item role="treeitem" hasChildren={false}>
-              <Name>{`${node.name}: `}</Name>
-              <Value node={node} value={node.value} />
-            </Item>
-          ) : (
-            <Item hasChildren>
-              <Typename>
-                {`${node.value}`}
-                {typeof index === "number" ? ` #${index}` : null}
-              </Typename>
-            </Item>
-          )}
-        </>
+        <Item role="treeitem">
+          <Name>{node.name}</Name>
+          <Arguments args={node.args} displayAll={isExpanded} />
+          {`: `}
+          <Value value={node.value} expandValues={false} />
+        </Item>
       )}
     </>
   );
 }
 
+export const SystemListItem = ({
+  node,
+  index
+}: {
+  node: FieldNode;
+  index?: number;
+}) => (
+  <Item>
+    {" "}
+    withChildren={false}
+    <Typename>
+      {`${node.value}`}
+      {typeof index === "number" ? ` #${index}` : null}
+    </Typename>
+  </Item>
+);
+
 export const List = styled.ul`
   margin: 0;
-  padding-bottom: 1rem;
+  padding-bottom: 0.3rem;
+  padding-top: 0.3rem;
   padding-left: 0.5rem;
   margin-left: 5px;
-  margin-top: 3.5px;
   border-left: 3px solid #cae3f212;
   list-style: none;
   font-size: 14px;
@@ -139,11 +120,15 @@ export const List = styled.ul`
 
 const FieldContainer = styled.button`
   width: 100%;
-  padding: 3px;
+  padding: 0;
   margin: 0;
+  padding-left: 1rem;
   background-color: transparent;
   border: none;
   outline: none;
+  position: relative;
+  height: 1.4rem;
+  line-height: 1.4rem;
 
   color: ${p => p.theme.grey["-1"]};
   text-align: left;
@@ -158,38 +143,38 @@ const FieldContainer = styled.button`
 `;
 
 const Item = styled.li`
-  padding-left: 1rem;
-  line-height: 1.5rem;
-
-  ${({ hasChildren }: { hasChildren: boolean }) =>
-    hasChildren &&
-    css`
-      padding-left: 0;
-    `}
+  padding-left: ${({ withChildren }: { withChildren: boolean }) =>
+    withChildren ? "0" : "1rem"};
+  min-height: 1.4rem;
+  line-height: 1.4rem;
 `;
 
 const Name = styled.span`
   color: ${p => p.theme.grey["+2"]};
 `;
 
-const Button = styled.div`
+const ChildrenName = styled.span`
   position: relative;
   margin-right: 3px;
   display: inline-block;
-
   color: ${p => p.theme.grey["-1"]};
-
   font-weight: bold;
   font-size: 14px;
 `;
 
 const Arrow = styled(ArrowIcon)`
   display: inline-block;
-  margin: 3px 3px 0 0;
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -4px;
+  margin-left: 2px;
+
   transform: ${({ active }: { active: boolean }) =>
     active ? "rotate(90deg)" : "rotate(0deg)"};
-  color: ${({ active, theme }: { active: boolean }) =>
-    active ? theme.red["+1"] : theme.grey["+1"]};
+  color: ${p => (p.active ? p.theme.red["+1"] : p.theme.grey["+1"])};
   transition: all 0.1s;
 `;
 
@@ -198,6 +183,8 @@ const Typename = styled.button`
   background-color: #11171a;
   border-radius: 2px;
   padding: 3px 5px;
-  margin-left: 3px;
+  margin-left: -7px;
+  margin-bottom: 0.15rem;
+  margin-top: -0.1rem;
   color: ${p => p.theme.grey["+2"]};
 `;

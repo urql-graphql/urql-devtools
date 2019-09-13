@@ -1,30 +1,56 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { FieldNode } from "../context/explorer/ast";
 import { SeeMoreIcon } from "./Icons";
 import { Value } from "./Value";
 
 interface Props {
-  node: FieldNode;
+  args: FieldNode["args"];
   displayAll: boolean;
 }
 
-export function Arguments({ node, displayAll }: Props) {
-  if (!node.args) {
+export function Arguments({ args, displayAll }: Props) {
+  if (!args) {
     return null;
   }
 
   let content = [];
-  const entries = Object.entries(node.args);
+  const entries = Object.entries(args);
 
   for (const [key, val] of entries) {
-    content.push(
-      <ArgWrapper>
-        <ArgKey>{key}: </ArgKey>
-        <Value node={node} value={val} />
-        {content.length === entries.length - 1 ? "" : ","}
-      </ArgWrapper>
-    );
+    if (Array.isArray(val)) {
+      content.push(
+        <ArgWrapper key={key}>
+          <ArgKey>{key}: </ArgKey>
+          <IconContainer>
+            {"["}
+            <SeeMore />
+            {"]"}
+          </IconContainer>
+          {content.length === entries.length - 1 ? "" : ","}
+        </ArgWrapper>
+      );
+    } else if (val && typeof val === "object") {
+      content.push(
+        <ArgWrapper>
+          <ArgKey>{key}: </ArgKey>
+          <IconContainer>
+            {"{"}
+            <SeeMore />
+            {"}"}
+          </IconContainer>
+          {content.length === entries.length - 1 ? "" : ","}
+        </ArgWrapper>
+      );
+    } else {
+      content.push(
+        <ArgWrapper key={key}>
+          <ArgKey>{key}: </ArgKey>
+          <Value value={val} expandValues={false} />
+          {content.length === entries.length - 1 ? "" : ","}
+        </ArgWrapper>
+      );
+    }
   }
 
   if (!displayAll && !(content.length <= 3)) {
@@ -38,10 +64,6 @@ export function Arguments({ node, displayAll }: Props) {
 
   return content ? <ArgsContainer>({content})</ArgsContainer> : null;
 }
-
-const SeeMore = styled(SeeMoreIcon)`
-  margin: 3px;
-`;
 
 const ArgsContainer = styled.div`
   display: inline-flex;
@@ -61,7 +83,7 @@ const ArgWrapper = styled.span`
   }
 `;
 
-const IconContainer = styled.button`
+const IconContainer = styled.div`
   display: inline-flex;
   align-items: flex-end;
   background-color: transparent;
@@ -75,4 +97,8 @@ const IconContainer = styled.button`
 
 const ExpandContainer = styled(IconContainer)`
   margin: 5px 5px 0;
+`;
+
+const SeeMore = styled(SeeMoreIcon)`
+  margin: 3px;
 `;

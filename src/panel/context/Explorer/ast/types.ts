@@ -42,12 +42,6 @@ export interface Variables {
   [name: string]: Scalar | Scalar[] | Variables | NullArray<Variables>;
 }
 
-// This is an input operation
-export interface OperationRequest {
-  query: DocumentNode;
-  variables?: object;
-}
-
 export interface ResolveInfo {
   fragments: Fragments;
   variables: Variables;

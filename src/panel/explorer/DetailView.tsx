@@ -1,6 +1,7 @@
 import React, { useState, useContext, useMemo } from "react";
 import styled from "styled-components";
-import { FieldNode } from "../context/explorer/ast";
+import { FieldNode, NodeMap } from "../context/explorer/ast";
+import { Value } from "./Value";
 
 interface Props {
   node: FieldNode | null;
@@ -15,20 +16,81 @@ export function DetailView({ node }: Props) {
     );
   }
 
+  const renderValues = (values: NodeMap | undefined) => {
+    if (!values) {
+      return null;
+    }
+
+    return Object.entries(values).map(node => {
+      const [key, value] = node;
+
+      if (!!value && typeof value === "object") {
+        if (value["value"]) {
+          return (
+            <Code>
+              <span>{`${key}: `}</span>
+              <Value value={value["value"]} expandValues />
+            </Code>
+          );
+        } else if (Array.isArray(value["children"])) {
+          return (
+            <Code>
+              <span>{`${key}: `}</span>
+              <Value value={value["value"]} expandValues />
+            </Code>
+          );
+        }
+      } else {
+        return (
+          <Code>
+            <span>{`${key}: `}</span>
+            <Value value={value} expandValues />
+          </Code>
+        );
+      }
+    });
+  };
+
+  const renderChildren = (node: FieldNode) => {
+    if (Array.isArray(node.children)) {
+      return (
+        <Code>
+          <Value value={node.children} expandValues={false} />
+        </Code>
+      );
+    } else if (node.children) {
+      return (
+        <>
+          <Code>{"{"}</Code>
+          <Code>{renderValues(node.children)}</Code>
+          <Code>{"}"}</Code>
+        </>
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <>
-      <Title>Arguments</Title>
-      <Code>{JSON.stringify(node.args, null, 2)}</Code>
+      <Title>Name</Title>
+      <Code>{node.name}</Code>
+      {node.args ? (
+        <>
+          <Title>Arguments</Title>
+          <Code>{JSON.stringify(node.args, null, 2)}</Code>
+        </>
+      ) : null}
       {node.value ? (
         <>
           <Title>Value</Title>
-          <Code>{JSON.stringify(node.value, null, 2)}</Code>
+          <Code>{renderValues(node.value)}</Code>
         </>
       ) : null}
       {node.children ? (
         <>
           <Title>Children</Title>
-          <Code>{JSON.stringify(node.children, null, 2)}</Code>
+          {renderChildren(node)}
         </>
       ) : null}
     </>
@@ -43,8 +105,13 @@ const Title = styled.h3`
 `;
 
 const Code = styled.code`
+  display: block;
   color: #b4bfd1;
   white-space: pre;
+
+  & > code {
+    padding-left: 1rem;
+  }
 `;
 
 const TextContainer = styled.div`
