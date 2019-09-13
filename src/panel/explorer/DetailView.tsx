@@ -1,6 +1,6 @@
-import React, { useState, useContext, useMemo } from "react";
+import React from "react";
 import styled from "styled-components";
-import { FieldNode, NodeMap } from "../context/explorer/ast";
+import { FieldNode } from "../context/explorer/ast";
 import { Value } from "./Value";
 
 interface Props {
@@ -16,7 +16,7 @@ export function DetailView({ node }: Props) {
     );
   }
 
-  const renderValues = (values: NodeMap | undefined) => {
+  const renderValues = (values: { [key: string]: any }) => {
     if (!values) {
       return null;
     }
@@ -84,7 +84,7 @@ export function DetailView({ node }: Props) {
       {node.value ? (
         <>
           <Title>Value</Title>
-          <Code>{renderValues(node.value)}</Code>
+          <Code>{renderValues(node)}</Code>
         </>
       ) : null}
       {node.children ? (
@@ -121,20 +121,4 @@ const TextContainer = styled.div`
 const Text = styled.p`
   text-align: center;
   color: #b4bfd170;
-`;
-
-const Name = styled.span`
-  color: ${p => p.theme.grey["+2"]};
-`;
-
-const String = styled.span`
-  color: #608f83;
-`;
-
-const Keyword = styled.span`
-  color: #8f606e;
-`;
-
-const Number = styled.span`
-  color: #8f8a60;
 `;

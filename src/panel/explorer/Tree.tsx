@@ -1,6 +1,7 @@
-import React, { useState, useContext, useMemo, useCallback } from "react";
+import React, { useCallback } from "react";
+import styled from "styled-components";
 import { NodeMap, FieldNode } from "../context/explorer/ast";
-import { ListItem, SystemListItem, List } from "./ListItem";
+import { ListItem, SystemListItem } from "./ListItem";
 
 interface Props {
   nodeMap: NodeMap | (NodeMap | null)[] | undefined;
@@ -90,3 +91,29 @@ export function Tree({
     </List>
   );
 }
+
+export const List = styled.ul`
+  margin: 0;
+  padding-bottom: 0.3rem;
+  padding-top: 0.3rem;
+  padding-left: 0.5rem;
+  margin-left: 5px;
+  border-left: 3px solid #cae3f212;
+  list-style: none;
+  font-size: 14px;
+  color: ${p => p.theme.grey["-1"]};
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  &[role="tree"] {
+    border-left: none;
+    padding-left: 0;
+
+    & > li {
+      border-left: none;
+      padding: 0;
+    }
+  }
+`;

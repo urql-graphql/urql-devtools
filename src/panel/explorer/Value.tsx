@@ -1,36 +1,12 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
-import styled, { keyframes, css } from "styled-components";
+import React from "react";
+import styled from "styled-components";
 import { FieldNode } from "../context/explorer/ast";
+import { useHighlight, HighlightUpdate } from "./Highlight";
 
 interface Props {
   value: FieldNode["value"];
   expandValues: boolean;
 }
-
-type HighlightState = "NOT_READY" | "READY" | "RUNNING";
-
-const useHighlight = (deps: Array<any> = []): [boolean, () => void] => {
-  const [state, setState] = useState<HighlightState>("NOT_READY");
-
-  useLayoutEffect(() => {
-    setState(prevState => {
-      switch (prevState) {
-        case "NOT_READY":
-          return "READY";
-        case "READY":
-          return "RUNNING";
-        default:
-          return prevState;
-      }
-    });
-  }, deps);
-
-  const onAnimationEnd = () => {
-    setState("READY");
-  };
-
-  return [state === "RUNNING", onAnimationEnd];
-};
 
 export function Value({ value, expandValues }: Props) {
   const [isAnimating, onAnimationEnd] = useHighlight([value]);
@@ -57,45 +33,18 @@ export function Value({ value, expandValues }: Props) {
         );
       }
     } else if (typeof value === "string") {
-      return (
-        <HighlightUpdate
-          onAnimationEnd={onAnimationEnd}
-          isAnimating={isAnimating}
-        >{`"${value}"`}</HighlightUpdate>
-      );
+      return <>{`"${value}"`}</>;
     } else {
-      return (
-        <HighlightUpdate
-          onAnimationEnd={onAnimationEnd}
-          isAnimating={isAnimating}
-        >{`${value}`}</HighlightUpdate>
-      );
+      return <>{`${value}`}</>;
     }
   };
 
-  return renderValue();
+  return (
+    <HighlightUpdate onAnimationEnd={onAnimationEnd} isAnimating={isAnimating}>
+      {renderValue()}
+    </HighlightUpdate>
+  );
 }
-
-const updated = keyframes`
-  from {
-    background-color: #9c27b0a1;
-  }
-  to {
-    background-color: transparent;
-  }
-`;
-
-const HighlightUpdate = styled.span`
-  border-radius: 3px;
-  animation-duration: 2s;
-  animation-iteration-count: 1;
-
-  ${({ isAnimating }: { isAnimating: boolean }) =>
-    isAnimating &&
-    css`
-      animation-name: ${updated};
-    `}
-`;
 
 const Code = styled.code`
   white-space: pre;

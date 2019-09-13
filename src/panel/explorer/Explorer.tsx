@@ -8,7 +8,7 @@ import { DetailView } from "./DetailView";
 
 export function Explorer() {
   const { data } = useContext(ExplorerContext);
-  const [focusedNodeId, setFocusedNodeId] = useState<string | undefined>("");
+  const [focusedNodeId, setFocusedNodeId] = useState<string>("");
   const [detailViewNode, setDetailViewNode] = useState<FieldNode | null>(null);
 
   const setActiveNode = (node: FieldNode) => setFocusedNodeId(node._id);

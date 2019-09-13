@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import { FieldNode } from "../context/explorer/ast";
+import { FieldNode } from "../context/Explorer/ast";
 import { ArrowIcon } from "./Icons";
 import { Arguments } from "./Arguments";
 import { Value } from "./Value";
 import { Tree } from "./Tree";
+import { useHighlight, HighlightUpdate } from "./Highlight";
 
 interface ItemProps {
   node: FieldNode;
@@ -22,6 +23,7 @@ export function ListItem({
   depth = 0
 }: ItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isAnimating, onAnimationEnd] = useHighlight([node.children]);
 
   useEffect(() => {
     if (isExpanded) {
@@ -56,19 +58,24 @@ export function ListItem({
     <>
       {hasChildren ? (
         <Item role="treeitem" withChildren>
-          <FieldContainer onClick={handleOnClick} isActive={isActive}>
-            <Arrow active={isExpanded} />
-            <ChildrenName>{node.name}</ChildrenName>
-            <Arguments args={node.args} displayAll={isExpanded} />
-          </FieldContainer>
+          <HighlightUpdate
+            isAnimating={isAnimating && !isExpanded}
+            onAnimationEnd={onAnimationEnd}
+          >
+            <FieldContainer onClick={handleOnClick} isActive={isActive}>
+              <Arrow active={isExpanded} />
+              <ChildrenName>{node.name}</ChildrenName>
+              <Arguments args={node.args} displayAll={isExpanded} />
+            </FieldContainer>
+          </HighlightUpdate>
           {isExpanded ? nodeChildren : null}
         </Item>
       ) : (
-        <Item role="treeitem">
+        <Item role="treeitem" withChildren={false}>
           <Name>{node.name}</Name>
           <Arguments args={node.args} displayAll={isExpanded} />
           {`: `}
-          <Value value={node.value} expandValues={false} />
+          <Value value={node.value} expandValues />
         </Item>
       )}
     </>
@@ -82,41 +89,13 @@ export const SystemListItem = ({
   node: FieldNode;
   index?: number;
 }) => (
-  <Item>
-    {" "}
-    withChildren={false}
+  <Item withChildren={false}>
     <Typename>
       {`${node.value}`}
       {typeof index === "number" ? ` #${index}` : null}
     </Typename>
   </Item>
 );
-
-export const List = styled.ul`
-  margin: 0;
-  padding-bottom: 0.3rem;
-  padding-top: 0.3rem;
-  padding-left: 0.5rem;
-  margin-left: 5px;
-  border-left: 3px solid #cae3f212;
-  list-style: none;
-  font-size: 14px;
-  color: ${p => p.theme.grey["-1"]};
-
-  &:last-of-type {
-    margin-bottom: 0;
-  }
-
-  &[role="tree"] {
-    border-left: none;
-    padding-left: 0;
-
-    & > li {
-      border-left: none;
-      padding: 0;
-    }
-  }
-`;
 
 const FieldContainer = styled.button`
   width: 100%;
@@ -178,13 +157,14 @@ const Arrow = styled(ArrowIcon)`
   transition: all 0.1s;
 `;
 
-const Typename = styled.button`
-  border: 1px solid #32444d;
-  background-color: #11171a;
-  border-radius: 2px;
-  padding: 3px 5px;
+const Typename = styled.div`
+  display: inline-block;
   margin-left: -7px;
   margin-bottom: 0.15rem;
   margin-top: -0.1rem;
+  padding: 3px 5px;
+  border: 1px solid ${p => p.theme.dark["+1"]};
+  border-radius: 2px;
+  background-color: ${p => p.theme.dark["-2"]};
   color: ${p => p.theme.grey["+2"]};
 `;
