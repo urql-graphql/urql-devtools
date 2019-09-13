@@ -167,4 +167,5 @@ const Typename = styled.div`
   border-radius: 2px;
   background-color: ${p => p.theme.dark["-2"]};
   color: ${p => p.theme.grey["+2"]};
+  font-size: 11px;
 `;

@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Background } from "../components/Background";
 import { ExplorerContext } from "../context";
-import { FieldNode } from "../context/explorer/ast";
+import { FieldNode } from "../context/Explorer/ast";
 import { Tree } from "./Tree";
 import { DetailView } from "./DetailView";
 
@@ -16,12 +16,19 @@ export function Explorer() {
   return (
     <Container>
       <ListContainer>
-        <Tree
-          nodeMap={data}
-          setFocusedNode={setActiveNode}
-          setDetailView={setDetailViewNode}
-          activeId={focusedNodeId}
-        />
+        {Object.keys(data).length ? (
+          <Tree
+            nodeMap={data}
+            setFocusedNode={setActiveNode}
+            setDetailView={setDetailViewNode}
+            activeId={focusedNodeId}
+          />
+        ) : (
+          <TitleWrapper>
+            <Title>Responses will be shown here</Title>
+            <span>Make a new request or refresh the page</span>
+          </TitleWrapper>
+        )}
       </ListContainer>
       <SidePanel>
         <DetailView node={detailViewNode} />
@@ -47,4 +54,15 @@ const ListContainer = styled.section`
   flex-basis: 70%;
   padding: 1rem;
   overflow: auto;
+`;
+
+const TitleWrapper = styled.div`
+  padding: 1rem;
+  color: ${p => p.theme.grey["0"]};
+  font-weight: normal;
+`;
+
+const Title = styled.h2`
+  font-weight: normal;
+  font-size: 1rem;
 `;
