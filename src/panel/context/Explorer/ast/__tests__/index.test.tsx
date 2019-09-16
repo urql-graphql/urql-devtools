@@ -3,6 +3,11 @@ import { Operation } from "urql";
 import gql from "graphql-tag";
 import { startQuery } from "../";
 
+jest.mock("nanoid", () => ({
+  __esModule: true,
+  default: () => "[nanoid]"
+}));
+
 interface TestCase {
   query: DocumentNode;
   variables?: any;
@@ -31,19 +36,19 @@ it("int on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "NcTnpyxuTNanDo3GMY32V",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "int": Object {
-        "_id": "b6ACAP1lU08SRC8CNpQ7H",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "int",
         "name": "int",
-        "owner": Object {},
         "value": 42,
       },
     }
@@ -106,7 +111,8 @@ it("complex query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "feed({\\"first\\":10,\\"orderBy\\":\\"DESC\\",\\"skip\\":1})": Object {
-        "_id": "Dj9UneOH0BIL2KxCCEKCq",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": Object {
           "first": 10,
           "orderBy": "DESC",
@@ -114,136 +120,135 @@ it("complex query", () => {
         },
         "children": Object {
           "__typename": Object {
-            "_id": "fnFTNm1C09xtpgUuIaBDc",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "__typename",
             "name": "__typename",
-            "owner": Object {},
             "value": "Feed",
           },
           "count": Object {
-            "_id": "3nrWVoATVAJjBkkL-jd16",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "count",
             "name": "count",
-            "owner": Object {},
             "value": 5,
           },
           "links": Object {
-            "_id": "kwTL5hZ4CKco_VfI6eBt_",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "children": Array [
               Object {
                 "__typename": Object {
-                  "_id": "7oGKFpRqQIoAyyToKrVP-",
+                  "_id": "[nanoid]",
+                  "_owner": Object {},
                   "args": null,
                   "key": "__typename",
                   "name": "__typename",
-                  "owner": Object {},
                   "value": "Link",
                 },
                 "createdAt": Object {
-                  "_id": "pboGXaOW46IacP4HQAxOm",
+                  "_id": "[nanoid]",
+                  "_owner": Object {},
                   "args": null,
                   "key": "createdAt",
                   "name": "createdAt",
-                  "owner": Object {},
                   "value": "2019-09-03T15:28:04.052Z",
                 },
                 "description": Object {
-                  "_id": "VIOqrADtuZzIs1Gym8noG",
+                  "_id": "[nanoid]",
+                  "_owner": Object {},
                   "args": null,
                   "key": "description",
                   "name": "description",
-                  "owner": Object {},
                   "value": "Prisma turns your database into a GraphQL API 😎",
                 },
                 "id": Object {
-                  "_id": "kdXwcKj2rzPqNReIfcx5t",
+                  "_id": "[nanoid]",
+                  "_owner": Object {},
                   "args": null,
                   "key": "id",
                   "name": "id",
-                  "owner": Object {},
                   "value": "ck03zlsr8qg4o0b53x2z7drw8",
                 },
                 "postedBy": Object {
-                  "_id": "FVPjZ__B4fncGrGxcnrUp",
+                  "_id": "[nanoid]",
+                  "_owner": Object {},
                   "args": null,
                   "key": "postedBy",
                   "name": "postedBy",
-                  "owner": Object {},
                   "value": null,
                 },
                 "url": Object {
-                  "_id": "Ws9u0OiL01lHM-kBriPuE",
+                  "_id": "[nanoid]",
+                  "_owner": Object {},
                   "args": null,
                   "key": "url",
                   "name": "url",
-                  "owner": Object {},
                   "value": "https://www.prismagraphql.com",
                 },
                 "votes": Object {
-                  "_id": "-PGWE2MHxOD_7XxL_gE7D",
+                  "_id": "[nanoid]",
+                  "_owner": Object {},
                   "args": null,
                   "children": Array [
                     Object {
                       "__typename": Object {
-                        "_id": "K5Hg2E_A1aKDrgaDwF30D",
+                        "_id": "[nanoid]",
+                        "_owner": Object {},
                         "args": null,
                         "key": "__typename",
                         "name": "__typename",
-                        "owner": Object {},
                         "value": "Vote",
                       },
                       "id": Object {
-                        "_id": "4wTnCrNoF8Y1Z--MMCDHG",
+                        "_id": "[nanoid]",
+                        "_owner": Object {},
                         "args": null,
                         "key": "id",
                         "name": "id",
-                        "owner": Object {},
                         "value": "ck06q9uikf5iw0b53dyjb0fbf",
                       },
                       "user": Object {
-                        "_id": "lnSjpb1V6hPz7VzYgLoVo",
+                        "_id": "[nanoid]",
+                        "_owner": Object {},
                         "args": null,
                         "children": Object {
                           "__typename": Object {
-                            "_id": "j_VQqk4o2KtVzMhZti775",
+                            "_id": "[nanoid]",
+                            "_owner": Object {},
                             "args": null,
                             "key": "__typename",
                             "name": "__typename",
-                            "owner": Object {},
                             "value": "User",
                           },
                           "id": Object {
-                            "_id": "xPSPU555ZCjnILtnYJhBX",
+                            "_id": "[nanoid]",
+                            "_owner": Object {},
                             "args": null,
                             "key": "id",
                             "name": "id",
-                            "owner": Object {},
                             "value": "ck06q5r9ef4cb0b53xl6mzlo4",
                           },
                         },
                         "key": "user",
                         "name": "user",
-                        "owner": Object {},
                       },
                     },
                   ],
                   "key": "votes",
                   "name": "votes",
-                  "owner": Object {},
                 },
               },
             ],
             "key": "links",
             "name": "links",
-            "owner": Object {},
           },
         },
         "key": "feed({\\"first\\":10,\\"orderBy\\":\\"DESC\\",\\"skip\\":1})",
         "name": "feed",
-        "owner": Object {},
       },
     }
   `);
@@ -261,19 +266,19 @@ it("aliased field on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "mAdSPVrN3nn9U4hvDjcuQ",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "int": Object {
-        "_id": "OL_yb21gXFB6TTylFCd4w",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "int",
         "name": "int",
-        "owner": Object {},
         "value": 42,
       },
     }
@@ -296,19 +301,19 @@ it("json on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "EqRx5hbuNnyLslWuFbXR8",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "json": Object {
-        "_id": "mUUTGYg5CT0dJt3EManQA",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "json",
         "name": "json",
-        "owner": Object {},
         "value": Object {
           "__typename": "Misleading",
           "test": true,
@@ -330,19 +335,19 @@ it("nullable field on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "mhbFimnWUvA_vQU3gnSSR",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "missing": Object {
-        "_id": "LAyKz_EO2btQhsI1vih8C",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "missing",
         "name": "missing",
-        "owner": Object {},
         "value": null,
       },
     }
@@ -361,21 +366,21 @@ it("int field with arguments on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "GKUMsOBL7-pzTzD4ZLvpH",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "int({\\"test\\":true})": Object {
-        "_id": "G9bOSl9RSnbHWhntDrqBc",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": Object {
           "test": true,
         },
         "key": "int({\\"test\\":true})",
         "name": "int",
-        "owner": Object {},
         "value": 42,
       },
     }
@@ -398,37 +403,37 @@ it("non-keyable entity on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "NPCLhGSYcrsxHT50IbU57",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "item": Object {
-        "_id": "QF0PZJ-8x7EXWKZgEnHG5",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Object {
           "__typename": Object {
-            "_id": "WCNsStMfXNjR5OgHqdjPq",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "__typename",
             "name": "__typename",
-            "owner": Object {},
             "value": "Item",
           },
           "name": Object {
-            "_id": "pYa-lulZF9OCA5wTckgkv",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "name",
             "name": "name",
-            "owner": Object {},
             "value": "Test",
           },
         },
         "key": "item",
         "name": "item",
-        "owner": Object {},
       },
     }
   `);
@@ -454,45 +459,45 @@ it("invalid entity on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "uyMqu4hNaYsDwnIoDPzxi",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "item": Object {
-        "_id": "nsOWnTFGNo_okVyuaV3-M",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Object {
           "__typename": Object {
-            "_id": "fpby_0J3sBvTP-nrtCaCX",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "__typename",
             "name": "__typename",
-            "owner": Object {},
             "value": null,
           },
           "id": Object {
-            "_id": "JO-JHCZ3nEJBTO4oPv9OT",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "id",
             "name": "id",
-            "owner": Object {},
             "value": "123",
           },
           "name": Object {
-            "_id": "IWb39rxEYlCOroUfy303F",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "name",
             "name": "name",
-            "owner": Object {},
             "value": "Test",
           },
         },
         "key": "item",
         "name": "item",
-        "owner": Object {},
       },
     }
   `);
@@ -514,37 +519,37 @@ it("non-IDable entity on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "Gpe1NEVDzizbIW6Y1wJhl",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "item": Object {
-        "_id": "2JqMAFFEtp4e4SBSfEs1p",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Object {
           "__typename": Object {
-            "_id": "Jvl5UjRabXjNRRCe7baxI",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "__typename",
             "name": "__typename",
-            "owner": Object {},
             "value": "Item",
           },
           "name": Object {
-            "_id": "f1Kh_34FoKWbHOlYmjbTK",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "name",
             "name": "name",
-            "owner": Object {},
             "value": "Test",
           },
         },
         "key": "item",
         "name": "item",
-        "owner": Object {},
       },
     }
   `);
@@ -569,45 +574,45 @@ it("entity on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "5aqlJwfREcHsuhjGs9EID",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "item": Object {
-        "_id": "V-7ggRAWgGVRyhlusyIxV",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Object {
           "__typename": Object {
-            "_id": "GgYlkLAoiKnr_aVbztnMI",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "__typename",
             "name": "__typename",
-            "owner": Object {},
             "value": "Item",
           },
           "id": Object {
-            "_id": "bxsMMIKAto_n526RT0BbE",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "id",
             "name": "id",
-            "owner": Object {},
             "value": "1",
           },
           "name": Object {
-            "_id": "3P-DY6yjJPYxyYcZnO9D5",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "name",
             "name": "name",
-            "owner": Object {},
             "value": "Test",
           },
         },
         "key": "item",
         "name": "item",
-        "owner": Object {},
       },
     }
   `);
@@ -632,45 +637,45 @@ it("entity on aliased field on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "t-TZ6Jt9YISlfMgdgLcXf",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "item": Object {
-        "_id": "gLYVoHZBSvNq-w1iMzEFk",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Object {
           "__typename": Object {
-            "_id": "cTp637lQM9sS7YiRpYBds",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "__typename",
             "name": "__typename",
-            "owner": Object {},
             "value": "Item",
           },
           "id": Object {
-            "_id": "aWJisSbIdY1H9JpqrRH6V",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "id",
             "name": "id",
-            "owner": Object {},
             "value": "1",
           },
           "name": Object {
-            "_id": "784OKQMI_gRegibC95m_a",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "name",
             "name": "name",
-            "owner": Object {},
             "value": "Test",
           },
         },
         "key": "item",
         "name": "item",
-        "owner": Object {},
       },
     }
   `);
@@ -695,47 +700,47 @@ it("entity with arguments on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "sfIVqkr_6TsPUvwg9iEun",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "item({\\"test\\":true})": Object {
-        "_id": "1R-umKncfHlN8-Z6luwLe",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": Object {
           "test": true,
         },
         "children": Object {
           "__typename": Object {
-            "_id": "YTb79Fpp9TW_ulzn1DkFB",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "__typename",
             "name": "__typename",
-            "owner": Object {},
             "value": "Item",
           },
           "id": Object {
-            "_id": "Wr-uI976Un2Q2e9QYDotE",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "id",
             "name": "id",
-            "owner": Object {},
             "value": "1",
           },
           "name": Object {
-            "_id": "FSGLhgssSwWNaszCtv6Jv",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "name",
             "name": "name",
-            "owner": Object {},
             "value": "Test",
           },
         },
         "key": "item({\\"test\\":true})",
         "name": "item",
-        "owner": Object {},
       },
     }
   `);
@@ -761,45 +766,45 @@ it("entity with Int-like ID on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "eucWXeS250TlbWkWl14mR",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "item": Object {
-        "_id": "yxNffjopVayHQLI2rdgXW",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Object {
           "__typename": Object {
-            "_id": "SFkr5FH4pwbQm_vRUtej2",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "__typename",
             "name": "__typename",
-            "owner": Object {},
             "value": "Item",
           },
           "id": Object {
-            "_id": "4FcWpjEeh6YLzZfkBGzAS",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "id",
             "name": "id",
-            "owner": Object {},
             "value": 1,
           },
           "name": Object {
-            "_id": "l6NS_Nc6KuTfpEtqCvNWG",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "name",
             "name": "name",
-            "owner": Object {},
             "value": "Test",
           },
         },
         "key": "item",
         "name": "item",
-        "owner": Object {},
       },
     }
   `);
@@ -823,57 +828,57 @@ it("entity list on query", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "KJg5SgMOGuvKNpgs3m1Nn",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "items": Object {
-        "_id": "RP6iEcCpYp_inV2LSyS7g",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Array [
           Object {
             "__typename": Object {
-              "_id": "sQSObj46A9RWDh0usTZRL",
+              "_id": "[nanoid]",
+              "_owner": Object {},
               "args": null,
               "key": "__typename",
               "name": "__typename",
-              "owner": Object {},
               "value": "Item",
             },
             "id": Object {
-              "_id": "OUKYoiX7ZKs_kgN1J5WrH",
+              "_id": "[nanoid]",
+              "_owner": Object {},
               "args": null,
               "key": "id",
               "name": "id",
-              "owner": Object {},
               "value": 1,
             },
           },
           Object {
             "__typename": Object {
-              "_id": "jgGXDgx92gu-XHh3jAvmr",
+              "_id": "[nanoid]",
+              "_owner": Object {},
               "args": null,
               "key": "__typename",
               "name": "__typename",
-              "owner": Object {},
               "value": "Item",
             },
             "id": Object {
-              "_id": "rReyXmzZOHt6xXmtRKgyy",
+              "_id": "[nanoid]",
+              "_owner": Object {},
               "args": null,
               "key": "id",
               "name": "id",
-              "owner": Object {},
               "value": 2,
             },
           },
         ],
         "key": "items",
         "name": "items",
-        "owner": Object {},
       },
     }
   `);
@@ -902,40 +907,41 @@ it("entity list on query and inline fragment", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "AFuy51sxRjaR2oyEtfRht",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "items": Object {
-        "_id": "vOOfYODcPm5kM0aLmIXK3",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Array [
           Object {
             "__typename": Object {
-              "_id": "flNtsxz8UFfAPt_oygFuL",
+              "_id": "[nanoid]",
+              "_owner": Object {},
               "args": null,
               "key": "__typename",
               "name": "__typename",
-              "owner": Object {},
               "value": "Item",
             },
             "id": Object {
-              "_id": "ZZ63Iqmz8ZCLi6O_OH_Zf",
+              "_id": "[nanoid]",
+              "_owner": Object {},
               "args": null,
               "key": "id",
               "name": "id",
-              "owner": Object {},
               "value": 1,
             },
             "test": Object {
-              "_id": "wtu2XDdf_2LAQsZznm5uE",
+              "_id": "[nanoid]",
+              "_owner": Object {},
               "args": null,
               "key": "test",
               "name": "test",
-              "owner": Object {},
               "value": true,
             },
           },
@@ -943,7 +949,6 @@ it("entity list on query and inline fragment", () => {
         ],
         "key": "items",
         "name": "items",
-        "owner": Object {},
       },
     }
   `);
@@ -974,40 +979,41 @@ it("entity list on query and spread fragment", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "LNj5r9NAdIaGMp0Y1LHqu",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "items": Object {
-        "_id": "G7FoJqbReyj04df8TnQiM",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Array [
           Object {
             "__typename": Object {
-              "_id": "BLe0IJCQAkCt1L8Tes5EH",
+              "_id": "[nanoid]",
+              "_owner": Object {},
               "args": null,
               "key": "__typename",
               "name": "__typename",
-              "owner": Object {},
               "value": "Item",
             },
             "id": Object {
-              "_id": "JViyBE0skjZ3tIY8cEfn4",
+              "_id": "[nanoid]",
+              "_owner": Object {},
               "args": null,
               "key": "id",
               "name": "id",
-              "owner": Object {},
               "value": 1,
             },
             "test": Object {
-              "_id": "FPbNaI6rF4wgLTQDfXiWo",
+              "_id": "[nanoid]",
+              "_owner": Object {},
               "args": null,
               "key": "test",
               "name": "test",
-              "owner": Object {},
               "value": true,
             },
           },
@@ -1015,7 +1021,6 @@ it("entity list on query and spread fragment", () => {
         ],
         "key": "items",
         "name": "items",
-        "owner": Object {},
       },
     }
   `);
@@ -1050,62 +1055,62 @@ it("embedded invalid object on entity", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "3KplKCzplbuHJCq8kXopS",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "item": Object {
-        "_id": "U-saooeaUBPLi6MBejBPc",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Object {
           "__typename": Object {
-            "_id": "NngQqTlWDXK6gqLddJU67",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "__typename",
             "name": "__typename",
-            "owner": Object {},
             "value": "Item",
           },
           "author": Object {
-            "_id": "pCp-QrMKUXpbtGW2gXWE0",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "children": Object {
               "__typename": Object {
-                "_id": "NjYINgpuZa31klvPagpT1",
+                "_id": "[nanoid]",
+                "_owner": Object {},
                 "args": null,
                 "key": "__typename",
                 "name": "__typename",
-                "owner": Object {},
                 "value": "Author",
               },
               "name": Object {
-                "_id": "H478Qtv3LXquZzD1zoocW",
+                "_id": "[nanoid]",
+                "_owner": Object {},
                 "args": null,
                 "key": "name",
                 "name": "name",
-                "owner": Object {},
                 "value": "Stanley",
               },
             },
             "key": "author",
             "name": "author",
-            "owner": Object {},
           },
           "id": Object {
-            "_id": "RBOw1bsITE8uSCFa4a5af",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "id",
             "name": "id",
-            "owner": Object {},
             "value": 1,
           },
         },
         "key": "item",
         "name": "item",
-        "owner": Object {},
       },
     }
   `);
@@ -1142,70 +1147,70 @@ it("embedded object on entity", () => {
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
-        "_id": "wXE-kX32ZtpoJMoq5qZhM",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "key": "__typename",
         "name": "__typename",
-        "owner": Object {},
         "value": "Query",
       },
       "item": Object {
-        "_id": "2u4XoZkki1AheUwA-Wo_k",
+        "_id": "[nanoid]",
+        "_owner": Object {},
         "args": null,
         "children": Object {
           "__typename": Object {
-            "_id": "7xu5Wh6uJBMZ4a-fK4tzo",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "__typename",
             "name": "__typename",
-            "owner": Object {},
             "value": "Item",
           },
           "author": Object {
-            "_id": "8AUX3lB45rwoSCbb4qgAf",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "children": Object {
               "__typename": Object {
-                "_id": "rXhoRqn81l9QohMpnUTak",
+                "_id": "[nanoid]",
+                "_owner": Object {},
                 "args": null,
                 "key": "__typename",
                 "name": "__typename",
-                "owner": Object {},
                 "value": "Author",
               },
               "id": Object {
-                "_id": "GIGjUClShUJ16A16Rrt8Q",
+                "_id": "[nanoid]",
+                "_owner": Object {},
                 "args": null,
                 "key": "id",
                 "name": "id",
-                "owner": Object {},
                 "value": 1,
               },
               "name": Object {
-                "_id": "FlryLcP803WPCzZGsQdfN",
+                "_id": "[nanoid]",
+                "_owner": Object {},
                 "args": null,
                 "key": "name",
                 "name": "name",
-                "owner": Object {},
                 "value": "Stanley",
               },
             },
             "key": "author",
             "name": "author",
-            "owner": Object {},
           },
           "id": Object {
-            "_id": "_CzgiKdbtGK-O3isu3dAX",
+            "_id": "[nanoid]",
+            "_owner": Object {},
             "args": null,
             "key": "id",
             "name": "id",
-            "owner": Object {},
             "value": 1,
           },
         },
         "key": "item",
         "name": "item",
-        "owner": Object {},
       },
     }
   `);
