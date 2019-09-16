@@ -54,6 +54,17 @@ export function ListItem({
     setIsExpanded(isExpanded => !isExpanded);
   };
 
+  const contents = (
+    <>
+      <Name>{node.name}</Name>
+      <Arguments args={node.args} displayAll={isExpanded} />
+      {`: `}
+      <ValueWrapper>
+        <Value value={node.value} expandValues />
+      </ValueWrapper>
+    </>
+  );
+
   return (
     <>
       {hasChildren ? (
@@ -72,10 +83,13 @@ export function ListItem({
         </Item>
       ) : (
         <Item role="treeitem" withChildren={false}>
-          <Name>{node.name}</Name>
-          <Arguments args={node.args} displayAll={isExpanded} />
-          {`: `}
-          <Value value={node.value} expandValues />
+          {node.args ? (
+            <FieldContainer onClick={handleOnClick} isActive={isActive}>
+              {contents}
+            </FieldContainer>
+          ) : (
+            <>{contents}</>
+          )}
         </Item>
       )}
     </>
@@ -97,6 +111,10 @@ export const SystemListItem = ({
   </Item>
 );
 
+const ValueWrapper = styled.div`
+  display: inline-block;
+`;
+
 const FieldContainer = styled.button`
   width: 100%;
   padding: 0;
@@ -106,7 +124,7 @@ const FieldContainer = styled.button`
   border: none;
   outline: none;
   position: relative;
-  height: 1.4rem;
+  min-height: 1.4rem;
   line-height: 1.4rem;
 
   color: ${p => p.theme.grey["-1"]};
@@ -119,6 +137,12 @@ const FieldContainer = styled.button`
       background-color: ${p => p.theme.dark["-1"]};
       transition: background-color 0.3s linear;
     `};
+
+  & > ${ValueWrapper} {
+    display: inline-flex;
+    width: min-content;
+    flex-wrap: wrap;
+  }
 `;
 
 const Item = styled.li`
@@ -168,4 +192,5 @@ const Typename = styled.div`
   background-color: ${p => p.theme.dark["-2"]};
   color: ${p => p.theme.grey["+2"]};
   font-size: 11px;
+  line-height: 1rem;
 `;

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FieldNode } from "../context/explorer/ast";
+import { FieldNode } from "../context/Explorer/ast";
 import { Value } from "./Value";
 
 interface Props {
@@ -78,13 +78,17 @@ export function DetailView({ node }: Props) {
       {node.args ? (
         <>
           <Title>Arguments</Title>
-          <Code>{JSON.stringify(node.args, null, 2)}</Code>
+          <Code>
+            <Value value={node.args} expandValues />
+          </Code>
         </>
       ) : null}
       {node.value ? (
         <>
           <Title>Value</Title>
-          <Code>{renderValues(node)}</Code>
+          <Code>
+            <Value value={node.value} expandValues={false} />
+          </Code>
         </>
       ) : null}
       {node.children ? (
@@ -99,14 +103,14 @@ export function DetailView({ node }: Props) {
 
 const Title = styled.h3`
   text-transform: uppercase;
-  color: #b4bfd170;
+  color: ${p => `${p.theme.grey["+1"]}`};
   font-size: 12px;
   font-weight: normal;
 `;
 
 const Code = styled.code`
   display: block;
-  color: #b4bfd1;
+  color: ${p => p.theme.grey["-1"]};
   white-space: pre;
 
   & > code {
@@ -120,5 +124,5 @@ const TextContainer = styled.div`
 
 const Text = styled.p`
   text-align: center;
-  color: #b4bfd170;
+  color: ${p => `${p.theme.grey["-1"]}`};
 `;

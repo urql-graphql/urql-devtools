@@ -26,11 +26,8 @@ export function ExplorerContextProvider({ children }: Props) {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const [operations, setOperations] = useState<NodeMap>({});
 
-  console.log(operations);
-
   useEffect(() => {
     return addMessageHandler((o: DevtoolsExchangeOutgoingMessage) => {
-      console.log(o);
       if (o.type === "response") {
         return setOperations(operations => {
           return startQuery(o.data.operation, o.data.data, operations);
