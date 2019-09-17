@@ -98,10 +98,10 @@ export const List = styled.ul`
   padding-top: 0.3rem;
   padding-left: 0.5rem;
   margin-left: 5px;
-  border-left: 3px solid #cae3f212;
+  border-left: 3px solid ${p => p.theme.border};
   list-style: none;
   font-size: 14px;
-  color: ${p => p.theme.grey["-1"]};
+  color: ${p => p.theme.value};
 
   &:last-of-type {
     margin-bottom: 0;

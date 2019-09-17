@@ -58,7 +58,7 @@ export function ListItem({
     <>
       <Name>{node.name}</Name>
       <Arguments args={node.args} displayAll={isExpanded} />
-      {`: `}
+      <Symbol>{`:`}</Symbol>
       <ValueWrapper>
         <Value value={node.value} expandValues />
       </ValueWrapper>
@@ -126,15 +126,16 @@ const FieldContainer = styled.button`
   position: relative;
   min-height: 1.4rem;
   line-height: 1.4rem;
+  cursor: pointer;
 
-  color: ${p => p.theme.grey["-1"]};
+  color: ${p => p.theme.symbol};
   text-align: left;
   font-size: 14px;
 
   ${({ isActive }: { isActive: boolean }) =>
     isActive &&
     css`
-      background-color: ${p => p.theme.dark["-1"]};
+      background-color: ${p => p.theme.bgSecondary};
       transition: background-color 0.3s linear;
     `};
 
@@ -153,14 +154,14 @@ const Item = styled.li`
 `;
 
 const Name = styled.span`
-  color: ${p => p.theme.grey["+2"]};
+  color: ${p => p.theme.key};
 `;
 
 const ChildrenName = styled.span`
   position: relative;
   margin-right: 3px;
   display: inline-block;
-  color: ${p => p.theme.grey["-1"]};
+  color: ${p => p.theme.heading};
   font-weight: bold;
   font-size: 14px;
 `;
@@ -177,7 +178,7 @@ const Arrow = styled(ArrowIcon)`
 
   transform: ${({ active }: { active: boolean }) =>
     active ? "rotate(90deg)" : "rotate(0deg)"};
-  color: ${p => (p.active ? p.theme.red["+1"] : p.theme.grey["+1"])};
+  color: ${p => (p.active ? p.theme.active : p.theme.symbol)};
   transition: all 0.1s;
 `;
 
@@ -187,10 +188,15 @@ const Typename = styled.div`
   margin-bottom: 0.15rem;
   margin-top: -0.1rem;
   padding: 3px 5px;
-  border: 1px solid ${p => p.theme.dark["+1"]};
+  border: 1px solid ${p => `${p.theme.symbol}50`};
   border-radius: 2px;
-  background-color: ${p => p.theme.dark["-2"]};
-  color: ${p => p.theme.grey["+2"]};
+  background-color: ${p => p.theme.bgSecondary};
+  color: ${p => p.theme.value};
   font-size: 11px;
   line-height: 1rem;
+`;
+
+const Symbol = styled.span`
+  color: ${p => p.theme.symbol};
+  margin-right: 3px;
 `;

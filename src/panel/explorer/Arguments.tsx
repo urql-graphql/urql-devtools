@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FieldNode } from "../context/explorer/ast";
 import { SeeMoreIcon } from "./Icons";
-import { Value } from "./Value";
+import { KeyValue } from "./Value";
 
 interface Props {
   args: FieldNode["args"];
@@ -21,7 +21,8 @@ export function Arguments({ args, displayAll }: Props) {
     if (Array.isArray(val)) {
       content.push(
         <ArgWrapper key={key}>
-          <ArgKey>{key}: </ArgKey>
+          <ArgKey>{key}</ArgKey>
+          <Symbol>{`:`}</Symbol>
           <IconContainer>
             {"["}
             <SeeMore />
@@ -33,7 +34,8 @@ export function Arguments({ args, displayAll }: Props) {
     } else if (val && typeof val === "object") {
       content.push(
         <ArgWrapper>
-          <ArgKey>{key}: </ArgKey>
+          <ArgKey>{key}</ArgKey>
+          <Symbol>{`:`}</Symbol>
           <IconContainer>
             {"{"}
             <SeeMore />
@@ -45,8 +47,7 @@ export function Arguments({ args, displayAll }: Props) {
     } else {
       content.push(
         <ArgWrapper key={key}>
-          <ArgKey>{key}: </ArgKey>
-          <Value value={val} expandValues={false} />
+          <KeyValue keyName={key} value={val} expandValues={false} />
           {content.length === entries.length - 1 ? "" : ","}
         </ArgWrapper>
       );
@@ -72,7 +73,7 @@ const ArgsContainer = styled.div`
 `;
 
 const ArgKey = styled.span`
-  color: ${p => p.theme.purple["0"]};
+  color: ${p => p.theme.key};
 `;
 
 const ArgWrapper = styled.span`
@@ -86,11 +87,7 @@ const ArgWrapper = styled.span`
 const IconContainer = styled.div`
   display: inline-flex;
   align-items: flex-end;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  padding: 0;
-  color: ${p => p.theme.grey["-1"]};
+  color: ${p => p.theme.symbol};
   font-size: 14px;
   cursor: pointer;
 `;
@@ -101,4 +98,9 @@ const ExpandContainer = styled(IconContainer)`
 
 const SeeMore = styled(SeeMoreIcon)`
   margin: 3px;
+`;
+
+const Symbol = styled.span`
+  color: ${p => p.theme.symbol};
+  margin-right: 5px;
 `;

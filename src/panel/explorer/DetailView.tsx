@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { FieldNode } from "../context/Explorer/ast";
-import { Value } from "./Value";
+import { FieldNode, NodeMap } from "../context/Explorer/ast";
+import { Value, KeyValue } from "./Value";
 
 interface Props {
   node: FieldNode | null;
@@ -16,65 +16,35 @@ export function DetailView({ node }: Props) {
     );
   }
 
-  const renderValues = (values: { [key: string]: any }) => {
+  const gatherChildValues = (values: NodeMap | undefined) => {
     if (!values) {
       return null;
     }
 
-    return Object.entries(values).map(node => {
-      const [key, value] = node;
-
-      if (!!value && typeof value === "object") {
-        if (value["value"]) {
-          return (
-            <Code>
-              <span>{`${key}: `}</span>
-              <Value value={value["value"]} expandValues />
-            </Code>
-          );
-        } else if (Array.isArray(value["children"])) {
-          return (
-            <Code>
-              <span>{`${key}: `}</span>
-              <Value value={value["value"]} expandValues />
-            </Code>
-          );
-        }
-      } else {
-        return (
-          <Code>
-            <span>{`${key}: `}</span>
-            <Value value={value} expandValues />
-          </Code>
-        );
+    return Object.entries(values).reduce((acc, [key, value]) => {
+      if (value && typeof value === "object") {
+        acc[key] = value.value;
       }
-    });
+      return acc;
+    }, Object.create(null));
   };
 
   const renderChildren = (node: FieldNode) => {
-    if (Array.isArray(node.children)) {
-      return (
-        <Code>
+    return (
+      <Code>
+        {Array.isArray(node.children) ? (
           <Value value={node.children} expandValues={false} />
-        </Code>
-      );
-    } else if (node.children) {
-      return (
-        <>
-          <Code>{"{"}</Code>
-          <Code>{renderValues(node.children)}</Code>
-          <Code>{"}"}</Code>
-        </>
-      );
-    } else {
-      return null;
-    }
+        ) : (
+          <Value value={gatherChildValues(node.children)} expandValues />
+        )}
+      </Code>
+    );
   };
 
   return (
     <>
       <Title>Name</Title>
-      <Code>{node.name}</Code>
+      <Name>{node.name}</Name>
       {node.args ? (
         <>
           <Title>Arguments</Title>
@@ -83,18 +53,14 @@ export function DetailView({ node }: Props) {
           </Code>
         </>
       ) : null}
-      {node.value ? (
+      {node.value || node.children ? (
         <>
           <Title>Value</Title>
-          <Code>
+          {node.children ? (
+            renderChildren(node)
+          ) : (
             <Value value={node.value} expandValues={false} />
-          </Code>
-        </>
-      ) : null}
-      {node.children ? (
-        <>
-          <Title>Children</Title>
-          {renderChildren(node)}
+          )}
         </>
       ) : null}
     </>
@@ -103,18 +69,25 @@ export function DetailView({ node }: Props) {
 
 const Title = styled.h3`
   text-transform: uppercase;
-  color: ${p => `${p.theme.grey["+1"]}`};
+  color: ${p => p.theme.heading};
   font-size: 12px;
   font-weight: normal;
 `;
 
+const Name = styled.span`
+  color: ${p => p.theme.value};
+`;
+
 const Code = styled.code`
   display: block;
-  color: ${p => p.theme.grey["-1"]};
+  color: ${p => p.theme.symbol};
   white-space: pre;
 
   & > code {
     padding-left: 1rem;
+  }
+  & > * {
+    display: block;
   }
 `;
 
@@ -124,5 +97,5 @@ const TextContainer = styled.div`
 
 const Text = styled.p`
   text-align: center;
-  color: ${p => `${p.theme.grey["-1"]}`};
+  color: ${p => p.theme.symbol};
 `;

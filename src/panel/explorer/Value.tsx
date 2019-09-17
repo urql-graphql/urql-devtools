@@ -38,18 +38,21 @@ export function Value({ value, expandValues }: Props) {
         return <>{"{}"}</>;
       } else {
         return expandValues ? (
-          <Code>
+          <Wrapper>
             {"{"}
             {entries.map(([key, value]) => {
               return (
-                <>
-                  <span>{`${key}: `}</span>
-                  <Value value={value} expandValues={expandValues} />
-                </>
+                <Container>
+                  <KeyValue
+                    keyName={key}
+                    value={value}
+                    expandValues={expandValues}
+                  />
+                </Container>
               );
             })}
             {"}"}
-          </Code>
+          </Wrapper>
         ) : (
           <>{`Object`}</>
         );
@@ -68,6 +71,39 @@ export function Value({ value, expandValues }: Props) {
   );
 }
 
-const Code = styled.code`
-  white-space: pre;
+interface KeyValProps {
+  keyName: string;
+  value: FieldNode["value"];
+  expandValues: boolean;
+}
+
+export function KeyValue({ keyName, value, expandValues }: KeyValProps) {
+  return (
+    <>
+      <Key>{keyName}</Key>
+      <Symbol>:</Symbol>
+      <Value value={value} expandValues={expandValues} />
+    </>
+  );
+}
+
+const Key = styled.span`
+  color: ${p => p.theme.key};
+`;
+
+const Symbol = styled.span`
+  margin-right: 5px;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+`;
+
+const Container = styled.span``;
+
+const Wrapper = styled.div`
+  & > ${Container} {
+    display: block;
+    padding-left: 1rem;
+  }
 `;
