@@ -23,6 +23,8 @@ declare module "styled-components" {
     green: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+2" | "+3">;
     red: Omit<ColorRange, "-3" | "-2" | "-1" | "+2" | "+3">;
     orange: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+2" | "+3">;
-    purple: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+2" | "+3">;
+    purple: Omit<ColorRange, "-3" | "-2" | "-1" | "+2" | "+3">;
+    pink: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+3">;
+    border: string;
   }
 }

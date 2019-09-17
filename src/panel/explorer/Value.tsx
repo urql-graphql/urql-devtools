@@ -40,9 +40,9 @@ export function Value({ value, expandValues }: Props) {
         return expandValues ? (
           <Wrapper>
             {"{"}
-            {entries.map(([key, value]) => {
+            {entries.map(([key, value], i) => {
               return (
-                <Container>
+                <Container key={i}>
                   <KeyValue
                     keyName={key}
                     value={value}
@@ -88,7 +88,7 @@ export function KeyValue({ keyName, value, expandValues }: KeyValProps) {
 }
 
 const Key = styled.span`
-  color: ${p => p.theme.key};
+  color: ${p => p.theme.pink["0"]};
 `;
 
 const Symbol = styled.span`

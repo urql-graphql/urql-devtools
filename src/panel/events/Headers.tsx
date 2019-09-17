@@ -12,7 +12,7 @@ export const Headers = () => (
 );
 
 const BaseTitle = styled.h3`
-  color: rgba(255, 255, 255);
+  color: ${p => p.theme.grey["+2"]};
   font-size: 13px;
   margin: 0;
   width: 50%;

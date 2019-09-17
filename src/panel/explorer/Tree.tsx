@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
-import { NodeMap, FieldNode } from "../context/explorer/ast";
+import { NodeMap, FieldNode } from "../context/Explorer/ast";
 import { ListItem, SystemListItem } from "./ListItem";
 
 interface Props {
@@ -101,7 +101,7 @@ export const List = styled.ul`
   border-left: 3px solid ${p => p.theme.border};
   list-style: none;
   font-size: 14px;
-  color: ${p => p.theme.value};
+  color: ${p => p.theme.grey["+2"]};
 
   &:last-of-type {
     margin-bottom: 0;

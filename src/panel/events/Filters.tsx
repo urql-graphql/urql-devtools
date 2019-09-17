@@ -114,7 +114,7 @@ const TextContainer = styled.div`
   justify-content: center;
   width: 100%;
   padding: 20px;
-  color: white;
+  color: ${p => p.theme.grey["+2"]};
 `;
 
 const Title = styled.strong`

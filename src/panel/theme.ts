@@ -1,19 +1,16 @@
-import styled from "styled-components";
-import { darken, lighten, opacify } from "polished";
-
 export const theme = {
   grey: {
-    "-1": "#607e8f",
+    "-1": "#607E90",
     "0": "#AAADB1",
     "+1": "#A5B0B7",
     "+2": "#b4bfd1"
   },
   dark: {
-    "-3": "#0F151E",
-    "-2": "#151D29",
-    "-1": "#1C2535",
-    "0": "#212D40",
-    "+1": "#495362"
+    "-3": "#11151c",
+    "-2": "#12141a",
+    "-1": "#1a1c24",
+    "0": "#1C1E26",
+    "+1": "#2e3240"
   },
   blue: {
     "-2": "#0067A3",
@@ -31,14 +28,12 @@ export const theme = {
     "0": "#EB9028"
   },
   purple: {
-    "0": "#7776d2"
+    "0": "#7776d2",
+    "+1": "#8899E3"
   },
-  bgPrimary: "#1C1E26",
-  bgSecondary: "rgba(0, 0, 0, 0.26)",
-  heading: "#8899E3",
-  value: "#b4bfd1",
-  key: "#B877DB",
-  symbol: "#607E90",
-  border: "#CAE3F212",
-  active: "#EC3E66"
+  pink: {
+    "0": "#B877DB",
+    "+2": "#EC3E66"
+  },
+  border: "#CAE3F212"
 };

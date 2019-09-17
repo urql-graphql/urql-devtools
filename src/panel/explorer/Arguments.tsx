@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FieldNode } from "../context/explorer/ast";
+import { FieldNode } from "../context/Explorer/ast";
 import { SeeMoreIcon } from "./Icons";
 import { KeyValue } from "./Value";
 
@@ -57,7 +57,7 @@ export function Arguments({ args, displayAll }: Props) {
   if (!displayAll && !(content.length <= 3)) {
     content = [
       ...content.slice(0, 3),
-      <ExpandContainer>
+      <ExpandContainer key="last">
         <SeeMore />
       </ExpandContainer>
     ];
@@ -73,7 +73,7 @@ const ArgsContainer = styled.div`
 `;
 
 const ArgKey = styled.span`
-  color: ${p => p.theme.key};
+  color: ${p => p.theme.pink["0"]};
 `;
 
 const ArgWrapper = styled.span`
@@ -87,7 +87,7 @@ const ArgWrapper = styled.span`
 const IconContainer = styled.div`
   display: inline-flex;
   align-items: flex-end;
-  color: ${p => p.theme.symbol};
+  color: ${p => p.theme.grey["-1"]};
   font-size: 14px;
   cursor: pointer;
 `;
@@ -101,6 +101,6 @@ const SeeMore = styled(SeeMoreIcon)`
 `;
 
 const Symbol = styled.span`
-  color: ${p => p.theme.symbol};
+  color: ${p => p.theme.grey["-1"]};
   margin-right: 5px;
 `;

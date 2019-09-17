@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FieldNode, NodeMap } from "../context/Explorer/ast";
-import { Value, KeyValue } from "./Value";
+import { Value } from "./Value";
 
 interface Props {
   node: FieldNode | null;
@@ -69,18 +69,18 @@ export function DetailView({ node }: Props) {
 
 const Title = styled.h3`
   text-transform: uppercase;
-  color: ${p => p.theme.heading};
+  color: ${p => p.theme.purple["+1"]};
   font-size: 12px;
   font-weight: normal;
 `;
 
 const Name = styled.span`
-  color: ${p => p.theme.value};
+  color: ${p => p.theme.grey["+2"]};
 `;
 
 const Code = styled.code`
   display: block;
-  color: ${p => p.theme.symbol};
+  color: ${p => p.theme.grey["-1"]};
   white-space: pre;
 
   & > code {
@@ -97,5 +97,5 @@ const TextContainer = styled.div`
 
 const Text = styled.p`
   text-align: center;
-  color: ${p => p.theme.symbol};
+  color: ${p => p.theme.grey["-1"]};
 `;

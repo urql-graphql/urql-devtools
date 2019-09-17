@@ -3,7 +3,7 @@ import styled, { keyframes, css } from "styled-components";
 
 export type HighlightState = "NOT_READY" | "READY" | "RUNNING";
 
-export const useHighlight = (deps: Array<any> = []): [boolean, () => void] => {
+export const useHighlight = (deps: any[] = []): [boolean, () => void] => {
   const [state, setState] = useState<HighlightState>("NOT_READY");
 
   useLayoutEffect(() => {
@@ -39,7 +39,7 @@ export const HighlightUpdate = styled.span`
   border-radius: 3px;
   animation-duration: 1s;
   animation-iteration-count: 1;
-  color: ${p => p.theme.value};
+  color: ${p => p.theme.grey["+2"]};
 
   ${({ isAnimating }: { isAnimating: boolean }) =>
     isAnimating &&

@@ -38,14 +38,14 @@ export function Explorer() {
 }
 
 const Container = styled(Background)`
-  background-color: ${p => p.theme.bgPrimary};
+  background-color: ${p => p.theme.dark["0"]};
 `;
 
 const SidePanel = styled.aside`
   flex: 1;
   flex-basis: 30%;
   padding: 1rem;
-  background-color: ${p => p.theme.bgSecondary};
+  background-color: ${p => p.theme.dark["-1"]};
   overflow: auto;
 `;
 
@@ -58,7 +58,7 @@ const ListContainer = styled.section`
 
 const TitleWrapper = styled.div`
   padding: 1rem;
-  color: ${p => p.theme.value};
+  color: ${p => p.theme.grey["+2"]};
   font-weight: normal;
 `;
 

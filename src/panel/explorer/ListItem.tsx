@@ -128,14 +128,14 @@ const FieldContainer = styled.button`
   line-height: 1.4rem;
   cursor: pointer;
 
-  color: ${p => p.theme.symbol};
+  color: ${p => p.theme.grey["-1"]};
   text-align: left;
   font-size: 14px;
 
   ${({ isActive }: { isActive: boolean }) =>
     isActive &&
     css`
-      background-color: ${p => p.theme.bgSecondary};
+      background-color: ${p => p.theme.dark["-1"]};
       transition: background-color 0.3s linear;
     `};
 
@@ -154,14 +154,14 @@ const Item = styled.li`
 `;
 
 const Name = styled.span`
-  color: ${p => p.theme.key};
+  color: ${p => p.theme.pink["0"]};
 `;
 
 const ChildrenName = styled.span`
   position: relative;
   margin-right: 3px;
   display: inline-block;
-  color: ${p => p.theme.heading};
+  color: ${p => p.theme.purple["+1"]};
   font-weight: bold;
   font-size: 14px;
 `;
@@ -178,7 +178,7 @@ const Arrow = styled(ArrowIcon)`
 
   transform: ${({ active }: { active: boolean }) =>
     active ? "rotate(90deg)" : "rotate(0deg)"};
-  color: ${p => (p.active ? p.theme.active : p.theme.symbol)};
+  color: ${p => (p.active ? p.theme.pink["+2"] : p.theme.grey["-1"])};
   transition: all 0.1s;
 `;
 
@@ -188,15 +188,15 @@ const Typename = styled.div`
   margin-bottom: 0.15rem;
   margin-top: -0.1rem;
   padding: 3px 5px;
-  border: 1px solid ${p => `${p.theme.symbol}50`};
+  border: 1px solid ${p => `${p.theme.grey["-1"]}50`};
   border-radius: 2px;
-  background-color: ${p => p.theme.bgSecondary};
-  color: ${p => p.theme.value};
+  background-color: ${p => p.theme.dark["-1"]};
+  color: ${p => p.theme.grey["+2"]};
   font-size: 11px;
   line-height: 1rem;
 `;
 
 const Symbol = styled.span`
-  color: ${p => p.theme.symbol};
+  color: ${p => p.theme.grey["-1"]};
   margin-right: 3px;
 `;

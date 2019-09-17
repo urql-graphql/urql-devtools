@@ -72,7 +72,7 @@ const EventsList = styled.div`
 `;
 
 const NoEvents = styled.h2`
-  color: white;
+  color: ${p => p.theme.grey["+2"]};
   margin: 0;
   margin-top: 12px;
   font-style: italic;
