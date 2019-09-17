@@ -26,10 +26,10 @@ type DataField = Scalar | NullArray<Scalar> | null;
 
 export interface FieldNode {
   _id: string;
+  _owner: {};
   key: string;
   name: string;
   args: Variables | null;
-  owner: {};
   value?: DataField;
   children?: NodeMap | NullArray<NodeMap>;
 }
@@ -55,23 +55,42 @@ export const startQuery = (
   }
 
   const operation = getMainOperation(request.query);
+  const select = getSelectionSet(operation);
+
+  if (select.length === 0) {
+    return map;
+  }
 
   const ctx = {
     variables: normalizeVariables(operation, request.variables),
     fragments: getFragments(request.query)
   };
 
-  return copyFromData(ctx, copyMap(map), getSelectionSet(operation), data, {});
+  const owner = {};
+  return copyFromData(ctx, copyNodeMap(map), select, data, owner);
 };
 
-const copyMap = (map: null | NodeMap): NodeMap => {
+const copyNodeMap = (map: null | NodeMap): NodeMap => {
   const newMap = Object.create(null);
-  return map ? Object.assign(newMap, map) : newMap;
+  return map !== null ? Object.assign(newMap, map) : newMap;
 };
 
-const makeNode = (owner: {}, node: undefined | FieldNode) => {
-  if (node === undefined || node.owner !== owner) {
-    const node = {};
+const copyFieldNode = (node: FieldNode, owner: {}) => {
+  if (node._owner === owner) {
+    return node;
+  } else {
+    const newNode = {
+      ...node,
+      _owner: owner
+    };
+
+    if (Array.isArray(node.children)) {
+      newNode.children = node.children.map(copyNodeMap);
+    } else if (typeof node.children === "object") {
+      newNode.children = copyNodeMap(node.children);
+    }
+
+    return newNode;
   }
 };
 
@@ -93,15 +112,13 @@ function copyFromData(
       if (map[fieldKey] === undefined) {
         node = map[fieldKey] = {
           _id: nanoid(),
+          _owner: owner,
           key: fieldKey,
           name: fieldName,
-          args: fieldArgs,
-          owner
+          args: fieldArgs
         };
-      } else if (map[fieldKey].owner !== owner) {
-        node = map[fieldKey] = { ...map[fieldKey], owner };
       } else {
-        node = map[fieldKey];
+        node = copyFieldNode(map[fieldKey], owner);
       }
 
       if (
@@ -113,36 +130,49 @@ function copyFromData(
         const fieldSelection = getSelectionSet(fieldNode);
 
         if (Array.isArray(childValue)) {
-          const prevChildren = Array.isArray(node.children)
+          const size = childValue.length;
+          node.children = Array.isArray(node.children)
             ? node.children
-            : [];
+            : new Array(size);
+          node.children.length = size;
 
-          node.children = childValue.map((childData: Data | null, index) => {
-            if (!childData) {
-              return null;
+          for (let i = 0; i < size; i++) {
+            const childData: Data | null = childValue[i];
+            if (childData === null) {
+              node.children[i] = null;
+            } else {
+              const childMap = node.children[i] || Object.create(null);
+              node.children[i] = copyFromData(
+                ctx,
+                childMap,
+                fieldSelection,
+                childData,
+                owner
+              );
             }
-
-            let map = copyMap(prevChildren[index]);
-
-            return copyFromData(ctx, map, fieldSelection, childData, {});
-          });
+          }
         } else {
-          let innerMap =
-            node.children && !Array.isArray(node.children)
-              ? node.children
-              : (node.children = Object.create(null));
-
-          return copyFromData(ctx, innerMap, fieldSelection, childValue, {});
+          const childMap = node.children || Object.create(null);
+          node.children = copyFromData(
+            ctx,
+            childMap,
+            fieldSelection,
+            childValue,
+            owner
+          );
         }
+
+        delete node.value;
       } else {
         node.value = fieldValue === undefined ? null : fieldValue;
+        delete node.children;
       }
     } else {
       const fragmentNode = !isInlineFragment(fieldNode)
         ? ctx.fragments[getName(fieldNode)]
         : fieldNode;
       if (fragmentNode !== undefined) {
-        copyFromData(ctx, map, getSelectionSet(fragmentNode), data, {});
+        copyFromData(ctx, map, getSelectionSet(fragmentNode), data, owner);
       }
     }
   });
