@@ -28,7 +28,7 @@ export const useHighlight = (deps: any[] = []): [boolean, () => void] => {
 
 const updated = keyframes`
   from {
-    background-color: #504f94c4;
+    background-color: #9594d4c4;
   }
   to {
     background-color: transparent;
@@ -39,7 +39,6 @@ export const HighlightUpdate = styled.span`
   border-radius: 3px;
   animation-duration: 1s;
   animation-iteration-count: 1;
-  color: ${p => p.theme.grey["+2"]};
 
   ${({ isAnimating }: { isAnimating: boolean }) =>
     isAnimating &&

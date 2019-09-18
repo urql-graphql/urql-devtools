@@ -29,7 +29,7 @@ export function Value({ value, expandValues }: Props) {
             ]
           </>
         ) : (
-          <>{`Array (${value.length})`}</>
+          <Val>{`Array (${value.length})`}</Val>
         );
       }
     } else if (typeof value === "object" && !!value) {
@@ -54,13 +54,13 @@ export function Value({ value, expandValues }: Props) {
             {"}"}
           </Wrapper>
         ) : (
-          <>{`Object`}</>
+          <Val>{`Object`}</Val>
         );
       }
     } else if (typeof value === "string") {
-      return <>{`"${value}"`}</>;
+      return <Val>{`"${value}"`}</Val>;
     } else {
-      return <>{`${value}`}</>;
+      return <Val>{`${value}`}</Val>;
     }
   };
 
@@ -106,4 +106,8 @@ const Wrapper = styled.div`
     display: block;
     padding-left: 1rem;
   }
+`;
+
+const Val = styled.span`
+  color: ${p => p.theme.grey["+2"]};
 `;

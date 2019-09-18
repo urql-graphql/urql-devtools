@@ -1,11 +1,11 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import { NodeMap, FieldNode } from "../context/Explorer/ast";
 import { ListItem, SystemListItem } from "./ListItem";
 
 interface Props {
   nodeMap: NodeMap | (NodeMap | null)[] | undefined;
-  setFocusedNode: (node: FieldNode) => void;
+  setFocusedNode: (id: string) => void;
   setDetailView: (node: FieldNode | null) => void;
   activeId?: string;
   depth?: number;
@@ -55,18 +55,15 @@ export function Tree({
     return null;
   }
 
-  const mapNode = useCallback(
-    (node: FieldNode) => (
-      <ListItem
-        key={node.key}
-        node={node}
-        setFocusedNode={setFocusedNode}
-        setDetailView={setDetailView}
-        activeId={activeId}
-        depth={depth}
-      />
-    ),
-    []
+  const mapNode = (node: FieldNode) => (
+    <ListItem
+      key={node.key}
+      node={node}
+      setFocusedNode={setFocusedNode}
+      setDetailView={setDetailView}
+      activeId={activeId}
+      depth={depth}
+    />
   );
 
   const fields = Object.values(nodeMap);

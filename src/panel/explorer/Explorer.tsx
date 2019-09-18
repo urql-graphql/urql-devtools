@@ -8,10 +8,12 @@ import { DetailView } from "./DetailView";
 
 export function Explorer() {
   const { data } = useContext(ExplorerContext);
-  const [focusedNodeId, setFocusedNodeId] = useState<string>("");
+  const [focusedNodeId, setFocusedNodeId] = useState<string | undefined>(
+    undefined
+  );
   const [detailViewNode, setDetailViewNode] = useState<FieldNode | null>(null);
 
-  const setActiveNode = (node: FieldNode) => setFocusedNodeId(node._id);
+  const setActiveNode = (id: string) => setFocusedNodeId(id);
 
   return (
     <Container>
@@ -52,8 +54,15 @@ const SidePanel = styled.aside`
 const ListContainer = styled.section`
   flex: 2;
   flex-basis: 70%;
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
   overflow: auto;
+
+  @media (min-aspect-ratio: 1/1) {
+    padding-right: 1px;
+  }
 `;
 
 const TitleWrapper = styled.div`

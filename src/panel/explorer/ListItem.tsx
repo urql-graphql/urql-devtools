@@ -9,7 +9,7 @@ import { useHighlight, HighlightUpdate } from "./Highlight";
 
 interface ItemProps {
   node: FieldNode;
-  setFocusedNode: (node: FieldNode) => any;
+  setFocusedNode: (id: string) => any;
   setDetailView: (node: FieldNode | null) => any;
   activeId: string | undefined;
   depth?: number;
@@ -27,8 +27,8 @@ export function ListItem({
 
   useEffect(() => {
     if (isExpanded) {
+      setFocusedNode(node._id);
       setDetailView(node);
-      setFocusedNode(node);
     } else {
       setDetailView(null);
     }
@@ -69,23 +69,27 @@ export function ListItem({
     <>
       {hasChildren ? (
         <Item role="treeitem" withChildren>
-          <HighlightUpdate
-            isAnimating={isAnimating && !isExpanded}
-            onAnimationEnd={onAnimationEnd}
-          >
-            <FieldContainer onClick={handleOnClick} isActive={isActive}>
-              <Arrow active={isExpanded} />
-              <ChildrenName>{node.name}</ChildrenName>
-              <Arguments args={node.args} displayAll={isExpanded} />
-            </FieldContainer>
-          </HighlightUpdate>
+          <FieldContainer onClick={handleOnClick}>
+            <HighlightUpdate
+              isAnimating={isAnimating && !isExpanded}
+              onAnimationEnd={onAnimationEnd}
+            >
+              <OutlineContainer isActive={isActive}>
+                <Arrow active={isExpanded} />
+                <ChildrenName>{node.name}</ChildrenName>
+                <Arguments args={node.args} displayAll={isExpanded} />
+              </OutlineContainer>
+            </HighlightUpdate>
+          </FieldContainer>
           {isExpanded ? nodeChildren : null}
         </Item>
       ) : (
         <Item role="treeitem" withChildren={false}>
           {node.args ? (
-            <FieldContainer onClick={handleOnClick} isActive={isActive}>
-              {contents}
+            <FieldContainer onClick={handleOnClick}>
+              <OutlineContainer isActive={isActive}>
+                {contents}
+              </OutlineContainer>
             </FieldContainer>
           ) : (
             <>{contents}</>
@@ -115,7 +119,16 @@ const ValueWrapper = styled.div`
   display: inline-block;
 `;
 
+const Item = styled.li`
+  padding-left: ${({ withChildren }: { withChildren: boolean }) =>
+    withChildren ? "0" : "1rem"};
+  min-height: 1.4rem;
+  line-height: 1.4rem;
+  color: ${p => p.theme.grey["-1"]};
+`;
+
 const FieldContainer = styled.button`
+  position: relative;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -132,13 +145,6 @@ const FieldContainer = styled.button`
   text-align: left;
   font-size: 14px;
 
-  ${({ isActive }: { isActive: boolean }) =>
-    isActive &&
-    css`
-      background-color: ${p => p.theme.dark["-1"]};
-      transition: background-color 0.3s linear;
-    `};
-
   & > ${ValueWrapper} {
     display: inline-flex;
     width: min-content;
@@ -146,11 +152,22 @@ const FieldContainer = styled.button`
   }
 `;
 
-const Item = styled.li`
-  padding-left: ${({ withChildren }: { withChildren: boolean }) =>
-    withChildren ? "0" : "1rem"};
-  min-height: 1.4rem;
-  line-height: 1.4rem;
+const OutlineContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: -3px;
+  width: 100%;
+
+  padding-left: 3px;
+
+  ${({ isActive }: { isActive: boolean }) =>
+    isActive &&
+    css`
+      background-color: ${p => p.theme.dark["-1"]};
+      outline: 1px dashed ${p => `${p.theme.pink["0"]}a0`};
+      transition: all 0.3s linear;
+    `};
 `;
 
 const Name = styled.span`
@@ -170,11 +187,10 @@ const Arrow = styled(ArrowIcon)`
   display: inline-block;
   height: 10px;
   width: 10px;
-  position: absolute;
-  left: 0;
-  top: 50%;
+
   margin-top: -4px;
   margin-left: 2px;
+  margin-right: 5px;
 
   transform: ${({ active }: { active: boolean }) =>
     active ? "rotate(90deg)" : "rotate(0deg)"};

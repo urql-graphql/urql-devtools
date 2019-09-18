@@ -7,6 +7,31 @@ interface Props {
   node: FieldNode | null;
 }
 
+const gatherChildValues = (values: NodeMap | undefined) => {
+  if (!values) {
+    return null;
+  }
+
+  return Object.entries(values).reduce((acc, [key, value]) => {
+    if (value && typeof value === "object") {
+      acc[key] = value.value;
+    }
+    return acc;
+  }, Object.create(null));
+};
+
+const renderChildren = (node: FieldNode) => {
+  return (
+    <Code key={node._id}>
+      {Array.isArray(node.children) ? (
+        <Value value={node.children} expandValues={false} />
+      ) : (
+        <Value value={gatherChildValues(node.children)} expandValues />
+      )}
+    </Code>
+  );
+};
+
 export function DetailView({ node }: Props) {
   if (!node) {
     return (
@@ -15,31 +40,6 @@ export function DetailView({ node }: Props) {
       </TextContainer>
     );
   }
-
-  const gatherChildValues = (values: NodeMap | undefined) => {
-    if (!values) {
-      return null;
-    }
-
-    return Object.entries(values).reduce((acc, [key, value]) => {
-      if (value && typeof value === "object") {
-        acc[key] = value.value;
-      }
-      return acc;
-    }, Object.create(null));
-  };
-
-  const renderChildren = (node: FieldNode) => {
-    return (
-      <Code>
-        {Array.isArray(node.children) ? (
-          <Value value={node.children} expandValues={false} />
-        ) : (
-          <Value value={gatherChildValues(node.children)} expandValues />
-        )}
-      </Code>
-    );
-  };
 
   return (
     <>
@@ -74,7 +74,7 @@ const Title = styled.h3`
   font-weight: normal;
 `;
 
-const Name = styled.span`
+const Name = styled.code`
   color: ${p => p.theme.grey["+2"]};
 `;
 

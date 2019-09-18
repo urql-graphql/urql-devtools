@@ -100,7 +100,7 @@ function copyFromData(
   selection: SelectionSet,
   data: Data,
   owner: {}
-) {
+): NodeMap {
   selection.forEach(fieldNode => {
     if (isFieldNode(fieldNode)) {
       const fieldName = getName(fieldNode) || "query";
@@ -118,7 +118,7 @@ function copyFromData(
           args: fieldArgs
         };
       } else {
-        node = copyFieldNode(map[fieldKey], owner);
+        node = map[fieldKey] = copyFieldNode(map[fieldKey], owner);
       }
 
       if (
