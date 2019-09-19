@@ -70,16 +70,16 @@ export function ListItem({
       {hasChildren ? (
         <Item role="treeitem" withChildren>
           <FieldContainer onClick={handleOnClick}>
-            <HighlightUpdate
-              isAnimating={isAnimating && !isExpanded}
-              onAnimationEnd={onAnimationEnd}
-            >
-              <OutlineContainer isActive={isActive}>
+            <OutlineContainer isActive={isActive}>
+              <HighlightUpdate
+                isAnimating={isAnimating && !isExpanded}
+                onAnimationEnd={onAnimationEnd}
+              >
                 <Arrow active={isExpanded} />
                 <ChildrenName>{node.name}</ChildrenName>
                 <Arguments args={node.args} displayAll={isExpanded} />
-              </OutlineContainer>
-            </HighlightUpdate>
+              </HighlightUpdate>
+            </OutlineContainer>
           </FieldContainer>
           {isExpanded ? nodeChildren : null}
         </Item>

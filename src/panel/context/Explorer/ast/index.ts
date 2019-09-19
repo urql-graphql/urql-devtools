@@ -2,13 +2,7 @@ import stringify from "fast-json-stable-stringify";
 import nanoid from "nanoid";
 import { Operation } from "urql";
 
-import {
-  Scalar,
-  SelectionSet,
-  Variables,
-  ResolveInfo,
-  NullArray
-} from "./types";
+import { Scalar, SelectionSet, Variables, Context, NullArray } from "./types";
 
 import {
   getName,
@@ -27,6 +21,7 @@ type DataField = Scalar | NullArray<Scalar> | null;
 export interface FieldNode {
   _id: string;
   _owner: {};
+  _meta?: Context["cacheOutcome"];
   key: string;
   name: string;
   args: Variables | null;
@@ -63,7 +58,8 @@ export const startQuery = (
 
   const ctx = {
     variables: normalizeVariables(operation, request.variables),
-    fragments: getFragments(request.query)
+    fragments: getFragments(request.query),
+    cacheOutcome: request.context.meta && request.context.meta.cacheOutcome
   };
 
   const owner = {};
@@ -95,7 +91,7 @@ const copyFieldNode = (node: FieldNode, owner: {}) => {
 };
 
 function copyFromData(
-  ctx: ResolveInfo,
+  ctx: Context,
   map: NodeMap,
   selection: SelectionSet,
   data: Data,
@@ -113,6 +109,7 @@ function copyFromData(
         node = map[fieldKey] = {
           _id: nanoid(),
           _owner: owner,
+          _meta: ctx.cacheOutcome,
           key: fieldKey,
           name: fieldName,
           args: fieldArgs

@@ -40,6 +40,7 @@ export function Tree({
     const children = nodeMap.map((childMap, childIndex) =>
       childMap ? (
         <Tree
+          key={childIndex}
           nodeMap={childMap}
           setFocusedNode={setFocusedNode}
           setDetailView={setDetailView}
@@ -57,7 +58,7 @@ export function Tree({
 
   const mapNode = (node: FieldNode) => (
     <ListItem
-      key={node.key}
+      key={node._id}
       node={node}
       setFocusedNode={setFocusedNode}
       setDetailView={setDetailView}

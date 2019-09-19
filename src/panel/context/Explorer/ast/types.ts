@@ -1,6 +1,7 @@
 /** Copied from https://github.com/FormidableLabs/urql-exchange-graphcache/blob/master/src/types.ts */
 
-import { DocumentNode, FragmentDefinitionNode, SelectionNode } from "graphql";
+import { FragmentDefinitionNode, SelectionNode } from "graphql";
+import { OperationDebugMeta } from "urql";
 
 // Helper types
 export type NullArray<T> = (null | T)[];
@@ -41,10 +42,10 @@ export type ResolvedLink = Link<Data>;
 export interface Variables {
   [name: string]: Scalar | Scalar[] | Variables | NullArray<Variables>;
 }
-
-export interface ResolveInfo {
+export interface Context {
   fragments: Fragments;
   variables: Variables;
+  cacheOutcome: OperationDebugMeta["cacheOutcome"];
 }
 
 export type KeyGenerator = (data: Data) => null | string;
