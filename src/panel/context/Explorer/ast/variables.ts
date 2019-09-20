@@ -1,6 +1,12 @@
 /** Copied from https://github.com/FormidableLabs/urql-exchange-graphcache/blob/master/src/ast/variables.ts */
 
-import { FieldNode, ValueNode, OperationDefinitionNode, Kind } from "graphql";
+import {
+  FieldNode,
+  ValueNode,
+  OperationDefinitionNode,
+  Kind,
+  valueFromASTUntyped
+} from "graphql";
 
 import { getName } from "./node";
 import { Variables } from "./types";
@@ -38,10 +44,19 @@ export const getFieldArguments = (
     return null;
   }
 
-  return node.arguments.reduce((args, arg) => {
-    args[getName(arg)] = evaluateValueNode(arg.value, vars);
-    return args;
-  }, Object.create(null));
+  const args = Object.create(null);
+  let argsSize = 0;
+
+  for (let i = 0, l = node.arguments.length; i < l; i++) {
+    const arg = node.arguments[i];
+    const value = valueFromASTUntyped(arg.value, vars);
+    if (value !== undefined && value !== null) {
+      args[getName(arg)] = value;
+      argsSize++;
+    }
+  }
+
+  return argsSize > 0 ? args : null;
 };
 
 /** Returns a normalized form of variables with defaulted values */
