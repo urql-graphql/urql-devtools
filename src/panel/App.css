@@ -6,6 +6,10 @@ body {
   font-weight: 300;
 }
 
+*::selection {
+  background-color: #7776d240;
+}
+
 code,
 pre {
   font-family: "IBM Plex Mono", monospace;

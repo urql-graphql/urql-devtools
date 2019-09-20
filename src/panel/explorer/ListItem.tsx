@@ -60,7 +60,10 @@ export function ListItem({
       <Arguments args={node.args} displayAll={isExpanded} />
       <Symbol>{`:`}</Symbol>
       <ValueWrapper>
-        <Value value={node.value} expandValues />
+        <Value
+          value={node.children !== undefined ? node.children : node.value}
+          expandValues
+        />
       </ValueWrapper>
     </>
   );
