@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const navItems = [
+  { link: "/explorer", label: "Explorer" },
   { link: "/events", label: "Events" },
-  { link: "/request", label: "Request" },
-  { link: "/explorer", label: "Explorer" }
+  { link: "/request", label: "Request" }
 ];
 
 export const Navigation = () => (
@@ -29,7 +29,7 @@ const Container = styled.div`
   right: 0;
 
   a {
-    color: rgba(255, 255, 255, 0.7);
+    color: ${p => p.theme.grey["+2"]};
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -39,7 +39,6 @@ const Container = styled.div`
     padding: 0 20px;
 
     &.active {
-      color: rgba(255, 255, 255, 0.9);
       background-color: ${props => props.theme.dark["0"]};
     }
 

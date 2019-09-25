@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FieldNode, NodeMap } from "../context/Explorer/ast";
-import { Context } from "../context/Explorer/ast/types";
+import { Context, Variables } from "../context/Explorer/ast/types";
 import { Value } from "./Value";
 import { CacheOutcomeIcon } from "./Icons";
 
@@ -9,17 +9,30 @@ interface Props {
   node: FieldNode | null;
 }
 
-const gatherChildValues = (values: NodeMap | undefined) => {
+const gatherChildValues = (
+  values: NodeMap | NodeMap[] | undefined | Variables
+) => {
   if (!values) {
     return null;
   }
 
-  return Object.entries(values).reduce((acc, [key, value]) => {
-    if (value && typeof value === "object") {
-      acc[key] = value.value;
-    }
-    return acc;
-  }, Object.create(null));
+  if (!Array.isArray(values) && (typeof values !== "object" && values)) {
+    return values;
+  } else {
+    return Object.entries(values).reduce((acc, [key, value]) => {
+      const childValue =
+        value.value !== undefined ? value.value : value.children;
+
+      if (Array.isArray(childValue)) {
+        acc[key] = childValue.map(gatherChildValues);
+      } else if (childValue && typeof childValue === "object") {
+        acc[key] = gatherChildValues(childValue);
+      } else {
+        acc[key] = childValue;
+      }
+      return acc;
+    }, Object.create(null));
+  }
 };
 
 const getDescription = (status: Context["cacheOutcome"]) => {
@@ -72,6 +85,16 @@ export function DetailView({ node }: Props) {
         <Title>Name</Title>
         <Name>{node.name}</Name>
       </Container>
+      {node._meta ? (
+        <Container>
+          <Title>Cache Outcome</Title>
+          <div>
+            <CacheIcon state={node._meta} />
+            <Name>{node._meta}</Name>
+            {getDescription(node._meta)}
+          </div>
+        </Container>
+      ) : null}
       {node.args ? (
         <Container>
           <Title>Arguments</Title>
@@ -83,21 +106,14 @@ export function DetailView({ node }: Props) {
       {node.value || node.children ? (
         <Container>
           <Title>Value</Title>
-          {node.children ? (
-            renderChildren(node)
+          {node.value !== undefined ? (
+            <Value
+              value={node.children !== undefined ? node.children : node.value}
+              expandValues={false}
+            />
           ) : (
-            <Value value={node.value} expandValues={false} />
+            renderChildren(node)
           )}
-        </Container>
-      ) : null}
-      {node._meta ? (
-        <Container>
-          <Title>Cache Outcome</Title>
-          <div>
-            <CacheIcon state={node._meta} />
-            <Name>{node._meta}</Name>
-            {getDescription(node._meta)}
-          </div>
         </Container>
       ) : null}
     </>

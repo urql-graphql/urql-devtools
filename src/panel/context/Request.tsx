@@ -7,7 +7,7 @@ import React, {
   useCallback,
   useMemo
 } from "react";
-import { print, ExecutionResult } from "graphql";
+import { print } from "graphql";
 import { GraphQLSchema } from "graphql";
 import { introspectSchema } from "graphql-tools";
 import { DevtoolsContext } from ".";

@@ -7,7 +7,7 @@ import { Tree } from "./Tree";
 import { DetailView } from "./DetailView";
 
 export function Explorer() {
-  const { data } = useContext(ExplorerContext);
+  const operations = useContext(ExplorerContext);
   const [focusedNodeId, setFocusedNodeId] = useState<string | undefined>(
     undefined
   );
@@ -18,9 +18,9 @@ export function Explorer() {
   return (
     <Container>
       <ListContainer>
-        {Object.keys(data).length ? (
+        {Object.keys(operations).length ? (
           <Tree
-            nodeMap={data}
+            nodeMap={operations}
             setFocusedNode={setActiveNode}
             setDetailView={setDetailViewNode}
             activeId={focusedNodeId}

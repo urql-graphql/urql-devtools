@@ -116,6 +116,7 @@ function copyFromData(
         };
       } else {
         node = map[fieldKey] = copyFieldNode(map[fieldKey], owner);
+        node._meta = ctx.cacheOutcome;
       }
 
       if (

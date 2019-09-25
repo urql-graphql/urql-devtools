@@ -17,7 +17,6 @@ window.addEventListener(DevtoolsExchangeOutgoingEventType, e => {
     connection = chrome.runtime.connect({ name: ContentScriptConnectionName });
     connection.onMessage.addListener(handleMessage);
     connection.onDisconnect.addListener(handleDisconnect);
-    return;
   }
 
   if (connection === undefined) {
