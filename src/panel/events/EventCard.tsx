@@ -102,7 +102,7 @@ const getActiveStyles = (p: { isActive: boolean }) => {
 };
 
 const OperationName = styled.h3`
-  color: rgba(255, 255, 255, 0.9);
+  color: ${p => p.theme.grey["+2"]};
   font-size: 15px;
   margin: 0;
   width: 50%;
@@ -113,7 +113,6 @@ const OperationName = styled.h3`
   }
 
   @media (min-width: ${mdMin}) {
-    color: rgba(255, 255, 255, 0.8);
     order: 1;
     font-size: 13px;
     width: auto;
@@ -127,7 +126,7 @@ const OperationName = styled.h3`
 `;
 
 const OperationTime = styled.p`
-  color: rgba(255, 255, 255, 0.8);
+  color: ${p => p.theme.grey["+2"]};
   font-size: 14px;
   margin: 0;
   width: 50%;
@@ -141,12 +140,12 @@ const OperationTime = styled.p`
 `;
 
 const OperationAddInfo = styled.p`
-  color: rgba(255, 255, 255, 0.7);
+  color: ${p => p.theme.grey["+2"]};
   margin: 0;
   width: 50%;
 
   @media (min-width: ${mdMin}) {
-    color: rgba(255, 255, 255, 0.8);
+    color: ${p => p.theme.grey["+2"]};
     order: 2;
     font-size: 13px;
     width: 25%;
@@ -159,15 +158,14 @@ const OperationAddInfo = styled.p`
 
 const OperationKey = styled.p`
   margin: 0;
+  color: ${p => p.theme.grey["+2"]};
 
   @media (max-width: ${smMax}) {
-    color: rgba(255, 255, 255, 0.7);
     width: 50%;
     text-align: right;
   }
 
   @media (min-width: ${mdMin}) {
-    color: rgba(255, 255, 255, 0.8);
     order: 3;
     font-size: 13px;
     width: 25%;
@@ -195,17 +193,17 @@ const Container = styled(animated.div)`
   flex-direction: row;
   padding: 10px 15px;
 
-  &:nth-child(2n):not(:hover) {
+  &:nth-child(2n) {
     background-color: ${props => props.theme.dark["-1"]};
   }
 
   &:hover {
     cursor: pointer;
-    background-color: ${props => props.theme.dark["-2"]};
+    opacity: 0.8;
   }
 
-  &[aria-selected="true"]:not(:hover) {
-    background-color: ${props => props.theme.dark["-3"]};
+  &[aria-selected="true"] {
+    background-color: ${props => props.theme.dark["+1"]};
   }
 
   @media (max-width: ${smMax}) {

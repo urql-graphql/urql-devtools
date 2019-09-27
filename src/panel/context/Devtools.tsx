@@ -54,7 +54,6 @@ export const DevtoolsProvider: FC = ({ children }) => {
     });
 
     const handleMessage = (msg: DevtoolsExchangeOutgoingMessage) => {
-      console.log("HANDLE MESSAGE", msg);
       return Object.values(messageHandlers.current).forEach(h => h(msg));
     };
 
