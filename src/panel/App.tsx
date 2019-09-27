@@ -26,10 +26,10 @@ export const App = () => {
           <RequestProvider>
             <Route path="/request" component={Request} />
           </RequestProvider>
-          <Route path="/" exact component={() => <Redirect to="/events" />} />
           <ExplorerContextProvider>
             <Route path="/explorer" exact component={Explorer} />
           </ExplorerContextProvider>
+          <Route path="/" exact component={() => <Redirect to="/explorer" />} />
           <Navigation />
         </HashRouter>
       </ThemeProvider>
