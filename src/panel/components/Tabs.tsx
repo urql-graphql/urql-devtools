@@ -29,7 +29,7 @@ const Tab = styled.h3`
   margin: 0;
   padding: 10px;
   font-size: 12px;
-  color: #fff;
+  color: ${p => p.theme.grey["+2"]};
   opacity: 0.6;
 
   &[data-active="true"] {

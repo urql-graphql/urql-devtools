@@ -50,7 +50,7 @@ const Heading = styled.h2`
   margin: 0;
   padding: 10px;
   font-size: 12px;
-  color: #fff;
+  color: ${p => p.theme.grey["+2"]};
   background: ${props => props.theme.dark["-2"]} !important;
 
   &.success {

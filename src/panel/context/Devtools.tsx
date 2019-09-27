@@ -53,8 +53,9 @@ export const DevtoolsProvider: FC = ({ children }) => {
       tabId: chrome.devtools.inspectedWindow.tabId
     });
 
-    const handleMessage = (msg: DevtoolsExchangeOutgoingMessage) =>
-      Object.values(messageHandlers.current).forEach(h => h(msg));
+    const handleMessage = (msg: DevtoolsExchangeOutgoingMessage) => {
+      return Object.values(messageHandlers.current).forEach(h => h(msg));
+    };
 
     connection.current.onMessage.addListener(handleMessage);
     return () => connection.current.onMessage.removeListener(handleMessage);
@@ -62,12 +63,13 @@ export const DevtoolsProvider: FC = ({ children }) => {
 
   // Listen for client init connection
   useEffect(() => {
-    addMessageHandler(
-      message => message.type === "init" && setClientConnected(true)
-    );
-    addMessageHandler(
-      message => message.type === "disconnect" && setClientConnected(false)
-    );
+    addMessageHandler(message => {
+      if (message.type === "init") {
+        setClientConnected(true);
+      } else if (message.type === "disconnect") {
+        setClientConnected(false);
+      }
+    });
   }, [addMessageHandler, setClientConnected]);
 
   return (
