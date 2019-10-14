@@ -67,7 +67,7 @@ jobs:
 
   deploy:
     docker:
-      - image: byrnedo/alpine-curl
+      - image: cibuilds/chrome-extension
     steps:
       - checkout
       - restore_cache:
@@ -75,8 +75,9 @@ jobs:
             - build-cache-{{ .Revision }}
       - run:
           command: |
-            curl -H "Authorization: Bearer ${CHROME_STORE_TOKEN}" -H "x-goog-api-version: 2" -X PUT -T ./extension.zip -v "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${EXTENSION_APP_ID}"
-            curl -H "Authorization: Bearer ${CHROME_STORE_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST -v "https://www.googleapis.com/chromewebstore/v1.1/items/${EXTENSION_APP_ID}/publish"
+            ACCESS_TOKEN=$(curl --fail "https://www.googleapis.com/oauth2/v4/token" -d "client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&refresh_token=${REFRESH_TOKEN}&grant_type=refresh_token" | jq -r .access_token)
+            curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -X PUT -T ./extension.zip "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${APP_ID}"
+            curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST "https://www.googleapis.com/chromewebstore/v1.1/items/${APP_ID}/publish"
 
 workflows:
   version: 2
