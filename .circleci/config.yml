@@ -56,9 +56,18 @@ jobs:
             - "dist"
             - "extension.zip"
 
-  deploy:
+  verify version:
     docker:
       - image: node:12
+    steps:
+      - checkout
+      - run:
+          command: |
+            node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error('Tag version does not line up with version in package.json') || process.exit(1))"
+
+  deploy:
+    docker:
+      - image: byrnedo/alpine-curl
     steps:
       - checkout
       - restore_cache:
@@ -66,9 +75,8 @@ jobs:
             - build-cache-{{ .Revision }}
       - run:
           command: |
-            node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error('Tag version does not line up with version in package.json') || process.exit(1))"
-            npm config set "//registry.npmjs.org/:_authToken" "$npm_TOKEN"
-            npm publish --access=public
+            curl -H "Authorization: Bearer ${CHROME_STORE_TOKEN}" -H "x-goog-api-version: 2" -X PUT -T ./extension.zip -v "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${EXTENSION_APP_ID}"
+            curl -H "Authorization: Bearer ${CHROME_STORE_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST -v "https://www.googleapis.com/chromewebstore/v1.1/items/${EXTENSION_APP_ID}/publish"
 
 workflows:
   version: 2
@@ -78,39 +86,52 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - lint:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
-      - prettier:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
-      - test:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
+      # - lint:
+      #     requires:
+      #       - install
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      # - prettier:
+      #     requires:
+      #       - install
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      # - test:
+      #     requires:
+      #       - install
+      #     filters:
+      #       tags:
+      #         only: /.*/
       - build:
           requires:
             - install
           filters:
             tags:
               only: /.*/
-      - deploy:
+      - verify version:
           requires:
             - install
-            - lint
-            - prettier
-            - test
+            # - lint
+            # - prettier
+            # - test
             - build
           filters:
             tags:
               only: /.*/
             branches:
               ignore: /.*/
+      - deploy:
+          requires:
+            - install
+            # - lint
+            # - prettier
+            # - test
+            - build
+            # - verify version
+          # filters:
+          #   tags:
+          #     only: /.*/
+          #   branches:
+          #     ignore: /.*/
