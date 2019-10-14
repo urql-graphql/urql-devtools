@@ -87,18 +87,18 @@ workflows:
           filters:
             tags:
               only: /.*/
-      # - lint:
-      #     requires:
-      #       - install
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      # - prettier:
-      #     requires:
-      #       - install
-      #     filters:
-      #       tags:
-      #         only: /.*/
+      - lint:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
+      - prettier:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
       # - test:
       #     requires:
       #       - install
@@ -114,8 +114,8 @@ workflows:
       - verify version:
           requires:
             - install
-            # - lint
-            # - prettier
+            - lint
+            - prettier
             # - test
             - build
           filters:
@@ -126,13 +126,13 @@ workflows:
       - deploy:
           requires:
             - install
-            # - lint
-            # - prettier
+            - lint
+            - prettier
             # - test
             - build
-            # - verify version
-          # filters:
-          #   tags:
-          #     only: /.*/
-          #   branches:
-          #     ignore: /.*/
+            - verify version
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
