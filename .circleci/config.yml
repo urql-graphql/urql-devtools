@@ -30,6 +30,16 @@ jobs:
             - node-cache-{{ .Revision }}
       - run: yarn run prettier-check
 
+  test:
+    docker:
+      - image: node:12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-cache-{{ .Revision }}
+      - run: yarn run test
+
   build:
     docker:
       - image: node:12
@@ -39,10 +49,12 @@ jobs:
           keys:
             - node-cache-{{ .Revision }}
       - run: yarn run build
+      - run: yarn run bundle
       - save_cache:
           key: build-cache-{{ .Revision }}
           paths:
             - "dist"
+            - "extension.zip"
 
   deploy:
     docker:
@@ -78,6 +90,12 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - test:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
       - build:
           requires:
             - install
@@ -89,6 +107,7 @@ workflows:
             - install
             - lint
             - prettier
+            - test
             - build
           filters:
             tags:
