@@ -85,13 +85,13 @@ export function DetailView({ node }: Props) {
         <Title>Name</Title>
         <Name>{node.name}</Name>
       </Container>
-      {node._meta ? (
+      {node.cacheOutcome ? (
         <Container>
           <Title>Cache Outcome</Title>
           <div>
-            <CacheIcon state={node._meta} />
-            <Name>{node._meta}</Name>
-            {getDescription(node._meta)}
+            <CacheIcon state={node.cacheOutcome} />
+            <Name>{node.cacheOutcome}</Name>
+            {getDescription(node.cacheOutcome)}
           </div>
         </Container>
       ) : null}

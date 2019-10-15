@@ -21,7 +21,7 @@ type DataField = Scalar | NullArray<Scalar> | null;
 export interface FieldNode {
   _id: string;
   _owner: {};
-  _meta?: Context["cacheOutcome"];
+  cacheOutcome?: Context["cacheOutcome"];
   key: string;
   name: string;
   args: Variables | null;
@@ -109,14 +109,14 @@ function copyFromData(
         node = map[fieldKey] = {
           _id: nanoid(),
           _owner: owner,
-          _meta: ctx.cacheOutcome,
+          cacheOutcome: ctx.cacheOutcome,
           key: fieldKey,
           name: fieldName,
           args: fieldArgs
         };
       } else {
         node = map[fieldKey] = copyFieldNode(map[fieldKey], owner);
-        node._meta = ctx.cacheOutcome;
+        node.cacheOutcome = ctx.cacheOutcome;
       }
 
       if (

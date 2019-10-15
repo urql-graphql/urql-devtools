@@ -38,22 +38,18 @@ it("int on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "int": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "int",
         "name": "int",
         "value": 42,
@@ -119,170 +115,138 @@ it("complex query", () => {
     Object {
       "feed({\\"first\\":10,\\"orderBy\\":\\"DESC\\",\\"skip\\":1})": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": Object {
           "first": 10,
           "orderBy": "DESC",
           "skip": 1,
         },
+        "cacheOutcome": "hit",
         "children": Object {
           "__typename": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Feed",
           },
           "count": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "count",
             "name": "count",
             "value": 5,
           },
           "links": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "children": Array [
               Object {
                 "__typename": Object {
                   "_id": "[nanoid]",
-                  "_meta": Object {
-                    "cacheOutcome": "hit",
-                  },
                   "_owner": Object {},
                   "args": null,
+                  "cacheOutcome": "hit",
                   "key": "__typename",
                   "name": "__typename",
                   "value": "Link",
                 },
                 "createdAt": Object {
                   "_id": "[nanoid]",
-                  "_meta": Object {
-                    "cacheOutcome": "hit",
-                  },
                   "_owner": Object {},
                   "args": null,
+                  "cacheOutcome": "hit",
                   "key": "createdAt",
                   "name": "createdAt",
                   "value": "2019-09-03T15:28:04.052Z",
                 },
                 "description": Object {
                   "_id": "[nanoid]",
-                  "_meta": Object {
-                    "cacheOutcome": "hit",
-                  },
                   "_owner": Object {},
                   "args": null,
+                  "cacheOutcome": "hit",
                   "key": "description",
                   "name": "description",
                   "value": "Prisma turns your database into a GraphQL API 😎",
                 },
                 "id": Object {
                   "_id": "[nanoid]",
-                  "_meta": Object {
-                    "cacheOutcome": "hit",
-                  },
                   "_owner": Object {},
                   "args": null,
+                  "cacheOutcome": "hit",
                   "key": "id",
                   "name": "id",
                   "value": "ck03zlsr8qg4o0b53x2z7drw8",
                 },
                 "postedBy": Object {
                   "_id": "[nanoid]",
-                  "_meta": Object {
-                    "cacheOutcome": "hit",
-                  },
                   "_owner": Object {},
                   "args": null,
+                  "cacheOutcome": "hit",
                   "key": "postedBy",
                   "name": "postedBy",
                   "value": null,
                 },
                 "url": Object {
                   "_id": "[nanoid]",
-                  "_meta": Object {
-                    "cacheOutcome": "hit",
-                  },
                   "_owner": Object {},
                   "args": null,
+                  "cacheOutcome": "hit",
                   "key": "url",
                   "name": "url",
                   "value": "https://www.prismagraphql.com",
                 },
                 "votes": Object {
                   "_id": "[nanoid]",
-                  "_meta": Object {
-                    "cacheOutcome": "hit",
-                  },
                   "_owner": Object {},
                   "args": null,
+                  "cacheOutcome": "hit",
                   "children": Array [
                     Object {
                       "__typename": Object {
                         "_id": "[nanoid]",
-                        "_meta": Object {
-                          "cacheOutcome": "hit",
-                        },
                         "_owner": Object {},
                         "args": null,
+                        "cacheOutcome": "hit",
                         "key": "__typename",
                         "name": "__typename",
                         "value": "Vote",
                       },
                       "id": Object {
                         "_id": "[nanoid]",
-                        "_meta": Object {
-                          "cacheOutcome": "hit",
-                        },
                         "_owner": Object {},
                         "args": null,
+                        "cacheOutcome": "hit",
                         "key": "id",
                         "name": "id",
                         "value": "ck06q9uikf5iw0b53dyjb0fbf",
                       },
                       "user": Object {
                         "_id": "[nanoid]",
-                        "_meta": Object {
-                          "cacheOutcome": "hit",
-                        },
                         "_owner": Object {},
                         "args": null,
+                        "cacheOutcome": "hit",
                         "children": Object {
                           "__typename": Object {
                             "_id": "[nanoid]",
-                            "_meta": Object {
-                              "cacheOutcome": "hit",
-                            },
                             "_owner": Object {},
                             "args": null,
+                            "cacheOutcome": "hit",
                             "key": "__typename",
                             "name": "__typename",
                             "value": "User",
                           },
                           "id": Object {
                             "_id": "[nanoid]",
-                            "_meta": Object {
-                              "cacheOutcome": "hit",
-                            },
                             "_owner": Object {},
                             "args": null,
+                            "cacheOutcome": "hit",
                             "key": "id",
                             "name": "id",
                             "value": "ck06q5r9ef4cb0b53xl6mzlo4",
@@ -322,22 +286,18 @@ it("aliased field on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "int": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "int",
         "name": "int",
         "value": 42,
@@ -363,22 +323,18 @@ it("json on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "json": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "json",
         "name": "json",
         "value": Object {
@@ -403,22 +359,18 @@ it("nullable field on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "missing": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "missing",
         "name": "missing",
         "value": null,
@@ -440,24 +392,20 @@ it("int field with arguments on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "int({\\"test\\":true})": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": Object {
           "test": true,
         },
+        "cacheOutcome": "hit",
         "key": "int({\\"test\\":true})",
         "name": "int",
         "value": 42,
@@ -483,41 +431,33 @@ it("non-keyable entity on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "item": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Object {
           "__typename": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
           "name": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "name",
             "name": "name",
             "value": "Test",
@@ -551,52 +491,42 @@ it("invalid entity on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "item": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Object {
           "__typename": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": null,
           },
           "id": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": "123",
           },
           "name": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "name",
             "name": "name",
             "value": "Test",
@@ -626,41 +556,33 @@ it("non-IDable entity on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "item": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Object {
           "__typename": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
           "name": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "name",
             "name": "name",
             "value": "Test",
@@ -693,52 +615,42 @@ it("entity on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "item": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Object {
           "__typename": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
           "id": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": "1",
           },
           "name": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "name",
             "name": "name",
             "value": "Test",
@@ -771,52 +683,42 @@ it("entity on aliased field on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "item": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Object {
           "__typename": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
           "id": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": "1",
           },
           "name": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "name",
             "name": "name",
             "value": "Test",
@@ -849,54 +751,44 @@ it("entity with arguments on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "item({\\"test\\":true})": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": Object {
           "test": true,
         },
+        "cacheOutcome": "hit",
         "children": Object {
           "__typename": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
           "id": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": "1",
           },
           "name": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "name",
             "name": "name",
             "value": "Test",
@@ -930,52 +822,42 @@ it("entity with Int-like ID on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "item": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Object {
           "__typename": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
           "id": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": 1,
           },
           "name": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "name",
             "name": "name",
             "value": "Test",
@@ -1007,42 +889,34 @@ it("entity list on query", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "items": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Array [
           Object {
             "__typename": Object {
               "_id": "[nanoid]",
-              "_meta": Object {
-                "cacheOutcome": "hit",
-              },
               "_owner": Object {},
               "args": null,
+              "cacheOutcome": "hit",
               "key": "__typename",
               "name": "__typename",
               "value": "Item",
             },
             "id": Object {
               "_id": "[nanoid]",
-              "_meta": Object {
-                "cacheOutcome": "hit",
-              },
               "_owner": Object {},
               "args": null,
+              "cacheOutcome": "hit",
               "key": "id",
               "name": "id",
               "value": 1,
@@ -1051,22 +925,18 @@ it("entity list on query", () => {
           Object {
             "__typename": Object {
               "_id": "[nanoid]",
-              "_meta": Object {
-                "cacheOutcome": "hit",
-              },
               "_owner": Object {},
               "args": null,
+              "cacheOutcome": "hit",
               "key": "__typename",
               "name": "__typename",
               "value": "Item",
             },
             "id": Object {
               "_id": "[nanoid]",
-              "_meta": Object {
-                "cacheOutcome": "hit",
-              },
               "_owner": Object {},
               "args": null,
+              "cacheOutcome": "hit",
               "key": "id",
               "name": "id",
               "value": 2,
@@ -1104,53 +974,43 @@ it("entity list on query and inline fragment", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "items": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Array [
           Object {
             "__typename": Object {
               "_id": "[nanoid]",
-              "_meta": Object {
-                "cacheOutcome": "hit",
-              },
               "_owner": Object {},
               "args": null,
+              "cacheOutcome": "hit",
               "key": "__typename",
               "name": "__typename",
               "value": "Item",
             },
             "id": Object {
               "_id": "[nanoid]",
-              "_meta": Object {
-                "cacheOutcome": "hit",
-              },
               "_owner": Object {},
               "args": null,
+              "cacheOutcome": "hit",
               "key": "id",
               "name": "id",
               "value": 1,
             },
             "test": Object {
               "_id": "[nanoid]",
-              "_meta": Object {
-                "cacheOutcome": "hit",
-              },
               "_owner": Object {},
               "args": null,
+              "cacheOutcome": "hit",
               "key": "test",
               "name": "test",
               "value": true,
@@ -1191,53 +1051,43 @@ it("entity list on query and spread fragment", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "items": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Array [
           Object {
             "__typename": Object {
               "_id": "[nanoid]",
-              "_meta": Object {
-                "cacheOutcome": "hit",
-              },
               "_owner": Object {},
               "args": null,
+              "cacheOutcome": "hit",
               "key": "__typename",
               "name": "__typename",
               "value": "Item",
             },
             "id": Object {
               "_id": "[nanoid]",
-              "_meta": Object {
-                "cacheOutcome": "hit",
-              },
               "_owner": Object {},
               "args": null,
+              "cacheOutcome": "hit",
               "key": "id",
               "name": "id",
               "value": 1,
             },
             "test": Object {
               "_id": "[nanoid]",
-              "_meta": Object {
-                "cacheOutcome": "hit",
-              },
               "_owner": Object {},
               "args": null,
+              "cacheOutcome": "hit",
               "key": "test",
               "name": "test",
               "value": true,
@@ -1282,60 +1132,48 @@ it("embedded invalid object on entity", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "item": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Object {
           "__typename": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
           "author": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "children": Object {
               "__typename": Object {
                 "_id": "[nanoid]",
-                "_meta": Object {
-                  "cacheOutcome": "hit",
-                },
                 "_owner": Object {},
                 "args": null,
+                "cacheOutcome": "hit",
                 "key": "__typename",
                 "name": "__typename",
                 "value": "Author",
               },
               "name": Object {
                 "_id": "[nanoid]",
-                "_meta": Object {
-                  "cacheOutcome": "hit",
-                },
                 "_owner": Object {},
                 "args": null,
+                "cacheOutcome": "hit",
                 "key": "name",
                 "name": "name",
                 "value": "Stanley",
@@ -1346,11 +1184,9 @@ it("embedded invalid object on entity", () => {
           },
           "id": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": 1,
@@ -1395,71 +1231,57 @@ it("embedded object on entity", () => {
     Object {
       "__typename": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
       "item": Object {
         "_id": "[nanoid]",
-        "_meta": Object {
-          "cacheOutcome": "hit",
-        },
         "_owner": Object {},
         "args": null,
+        "cacheOutcome": "hit",
         "children": Object {
           "__typename": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
           "author": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "children": Object {
               "__typename": Object {
                 "_id": "[nanoid]",
-                "_meta": Object {
-                  "cacheOutcome": "hit",
-                },
                 "_owner": Object {},
                 "args": null,
+                "cacheOutcome": "hit",
                 "key": "__typename",
                 "name": "__typename",
                 "value": "Author",
               },
               "id": Object {
                 "_id": "[nanoid]",
-                "_meta": Object {
-                  "cacheOutcome": "hit",
-                },
                 "_owner": Object {},
                 "args": null,
+                "cacheOutcome": "hit",
                 "key": "id",
                 "name": "id",
                 "value": 1,
               },
               "name": Object {
                 "_id": "[nanoid]",
-                "_meta": Object {
-                  "cacheOutcome": "hit",
-                },
                 "_owner": Object {},
                 "args": null,
+                "cacheOutcome": "hit",
                 "key": "name",
                 "name": "name",
                 "value": "Stanley",
@@ -1470,11 +1292,9 @@ it("embedded object on entity", () => {
           },
           "id": Object {
             "_id": "[nanoid]",
-            "_meta": Object {
-              "cacheOutcome": "hit",
-            },
             "_owner": Object {},
             "args": null,
+            "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": 1,
