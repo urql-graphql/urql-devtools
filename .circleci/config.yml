@@ -99,12 +99,12 @@ workflows:
           filters:
             tags:
               only: /.*/
-      # - test:
-      #     requires:
-      #       - install
-      #     filters:
-      #       tags:
-      #         only: /.*/
+      - test:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
       - build:
           requires:
             - install
@@ -116,7 +116,7 @@ workflows:
             - install
             - lint
             - prettier
-            # - test
+            - test
             - build
           filters:
             tags:
@@ -128,7 +128,7 @@ workflows:
             - install
             - lint
             - prettier
-            # - test
+            - test
             - build
             - verify version
           filters:
