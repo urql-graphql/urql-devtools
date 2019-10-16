@@ -48,6 +48,8 @@ jobs:
       - restore_cache:
           keys:
             - node-cache-{{ .Revision }}
+      - run: apt-get update
+      - run: apt-get -y install zip
       - run: yarn run build
       - run: yarn run bundle
       - save_cache:
@@ -55,6 +57,8 @@ jobs:
           paths:
             - "dist"
             - "extension.zip"
+      - store_artifacts:
+          path: extension.zip
 
   verify version:
     docker:
