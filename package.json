@@ -1,12 +1,12 @@
 {
   "name": "@urql/devtools-chrome-extension",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The Urql devtools chrome extension",
   "scripts": {
     "start": "webpack --watch",
     "build": "NODE_ENV=\"production\" webpack",
+    "bundle": "cd dist && bestzip ../extension.zip *",
     "lint": "eslint --ext .ts,.tsx src",
-    "check": "tsc --noEmit",
     "test": "jest",
     "coverage": "jest --coverage",
     "prettier-check": "prettier -c src/** README.md",
@@ -56,6 +56,7 @@
     }
   },
   "dependencies": {
+    "bestzip": "^2.1.4",
     "fast-json-stable-stringify": "^2.0.0",
     "nanoid": "^2.1.0",
     "wonka": "^3.2.0"

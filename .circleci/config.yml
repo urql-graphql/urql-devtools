@@ -30,6 +30,16 @@ jobs:
             - node-cache-{{ .Revision }}
       - run: yarn run prettier-check
 
+  test:
+    docker:
+      - image: node:12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-cache-{{ .Revision }}
+      - run: yarn run test
+
   build:
     docker:
       - image: node:12
@@ -39,14 +49,25 @@ jobs:
           keys:
             - node-cache-{{ .Revision }}
       - run: yarn run build
+      - run: yarn run bundle
       - save_cache:
           key: build-cache-{{ .Revision }}
           paths:
             - "dist"
+            - "extension.zip"
+
+  verify version:
+    docker:
+      - image: node:12
+    steps:
+      - checkout
+      - run:
+          command: |
+            node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error('Tag version does not line up with version in package.json') || process.exit(1))"
 
   deploy:
     docker:
-      - image: node:12
+      - image: cibuilds/chrome-extension
     steps:
       - checkout
       - restore_cache:
@@ -54,9 +75,9 @@ jobs:
             - build-cache-{{ .Revision }}
       - run:
           command: |
-            node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error('Tag version does not line up with version in package.json') || process.exit(1))"
-            npm config set "//registry.npmjs.org/:_authToken" "$npm_TOKEN"
-            npm publish --access=public
+            ACCESS_TOKEN=$(curl --fail "https://www.googleapis.com/oauth2/v4/token" -d "client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&refresh_token=${REFRESH_TOKEN}&grant_type=refresh_token" | jq -r .access_token)
+            curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -X PUT -T ./extension.zip "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${APP_ID}"
+            curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST "https://www.googleapis.com/chromewebstore/v1.1/items/${APP_ID}/publish"
 
 workflows:
   version: 2
@@ -78,18 +99,38 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - test:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
       - build:
           requires:
             - install
           filters:
             tags:
               only: /.*/
+      - verify version:
+          requires:
+            - install
+            - lint
+            - prettier
+            - test
+            - build
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
       - deploy:
           requires:
             - install
             - lint
             - prettier
+            - test
             - build
+            - verify version
           filters:
             tags:
               only: /.*/
