@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { Background } from "../components/Background";
+import { Background, Pane } from "../components";
 import { ExplorerContext } from "../context";
 import { FieldNode } from "../context/Explorer/ast";
 import { Tree } from "./Tree";
@@ -32,9 +32,7 @@ export function Explorer() {
           </TitleWrapper>
         )}
       </ListContainer>
-      <SidePanel>
-        <DetailView node={detailViewNode} />
-      </SidePanel>
+      <Pane />
     </Container>
   );
 }

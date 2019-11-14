@@ -8,6 +8,7 @@ import { UnControlled as CodeMirror } from "react-codemirror2";
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { RequestContext } from "../context";
+import { Pane } from "../components/Pane";
 
 export const Response = () => {
   const { response, error } = useContext(RequestContext);
@@ -16,35 +17,26 @@ export const Response = () => {
     error !== undefined ? "error" : response !== undefined ? "success" : "";
 
   return (
-    <Container>
+    <Pane>
       <Heading className={className}>Response</Heading>
-      <CodeMirror
-        options={{
-          mode: "javascript",
-          theme: "material",
-          lineNumbers: true,
-          readOnly: true,
-          foldGutter: true
-        }}
-        value={JSON.stringify(error || response || {}, null, 2).replace(
-          /\"([^(\")"]+)\":/g,
-          "$1:"
-        )}
-      />
-    </Container>
+      <Pane.Body>
+        <CodeMirror
+          options={{
+            mode: "javascript",
+            theme: "material",
+            lineNumbers: true,
+            readOnly: true,
+            foldGutter: true
+          }}
+          value={JSON.stringify(error || response || {}, null, 2).replace(
+            /\"([^(\")"]+)\":/g,
+            "$1:"
+          )}
+        />
+      </Pane.Body>
+    </Pane>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-
-  .cm-s-material,
-  .CodeMirror-gutters {
-    background: ${props => props.theme.dark["-2"]} !important;
-  }
-`;
 
 const Heading = styled.h2`
   margin: 0;
