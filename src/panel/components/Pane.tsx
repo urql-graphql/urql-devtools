@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { useOrientationWatcher } from "../hooks";
 
 const PaneRoot: FC = ({ children }) => {
+  const [grabbed, setGrabbed] = useState(false);
   const [size, setSize] = useState({ x: 400, y: 400 });
   const { isPortrait } = useOrientationWatcher();
 
@@ -20,7 +21,9 @@ const PaneRoot: FC = ({ children }) => {
         return;
       }
 
+      ce.preventDefault();
       document.body.style.cursor = isPortrait ? "ns-resize" : "ew-resize";
+      setGrabbed(true);
       let latestPosition: position = { x: ce.clientX, y: ce.clientY };
       let moving = true;
 
@@ -45,6 +48,7 @@ const PaneRoot: FC = ({ children }) => {
       const handleMouseUp = () => {
         moving = false;
         document.body.style.cursor = "";
+        setGrabbed(false);
         window.removeEventListener("mouseup", handleMouseUp);
         window.removeEventListener("mousemove", handleMouseMove);
       };
@@ -67,7 +71,12 @@ const PaneRoot: FC = ({ children }) => {
   return (
     <PaneContainer style={style}>
       {children}
-      <DraggingEdge onMouseDown={handleClick} />
+      <DraggingEdge
+        role="seperator"
+        aria-orientation={isPortrait ? "horizontal" : "vertical"}
+        aria-grabbed={grabbed}
+        onMouseDown={handleClick}
+      />
     </PaneContainer>
   );
 };
