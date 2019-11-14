@@ -1,12 +1,9 @@
 import React, { FC, useState, useMemo, useLayoutEffect } from "react";
-import { Tabs } from "../../components/Tabs";
-import { EventPanel, ParsedEvent } from "../../types";
-import { Pane } from "../../components/Pane";
-import { QueryPanel } from "./QueryPanel";
-import { JsonCode } from "./JsonCode";
+import { EventPanel, ParsedEvent } from "../types";
+import { Tabs, Pane, QueryCode, JsonCode } from "../components";
 
 /** Pane shows additional information about a selected operation event. */
-export const Panel: FC<{ event: ParsedEvent }> = ({ event }) => {
+export const EventPane: FC<{ event: ParsedEvent }> = ({ event }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
 
   useLayoutEffect(() => {
@@ -32,7 +29,7 @@ export const Panel: FC<{ event: ParsedEvent }> = ({ event }) => {
 
     switch (activePanel.name) {
       case "query":
-        return <QueryPanel query={activePanel.data} />;
+        return <QueryCode query={activePanel.data} />;
 
       default:
         return <JsonCode json={activePanel.data || {}} />;

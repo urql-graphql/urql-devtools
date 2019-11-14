@@ -6,7 +6,7 @@ import { UnControlled as CodeMirror } from "react-codemirror2";
 import React, { FC } from "react";
 import styled from "styled-components";
 
-export const QueryPanel: FC<{ query: string }> = ({ query }) => (
+export const QueryCode: FC<{ query: string }> = ({ query }) => (
   <StyledCodeMirror
     options={{
       mode: "graphql",

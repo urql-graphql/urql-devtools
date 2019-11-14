@@ -1,14 +1,8 @@
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material.css";
-import "codemirror/lib/codemirror.js";
-import "codemirror/addon/fold/foldcode";
-import "codemirror/addon/fold/brace-fold";
-import "codemirror/mode/javascript/javascript";
-import { UnControlled as CodeMirror } from "react-codemirror2";
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { RequestContext } from "../context";
 import { Pane } from "../components/Pane";
+import { JsonCode } from "../components";
 
 export const Response = () => {
   const { response, error } = useContext(RequestContext);
@@ -20,19 +14,7 @@ export const Response = () => {
     <Pane>
       <Heading className={className}>Response</Heading>
       <Pane.Body>
-        <CodeMirror
-          options={{
-            mode: "javascript",
-            theme: "material",
-            lineNumbers: true,
-            readOnly: true,
-            foldGutter: true
-          }}
-          value={JSON.stringify(error || response || {}, null, 2).replace(
-            /\"([^(\")"]+)\":/g,
-            "$1:"
-          )}
-        />
+        <JsonCode json={error || response || {}} />
       </Pane.Body>
     </Pane>
   );

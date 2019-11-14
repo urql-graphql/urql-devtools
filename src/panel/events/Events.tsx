@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { EventsContext } from "../context";
 import { Background } from "../components/Background";
-import { Panel } from "./panels";
+import { EventPane } from "./EventPane";
 import { EventCard } from "./EventCard";
 import { Filters } from "./Filters";
 import { Headers } from "./Headers";
@@ -44,7 +44,7 @@ export const Events = () => {
           ))
         )}
       </EventsList>
-      {selectedEvent !== undefined && <Panel event={selectedEvent} />}
+      {selectedEvent !== undefined && <EventPane event={selectedEvent} />}
     </Container>
   );
 };
