@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`on mount matches snapshot 1`] = `
+<Container>
+  <Tab
+    data-active={true}
+    key="a"
+    onClick={[Function]}
+  >
+    first
+  </Tab>
+  <Tab
+    data-active={false}
+    key="b"
+    onClick={[Function]}
+  >
+    second
+  </Tab>
+</Container>
+`;

@@ -9,6 +9,6 @@
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "src/**/*.test.ts"]
+  "include": ["src", "src/**/*.test.ts"],
+  "exclude": ["node_modules"]
 }
