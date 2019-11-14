@@ -1,7 +1,8 @@
-import React from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import { FieldNode, NodeMap } from "../context/Explorer/ast";
 import { Context, Variables } from "../context/Explorer/ast/types";
+import { Pane } from "../components";
 import { Value } from "./Value";
 import { CacheOutcomeIcon } from "./Icons";
 
@@ -70,7 +71,19 @@ const renderChildren = (node: FieldNode) => {
   );
 };
 
-export function DetailView({ node }: Props) {
+export const DetailViewPane: FC<Props> = props => (
+  <Pane>
+    <PaneBody>
+      <DetailView {...props} />
+    </PaneBody>
+  </Pane>
+);
+
+const PaneBody = styled(Pane.Body)`
+  padding: 20px;
+`;
+
+const DetailView: FC<Props> = ({ node }) => {
   if (!node) {
     return (
       <TextContainer>
@@ -118,7 +131,7 @@ export function DetailView({ node }: Props) {
       ) : null}
     </>
   );
-}
+};
 
 const Container = styled.div`
   margin-bottom: 1rem;
