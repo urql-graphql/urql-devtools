@@ -6,7 +6,7 @@ import { UnControlled as CodeMirror } from "react-codemirror2";
 import React, { FC } from "react";
 import styled from "styled-components";
 
-export const QueryPanel: FC<{ query: string }> = ({ query }) => (
+export const QueryCode: FC<{ query: string }> = ({ query }) => (
   <StyledCodeMirror
     options={{
       mode: "graphql",
@@ -20,6 +20,10 @@ export const QueryPanel: FC<{ query: string }> = ({ query }) => (
 );
 
 const StyledCodeMirror = styled(CodeMirror)`
+  .CodeMirror {
+    height: 100%;
+  }
+
   .cm-s-material,
   .CodeMirror-gutters {
     background: ${props => props.theme.dark["-2"]} !important;

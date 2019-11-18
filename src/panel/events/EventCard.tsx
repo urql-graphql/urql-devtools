@@ -1,8 +1,8 @@
-import React, { FC, useContext, useCallback, MouseEventHandler } from "react";
-import styled, { ThemeContext, css } from "styled-components";
+import React, { FC, useCallback, MouseEventHandler } from "react";
+import styled, { css } from "styled-components";
 import { animated, useSpring } from "react-spring";
-import { EventsContext } from "../context";
 import { ParsedEvent } from "../types";
+import { useThemeContext, useEventsContext } from "../hooks";
 import { smMax, mdMin } from "./constants";
 
 /** Shows basic information about an operation. */
@@ -11,13 +11,13 @@ export const EventCard: FC<{
   active: boolean;
   canFilter: boolean;
 }> = ({ event, canFilter, active = false }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useThemeContext();
   const {
     selectedEvent,
     selectEvent,
     clearSelectedEvent,
     addFilter
-  } = useContext(EventsContext);
+  } = useEventsContext();
 
   const slideInAnimation = useSpring({
     config: { duration: 200 },

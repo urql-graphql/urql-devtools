@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`on mount on landscape orientation matches snapshot 1`] = `
+<PaneContainer
+  style={
+    Object {
+      "height": "auto",
+      "minWidth": 400,
+      "width": 400,
+    }
+  }
+>
+  <DraggingEdge
+    aria-grabbed={false}
+    aria-orientation="vertical"
+    onMouseDown={[Function]}
+    role="seperator"
+  />
+</PaneContainer>
+`;
+
+exports[`on mount on portrait orientation matches snapshot 1`] = `
+<PaneContainer
+  style={
+    Object {
+      "height": 400,
+      "minHeight": 400,
+      "width": "auto",
+    }
+  }
+>
+  <DraggingEdge
+    aria-grabbed={false}
+    aria-orientation="horizontal"
+    onMouseDown={[Function]}
+    role="seperator"
+  />
+</PaneContainer>
+`;

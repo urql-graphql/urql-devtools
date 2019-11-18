@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`on mount active event matches snapshot 1`] = `
+<Container
+  aria-selected={true}
+  onClick={[Function]}
+>
+  <Indicator
+    style={
+      Object {
+        "backgroundColor": "purple",
+      }
+    }
+  />
+  <OperationName
+    isActive={false}
+    onClick={[Function]}
+  >
+    mutation
+  </OperationName>
+  <OperationTime>
+    00:02:03
+  </OperationTime>
+  <OperationAddInfo
+    isActive={false}
+    onClick={[Function]}
+  >
+    ComponentSource
+  </OperationAddInfo>
+  <OperationKey
+    isActive={false}
+    onClick={[Function]}
+  >
+    1234
+  </OperationKey>
+</Container>
+`;
+
+exports[`on mount inactive event matches snapshot 1`] = `
+<Container
+  aria-selected={false}
+  onClick={[Function]}
+>
+  <Indicator
+    style={
+      Object {
+        "backgroundColor": "purple",
+      }
+    }
+  />
+  <OperationName
+    isActive={false}
+    onClick={[Function]}
+  >
+    mutation
+  </OperationName>
+  <OperationTime>
+    00:02:03
+  </OperationTime>
+  <OperationAddInfo
+    isActive={false}
+    onClick={[Function]}
+  >
+    ComponentSource
+  </OperationAddInfo>
+  <OperationKey
+    isActive={false}
+    onClick={[Function]}
+  >
+    1234
+  </OperationKey>
+</Container>
+`;

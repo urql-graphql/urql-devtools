@@ -26,6 +26,10 @@ export const JsonCode: FC<JsonCodeProps> = ({ json }) => (
 );
 
 const StyledCodeMirror = styled(CodeMirror)`
+  .CodeMirror {
+    height: 100%;
+  }
+
   .cm-s-material,
   .CodeMirror-gutters {
     background: ${props => props.theme.dark["-2"]} !important;

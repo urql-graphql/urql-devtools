@@ -16,12 +16,12 @@ export interface ParsedEventBase {
   key: number;
   source: string;
   timestamp: number;
-  panels: EventPanel[];
+  panels: readonly EventPanel[];
 }
 
 export interface ParsedMutationEvent extends ParsedEventBase {
   type: "mutation";
-  panels: [
+  panels: readonly [
     { name: "query"; data: string },
     { name: "variables"; data: object | undefined },
     { name: "response"; data: object | undefined },
@@ -31,7 +31,7 @@ export interface ParsedMutationEvent extends ParsedEventBase {
 
 export interface ParsedQueryEvent extends ParsedEventBase {
   type: "query";
-  panels: [
+  panels: readonly [
     { name: "query"; data: string },
     { name: "variables"; data: object | undefined },
     { name: "state"; data: object | undefined },
@@ -49,12 +49,15 @@ export interface ParsedTeardownEvent extends ParsedEventBase {
 
 export interface ParsedResponseEvent extends ParsedEventBase {
   type: "response";
-  panels: [{ name: "response"; data: object }, { name: "meta"; data: object }];
+  panels: readonly [
+    { name: "response"; data: object },
+    { name: "meta"; data: object }
+  ];
 }
 
 export interface ParsedErrorEvent extends ParsedEventBase {
   type: "error";
-  panels: [
+  panels: readonly [
     { name: "error"; data: object | undefined },
     { name: "meta"; data: object }
   ];

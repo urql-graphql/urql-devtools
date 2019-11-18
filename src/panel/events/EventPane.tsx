@@ -1,12 +1,9 @@
 import React, { FC, useState, useMemo, useLayoutEffect } from "react";
-import styled from "styled-components";
-import { Tabs } from "../../components/Tabs";
-import { EventPanel, ParsedEvent } from "../../types";
-import { QueryPanel } from "./QueryPanel";
-import { JsonCode } from "./JsonCode";
+import { EventPanel, ParsedEvent } from "../types";
+import { Tabs, Pane, QueryCode, JsonCode } from "../components";
 
 /** Pane shows additional information about a selected operation event. */
-export const Panel: FC<{ event: ParsedEvent }> = ({ event }) => {
+export const EventPane: FC<{ event: ParsedEvent }> = ({ event }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
 
   useLayoutEffect(() => {
@@ -32,7 +29,7 @@ export const Panel: FC<{ event: ParsedEvent }> = ({ event }) => {
 
     switch (activePanel.name) {
       case "query":
-        return <QueryPanel query={activePanel.data} />;
+        return <QueryCode query={activePanel.data} />;
 
       default:
         return <JsonCode json={activePanel.data || {}} />;
@@ -40,34 +37,13 @@ export const Panel: FC<{ event: ParsedEvent }> = ({ event }) => {
   }, [panels, selectedTab]);
 
   return (
-    <Container>
+    <Pane>
       <Tabs
         active={selectedTab}
         options={tabOptions}
         setActive={setActiveTab}
       />
-      {panelContent}
-    </Container>
+      <Pane.Body key={selectedTab}>{panelContent}</Pane.Body>
+    </Pane>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  background: ${props => props.theme.dark["-2"]};
-  width: 100%;
-  height: 400px;
-  max-height: 400px;
-  overflow: scroll;
-  font-size: 12px;
-
-  .react-codemirror2 {
-    display: flex;
-    flex-grow: 1;
-
-    .CodeMirror {
-      height: auto;
-      width: 100%;
-    }
-  }
-`;

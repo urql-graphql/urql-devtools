@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { Background } from "../components/Background";
+import { Background } from "../components";
 import { ExplorerContext } from "../context";
 import { FieldNode } from "../context/Explorer/ast";
 import { Tree } from "./Tree";
-import { DetailView } from "./DetailView";
+import { DetailViewPane } from "./DetailView";
 
 export function Explorer() {
   const operations = useContext(ExplorerContext);
@@ -32,23 +32,13 @@ export function Explorer() {
           </TitleWrapper>
         )}
       </ListContainer>
-      <SidePanel>
-        <DetailView node={detailViewNode} />
-      </SidePanel>
+      <DetailViewPane node={detailViewNode} />
     </Container>
   );
 }
 
 const Container = styled(Background)`
   background-color: ${p => p.theme.dark["0"]};
-`;
-
-const SidePanel = styled.aside`
-  flex: 1;
-  flex-basis: 30%;
-  padding: 1rem;
-  background-color: ${p => p.theme.dark["-1"]};
-  overflow: auto;
 `;
 
 const ListContainer = styled.section`
