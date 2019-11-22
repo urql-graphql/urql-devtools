@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useTransition } from "react-spring";
 import styled from "styled-components";
 import { EventsContext } from "../context";
 import { Background } from "../components/Background";
@@ -11,12 +10,6 @@ import { Headers } from "./Headers";
 export const Events = () => {
   const { events, selectedEvent } = useContext(EventsContext);
   const [filteringOn, setFilteringOn] = useState(false);
-
-  const transitionEvents = useTransition(events, e => e.timestamp, {
-    config: { duration: 200 },
-    from: { transform: `translateY(100%)`, opacity: 0 },
-    enter: { transform: `translateY(0%)`, opacity: 1 }
-  });
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) =>
@@ -38,14 +31,13 @@ export const Events = () => {
       <EventsList>
         <Filters />
         <Headers />
-        {transitionEvents.length === 0 ? (
+        {events.length === 0 ? (
           <NoEvents>No Events</NoEvents>
         ) : (
-          transitionEvents.map(({ key, item, props }) => (
+          events.map(event => (
             <EventCard
-              style={props}
-              key={key}
-              event={item}
+              key={`${event.timestamp}-${event.type}`}
+              event={event}
               canFilter={filteringOn}
               active={event === selectedEvent}
             />
