@@ -1,6 +1,11 @@
-import React, { FC, useCallback, MouseEventHandler } from "react";
+import React, {
+  FC,
+  useCallback,
+  MouseEventHandler,
+  CSSProperties
+} from "react";
 import styled, { css } from "styled-components";
-import { animated, useSpring } from "react-spring";
+import { animated } from "react-spring";
 import { ParsedEvent } from "../types";
 import { useThemeContext, useEventsContext } from "../hooks";
 import { smMax, mdMin } from "./constants";
@@ -10,7 +15,8 @@ export const EventCard: FC<{
   event: ParsedEvent;
   active: boolean;
   canFilter: boolean;
-}> = ({ event, canFilter, active = false }) => {
+  style?: CSSProperties;
+}> = ({ event, canFilter, active = false, style }) => {
   const theme = useThemeContext();
   const {
     selectedEvent,
@@ -18,12 +24,6 @@ export const EventCard: FC<{
     clearSelectedEvent,
     addFilter
   } = useEventsContext();
-
-  const slideInAnimation = useSpring({
-    config: { duration: 200 },
-    from: { transform: `translate(100%)` },
-    to: { transform: `translate(0%)` }
-  });
 
   const colors: { [key: string]: string } = {
     subscription: theme.orange[0],
@@ -60,7 +60,7 @@ export const EventCard: FC<{
 
   return (
     <Container
-      style={slideInAnimation}
+      style={style}
       onClick={handleContainerClick}
       aria-selected={active}
     >
