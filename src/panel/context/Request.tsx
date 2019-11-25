@@ -49,9 +49,7 @@ export const RequestProvider: FC = ({ children }) => {
       setState(s => {
         if (
           !s.fetching ||
-          e.type === "operation" ||
-          e.type === "init" ||
-          e.type === "disconnect" ||
+          (e.type !== "response" && e.type !== "error") ||
           (e.data.operation.context.meta as any).source !== "Devtools"
         ) {
           return s;
