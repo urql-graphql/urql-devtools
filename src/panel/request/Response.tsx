@@ -5,7 +5,7 @@ import { Pane } from "../components/Pane";
 import { JsonCode } from "../components";
 
 export const Response = () => {
-  const { response, error } = useContext(RequestContext);
+  const { fetching, response, error } = useContext(RequestContext);
 
   const className =
     error !== undefined ? "error" : response !== undefined ? "success" : "";
@@ -14,7 +14,9 @@ export const Response = () => {
     <Pane>
       <Heading className={className}>Response</Heading>
       <Pane.Body>
-        <JsonCode json={error || response || {}} />
+        <JsonCode
+          json={fetching ? "Fetching" : response || error || "Unknown"}
+        />
       </Pane.Body>
     </Pane>
   );
