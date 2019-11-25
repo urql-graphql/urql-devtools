@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`on mount matches snapshot 1`] = `
+<Fragment>
+  <GlobalStyleComponent />
+  <Container>
+    <Logo
+      alt="Urql Eagle"
+      src={null}
+    />
+    <Header>
+      Waiting for exchange
+    </Header>
+    <Hint>
+      Make sure 
+      you're
+       using the Urql Devtools exchange!
+    </Hint>
+  </Container>
+</Fragment>
+`;

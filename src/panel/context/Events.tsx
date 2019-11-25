@@ -76,13 +76,6 @@ export const EventsProvider: FC = ({ children }) => {
   /** Handle incoming events */
   useEffect(() => {
     return addMessageHandler(msg => {
-      // When using an effect on client connection true --> false
-      // something in the lifecycle seems to get lost... That's why
-      // I opted for this solution.
-      if (msg.type === "disconnect") {
-        setRawEvents(() => []);
-      }
-
       if (!["operation", "response", "error"].includes(msg.type)) {
         return;
       }

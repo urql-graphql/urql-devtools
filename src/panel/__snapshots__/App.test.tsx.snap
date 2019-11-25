@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App on mount matches snapshot 1`] = `
+<ThemeProvider
+  theme={
+    Object {
+      "blue": Object {
+        "-1": "#0084D1",
+        "-2": "#0067A3",
+        "0": "#00A1FF",
+      },
+      "border": "#CAE3F212",
+      "dark": Object {
+        "+1": "#2e3240",
+        "+2": "#3e4270",
+        "-1": "#15161c",
+        "-2": "#12141a",
+        "-3": "#11151c",
+        "0": "#1C1E26",
+      },
+      "green": Object {
+        "0": "#2DAF7E",
+      },
+      "grey": Object {
+        "+1": "#A5B0B7",
+        "+2": "#b4bfd1",
+        "-1": "#607E90",
+        "0": "#AAADB1",
+      },
+      "orange": Object {
+        "0": "#EB9028",
+      },
+      "pink": Object {
+        "+2": "#EC3E66",
+        "0": "#B877DB",
+      },
+      "purple": Object {
+        "+1": "#8899E3",
+        "0": "#7776d2",
+      },
+      "red": Object {
+        "+1": "#EC8275",
+        "0": "#EE6352",
+      },
+    }
+  }
+>
+  <DevtoolsProvider>
+    <AppRoutes />
+  </DevtoolsProvider>
+</ThemeProvider>
+`;
+
+exports[`App routes on mount on connected matches snapshot 1`] = `
+<HashRouter>
+  <EventsProvider>
+    <Route
+      component={[Function]}
+      path="/events"
+    />
+  </EventsProvider>
+  <RequestProvider>
+    <Route
+      component={[Function]}
+      path="/request"
+    />
+  </RequestProvider>
+  <ExplorerContextProvider>
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/explorer"
+    />
+  </ExplorerContextProvider>
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/"
+  />
+  <Navigation />
+</HashRouter>
+`;
+
+exports[`App routes on mount on disconnected matches snapshot 1`] = `<Disconnected />`;

@@ -13,11 +13,6 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { RequestContext } from "../context";
 
-type CodemirrorEventHandler<T extends Event = Event> = (
-  ed: CodeMirror.Editor,
-  ev: T
-) => void;
-
 /** Query editor
  * Inspired by Graphiql's query editor - https://github.com/graphql/graphiql/blob/master/packages/graphiql/src/components/QueryEditor.js
  */
