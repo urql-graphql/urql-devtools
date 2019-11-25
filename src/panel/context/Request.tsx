@@ -26,41 +26,45 @@ export const RequestContext = createContext<RequestContextValue>(null as any);
 
 export const RequestProvider: FC = ({ children }) => {
   const { sendMessage, addMessageHandler } = useContext(DevtoolsContext);
-  const [fetching, setFetching] = useState(false);
+  const [state, setState] = useState<{
+    fetching: boolean;
+    response?: object;
+    error?: object;
+  }>({ fetching: false, response: undefined, error: undefined });
   const [query, setQuery] = useState<string>();
-  const [response, setResponse] = useState<object | undefined>();
-  const [error, setError] = useState<object | undefined>();
   const [schema, setSchema] = useState<GraphQLSchema>();
 
   const execute = useCallback(() => {
-    setFetching(true);
-    setResponse(undefined);
-    setError(undefined);
+    setState({
+      fetching: true,
+      response: undefined,
+      error: undefined
+    });
     sendMessage({ type: "request", query: query || "" });
   }, [query, sendMessage]);
 
   // Listen for response for devtools
   useEffect(() => {
     return addMessageHandler(e => {
-      if (
-        !fetching ||
-        e.type === "operation" ||
-        e.type === "init" ||
-        e.type === "disconnect" ||
-        (e.data.operation.context.meta as any).source !== "Devtools"
-      ) {
-        return;
-      }
+      setState(s => {
+        if (
+          !s.fetching ||
+          e.type === "operation" ||
+          e.type === "init" ||
+          e.type === "disconnect" ||
+          (e.data.operation.context.meta as any).source !== "Devtools"
+        ) {
+          return s;
+        }
 
-      if (e.data.error !== undefined) {
-        setError(e.data.error);
-      } else {
-        setResponse(e.data.data);
-      }
-
-      setFetching(false);
+        return {
+          fetching: false,
+          error: e.data.error,
+          response: e.data.data
+        };
+      });
     });
-  }, [fetching, addMessageHandler]);
+  }, [addMessageHandler]);
 
   // Get schema
   useEffect(() => {
@@ -88,13 +92,11 @@ export const RequestProvider: FC = ({ children }) => {
     () => ({
       query,
       setQuery,
-      fetching,
-      response,
-      error,
+      ...state,
       execute,
       schema
     }),
-    [query, fetching, response, error, execute, schema]
+    [query, state, execute, schema]
   );
 
   return <RequestContext.Provider value={value} children={children} />;
