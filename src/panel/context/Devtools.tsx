@@ -5,7 +5,8 @@ import React, {
   FC,
   useRef,
   useCallback,
-  useState
+  useState,
+  useContext
 } from "react";
 import { DevtoolsPanelConnectionName, PanelOutgoingMessage } from "../../types";
 
@@ -18,6 +19,8 @@ interface DevtoolsContextType {
 }
 
 export const DevtoolsContext = createContext<DevtoolsContextType>(null as any);
+
+export const useDevtoolsContext = () => useContext(DevtoolsContext);
 
 export const DevtoolsProvider: FC = ({ children }) => {
   const [clientConnected, setClientConnected] = useState(false);

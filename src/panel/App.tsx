@@ -1,9 +1,10 @@
 import "./App.css";
-import React from "react";
+import React, { FC } from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { Events } from "./events";
 import { Explorer } from "./explorer";
+import { Disconnected } from "./disconnected";
 import { Navigation } from "./Navigation";
 import { Request } from "./request/Request";
 import { theme } from "./theme";
@@ -12,27 +13,40 @@ import {
   DevtoolsProvider,
   EventsProvider,
   RequestProvider,
-  ExplorerContextProvider
+  ExplorerContextProvider,
+  useDevtoolsContext
 } from "./context";
 
 export const App = () => {
   return (
-    <DevtoolsProvider>
-      <ThemeProvider theme={theme}>
-        <HashRouter>
-          <EventsProvider>
-            <Route path="/events" component={Events} />
-          </EventsProvider>
-          <RequestProvider>
-            <Route path="/request" component={Request} />
-          </RequestProvider>
-          <ExplorerContextProvider>
-            <Route path="/explorer" exact component={Explorer} />
-          </ExplorerContextProvider>
-          <Route path="/" exact component={() => <Redirect to="/explorer" />} />
-          <Navigation />
-        </HashRouter>
-      </ThemeProvider>
-    </DevtoolsProvider>
+    <ThemeProvider theme={theme}>
+      <DevtoolsProvider>
+        <AppRoutes />
+      </DevtoolsProvider>
+    </ThemeProvider>
+  );
+};
+
+export const AppRoutes: FC = () => {
+  const { clientConnected } = useDevtoolsContext();
+
+  if (!clientConnected) {
+    return <Disconnected />;
+  }
+
+  return (
+    <HashRouter>
+      <EventsProvider>
+        <Route path="/events" component={Events} />
+      </EventsProvider>
+      <RequestProvider>
+        <Route path="/request" component={Request} />
+      </RequestProvider>
+      <ExplorerContextProvider>
+        <Route path="/explorer" exact component={Explorer} />
+      </ExplorerContextProvider>
+      <Route path="/" exact component={() => <Redirect to="/explorer" />} />
+      <Navigation />
+    </HashRouter>
   );
 };
