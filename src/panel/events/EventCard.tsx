@@ -21,8 +21,8 @@ export const EventCard: FC<{
 
   const slideInAnimation = useSpring({
     config: { duration: 200 },
-    from: { transform: `translate(100%)` },
-    to: { transform: `translate(0%)` }
+    from: { transform: `translateY(100%)` },
+    to: { transform: `translateY(0%)` }
   });
 
   const colors: { [key: string]: string } = {

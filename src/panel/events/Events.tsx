@@ -34,9 +34,9 @@ export const Events = () => {
         {events.length === 0 ? (
           <NoEvents>No Events</NoEvents>
         ) : (
-          events.map((event, i) => (
+          events.map(event => (
             <EventCard
-              key={i}
+              key={`${event.timestamp}-${event.type}`}
               event={event}
               canFilter={filteringOn}
               active={event === selectedEvent}
