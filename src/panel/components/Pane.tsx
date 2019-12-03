@@ -117,7 +117,8 @@ export const DraggingEdge = styled.div`
     cursor: ew-resize;
   }
 
-  &:hover {
+  &:hover,
+  &[aria-grabbed="true"] {
     transition: background 150ms ease;
     background: ${p => p.theme.dark["+2"]};
   }
