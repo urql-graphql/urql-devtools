@@ -1,7 +1,7 @@
 <div align="center">
   <img alt="logo" src="https://raw.githubusercontent.com/FormidableLabs/urql-devtools/master/src/assets/icon.svg?sanitize=true" />
   <h1>urql devtools</h1>
-  <em>A chrome devtools extension for urql</em>
+  <em>A devtools extension for urql</em>
   <br />
   <br />
   <a href="https://spectrum.chat/urql">
@@ -38,6 +38,7 @@ npm i -D @urql/devtools
 
 - [urql](https://github.com/FormidableLabs/urql) _v1.2.0_ (or later)
 - [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
+- [Firefox extension](https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools/)
 
 ### Usage
 
