@@ -65,24 +65,27 @@ module.exports = {
       /\.js$/
     ),
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([
-      { from: "src/assets/", to: "assets/" },
-      {
-        from: "src/manifest.json",
-        transform: function(content) {
-          return Buffer.from(
-            JSON.stringify(
-              {
-                ...JSON.parse(content.toString()),
-                version: process.env.npm_package_version
-              },
-              null,
-              2
-            )
-          );
+    new CopyWebpackPlugin(
+      [
+        { from: "src/assets/", to: "assets/" },
+        {
+          from: "src/manifest.json",
+          transform: function(content) {
+            return Buffer.from(
+              JSON.stringify(
+                {
+                  ...JSON.parse(content.toString()),
+                  version: process.env.npm_package_version
+                },
+                null,
+                2
+              )
+            );
+          }
         }
-      }
-    ]),
+      ],
+      { copyUnmodified: true }
+    ),
     new HtmlWebpackPlugin({
       template: `${__dirname}/src/devtools/devtools.html`,
       filename: "devtools.html",
