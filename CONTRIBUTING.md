@@ -16,7 +16,7 @@ Luckily it's not hard to get started. You can install dependencies using `yarn`.
 yarn
 ```
 
-Run `yarn start` to initiate the Webpack and TypeScript build (for the extension and exchange, respectively).
+Run `yarn start` to initiate the build of the extension.
 
 ```sh
 yarn start
@@ -27,7 +27,7 @@ choose _Load unpacked_ and select the _dist/extension_ folder in the root of the
 
 ### Start an urql example repo
 
-Devtools will only be accessible if a development instance of `urql` is running.
+Devtools will only be accessible if a development instance of `urql` is running and it includes the [devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange).
 
 Clone the [Urql repo](https://github.com/FormidableLabs/urql).
 
