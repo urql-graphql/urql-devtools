@@ -99,7 +99,6 @@
     "eslint-config-prettier": "^5.1.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-react": "^7.14.2",
-    "event-hooks-webpack-plugin": "^2.1.2",
     "graphql": "^14.3.1",
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.5",
