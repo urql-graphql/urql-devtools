@@ -10,7 +10,8 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "prettier-check": "prettier -c src/** README.md",
-    "prepublishOnly": "run-s lint build"
+    "prepublishOnly": "run-s lint build",
+    "changelog": "docker run -it --rm -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator -u FormidableLabs -p urql-devtools"
   },
   "author": "Formidable",
   "license": "MIT",
