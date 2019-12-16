@@ -110,7 +110,7 @@ jobs:
       - run:
           command: |
             cd dist
-            $(npm bin)/web-ext sign --channel listed --api-key $FIREFOX_API_KEY --api-secret $FIREFOX_API_SECRET
+            $(npm bin)/web-ext sign --channel listed --api-key $FIREFOX_API_KEY --api-secret $FIREFOX_API_SECRET --id urql-devtools
 
 workflows:
   version: 2
