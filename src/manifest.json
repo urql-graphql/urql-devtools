@@ -34,7 +34,8 @@
   "manifest_version": 2,
   "browser_specific_settings": {
     "gecko": {
-      "id": "d1aa70ce-9992-b947-ba5d-7f7e8c4ecb5f"
+      "id": "{c11f3a69-f159-4708-b044-853066c2d2fe}",
+      "strict_min_version": "42.0"
     }
   }
 }
