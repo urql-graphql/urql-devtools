@@ -60,6 +60,8 @@
     "bestzip": "^2.1.4",
     "fast-json-stable-stringify": "^2.0.0",
     "nanoid": "^2.1.0",
+    "prism-react-renderer": "^1.0.2",
+    "prismjs": "^1.17.1",
     "wonka": "^3.2.0"
   },
   "devDependencies": {

@@ -63,7 +63,7 @@ const Container = styled(Background)`
 `;
 
 const EventsList = styled.div`
-  overflow: scroll;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

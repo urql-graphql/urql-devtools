@@ -1,6 +1,6 @@
 import React, { FC, useState, useMemo, useLayoutEffect } from "react";
 import { EventPanel, ParsedEvent } from "../types";
-import { Tabs, Pane, QueryCode, JsonCode } from "../components";
+import { Tabs, Pane, CodeHighlight } from "../components";
 
 /** Pane shows additional information about a selected operation event. */
 export const EventPane: FC<{ event: ParsedEvent }> = ({ event }) => {
@@ -27,13 +27,16 @@ export const EventPane: FC<{ event: ParsedEvent }> = ({ event }) => {
   const panelContent = useMemo(() => {
     const activePanel = panels[selectedTab];
 
-    switch (activePanel.name) {
-      case "query":
-        return <QueryCode query={activePanel.data} />;
-
-      default:
-        return <JsonCode json={activePanel.data || {}} />;
+    if (activePanel.name === "query") {
+      return <CodeHighlight code={activePanel.data} language="graphql" />;
     }
+
+    return (
+      <CodeHighlight
+        code={JSON.stringify(activePanel.data || {}, null, 2)}
+        language="json"
+      />
+    );
   }, [panels, selectedTab]);
 
   return (
