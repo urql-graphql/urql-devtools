@@ -82,7 +82,7 @@ jobs:
           command: |
             node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error('Tag version does not line up with version in package.json') || process.exit(1))"
 
-  deploy:
+  deploy chrome:
     docker:
       - image: cibuilds/chrome-extension
     steps:
@@ -95,6 +95,22 @@ jobs:
             ACCESS_TOKEN=$(curl --fail "https://www.googleapis.com/oauth2/v4/token" -d "client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&refresh_token=${REFRESH_TOKEN}&grant_type=refresh_token" | jq -r .access_token)
             curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -X PUT -T ./extension.zip "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${APP_ID}"
             curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST "https://www.googleapis.com/chromewebstore/v1.1/items/${APP_ID}/publish"
+
+  deploy firefox:
+    docker:
+      - image: node:12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-cache-{{ .Revision }}
+      - restore_cache:
+          keys:
+            - build-cache-{{ .Revision }}
+      - run:
+          command: |
+            cd dist
+            $(npm bin)/web-ext sign --channel listed --api-key $FIREFOX_API_KEY --api-secret $FIREFOX_API_SECRET
 
 workflows:
   version: 2
@@ -142,7 +158,21 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - deploy:
+      - deploy chrome:
+          requires:
+            - install
+            - lint
+            - prettier
+            - test
+            - build
+            - lint firefox
+            - verify version
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+      - deploy firefox:
           requires:
             - install
             - lint
