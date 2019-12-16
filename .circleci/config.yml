@@ -60,6 +60,19 @@ jobs:
       - store_artifacts:
           path: extension.zip
 
+  lint firefox:
+    docker:
+      - image: node:12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-cache-{{ .Revision }}
+            - build-cache-{{ .Revision }}
+      - run:
+          command: |
+            yarn run firefox:lint
+
   verify version:
     docker:
       - image: node:12
@@ -117,16 +130,18 @@ workflows:
               only: /.*/
       - verify version:
           requires:
-            - install
-            - lint
-            - prettier
-            - test
             - build
           filters:
             tags:
               only: /.*/
             branches:
               ignore: /.*/
+      - lint firefox:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /.*/
       - deploy:
           requires:
             - install
@@ -134,6 +149,7 @@ workflows:
             - prettier
             - test
             - build
+            - lint firefox
             - verify version
           filters:
             tags:
