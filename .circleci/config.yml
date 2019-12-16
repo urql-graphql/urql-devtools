@@ -71,9 +71,7 @@ jobs:
       - restore_cache:
           keys:
             - build-cache-{{ .Revision }}
-      - run:
-          command: |
-            yarn run firefox:lint
+      - run: yarn run firefox:lint
 
   verify version:
     docker:
