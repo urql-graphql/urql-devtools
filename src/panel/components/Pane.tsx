@@ -125,7 +125,7 @@ export const DraggingEdge = styled.div`
 `;
 
 const Body = styled.div`
-  overflow: scroll;
+  overflow: auto;
 `;
 
 type Pane = typeof PaneRoot & { Body: typeof Body };
