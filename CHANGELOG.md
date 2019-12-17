@@ -1,6 +1,27 @@
 # Changelog
 
-## [v0.0.6](https://github.com/FormidableLabs/urql-devtools/tree/v0.0.6)
+## [v0.0.8](https://github.com/FormidableLabs/urql-devtools/tree/v0.0.8) (2019-12-17)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v0.0.6...v0.0.8)
+
+**Fixed bugs:**
+
+- Fix visual issues on Firefox [\#88](https://github.com/FormidableLabs/urql-devtools/issues/88)
+
+**Closed issues:**
+
+- Fix issue where webpack watched rebuilds remove files [\#87](https://github.com/FormidableLabs/urql-devtools/issues/87)
+- Create a bridging abstraction for wider browser support [\#2](https://github.com/FormidableLabs/urql-devtools/issues/2)
+
+**Merged pull requests:**
+
+- Add Firefox publishing [\#95](https://github.com/FormidableLabs/urql-devtools/pull/95) ([andyrichardson](https://github.com/andyrichardson))
+- Migrate to Prism, fix firefox scrollbars and font sizes [\#93](https://github.com/FormidableLabs/urql-devtools/pull/93) ([andyrichardson](https://github.com/andyrichardson))
+- Fix webpack rebuilds [\#91](https://github.com/FormidableLabs/urql-devtools/pull/91) ([andyrichardson](https://github.com/andyrichardson))
+- Add script and info info for changelog generation [\#86](https://github.com/FormidableLabs/urql-devtools/pull/86) ([andyrichardson](https://github.com/andyrichardson))
+- Keep pane hover state active on drag [\#85](https://github.com/FormidableLabs/urql-devtools/pull/85) ([andyrichardson](https://github.com/andyrichardson))
+
+## [v0.0.6](https://github.com/FormidableLabs/urql-devtools/tree/v0.0.6) (2019-12-02)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v0.0.5...v0.0.6)
 
@@ -74,8 +95,8 @@
 - \(feat\) - event card animation [\#49](https://github.com/FormidableLabs/urql-devtools/pull/49) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - \(fix\) - invalid utf-8 character in minified output [\#47](https://github.com/FormidableLabs/urql-devtools/pull/47) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - \(fix\) - enable minification [\#46](https://github.com/FormidableLabs/urql-devtools/pull/46) ([JoviDeCroock](https://github.com/JoviDeCroock))
-- \(chore\) - move webpack deps to devDependencies [\#44](https://github.com/FormidableLabs/urql-devtools/pull/44) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - \(chore\) - correct links [\#43](https://github.com/FormidableLabs/urql-devtools/pull/43) ([JoviDeCroock](https://github.com/JoviDeCroock))
+- \(feat\) - headers for devtools [\#42](https://github.com/FormidableLabs/urql-devtools/pull/42) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - Update and rename docs/Development.md to CONTRIBUTING.md [\#40](https://github.com/FormidableLabs/urql-devtools/pull/40) ([kitten](https://github.com/kitten))
 - Add page action when content script connects [\#39](https://github.com/FormidableLabs/urql-devtools/pull/39) ([andyrichardson](https://github.com/andyrichardson))
 
@@ -109,13 +130,14 @@
 - Add filtering capabilities to event overview [\#4](https://github.com/FormidableLabs/urql-devtools/issues/4)
 - Add basic CI steps [\#3](https://github.com/FormidableLabs/urql-devtools/issues/3)
 - Unify build process [\#1](https://github.com/FormidableLabs/urql-devtools/issues/1)
+- Add in changelog / changelog automation [\#32](https://github.com/FormidableLabs/urql-devtools/issues/32)
 - Add CI for automated release [\#30](https://github.com/FormidableLabs/urql-devtools/issues/30)
 - Update README for release [\#29](https://github.com/FormidableLabs/urql-devtools/issues/29)
 - Fix build error [\#10](https://github.com/FormidableLabs/urql-devtools/issues/10)
 
 **Merged pull requests:**
 
-- \(feat\) - headers for devtools [\#42](https://github.com/FormidableLabs/urql-devtools/pull/42) ([JoviDeCroock](https://github.com/JoviDeCroock))
+- \(chore\) - move webpack deps to devDependencies [\#44](https://github.com/FormidableLabs/urql-devtools/pull/44) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - Add ignores for npm publish [\#37](https://github.com/FormidableLabs/urql-devtools/pull/37) ([andyrichardson](https://github.com/andyrichardson))
 - Adds auto-publishing for tags [\#33](https://github.com/FormidableLabs/urql-devtools/pull/33) ([andyrichardson](https://github.com/andyrichardson))
 - update dependency and remove type overrides [\#31](https://github.com/FormidableLabs/urql-devtools/pull/31) ([andyrichardson](https://github.com/andyrichardson))

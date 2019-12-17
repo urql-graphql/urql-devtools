@@ -1,6 +1,6 @@
 {
   "name": "@urql/devtools-chrome-extension",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "The Urql devtools chrome extension",
   "scripts": {
     "start": "webpack --watch",
