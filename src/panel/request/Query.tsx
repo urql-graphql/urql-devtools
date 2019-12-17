@@ -1,4 +1,6 @@
+import "codemirror/theme/material.css";
 import "codemirror/lib/codemirror";
+import "codemirror/lib/codemirror.css";
 import "codemirror/addon/hint/show-hint";
 import "codemirror/addon/edit/closebrackets";
 import "codemirror/addon/edit/matchbrackets";
