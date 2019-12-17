@@ -31,5 +31,11 @@
   "devtools_page": "devtools.html",
   "permissions": ["file:///*", "http://*/*", "https://*/*"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "manifest_version": 2
+  "manifest_version": 2,
+  "application": {
+    "gecko": {
+      "id": "{c11f3a69-f159-4708-b044-853066c2d2fe}",
+      "strict_min_version": "42.0"
+    }
+  }
 }
