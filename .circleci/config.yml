@@ -81,6 +81,7 @@ jobs:
       - run:
           command: |
             node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error('Tag version does not line up with version in package.json') || process.exit(1))"
+            (sed -n '3p' CHANGELOG.md | grep -i $CIRCLE_TAG) && echo "Version documented in changelog" || (echo "Version not documented in changelog" && exit 1)
 
   deploy chrome:
     docker:
