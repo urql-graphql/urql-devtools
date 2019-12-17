@@ -1,5 +1,17 @@
 # Changelog
 
+## [v0.0.9](https://github.com/FormidableLabs/urql-devtools/tree/v0.0.9) (2019-12-17)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v0.0.8...v0.0.9)
+
+**Fixed bugs:**
+
+- Query panel in request page is broken [\#96](https://github.com/FormidableLabs/urql-devtools/issues/96)
+
+**Closed issues:**
+
+- Add automated release for Firefox [\#90](https://github.com/FormidableLabs/urql-devtools/issues/90)
+
 ## [v0.0.8](https://github.com/FormidableLabs/urql-devtools/tree/v0.0.8) (2019-12-17)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v0.0.6...v0.0.8)
@@ -94,7 +106,7 @@
 - \(chore\) - add spectrum badge [\#54](https://github.com/FormidableLabs/urql-devtools/pull/54) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - \(feat\) - event card animation [\#49](https://github.com/FormidableLabs/urql-devtools/pull/49) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - \(fix\) - invalid utf-8 character in minified output [\#47](https://github.com/FormidableLabs/urql-devtools/pull/47) ([JoviDeCroock](https://github.com/JoviDeCroock))
-- \(fix\) - enable minification [\#46](https://github.com/FormidableLabs/urql-devtools/pull/46) ([JoviDeCroock](https://github.com/JoviDeCroock))
+- \(chore\) - move webpack deps to devDependencies [\#44](https://github.com/FormidableLabs/urql-devtools/pull/44) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - \(chore\) - correct links [\#43](https://github.com/FormidableLabs/urql-devtools/pull/43) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - \(feat\) - headers for devtools [\#42](https://github.com/FormidableLabs/urql-devtools/pull/42) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - Update and rename docs/Development.md to CONTRIBUTING.md [\#40](https://github.com/FormidableLabs/urql-devtools/pull/40) ([kitten](https://github.com/kitten))
@@ -137,7 +149,7 @@
 
 **Merged pull requests:**
 
-- \(chore\) - move webpack deps to devDependencies [\#44](https://github.com/FormidableLabs/urql-devtools/pull/44) ([JoviDeCroock](https://github.com/JoviDeCroock))
+- \(fix\) - enable minification [\#46](https://github.com/FormidableLabs/urql-devtools/pull/46) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - Add ignores for npm publish [\#37](https://github.com/FormidableLabs/urql-devtools/pull/37) ([andyrichardson](https://github.com/andyrichardson))
 - Adds auto-publishing for tags [\#33](https://github.com/FormidableLabs/urql-devtools/pull/33) ([andyrichardson](https://github.com/andyrichardson))
 - update dependency and remove type overrides [\#31](https://github.com/FormidableLabs/urql-devtools/pull/31) ([andyrichardson](https://github.com/andyrichardson))
