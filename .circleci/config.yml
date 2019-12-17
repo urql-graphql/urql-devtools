@@ -111,7 +111,7 @@ jobs:
       - run:
           command: |
             cd dist
-            ERR=$($(npm bin)/web-ext sign --channel listed --api-key $FIREFOX_API_KEY --api-secret $FIREFOX_API_SECRET --id {c11f3a69-f159-4708-b044-853066c2d2fe})
+            ERR=$($(npm bin)/web-ext sign --channel listed --api-key $FIREFOX_API_KEY --api-secret $FIREFOX_API_SECRET --id {c11f3a69-f159-4708-b044-853066c2d2fe} || true)
             (grep -qi "Your add-on has been submitted for review" <<< $ERR) && echo "Addon submitted for review." || (echo "Addon not submitted for review" && echo $ERR && exit 1)
 
 workflows:
