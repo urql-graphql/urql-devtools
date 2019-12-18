@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { Background } from "../components";
-import { ExplorerContext } from "../context";
-import { FieldNode } from "../context/Explorer/ast";
+import { Background } from "../../components";
+import { ExplorerContext } from "../../context";
+import { FieldNode } from "../../context/Explorer/ast";
 import { Tree } from "./Tree";
 import { DetailViewPane } from "./DetailView";
 

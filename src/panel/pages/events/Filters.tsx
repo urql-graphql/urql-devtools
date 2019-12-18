@@ -2,7 +2,7 @@ import React, { FC, useContext, useCallback } from "react";
 import styled from "styled-components";
 import { useTransition } from "react-spring";
 import { animated } from "react-spring";
-import { EventsContext, EventsContextValue } from "../context";
+import { EventsContext, EventsContextValue } from "../../context";
 
 interface FilterEntry {
   type: keyof EventsContextValue["activeFilters"];

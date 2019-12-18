@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { EventsContext } from "../context";
-import { Background } from "../components/Background";
+import { EventsContext } from "../../context";
+import { Background } from "../../components/Background";
 import { EventPane } from "./EventPane";
 import { EventCard } from "./EventCard";
 import { Filters } from "./Filters";

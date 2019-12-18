@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import image from "../../assets/icon.svg";
+import image from "../../../assets/icon.svg";
 
 export const Disconnected: FC = () => (
   <>

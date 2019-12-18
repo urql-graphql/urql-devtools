@@ -1,8 +1,8 @@
 import React, { useContext, useMemo } from "react";
 import styled from "styled-components";
-import { RequestContext } from "../context";
-import { Pane } from "../components/Pane";
-import { CodeHighlight } from "../components";
+import { RequestContext } from "../../context";
+import { Pane } from "../../components/Pane";
+import { CodeHighlight } from "../../components";
 
 export const Response = () => {
   const { fetching, response, error } = useContext(RequestContext);

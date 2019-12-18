@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { FieldNode, NodeMap } from "../context/Explorer/ast";
-import { Context, Variables } from "../context/Explorer/ast/types";
-import { Pane } from "../components";
+import { FieldNode, NodeMap } from "../../context/Explorer/ast";
+import { Context, Variables } from "../../context/Explorer/ast/types";
+import { Pane } from "../../components";
 import { Value } from "./Value";
 import { CacheOutcomeIcon } from "./Icons";
 
@@ -17,7 +17,7 @@ const gatherChildValues = (
     return null;
   }
 
-  if (!Array.isArray(values) && (typeof values !== "object" && values)) {
+  if (!Array.isArray(values) && typeof values !== "object" && values) {
     return values;
   } else {
     return Object.entries(values).reduce((acc, [key, value]) => {
