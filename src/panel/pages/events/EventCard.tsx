@@ -1,8 +1,8 @@
 import React, { FC, useCallback, MouseEventHandler } from "react";
 import styled, { css } from "styled-components";
 import { animated, useSpring } from "react-spring";
-import { ParsedEvent } from "../types";
-import { useThemeContext, useEventsContext } from "../hooks";
+import { ParsedEvent } from "../../types";
+import { useThemeContext, useEventsContext } from "../../hooks";
 import { smMax, mdMin } from "./constants";
 
 /** Shows basic information about an operation. */

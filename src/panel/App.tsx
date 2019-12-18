@@ -2,11 +2,8 @@ import "./App.css";
 import React, { FC } from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { Events } from "./events";
-import { Explorer } from "./explorer";
-import { Disconnected } from "./disconnected";
+import { Disconnected, Events, Explorer, Request } from "./pages";
 import { Navigation } from "./Navigation";
-import { Request } from "./request/Request";
 import { theme } from "./theme";
 
 import {

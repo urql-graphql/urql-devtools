@@ -13,7 +13,7 @@ import "codemirror-graphql/mode";
 import CodeMirror from "codemirror";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { RequestContext } from "../context";
+import { RequestContext } from "../../context";
 
 /** Query editor
  * Inspired by Graphiql's query editor - https://github.com/graphql/graphiql/blob/master/packages/graphiql/src/components/QueryEditor.js

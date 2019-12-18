@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FieldNode } from "../context/Explorer/ast";
+import { FieldNode } from "../../context/Explorer/ast";
 import { useHighlight, HighlightUpdate } from "./Highlight";
 
 interface Props {
