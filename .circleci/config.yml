@@ -1,7 +1,22 @@
+version: 2
+
+.node_env: &node_env
+  docker:
+    - image: node:13
+
+.node_modules_cache: &node_modules_cache
+  restore_cache:
+    keys:
+      - node-cache-{{ .Revision }}
+
+.build_cache: &build_cache
+  restore_cache:
+    keys:
+      - build-cache-{{ .Revision }}
+
 jobs:
   install:
-    docker:
-      - image: node:12
+    <<: *node_env
     steps:
       - checkout
       - run: yarn
@@ -11,45 +26,32 @@ jobs:
             - "node_modules"
 
   lint:
-    docker:
-      - image: node:12
+    <<: *node_env
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - node-cache-{{ .Revision }}
+      - *node_modules_cache
       - run: yarn run lint
 
   prettier:
-    docker:
-      - image: node:12
+    <<: *node_env
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - node-cache-{{ .Revision }}
+      - *node_modules_cache
       - run: yarn run prettier-check
 
   test:
-    docker:
-      - image: node:12
+    <<: *node_env
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - node-cache-{{ .Revision }}
+      - *node_modules_cache
       - run: yarn run test
 
   build:
-    docker:
-      - image: node:12
+    <<: *node_env
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - node-cache-{{ .Revision }}
-      - run: apt-get update
-      - run: apt-get -y install zip
+      - *node_modules_cache
+      - run: apt-get update && apt-get -y install zip
       - run: yarn run build
       - run: yarn run bundle
       - save_cache:
@@ -61,21 +63,15 @@ jobs:
           path: extension.zip
 
   lint firefox:
-    docker:
-      - image: node:12
+    <<: *node_env
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - node-cache-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - build-cache-{{ .Revision }}
+      - *node_modules_cache
+      - *build_cache
       - run: yarn run firefox:lint
 
   verify version:
-    docker:
-      - image: node:12
+    <<: *node_env
     steps:
       - checkout
       - run:
@@ -88,9 +84,7 @@ jobs:
       - image: cibuilds/chrome-extension
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - build-cache-{{ .Revision }}
+      - *build_cache
       - run:
           command: |
             ACCESS_TOKEN=$(curl --fail "https://www.googleapis.com/oauth2/v4/token" -d "client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&refresh_token=${REFRESH_TOKEN}&grant_type=refresh_token" | jq -r .access_token)
@@ -98,16 +92,11 @@ jobs:
             curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST "https://www.googleapis.com/chromewebstore/v1.1/items/${APP_ID}/publish"
 
   deploy firefox:
-    docker:
-      - image: node:12
+    <<: *node_env
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - node-cache-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - build-cache-{{ .Revision }}
+      - *node_modules_cache
+      - *build_cache
       - run:
           command: |
             cd dist
