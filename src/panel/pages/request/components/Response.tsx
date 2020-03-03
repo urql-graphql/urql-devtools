@@ -1,8 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import styled from "styled-components";
-import { RequestContext } from "../../context";
-import { Pane } from "../../components/Pane";
-import { CodeHighlight } from "../../components";
+import { RequestContext } from "../../../context";
+import { Pane, CodeHighlight } from "../../../components";
 
 export const Response = () => {
   const { fetching, response, error } = useContext(RequestContext);
@@ -29,14 +28,16 @@ const Heading = styled.h2`
   margin: 0;
   padding: 10px;
   font-size: 12px;
-  color: ${p => p.theme.grey["+2"]};
-  background: ${props => props.theme.dark["-2"]} !important;
+  color: #fff;
+  background: ${props => props.theme.blue["0"]};
 
   &.success {
     background: ${props => props.theme.green["0"]};
+    color: #fff;
   }
 
   &.error {
     background: ${props => props.theme.red["0"]};
+    color: #fff;
   }
 `;

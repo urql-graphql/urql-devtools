@@ -5,7 +5,6 @@ module.exports = {
     "@babel/preset-typescript"
   ],
   plugins: [
-    "inline-import-data-uri",
     [
       "babel-plugin-styled-components",
       {
