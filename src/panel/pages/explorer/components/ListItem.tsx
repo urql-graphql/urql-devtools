@@ -15,7 +15,7 @@ interface ListItemProps {
 export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   const { focusedNode, setFocusedNode } = useContext(ExplorerContext);
   const isExpanded = useMemo(
-    () => focusedNode && focusedNode._id === node._id,
+    () => (focusedNode ? focusedNode._id === node._id : false),
     [node, focusedNode]
   );
 
