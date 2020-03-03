@@ -1,14 +1,73 @@
-import React, { FC } from "react";
+import React, { FC, useContext, useMemo } from "react";
 import styled from "styled-components";
 import { FieldNode, NodeMap } from "../../context/Explorer/ast";
 import { Context, Variables } from "../../context/Explorer/ast/types";
 import { Pane } from "../../components";
+import { ExplorerContext } from "../../context";
 import { Value } from "./Value";
 import { CacheOutcomeIcon } from "./Icons";
 
-interface Props {
-  node: FieldNode | null;
-}
+export const NodeInfoPane: FC = () => {
+  const { focusedNode } = useContext(ExplorerContext);
+
+  const content = useMemo(() => {
+    if (!focusedNode) {
+      return (
+        <TextContainer>
+          <Text>Select a node to see more information...</Text>
+        </TextContainer>
+      );
+    }
+
+    return <NodeInfoContent node={focusedNode} />;
+  }, [focusedNode]);
+
+  return (
+    <Pane>
+      <PaneBody>{content}</PaneBody>
+    </Pane>
+  );
+};
+
+const NodeInfoContent: FC<{ node: FieldNode }> = ({ node }) => (
+  <>
+    <Container>
+      <Title>Name</Title>
+      <Name>{node.name}</Name>
+    </Container>
+    {node.cacheOutcome ? (
+      <Container>
+        <Title>Cache Outcome</Title>
+        <div>
+          <CacheIcon state={node.cacheOutcome} />
+          <Name>{node.cacheOutcome}</Name>
+          {getDescription(node.cacheOutcome)}
+        </div>
+      </Container>
+    ) : null}
+    {node.args ? (
+      <Container>
+        <Title>Arguments</Title>
+        <Code>
+          <Value value={node.args} expandValues />
+        </Code>
+      </Container>
+    ) : null}
+    {node.value || node.children ? (
+      <Container>
+        <Title>Value</Title>
+        {node.value !== undefined ? (
+          <Value
+            value={node.children !== undefined ? node.children : node.value}
+            expandValues={false}
+          />
+        ) : (
+          renderChildren(node)
+        )}
+      </Container>
+    ) : null}
+  </>
+);
 
 const gatherChildValues = (
   values: NodeMap | NodeMap[] | undefined | Variables
@@ -71,67 +130,9 @@ const renderChildren = (node: FieldNode) => {
   );
 };
 
-export const DetailViewPane: FC<Props> = props => (
-  <Pane>
-    <PaneBody>
-      <DetailView {...props} />
-    </PaneBody>
-  </Pane>
-);
-
 const PaneBody = styled(Pane.Body)`
   padding: 20px;
 `;
-
-const DetailView: FC<Props> = ({ node }) => {
-  if (!node) {
-    return (
-      <TextContainer>
-        <Text>Select a node to see more information...</Text>
-      </TextContainer>
-    );
-  }
-
-  return (
-    <>
-      <Container>
-        <Title>Name</Title>
-        <Name>{node.name}</Name>
-      </Container>
-      {node.cacheOutcome ? (
-        <Container>
-          <Title>Cache Outcome</Title>
-          <div>
-            <CacheIcon state={node.cacheOutcome} />
-            <Name>{node.cacheOutcome}</Name>
-            {getDescription(node.cacheOutcome)}
-          </div>
-        </Container>
-      ) : null}
-      {node.args ? (
-        <Container>
-          <Title>Arguments</Title>
-          <Code>
-            <Value value={node.args} expandValues />
-          </Code>
-        </Container>
-      ) : null}
-      {node.value || node.children ? (
-        <Container>
-          <Title>Value</Title>
-          {node.value !== undefined ? (
-            <Value
-              value={node.children !== undefined ? node.children : node.value}
-              expandValues={false}
-            />
-          ) : (
-            renderChildren(node)
-          )}
-        </Container>
-      ) : null}
-    </>
-  );
-};
 
 const Container = styled.div`
   margin-bottom: 1rem;

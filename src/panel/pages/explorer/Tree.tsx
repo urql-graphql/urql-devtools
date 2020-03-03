@@ -1,94 +1,65 @@
-import React from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import { NodeMap, FieldNode } from "../../context/Explorer/ast";
 import { ListItem, SystemListItem } from "./ListItem";
 
-interface Props {
+interface TreeProps {
   nodeMap: NodeMap | (NodeMap | null)[] | undefined;
-  setFocusedNode: (id: string) => void;
-  setDetailView: (node: FieldNode | null) => void;
-  activeId?: string;
   depth?: number;
   index?: number;
 }
+
+export const Tree: FC<TreeProps> = ({ nodeMap, depth = 0, index }) => {
+  if (!nodeMap || (Array.isArray(nodeMap) && nodeMap.length === 0)) {
+    return null;
+  }
+
+  if (Array.isArray(nodeMap)) {
+    return (
+      <>
+        {nodeMap.map(
+          (map, index) =>
+            map && (
+              <Tree key={index} nodeMap={map} depth={depth} index={index} />
+            )
+        )}
+      </>
+    );
+  }
+
+  const fields = Object.values(nodeMap);
+  const typenameField = fields.find(x => x.name === "__typename");
+  const childrenFields = sortFields(
+    fields.filter(x => x.children !== undefined)
+  );
+  const scalarFields = sortFields(
+    fields.filter(x => x.children === undefined && x.name !== "__typename")
+  );
+  const role = depth === 0 ? "tree" : "group";
+
+  return (
+    <List role={role}>
+      {typenameField && <SystemListItem node={typenameField} index={index} />}
+      {[...scalarFields, ...childrenFields].map(node => (
+        <ListItem key={node._id} node={node} depth={depth} />
+      ))}
+    </List>
+  );
+};
 
 const sortFields = (nodes: FieldNode[]) => {
   return nodes.sort((a, b) => {
     if (a.name === "id") {
       return -nodes.length;
-    } else if (b.name === "id") {
+    }
+
+    if (b.name === "id") {
       return nodes.length;
     }
 
     return a.name.localeCompare(b.name);
   });
 };
-
-export function Tree({
-  nodeMap,
-  setFocusedNode,
-  setDetailView,
-  activeId,
-  depth = 0,
-  index
-}: Props) {
-  if (Array.isArray(nodeMap)) {
-    if (nodeMap.length === 0) {
-      return null;
-    }
-
-    const children = nodeMap.map((childMap, childIndex) =>
-      childMap ? (
-        <Tree
-          key={childIndex}
-          nodeMap={childMap}
-          setFocusedNode={setFocusedNode}
-          setDetailView={setDetailView}
-          activeId={activeId}
-          depth={depth}
-          index={childIndex}
-        />
-      ) : null
-    );
-
-    return <>{children}</>;
-  } else if (!nodeMap) {
-    return null;
-  }
-
-  const mapNode = (node: FieldNode) => (
-    <ListItem
-      key={node._id}
-      node={node}
-      setFocusedNode={setFocusedNode}
-      setDetailView={setDetailView}
-      activeId={activeId}
-      depth={depth}
-    />
-  );
-
-  const fields = Object.values(nodeMap);
-  const typenameField = fields.find(x => x.name === "__typename");
-
-  const childrenFields = sortFields(
-    fields.filter(x => x.children !== undefined)
-  );
-
-  const scalarFields = sortFields(
-    fields.filter(x => x.children === undefined && x.name !== "__typename")
-  );
-
-  return (
-    <List role={depth === 0 ? "tree" : "group"}>
-      {typenameField ? (
-        <SystemListItem node={typenameField} index={index} />
-      ) : null}
-
-      {scalarFields.map(mapNode)}
-      {childrenFields.map(mapNode)}
-    </List>
-  );
-}
 
 export const List = styled.ul`
   margin: 0;

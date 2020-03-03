@@ -1,6 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useMemo,
+  useCallback
+} from "react";
 import styled, { css } from "styled-components";
 import { FieldNode } from "../../context/Explorer/ast";
+import { ExplorerContext } from "../../context";
 import { ArrowIcon } from "./Icons";
 import { Arguments } from "./Arguments";
 import { Value } from "./Value";
@@ -15,44 +22,15 @@ interface ItemProps {
   depth?: number;
 }
 
-export function ListItem({
-  node,
-  activeId,
-  setFocusedNode,
-  setDetailView,
-  depth = 0
-}: ItemProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isAnimating, onAnimationEnd] = useHighlight([node.children]);
+export function ListItem({ node, depth = 0 }: ItemProps) {
+  const { focusedNode, setFocusedNode } = useContext(ExplorerContext);
+  const isExpanded = useMemo(() => focusedNode === node, [node, focusedNode]);
+  const isActive = isExpanded;
 
-  useEffect(() => {
-    if (isExpanded) {
-      setFocusedNode(node._id);
-      setDetailView(node);
-    } else {
-      setDetailView(null);
-    }
-  }, [isExpanded]);
-
-  const hasChildren = Array.isArray(node.children)
-    ? node.children.length > 0
-    : !!node.children;
-
-  const nodeChildren = (
-    <Tree
-      nodeMap={node.children}
-      activeId={activeId}
-      setFocusedNode={setFocusedNode}
-      setDetailView={setDetailView}
-      depth={depth + 1}
-    />
+  const handleFieldContainerClick = useCallback(
+    () => setFocusedNode(n => (n === node ? undefined : node)),
+    [setFocusedNode, node]
   );
-
-  const isActive = node._id === activeId && isExpanded;
-
-  const handleOnClick = () => {
-    setIsExpanded(isExpanded => !isExpanded);
-  };
 
   const contents = (
     <>
@@ -68,38 +46,40 @@ export function ListItem({
     </>
   );
 
+  if (
+    node.children ||
+    (Array.isArray(node.children) && node.children.length > 0)
+  ) {
+    return (
+      <Item role="treeitem" withChildren>
+        <FieldContainer onClick={handleFieldContainerClick}>
+          <OutlineContainer isActive={isActive}>
+            {/* <HighlightUpdate
+              isAnimating={isAnimating && !isExpanded}
+              onAnimationEnd={onAnimationEnd}
+            > */}
+            <Arrow active={isExpanded} />
+            <ChildrenName>{node.name}</ChildrenName>
+            <Arguments args={node.args} displayAll={isExpanded} />
+            {/* </HighlightUpdate> */}
+          </OutlineContainer>
+        </FieldContainer>
+        {isExpanded && <Tree nodeMap={node.children} depth={depth + 1} />}
+        {/* {isExpanded ? nodeChildren : null} */}
+      </Item>
+    );
+  }
+
   return (
-    <>
-      {hasChildren ? (
-        <Item role="treeitem" withChildren>
-          <FieldContainer onClick={handleOnClick}>
-            <OutlineContainer isActive={isActive}>
-              <HighlightUpdate
-                isAnimating={isAnimating && !isExpanded}
-                onAnimationEnd={onAnimationEnd}
-              >
-                <Arrow active={isExpanded} />
-                <ChildrenName>{node.name}</ChildrenName>
-                <Arguments args={node.args} displayAll={isExpanded} />
-              </HighlightUpdate>
-            </OutlineContainer>
-          </FieldContainer>
-          {isExpanded ? nodeChildren : null}
-        </Item>
+    <Item role="treeitem" withChildren={false}>
+      {node.args ? (
+        <FieldContainer onClick={handleFieldContainerClick}>
+          <OutlineContainer isActive={isActive}>{contents}</OutlineContainer>
+        </FieldContainer>
       ) : (
-        <Item role="treeitem" withChildren={false}>
-          {node.args ? (
-            <FieldContainer onClick={handleOnClick}>
-              <OutlineContainer isActive={isActive}>
-                {contents}
-              </OutlineContainer>
-            </FieldContainer>
-          ) : (
-            <>{contents}</>
-          )}
-        </Item>
+        <>{contents}</>
       )}
-    </>
+    </Item>
   );
 }
 

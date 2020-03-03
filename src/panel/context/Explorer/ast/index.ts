@@ -29,9 +29,7 @@ export interface FieldNode {
   children?: NodeMap | NullArray<NodeMap>;
 }
 
-export interface NodeMap {
-  [key: string]: FieldNode;
-}
+export type NodeMap = Record<string, FieldNode>;
 
 interface Data {
   [fieldName: string]: Data[] | Data | DataField;

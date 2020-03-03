@@ -4,16 +4,10 @@ import { Background } from "../../components";
 import { ExplorerContext } from "../../context";
 import { FieldNode } from "../../context/Explorer/ast";
 import { Tree } from "./Tree";
-import { DetailViewPane } from "./DetailView";
+import { NodeInfoPane } from "./NodeInfoPane";
 
 export function Explorer() {
-  const operations = useContext(ExplorerContext);
-  const [focusedNodeId, setFocusedNodeId] = useState<string | undefined>(
-    undefined
-  );
-  const [detailViewNode, setDetailViewNode] = useState<FieldNode | null>(null);
-
-  const setActiveNode = (id: string) => setFocusedNodeId(id);
+  const { operations } = useContext(ExplorerContext);
 
   return (
     <Container>
@@ -32,7 +26,7 @@ export function Explorer() {
           </TitleWrapper>
         )}
       </ListContainer>
-      <DetailViewPane node={detailViewNode} />
+      <NodeInfoPane />
     </Container>
   );
 }
