@@ -6,7 +6,7 @@ jest.mock("react-spring");
 import * as React from "react";
 import { shallow } from "enzyme";
 import { mocked } from "ts-jest/utils";
-import { useThemeContext, useEventsContext } from "../../hooks";
+import { useThemeContext, useEventsContext } from "../../../hooks";
 import { EventCard } from "./EventCard";
 
 const theme = new Proxy({}, { get: (t, p) => [p] });

@@ -1,9 +1,8 @@
 import React, { FC, useCallback, MouseEventHandler } from "react";
 import styled, { css } from "styled-components";
 import { animated, useSpring } from "react-spring";
-import { ParsedEvent } from "../../types";
-import { useThemeContext, useEventsContext } from "../../hooks";
-import { smMax, mdMin } from "./constants";
+import { ParsedEvent } from "../../../types";
+import { useThemeContext, useEventsContext } from "../../../hooks";
 
 /** Shows basic information about an operation. */
 export const EventCard: FC<{
@@ -108,11 +107,11 @@ const OperationName = styled.h3`
   width: 50%;
   text-transform: capitalize;
 
-  @media (max-width: ${smMax}) {
+  @media (max-width: 399px) {
     margin-bottom: 10px;
   }
 
-  @media (min-width: ${mdMin}) {
+  @media (min-width: 400px) {
     order: 1;
     font-size: 13px;
     width: auto;
@@ -132,7 +131,7 @@ const OperationTime = styled.p`
   width: 50%;
   text-align: right;
 
-  @media (min-width: ${mdMin}) {
+  @media (min-width: 400px) {
     order: 4;
     font-size: 13px;
     width: 20%;
@@ -144,7 +143,7 @@ const OperationAddInfo = styled.p`
   margin: 0;
   width: 50%;
 
-  @media (min-width: ${mdMin}) {
+  @media (min-width: 400px) {
     color: ${p => p.theme.grey["+2"]};
     order: 2;
     font-size: 13px;
@@ -160,12 +159,12 @@ const OperationKey = styled.p`
   margin: 0;
   color: ${p => p.theme.grey["+2"]};
 
-  @media (max-width: ${smMax}) {
+  @media (max-width: 399px) {
     width: 50%;
     text-align: right;
   }
 
-  @media (min-width: ${mdMin}) {
+  @media (min-width: 400px) {
     order: 3;
     font-size: 13px;
     width: 25%;
@@ -206,12 +205,12 @@ const Container = styled(animated.div)`
     background-color: ${props => props.theme.dark["+1"]};
   }
 
-  @media (max-width: ${smMax}) {
+  @media (max-width: 399px) {
     flex-wrap: wrap;
     align-items: baseline;
   }
 
-  @media (min-width: ${mdMin}) {
+  @media (min-width: 400px) {
     align-items: center;
     justify-content: space-between;
   }

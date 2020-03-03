@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { mdMin } from "./constants";
 
 export const Headers = () => (
   <Container>
@@ -52,7 +51,7 @@ const Container = styled.div`
   padding: 10px 15px;
   display: none;
 
-  @media (min-width: ${mdMin}) {
+  @media (min-width: 400px) {
     align-items: center;
     display: flex;
     flex-direction: row;

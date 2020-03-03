@@ -1,6 +1,6 @@
 import React, { FC, useState, useMemo, useLayoutEffect } from "react";
-import { EventPanel, ParsedEvent } from "../../types";
-import { Tabs, Pane, CodeHighlight } from "../../components";
+import { EventPanel, ParsedEvent } from "../../../types";
+import { Tabs, Pane, CodeHighlight } from "../../../components";
 
 /** Pane shows additional information about a selected operation event. */
 export const EventPane: FC<{ event: ParsedEvent }> = ({ event }) => {
