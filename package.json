@@ -115,6 +115,7 @@
     "prettier": "^1.18.2",
     "react": "^16.8.6",
     "react-codemirror2": "^6.0.0",
+    "react-cosmos": "^5.0.8",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",

@@ -1,0 +1,6 @@
+{
+  "watchDirs": ["src/panel"],
+  "webpack": {
+    "configPath": ""
+  }
+}
