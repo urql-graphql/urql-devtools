@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "include": ["src/exchange/index.ts", "src/globals.d.ts"],
-  "compilerOptions": {
-    "declaration": true,
-    "sourceMap": true,
-    "outDir": "dist/exchange"
-  }
-}

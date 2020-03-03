@@ -88,6 +88,8 @@
     "@urql/devtools": "0.1.0-beta.0",
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-inline-import-data-uri": "^1.0.1",
     "babel-plugin-styled-components": "^1.10.6",
     "clean-webpack-plugin": "^3.0.0",
     "codemirror": "^5.48.0",
