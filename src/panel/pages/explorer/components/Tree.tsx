@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { NodeMap, FieldNode } from "../../context/Explorer/ast";
+import { NodeMap, FieldNode } from "../../../context/Explorer/ast";
 import { ListItem, SystemListItem } from "./ListItem";
 
 interface TreeProps {

@@ -1,35 +1,37 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useMemo,
-  useCallback
-} from "react";
+import React, { useContext, useMemo, useCallback, FC, useEffect } from "react";
 import styled, { css } from "styled-components";
-import { FieldNode } from "../../context/Explorer/ast";
-import { ExplorerContext } from "../../context";
+import { FieldNode } from "../../../context/Explorer/ast";
+import { ExplorerContext } from "../../../context";
 import { ArrowIcon } from "./Icons";
 import { Arguments } from "./Arguments";
 import { Value } from "./Value";
 import { Tree } from "./Tree";
-import { useHighlight, HighlightUpdate } from "./Highlight";
 
-interface ItemProps {
+interface ListItemProps {
   node: FieldNode;
-  setFocusedNode: (id: string) => any;
-  setDetailView: (node: FieldNode | null) => any;
-  activeId: string | undefined;
   depth?: number;
 }
 
-export function ListItem({ node, depth = 0 }: ItemProps) {
+export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   const { focusedNode, setFocusedNode } = useContext(ExplorerContext);
-  const isExpanded = useMemo(() => focusedNode === node, [node, focusedNode]);
-  const isActive = isExpanded;
+  const isExpanded = useMemo(
+    () => focusedNode && focusedNode._id === node._id,
+    [node, focusedNode]
+  );
+
+  useEffect(() => {
+    // Not focused or node hasn't changed
+    if (!isExpanded || node === focusedNode) {
+      return;
+    }
+
+    // Update focused node object
+    setFocusedNode(node);
+  }, [isExpanded, node, focusedNode]);
 
   const handleFieldContainerClick = useCallback(
-    () => setFocusedNode(n => (n === node ? undefined : node)),
-    [setFocusedNode, node]
+    () => setFocusedNode(n => (n && n._id === node._id ? undefined : node)),
+    [isExpanded, node]
   );
 
   const contents = (
@@ -47,25 +49,19 @@ export function ListItem({ node, depth = 0 }: ItemProps) {
   );
 
   if (
-    node.children ||
-    (Array.isArray(node.children) && node.children.length > 0)
+    (Array.isArray(node.children) && node.children.length > 0) ||
+    node.children
   ) {
     return (
       <Item role="treeitem" withChildren>
         <FieldContainer onClick={handleFieldContainerClick}>
-          <OutlineContainer isActive={isActive}>
-            {/* <HighlightUpdate
-              isAnimating={isAnimating && !isExpanded}
-              onAnimationEnd={onAnimationEnd}
-            > */}
+          <OutlineContainer isActive={isExpanded}>
             <Arrow active={isExpanded} />
             <ChildrenName>{node.name}</ChildrenName>
             <Arguments args={node.args} displayAll={isExpanded} />
-            {/* </HighlightUpdate> */}
           </OutlineContainer>
         </FieldContainer>
         {isExpanded && <Tree nodeMap={node.children} depth={depth + 1} />}
-        {/* {isExpanded ? nodeChildren : null} */}
       </Item>
     );
   }
@@ -74,14 +70,14 @@ export function ListItem({ node, depth = 0 }: ItemProps) {
     <Item role="treeitem" withChildren={false}>
       {node.args ? (
         <FieldContainer onClick={handleFieldContainerClick}>
-          <OutlineContainer isActive={isActive}>{contents}</OutlineContainer>
+          <OutlineContainer isActive={isExpanded}>{contents}</OutlineContainer>
         </FieldContainer>
       ) : (
         <>{contents}</>
       )}
     </Item>
   );
-}
+};
 
 export const SystemListItem = ({
   node,

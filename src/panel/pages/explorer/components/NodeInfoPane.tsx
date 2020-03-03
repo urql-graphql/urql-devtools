@@ -1,9 +1,9 @@
 import React, { FC, useContext, useMemo } from "react";
 import styled from "styled-components";
-import { FieldNode, NodeMap } from "../../context/Explorer/ast";
-import { Context, Variables } from "../../context/Explorer/ast/types";
-import { Pane } from "../../components";
-import { ExplorerContext } from "../../context";
+import { FieldNode, NodeMap } from "../../../context/Explorer/ast";
+import { Context, Variables } from "../../../context/Explorer/ast/types";
+import { Pane } from "../../../components";
+import { ExplorerContext } from "../../../context";
 import { Value } from "./Value";
 import { CacheOutcomeIcon } from "./Icons";
 

@@ -1,10 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Background } from "../../components";
 import { ExplorerContext } from "../../context";
-import { FieldNode } from "../../context/Explorer/ast";
-import { Tree } from "./Tree";
-import { NodeInfoPane } from "./NodeInfoPane";
+import { Tree, NodeInfoPane } from "./components";
 
 export function Explorer() {
   const { operations } = useContext(ExplorerContext);
@@ -13,12 +11,7 @@ export function Explorer() {
     <Container>
       <ListContainer>
         {Object.keys(operations).length ? (
-          <Tree
-            nodeMap={operations}
-            setFocusedNode={setActiveNode}
-            setDetailView={setDetailViewNode}
-            activeId={focusedNodeId}
-          />
+          <Tree nodeMap={operations} />
         ) : (
           <TitleWrapper>
             <Title>Responses will be shown here</Title>

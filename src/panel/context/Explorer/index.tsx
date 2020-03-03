@@ -21,7 +21,7 @@ export interface ExplorerContextValue {
 
 export const ExplorerContext = createContext<ExplorerContextValue>(null as any);
 
-export const ExplorerContextProvider: FC = ({ children }) => {
+export const ExplorerProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const [operations, setOperations] = useState<
     ExplorerContextValue["operations"]
@@ -44,16 +44,15 @@ export const ExplorerContextProvider: FC = ({ children }) => {
         return;
       }
     });
-  }, [operations, addMessageHandler]);
+  }, [addMessageHandler]);
 
   const value = useMemo(
     () => ({
       focusedNode,
       setFocusedNode,
-      operations,
-      setOperations
+      operations
     }),
-    [operations, focusedNode]
+    [operations, focusedNode, setFocusedNode]
   );
   return (
     <ExplorerContext.Provider value={value}>
