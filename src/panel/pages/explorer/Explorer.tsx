@@ -36,10 +36,6 @@ const ListContainer = styled.section`
   padding-right: 1rem;
   padding-bottom: 1rem;
   overflow: auto;
-
-  @media (min-aspect-ratio: 1/1) {
-    padding-right: 1px;
-  }
 `;
 
 const TitleWrapper = styled.div`

@@ -1,7 +1,16 @@
-import React, { useContext, useMemo, useCallback, FC, useEffect } from "react";
+import React, {
+  useContext,
+  useMemo,
+  useCallback,
+  FC,
+  useEffect,
+  useRef
+} from "react";
+import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { FieldNode } from "../../../context/Explorer/ast";
 import { ExplorerContext } from "../../../context";
+import { useFlash } from "../hooks";
 import { ArrowIcon } from "./Icons";
 import { Arguments } from "./Arguments";
 import { Value } from "./Value";
@@ -13,6 +22,8 @@ interface ListItemProps {
 }
 
 export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
+  const previousNode = useRef(node);
+  const [flashStyle, flash] = useFlash();
   const { focusedNode, setFocusedNode } = useContext(ExplorerContext);
   const isExpanded = useMemo(
     () => (focusedNode ? focusedNode._id === node._id : false),
@@ -20,12 +31,20 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   );
 
   useEffect(() => {
-    // Not focused or node hasn't changed
+    if (!isExpanded && previousNode.current !== node) {
+      flash();
+      console.log("FLASH!");
+    }
+
+    previousNode.current = node;
+  }, [isExpanded, flash, node]);
+
+  // Update focused node on change
+  useEffect(() => {
     if (!isExpanded || node === focusedNode) {
       return;
     }
 
-    // Update focused node object
     setFocusedNode(node);
   }, [isExpanded, node, focusedNode]);
 
@@ -42,7 +61,7 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
       <ValueWrapper>
         <Value
           value={node.children !== undefined ? node.children : node.value}
-          expandValues
+          expand={true}
         />
       </ValueWrapper>
     </>
@@ -55,7 +74,7 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
     return (
       <Item role="treeitem" withChildren>
         <FieldContainer onClick={handleFieldContainerClick}>
-          <OutlineContainer isActive={isExpanded}>
+          <OutlineContainer style={flashStyle} isActive={isExpanded}>
             <Arrow active={isExpanded} />
             <ChildrenName>{node.name}</ChildrenName>
             <Arguments args={node.args} displayAll={isExpanded} />
@@ -70,7 +89,9 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
     <Item role="treeitem" withChildren={false}>
       {node.args ? (
         <FieldContainer onClick={handleFieldContainerClick}>
-          <OutlineContainer isActive={isExpanded}>{contents}</OutlineContainer>
+          <OutlineContainer style={flashStyle} isActive={isExpanded}>
+            {contents}
+          </OutlineContainer>
         </FieldContainer>
       ) : (
         <>{contents}</>
@@ -131,7 +152,7 @@ const FieldContainer = styled.button`
   }
 `;
 
-const OutlineContainer = styled.div`
+const OutlineContainer = styled(animated.div)`
   position: absolute;
   bottom: 0;
   top: 0;

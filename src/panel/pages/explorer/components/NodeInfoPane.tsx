@@ -49,7 +49,7 @@ const NodeInfoContent: FC<{ node: FieldNode }> = ({ node }) => (
       <Container>
         <Title>Arguments</Title>
         <Code>
-          <Value value={node.args} expandValues />
+          <Value value={node.args} expand={true} />
         </Code>
       </Container>
     ) : null}
@@ -59,7 +59,7 @@ const NodeInfoContent: FC<{ node: FieldNode }> = ({ node }) => (
         {node.value !== undefined ? (
           <Value
             value={node.children !== undefined ? node.children : node.value}
-            expandValues={false}
+            expand={false}
           />
         ) : (
           renderChildren(node)

@@ -1,97 +1,111 @@
-import React from "react";
+import React, { useEffect, useRef, useMemo, FC } from "react";
 import styled from "styled-components";
+import { animated } from "react-spring";
 import { FieldNode } from "../../../context/Explorer/ast";
-import { useHighlight, HighlightUpdate } from "./Highlight";
+import { useFlash } from "../hooks";
 
-interface Props {
+export const Value: FC<{
   value: FieldNode["value"];
-  expandValues: boolean;
-  className?: string;
-}
+  expand?: boolean;
+  isRoot?: boolean;
+}> = ({ value, expand = false, isRoot = true }) => {
+  const previousValue = useRef(value);
+  const [flashProps, flash] = useFlash();
 
-export function Value({ value, expandValues }: Props) {
-  const [isAnimating, onAnimationEnd] = useHighlight([value]);
-
-  const renderValue = (value: FieldNode["value"]) => {
-    if (Array.isArray(value)) {
-      if (value.length === 0) {
-        return <>{"[]"}</>;
-      } else {
-        return expandValues ? (
-          <>
-            [
-            {value.map((val, index) => (
-              <span key={index}>
-                {renderValue(val)}
-                {index === value.length - 1 ? "" : ", "}
-              </span>
-            ))}
-            ]
-          </>
-        ) : (
-          <Val>{`Array (${value.length})`}</Val>
-        );
-      }
-    } else if (typeof value === "object" && !!value) {
-      const entries = Object.entries(value);
-      if (entries.length === 0) {
-        return <>{"{}"}</>;
-      } else {
-        return expandValues ? (
-          <Wrapper>
-            {"{"}
-            {entries.map(([key, value], i) => {
-              return (
-                <Container key={i}>
-                  <KeyValue
-                    keyName={key}
-                    value={value}
-                    expandValues={expandValues}
-                  />
-                </Container>
-              );
-            })}
-            {"}"}
-          </Wrapper>
-        ) : (
-          <Val>{`Object`}</Val>
-        );
-      }
-    } else if (typeof value === "string") {
-      return <Val>{`"${value}"`}</Val>;
-    } else {
-      return <Val>{`${value}`}</Val>;
+  // Flash on value change
+  useEffect(() => {
+    if (isRoot && value !== previousValue.current) {
+      flash();
     }
-  };
 
-  return (
-    <HighlightUpdate onAnimationEnd={onAnimationEnd} isAnimating={isAnimating}>
-      {renderValue(value)}
-    </HighlightUpdate>
-  );
-}
+    previousValue.current = value;
+  }, [value, flash, isRoot]);
 
-interface KeyValProps {
-  keyName: string;
-  value: FieldNode["value"];
-  expandValues: boolean;
-}
+  const content = useMemo(() => {
+    const props = { value, expand };
 
-export function KeyValue({ keyName, value, expandValues }: KeyValProps) {
-  return (
-    <>
-      <Key>{keyName}</Key>
-      <Symbol>:</Symbol>
-      <Value value={value} expandValues={expandValues} />
-    </>
-  );
-}
+    if (value instanceof Array) {
+      return <ArrayValue {...props} value={value as any[]} />;
+    }
 
-const Key = styled.span`
+    if (typeof value === "object" && !!value) {
+      return <ObjectValue {...props} value={value as object} />;
+    }
+
+    if (typeof value === "string") {
+      return <DescribedValue>{`"${value}"`}</DescribedValue>;
+    }
+
+    return <DescribedValue>{`${value}`}</DescribedValue>;
+  }, [value, expand, isRoot]);
+
+  if (!isRoot) {
+    return content;
+  }
+
+  return <animated.span style={flashProps}>{content}</animated.span>;
+};
+
+const ArrayValue: FC<{ value: any[]; expand: boolean }> = ({
+  value,
+  expand
+}) => {
+  if (value.length === 0) {
+    return "[]";
+  }
+
+  if (expand) {
+    return (
+      <>
+        [
+        {value.map((v, i) => (
+          <span key={i}>
+            <Value isRoot={false} value={v} expand={expand} />
+            {i === value.length - 1 ? "" : ", "}
+          </span>
+        ))}
+        ]
+      </>
+    );
+  }
+
+  return <DescribedValue>{`Array (${value.length})`}</DescribedValue>;
+};
+
+const ObjectValue: FC<{ value: object; expand: boolean }> = ({
+  value,
+  expand
+}) => {
+  const entries = Object.entries(value);
+
+  if (entries.length === 0) {
+    return <>{"{}"}</>;
+  }
+
+  if (expand) {
+    return (
+      <Wrapper>
+        {"{"}
+        {entries.map(([k, v]) => (
+          <Container key={k}>
+            <Key>{k}</Key>
+            <Symbol>:</Symbol>
+            <Value isRoot={false} value={v} expand={expand} />
+          </Container>
+        ))}
+        {"}"}
+      </Wrapper>
+    );
+  }
+
+  return <DescribedValue>{`Object`}</DescribedValue>;
+};
+
+export const Key = styled.span`
   color: ${p => p.theme.pink["0"]};
 `;
 
-const Symbol = styled.span`
+export const Symbol = styled.span`
   margin-right: 5px;
 
   &:last-of-type {
@@ -108,6 +122,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const Val = styled.span`
+const DescribedValue = styled.span`
   color: ${p => p.theme.grey["+2"]};
 `;

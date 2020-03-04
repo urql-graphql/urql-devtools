@@ -16,11 +16,14 @@ const defaultEvents: OperationResponseMessage[] = [
         key: 12345,
         operationName: "query",
         variables: {
-          myVar: 1234
+          name: "carl",
+          address: {
+            postcode: "E1"
+          }
         },
         query: gql`
-          {
-            todos(id: 1234) {
+          query getTodos($name: String!, $address: Address!) {
+            todos(id: 1234, name: $name, address: $address) {
               id
               content
               __typename
@@ -87,8 +90,7 @@ export default {
       addMessageHandler={h => {
         const event = defaultEvents[0];
         let content = 1;
-
-        setInterval(() => {
+        const update = () =>
           h({
             ...event,
             data: {
@@ -104,8 +106,11 @@ export default {
               }
             }
           });
+        update();
+        setInterval(() => {
+          update();
           content += 1;
-        }, 1000);
+        }, 1500);
 
         return () => false;
       }}
