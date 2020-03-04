@@ -122,9 +122,9 @@ const renderChildren = (node: FieldNode) => {
   return (
     <Code key={node._id}>
       {Array.isArray(node.children) ? (
-        <Value value={node.children} expandValues={false} />
+        <Value value={node.children} />
       ) : (
-        <Value value={gatherChildValues(node.children)} expandValues />
+        <Value value={gatherChildValues(node.children)} expand />
       )}
     </Code>
   );

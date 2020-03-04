@@ -28,7 +28,7 @@ const RequestProviderMock: FC<Partial<ContextType<typeof RequestContext>>> = ({
       query,
       setQuery,
       error: undefined,
-      execute: () => false,
+      execute: () => null as any,
       fetching: false,
       response: undefined,
       schema,
