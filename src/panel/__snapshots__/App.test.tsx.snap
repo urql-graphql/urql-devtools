@@ -65,13 +65,13 @@ exports[`App routes on mount on connected matches snapshot 1`] = `
       path="/request"
     />
   </RequestProvider>
-  <ExplorerContextProvider>
+  <ExplorerProvider>
     <Route
       component={[Function]}
       exact={true}
       path="/explorer"
     />
-  </ExplorerContextProvider>
+  </ExplorerProvider>
   <Route
     component={[Function]}
     exact={true}

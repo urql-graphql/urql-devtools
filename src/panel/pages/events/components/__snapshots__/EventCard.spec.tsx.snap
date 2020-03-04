@@ -19,7 +19,7 @@ exports[`on mount active event matches snapshot 1`] = `
     mutation
   </OperationName>
   <OperationTime>
-    00:02:03
+    01:02:03
   </OperationTime>
   <OperationAddInfo
     isActive={false}
@@ -55,7 +55,7 @@ exports[`on mount inactive event matches snapshot 1`] = `
     mutation
   </OperationName>
   <OperationTime>
-    00:02:03
+    01:02:03
   </OperationTime>
   <OperationAddInfo
     isActive={false}

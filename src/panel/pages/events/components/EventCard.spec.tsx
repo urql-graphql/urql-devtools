@@ -1,4 +1,4 @@
-jest.mock("../../hooks", () => ({
+jest.mock("../../../hooks", () => ({
   useThemeContext: jest.fn(),
   useEventsContext: jest.fn()
 }));
