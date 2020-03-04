@@ -1,5 +1,4 @@
 export * from "./Arguments";
-export * from "./Highlight";
 export * from "./Icons";
 export * from "./ListItem";
 export * from "./NodeInfoPane";
