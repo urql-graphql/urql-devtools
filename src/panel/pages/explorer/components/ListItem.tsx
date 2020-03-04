@@ -33,7 +33,6 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   useEffect(() => {
     if (!isExpanded && previousNode.current !== node) {
       flash();
-      console.log("FLASH!");
     }
 
     previousNode.current = node;
