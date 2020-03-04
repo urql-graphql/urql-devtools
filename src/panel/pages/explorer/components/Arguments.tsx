@@ -24,7 +24,7 @@ export function Arguments({ args, displayAll }: Props) {
       </ArgWrapper>
     ));
 
-    if (displayAll || arguments.length < 3) {
+    if (displayAll || argElements.length <= 3) {
       return argElements;
     }
 
@@ -40,68 +40,6 @@ export function Arguments({ args, displayAll }: Props) {
 
   return <ArgsContainer>({content})</ArgsContainer>;
 }
-//   return null;
-//   const content = useMemo(
-//     () =>
-//       Object.entries(args).reduce((p, [k, v]) => {
-//         if (Array.isArray(v)) {
-//           return [...p];
-//         }
-//       }, []),
-//     [args]
-//   );
-
-//   let content = [];
-//   const entries = Object.entries(args);
-
-//   for (const [key, val] of entries) {
-//     if (Array.isArray(val)) {
-//       content.push(
-//         <ArgWrapper key={key}>
-//           <ArgKey>{key}</ArgKey>
-//           <Symbol>{`:`}</Symbol>
-//           <IconContainer>
-//             {"["}
-//             <SeeMore />
-//             {"]"}
-//           </IconContainer>
-//           {content.length === entries.length - 1 ? "" : ","}
-//         </ArgWrapper>
-//       );
-//     } else if (val && typeof val === "object") {
-//       content.push(
-//         <ArgWrapper>
-//           <ArgKey>{key}</ArgKey>
-//           <Symbol>{`:`}</Symbol>
-//           <IconContainer>
-//             {"{"}
-//             <SeeMore />
-//             {"}"}
-//           </IconContainer>
-//           {content.length === entries.length - 1 ? "" : ","}
-//         </ArgWrapper>
-//       );
-//     } else {
-//       content.push(
-//         <ArgWrapper key={key}>
-//           <Vaue keyName={key} value={val} expand={false} />
-//           {content.length === entries.length - 1 ? "" : ","}
-//         </ArgWrapper>
-//       );
-//     }
-//   }
-
-//   if (!displayAll && !(content.length <= 3)) {
-//     content = [
-//       ...content.slice(0, 3),
-//       <ExpandContainer key="last">
-//         <SeeMore />
-//       </ExpandContainer>
-//     ];
-//   }
-
-//   return content ? <ArgsContainer>({content})</ArgsContainer> : null;
-// }
 
 const GraphQLArgument: FC<{ argument: { key: string; value: any } }> = ({
   argument: { key, value }

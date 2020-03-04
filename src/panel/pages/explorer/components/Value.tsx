@@ -51,7 +51,7 @@ const ArrayValue: FC<{ value: any[]; expand: boolean }> = ({
   expand
 }) => {
   if (value.length === 0) {
-    return "[]";
+    return <>{"[]"}</>;
   }
 
   if (expand) {
