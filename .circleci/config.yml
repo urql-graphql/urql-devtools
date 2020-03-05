@@ -7,7 +7,7 @@ version: 2
 .node_modules_cache: &node_modules_cache
   restore_cache:
     keys:
-      - node-cache-{{ .Revision }}
+      - node-cache-{{ checksum "yarn.lock" }}
 
 .build_cache: &build_cache
   restore_cache:
@@ -19,9 +19,13 @@ jobs:
     <<: *node_env
     steps:
       - checkout
+      - *node_modules_cache
+      - run:
+          name: Check for dependencies
+          command: "([[ -d node_modules ]] && circleci-agent step halt) || exit 0"
       - run: yarn install --frozen-lockfile
       - save_cache:
-          key: node-cache-{{ .Revision }}
+          key: node-cache-{{ checksum "yarn.lock" }}
           paths:
             - "node_modules"
 
@@ -44,7 +48,15 @@ jobs:
     steps:
       - checkout
       - *node_modules_cache
-      - run: yarn run test
+      - run: source .env
+      - run: yarn run test --coverage
+
+  visual regression:
+    <<: *node_env
+    steps:
+      - checkout
+      - *node_modules_cache
+      - run: yarn cosmos & (npx wait-on http://localhost:5000 && yarn run visual-regression)
 
   build:
     <<: *node_env
@@ -124,6 +136,12 @@ workflows:
             tags:
               only: /.*/
       - test:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
+      - visual regression:
           requires:
             - install
           filters:
