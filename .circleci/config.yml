@@ -48,8 +48,7 @@ jobs:
     steps:
       - checkout
       - *node_modules_cache
-      - run: source .env
-      - run: yarn run test --coverage
+      - run: TZ=Europe/London yarn run test --coverage
 
   visual regression:
     <<: *node_env
