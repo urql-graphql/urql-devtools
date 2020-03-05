@@ -12,9 +12,14 @@ beforeAll(async () => {
   jest.setTimeout(60000);
 });
 
+afterAll(async () => {
+  await browser.close();
+});
+
 describe("Matches snapshot", () => {
   it("renders", async () => {
     for (const url of fixtures) {
+      console.log(fixtures);
       const page = await browser.newPage();
       await page.goto(
         `http://${url.replace("?fixtureId", "_renderer.html?_fixtureId")}`
@@ -27,13 +32,3 @@ describe("Matches snapshot", () => {
     }
   }, 120000);
 });
-
-// describe("Matches snapshot", () => {
-//   it("renders", async () => {
-//     const browser = new Browser();
-//     const cosmosConfig = detectCosmosConfig();
-//     const fixtures = await getFixtures({ cosmosConfig });
-
-//     console.log(fixtures[0].getElement());
-//   });
-// });
