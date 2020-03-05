@@ -7,8 +7,9 @@
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "resolveJsonModule": true
   },
   "include": ["src", "src/**/*.test.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/**/visual-regression.test.ts"]
 }
