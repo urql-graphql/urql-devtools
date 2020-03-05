@@ -7,7 +7,7 @@ version: 2
 .node_modules_cache: &node_modules_cache
   restore_cache:
     keys:
-      - node-cache-{{ checksum "yarn.lock" }}
+      - node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
 
 .build_cache: &build_cache
   restore_cache:
@@ -25,7 +25,7 @@ jobs:
           command: "([[ -d node_modules ]] && circleci-agent step halt) || exit 0"
       - run: yarn install --frozen-lockfile
       - save_cache:
-          key: node-cache-{{ checksum "yarn.lock" }}
+          key: node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
           paths:
             - "node_modules"
 
@@ -52,10 +52,11 @@ jobs:
 
   visual regression:
     docker:
-      - image: circleci/node:13
+      - image: buildkite/puppeteer:latest
+        user: node
     steps:
       - checkout
-      - *node_modules_cache
+      - run: yarn
       - run: yarn cosmos & (npx wait-on http://localhost:5000 && yarn run visual-regression)
 
   build:
