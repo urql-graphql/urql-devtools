@@ -58,6 +58,8 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn cosmos & (npx wait-on http://localhost:5000 && yarn run visual-regression)
+      - store_artifacts:
+          path: src/panel/__image_snapshots__/__diff_output__/
 
   build:
     <<: *node_env
