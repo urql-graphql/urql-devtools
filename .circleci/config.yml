@@ -51,7 +51,8 @@ jobs:
       - run: TZ=Europe/London yarn run test --coverage
 
   visual regression:
-    <<: *node_env
+    docker:
+      - image: circleci/node:13
     steps:
       - checkout
       - *node_modules_cache
