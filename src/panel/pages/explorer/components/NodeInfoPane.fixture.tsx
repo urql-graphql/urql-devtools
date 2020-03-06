@@ -1,8 +1,8 @@
 import React from "react";
-import { ExplorerContext, ExplorerContextValue } from "../../../context";
+import { ExplorerContext } from "../../../context";
 import { NodeInfoPane } from "./NodeInfoPane";
 
-const explorerContextValue: ExplorerContextValue = {
+const explorerContextValue = {
   operations: {},
   setFocusedNode: () => false,
   focusedNode: {
@@ -11,7 +11,7 @@ const explorerContextValue: ExplorerContextValue = {
     name: "Hello",
     key: "1234"
   }
-};
+} as const;
 
 export default {
   empty: (

@@ -24,8 +24,8 @@ export interface FieldNode {
   cacheOutcome?: Context["cacheOutcome"];
   key: string;
   name: string;
-  args?: Variables;
-  value?: DataField;
+  args?: Variables | null;
+  value?: DataField | null;
   children?: NodeMap | NullArray<NodeMap>;
 }
 
