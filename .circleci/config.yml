@@ -52,11 +52,10 @@ jobs:
 
   visual regression:
     docker:
-      - image: buildkite/puppeteer:latest
-        user: node
+      - image: circleci/node:13-browsers
     steps:
       - checkout
-      - run: yarn
+      - run: yarn --frozen-lockfile
       - run: yarn cosmos & (npx wait-on http://localhost:5000 && yarn run visual-regression)
       - store_artifacts:
           path: src/panel/__image_snapshots__/__diff_output__/
