@@ -22,7 +22,7 @@ describe("Matches snapshot", () => {
       const page = await browser.newPage();
       await page.goto(
         `http://${url.replace("?fixtureId", "_renderer.html?_fixtureId")}`,
-        { waitUntil: "domcontentloaded" }
+        { waitUntil: "networkidle0" }
       );
       const image = await page.screenshot();
       expect(image).toMatchImageSnapshot({
