@@ -10,7 +10,8 @@
     "lint": "eslint --ext .ts,.tsx src",
     "firefox:lint": "cd dist && web-ext lint",
     "test": "jest --testPathIgnorePatterns visual-regression",
-    "visual-regression": "jest visual-regression",
+    "visual-regression": "./regression.sh",
+    "visual-regression-exec": "jest visual-regression",
     "prettier-check": "prettier -c src/** README.md",
     "changelog": "docker run -it --rm -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator -u FormidableLabs -p urql-devtools"
   },

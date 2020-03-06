@@ -7,19 +7,25 @@ let fixtures: { id: string; url: string }[];
 let browser: puppeteer.Browser;
 
 beforeAll(async () => {
-  browser = await puppeteer.launch({ args: ["--font-render-hinting=none"] });
-  fixtures = (await getFixtureUrls({ cosmosConfig: detectCosmosConfig() })).map(
-    url => ({
+  try {
+    browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+    fixtures = (
+      await getFixtureUrls({ cosmosConfig: detectCosmosConfig() })
+    ).map(url => ({
       id: url.replace(/.*?fixtureId\=/, ""),
-      url: `http://${url.replace("?fixtureId", "_renderer.html?_fixtureId")}`
-    })
-  );
+      url: `http://${url
+        .replace("?fixtureId", "_renderer.html?_fixtureId")
+        .replace("localhost", "cosmos")}`
+    }));
+  } catch (err) {
+    console.error(err);
+  }
 
   jest.setTimeout(60000);
 });
 
 afterAll(async () => {
-  await browser.close();
+  browser && (await browser.close());
 });
 
 describe("Fixtures", () => {
@@ -27,12 +33,15 @@ describe("Fixtures", () => {
     for (const { id, url } of fixtures) {
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: "domcontentloaded" });
-      await page.evaluateHandle("document.fonts.ready");
+      await delay(200);
       const image = await page.screenshot();
       expect(image).toMatchImageSnapshot({
-        customSnapshotIdentifier: id
+        customSnapshotIdentifier: id,
+        failureThreshold: 0.01
       });
       await page.close();
     }
   }, 120000);
 });
+
+const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));

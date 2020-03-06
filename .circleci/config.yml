@@ -52,12 +52,11 @@ jobs:
 
   visual regression:
     docker:
-      - image: alekzonder/puppeteer:latest
-        user: pptruser
+      - image: docker/compose
     steps:
       - checkout
-      - run: yarn --frozen-lockfile
-      - run: yarn cosmos & (npx wait-on http://localhost:5000 && yarn run visual-regression)
+      - setup_remote_docker
+      - run: docker-compose run -e "CI=true" regression
       - store_artifacts:
           path: src/panel/__image_snapshots__/__diff_output__/
 
