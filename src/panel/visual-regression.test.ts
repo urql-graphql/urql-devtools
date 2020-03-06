@@ -15,12 +15,6 @@ beforeAll(async () => {
     })
   );
 
-  // Hacky solution to fix CI font rendering
-  const page = await browser.newPage();
-  await page.goto(fixtures[0].url, { waitUntil: "domcontentloaded" });
-  await page.close();
-  // End hacky fix
-
   jest.setTimeout(60000);
 });
 
@@ -28,17 +22,12 @@ afterAll(async () => {
   await browser.close();
 });
 
-describe("Matches snapshot", () => {
-  it("renders", async () => {
-    // Hacky solution to fix CI font rendering
-    const p = await browser.newPage();
-    await p.goto(fixtures[0].url, { waitUntil: "domcontentloaded" });
-    await p.screenshot();
-    // End hacky fix
-
+describe("Fixtures", () => {
+  it("matches image snapshot", async () => {
     for (const { id, url } of fixtures) {
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: "domcontentloaded" });
+      await page.evaluateHandle("document.fonts.ready");
       const image = await page.screenshot();
       expect(image).toMatchImageSnapshot({
         customSnapshotIdentifier: id
