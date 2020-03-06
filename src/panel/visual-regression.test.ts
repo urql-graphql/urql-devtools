@@ -30,6 +30,15 @@ afterAll(async () => {
 
 describe("Matches snapshot", () => {
   it("renders", async () => {
+    // Hacky solution to fix CI font rendering
+    const p = await browser.newPage();
+    await p.goto(fixtures[0].url, { waitUntil: "domcontentloaded" });
+    const i = await p.screenshot();
+    expect(i).toMatchImageSnapshot({
+      customSnapshotIdentifier: "New ID"
+    });
+    // End hacky fix
+
     for (const { id, url } of fixtures) {
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: "domcontentloaded" });
