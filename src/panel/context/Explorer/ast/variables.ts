@@ -36,27 +36,29 @@ export const evaluateValueNode = (node: ValueNode, vars: Variables): any => {
 };
 
 /** Evaluates a fields arguments taking vars into account */
-export const getFieldArguments = (
-  node: FieldNode,
-  vars: Variables
-): null | Variables => {
+export const getFieldArguments = (node: FieldNode, vars: Variables) => {
   if (node.arguments === undefined || node.arguments.length === 0) {
-    return null;
+    return;
   }
 
-  const args = Object.create(null);
-  let argsSize = 0;
-
-  for (let i = 0, l = node.arguments.length; i < l; i++) {
-    const arg = node.arguments[i];
+  const args = node.arguments.reduce<Variables>((p, arg) => {
     const value = valueFromASTUntyped(arg.value, vars);
-    if (value !== undefined && value !== null) {
-      args[getName(arg)] = value;
-      argsSize++;
+
+    if (value === undefined || value === null) {
+      return p;
     }
+
+    return {
+      ...p,
+      [node.name.value]: value
+    };
+  }, {});
+
+  if (Object.keys(args).length === 0) {
+    return;
   }
 
-  return argsSize > 0 ? args : null;
+  return args;
 };
 
 /** Returns a normalized form of variables with defaulted values */

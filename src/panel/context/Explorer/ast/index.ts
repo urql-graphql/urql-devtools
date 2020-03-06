@@ -24,7 +24,7 @@ export interface FieldNode {
   cacheOutcome?: Context["cacheOutcome"];
   key: string;
   name: string;
-  args?: Variables | null;
+  args?: Variables;
   value?: DataField | null;
   children?: NodeMap | NullArray<NodeMap>;
 }
@@ -35,7 +35,7 @@ interface Data {
   [fieldName: string]: Data[] | Data | DataField;
 }
 
-export const keyOfField = (fieldName: string, args?: null | Variables) =>
+export const getFieldKey = (fieldName: string, args?: Variables) =>
   args ? `${fieldName}(${stringify(args)})` : fieldName;
 
 export const startQuery = (
@@ -97,9 +97,9 @@ function copyFromData(
 ): NodeMap {
   selection.forEach(fieldNode => {
     if (isFieldNode(fieldNode)) {
-      const fieldName = getName(fieldNode) || "query";
+      const fieldName = fieldNode.name.value || "query";
       const fieldArgs = getFieldArguments(fieldNode, ctx.variables);
-      const fieldKey = keyOfField(fieldName, fieldArgs);
+      const fieldKey = getFieldKey(fieldName, fieldArgs);
       const fieldValue = data[getFieldAlias(fieldNode)];
 
       let node: FieldNode;
