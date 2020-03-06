@@ -32,7 +32,7 @@ describe("Fixtures", () => {
   it("matches image snapshot", async () => {
     for (const { id, url } of fixtures) {
       const page = await browser.newPage();
-      await page.goto(url, { waitUntil: "domcontentloaded" });
+      await page.goto(url, { waitUntil: "load" });
       await delay(200);
       const image = await page.screenshot();
       expect(image).toMatchImageSnapshot({
