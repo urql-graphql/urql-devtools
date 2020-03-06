@@ -7,7 +7,7 @@ let fixtures: { id: string; url: string }[];
 let browser: puppeteer.Browser;
 
 beforeAll(async () => {
-  browser = await puppeteer.launch();
+  browser = await puppeteer.launch({ args: ["--font-render-hinting=none"] });
   fixtures = (await getFixtureUrls({ cosmosConfig: detectCosmosConfig() })).map(
     url => ({
       id: url.replace(/.*?fixtureId\=/, ""),
