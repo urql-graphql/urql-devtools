@@ -23,14 +23,11 @@ describe("Matches snapshot", () => {
       await page.goto(
         `http://${url.replace("?fixtureId", "_renderer.html?_fixtureId")}`
       );
-      await wait(200);
       const image = await page.screenshot();
       expect(image).toMatchImageSnapshot({
         customSnapshotIdentifier: url.replace(/.*?fixtureId\=/, "")
       });
-      page.close();
+      await page.close();
     }
   }, 120000);
 });
-
-const wait = (t: number) => new Promise(resolve => setTimeout(resolve, t));
