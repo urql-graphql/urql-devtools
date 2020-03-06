@@ -19,11 +19,11 @@ afterAll(async () => {
 describe("Matches snapshot", () => {
   it("renders", async () => {
     for (const url of fixtures) {
-      console.log(fixtures);
       const page = await browser.newPage();
       await page.goto(
         `http://${url.replace("?fixtureId", "_renderer.html?_fixtureId")}`
       );
+      await wait(200);
       const image = await page.screenshot();
       expect(image).toMatchImageSnapshot({
         customSnapshotIdentifier: url.replace(/.*?fixtureId\=/, "")
@@ -32,3 +32,5 @@ describe("Matches snapshot", () => {
     }
   }, 120000);
 });
+
+const wait = (t: number) => new Promise(resolve => setTimeout(resolve, t));
