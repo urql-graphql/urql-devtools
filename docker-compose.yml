@@ -2,6 +2,7 @@ version: "3"
 services:
   cosmos:
     image: alekzonder/puppeteer:latest
+    user: root
     working_dir: /app
     volumes:
       - .:/app
@@ -11,6 +12,7 @@ services:
       - yarn --frozen-lockfile && yarn cosmos
   regression:
     image: alekzonder/puppeteer:latest
+    user: root
     working_dir: /app
     volumes:
       - .:/app

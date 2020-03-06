@@ -51,11 +51,10 @@ jobs:
       - run: TZ=Europe/London yarn run test --coverage
 
   visual regression:
-    docker:
-      - image: docker/compose
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - setup_remote_docker
       - run: docker-compose run -e "CI=true" regression
       - store_artifacts:
           path: src/panel/__image_snapshots__/__diff_output__/
