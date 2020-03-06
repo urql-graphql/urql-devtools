@@ -12,7 +12,7 @@ import {
   getFieldAlias
 } from "./node";
 
-import { getFieldArguments, normalizeVariables } from "./variables";
+import { getFieldArguments, getNormalizedVariables } from "./variables";
 
 import { getMainOperation, getFragments } from "./traversal";
 
@@ -55,10 +55,15 @@ export const startQuery = (
   }
 
   const ctx = {
-    variables: normalizeVariables(operation, request.variables),
+    variables: getNormalizedVariables(
+      operation.variableDefinitions,
+      request.variables
+    ),
     fragments: getFragments(request.query),
     cacheOutcome: request.context.meta && request.context.meta.cacheOutcome
   };
+
+  console.log(ctx);
 
   const owner = {};
   return copyFromData(ctx, copyNodeMap(map), select, data, owner);
