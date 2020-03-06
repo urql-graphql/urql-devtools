@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Background } from "../../components/Background";
-import { Query } from "./Query";
-import { Response } from "./Response";
+import { Query, Response } from "./components";
 
 export const Request = () => {
   return (

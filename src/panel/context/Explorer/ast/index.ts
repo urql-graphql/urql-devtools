@@ -24,14 +24,12 @@ export interface FieldNode {
   cacheOutcome?: Context["cacheOutcome"];
   key: string;
   name: string;
-  args: Variables | null;
-  value?: DataField;
+  args?: Variables | null;
+  value?: DataField | null;
   children?: NodeMap | NullArray<NodeMap>;
 }
 
-export interface NodeMap {
-  [key: string]: FieldNode;
-}
+export type NodeMap = Record<string, FieldNode>;
 
 interface Data {
   [fieldName: string]: Data[] | Data | DataField;

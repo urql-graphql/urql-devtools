@@ -7,7 +7,7 @@ version: 2
 .node_modules_cache: &node_modules_cache
   restore_cache:
     keys:
-      - node-cache-{{ .Revision }}
+      - node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
 
 .build_cache: &build_cache
   restore_cache:
@@ -19,9 +19,13 @@ jobs:
     <<: *node_env
     steps:
       - checkout
+      - *node_modules_cache
+      - run:
+          name: Check for dependencies
+          command: "([[ -d node_modules ]] && circleci-agent step halt) || exit 0"
       - run: yarn install --frozen-lockfile
       - save_cache:
-          key: node-cache-{{ .Revision }}
+          key: node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
           paths:
             - "node_modules"
 
@@ -44,7 +48,16 @@ jobs:
     steps:
       - checkout
       - *node_modules_cache
-      - run: yarn run test
+      - run: TZ=Europe/London yarn run test --coverage
+
+  visual regression:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - run: docker-compose run -e "CI=true" regression
+      - store_artifacts:
+          path: src/panel/__image_snapshots__/__diff_output__/
 
   build:
     <<: *node_env
@@ -124,6 +137,12 @@ workflows:
             tags:
               only: /.*/
       - test:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
+      - visual regression:
           requires:
             - install
           filters:

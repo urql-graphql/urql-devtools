@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import { DevtoolsPanelConnectionName, PanelOutgoingMessage } from "../../types";
 
-interface DevtoolsContextType {
+export interface DevtoolsContextType {
   sendMessage: (message: PanelOutgoingMessage) => void;
   addMessageHandler: (
     cb: (message: DevtoolsExchangeOutgoingMessage) => void

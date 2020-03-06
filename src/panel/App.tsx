@@ -10,7 +10,7 @@ import {
   DevtoolsProvider,
   EventsProvider,
   RequestProvider,
-  ExplorerContextProvider,
+  ExplorerProvider,
   useDevtoolsContext
 } from "./context";
 
@@ -39,9 +39,9 @@ export const AppRoutes: FC = () => {
       <RequestProvider>
         <Route path="/request" component={Request} />
       </RequestProvider>
-      <ExplorerContextProvider>
+      <ExplorerProvider>
         <Route path="/explorer" exact component={Explorer} />
-      </ExplorerContextProvider>
+      </ExplorerProvider>
       <Route path="/" exact component={() => <Redirect to="/explorer" />} />
       <Navigation />
     </HashRouter>

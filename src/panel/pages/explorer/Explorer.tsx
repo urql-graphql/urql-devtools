@@ -1,30 +1,17 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Background } from "../../components";
 import { ExplorerContext } from "../../context";
-import { FieldNode } from "../../context/Explorer/ast";
-import { Tree } from "./Tree";
-import { DetailViewPane } from "./DetailView";
+import { Tree, NodeInfoPane } from "./components";
 
 export function Explorer() {
-  const operations = useContext(ExplorerContext);
-  const [focusedNodeId, setFocusedNodeId] = useState<string | undefined>(
-    undefined
-  );
-  const [detailViewNode, setDetailViewNode] = useState<FieldNode | null>(null);
-
-  const setActiveNode = (id: string) => setFocusedNodeId(id);
+  const { operations } = useContext(ExplorerContext);
 
   return (
     <Container>
       <ListContainer>
         {Object.keys(operations).length ? (
-          <Tree
-            nodeMap={operations}
-            setFocusedNode={setActiveNode}
-            setDetailView={setDetailViewNode}
-            activeId={focusedNodeId}
-          />
+          <Tree nodeMap={operations} />
         ) : (
           <TitleWrapper>
             <Title>Responses will be shown here</Title>
@@ -32,7 +19,7 @@ export function Explorer() {
           </TitleWrapper>
         )}
       </ListContainer>
-      <DetailViewPane node={detailViewNode} />
+      <NodeInfoPane />
     </Container>
   );
 }
@@ -49,10 +36,6 @@ const ListContainer = styled.section`
   padding-right: 1rem;
   padding-bottom: 1rem;
   overflow: auto;
-
-  @media (min-aspect-ratio: 1/1) {
-    padding-right: 1px;
-  }
 `;
 
 const TitleWrapper = styled.div`

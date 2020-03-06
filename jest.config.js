@@ -3,6 +3,7 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "babel-jest"
   },
+  setupFiles: ["dotenv/config"],
   setupFilesAfterEnv: ["<rootDir>src/setupTests.ts"],
   snapshotSerializers: ["enzyme-to-json/serializer"],
   moduleNameMapper: {

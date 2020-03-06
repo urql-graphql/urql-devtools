@@ -3,3 +3,4 @@ dist
 yarn-error.log
 .DS_Store
 web-ext-artifacts
+__diff_output__
