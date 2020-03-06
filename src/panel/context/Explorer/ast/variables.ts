@@ -7,32 +7,45 @@ import {
   Kind,
   valueFromASTUntyped
 } from "graphql";
-
-import { getName } from "./node";
 import { Variables } from "./types";
 
 /** Evaluates a given ValueNode to a JSON value taking vars into account */
-export const evaluateValueNode = (node: ValueNode, vars: Variables): any => {
-  switch (node.kind) {
-    case Kind.NULL:
-      return null;
-    case Kind.INT:
-      return parseInt(node.value, 10);
-    case Kind.FLOAT:
-      return parseFloat(node.value);
-    case Kind.LIST:
-      return node.values.map(v => evaluateValueNode(v, vars));
-    case Kind.OBJECT:
-      return node.fields.reduce((obj, field) => {
-        obj[getName(field)] = evaluateValueNode(field.value, vars);
-        return obj;
-      }, Object.create(null));
-    case Kind.VARIABLE:
-      const varValue = vars[getName(node)];
-      return varValue !== undefined ? varValue : null;
-    default:
-      return node.value;
+export const getSerializedValue = (
+  node: ValueNode,
+  vars: Variables
+): Variables[number] => {
+  if (node.kind === Kind.NULL) {
+    return null;
   }
+
+  if (node.kind === Kind.INT) {
+    return parseInt(node.value, 10);
+  }
+
+  if (node.kind === Kind.FLOAT) {
+    return parseFloat(node.value);
+  }
+
+  if (node.kind === Kind.VARIABLE) {
+    const value = vars[node.name.value];
+    return value !== undefined ? value : null;
+  }
+
+  if (node.kind === Kind.LIST) {
+    return node.values.map(n => getSerializedValue(n, vars));
+  }
+
+  if (node.kind === Kind.OBJECT) {
+    return node.fields.reduce(
+      (o, field) => ({
+        ...o,
+        [field.name.value]: getSerializedValue(field.value, vars)
+      }),
+      {}
+    );
+  }
+
+  return node.value;
 };
 
 /** Evaluates a fields arguments taking vars into account */
@@ -62,28 +75,27 @@ export const getFieldArguments = (node: FieldNode, vars: Variables) => {
 };
 
 /** Returns a normalized form of variables with defaulted values */
-export const normalizeVariables = (
-  node: OperationDefinitionNode,
-  input: void | object
-): Variables => {
-  if (node.variableDefinitions === undefined) {
-    return {};
-  }
+export const getNormalizedVariables = (
+  variableDefinitions: OperationDefinitionNode["variableDefinitions"] = [],
+  variables: Variables
+) => {
+  return variableDefinitions.reduce<Variables>((normalized, definition) => {
+    const name = definition.variable.name.value;
 
-  const args: Variables = (input as Variables) || {};
-
-  return node.variableDefinitions.reduce((vars, def) => {
-    const name = getName(def.variable);
-    let value = args[name];
-    if (value === undefined) {
-      if (def.defaultValue !== undefined) {
-        value = evaluateValueNode(def.defaultValue, args);
-      } else {
-        return vars;
-      }
+    if (variables[name] !== undefined) {
+      return {
+        ...normalized,
+        [name]: variables[name]
+      };
     }
 
-    vars[name] = value;
-    return vars;
-  }, Object.create(null));
+    if (definition.defaultValue !== undefined) {
+      return {
+        ...normalized,
+        [name]: getSerializedValue(definition.defaultValue, variables)
+      };
+    }
+
+    return normalized;
+  }, {});
 };
