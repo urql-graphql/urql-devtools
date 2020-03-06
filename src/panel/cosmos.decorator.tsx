@@ -8,8 +8,13 @@ import { DevtoolsContext } from "./context";
 const GlobalStyle = createGlobalStyle`
   body, html, #root {
     height: 100%;
+    margin: 0;
   }
 
+  #root {
+    display: flex;
+  }
+  
   #root > * {
     top: 0;
   }
