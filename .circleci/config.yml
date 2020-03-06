@@ -52,8 +52,8 @@ jobs:
 
   visual regression:
     docker:
-      - image: buildkite/puppeteer:latest
-        user: node
+      - image: alekzonder/puppeteer:latest
+        user: pptruser
     steps:
       - checkout
       - run: yarn --frozen-lockfile
