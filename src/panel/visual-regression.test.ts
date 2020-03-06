@@ -21,7 +21,8 @@ describe("Matches snapshot", () => {
     for (const url of fixtures) {
       const page = await browser.newPage();
       await page.goto(
-        `http://${url.replace("?fixtureId", "_renderer.html?_fixtureId")}`
+        `http://${url.replace("?fixtureId", "_renderer.html?_fixtureId")}`,
+        { waitUntil: "domcontentloaded" }
       );
       const image = await page.screenshot();
       expect(image).toMatchImageSnapshot({
