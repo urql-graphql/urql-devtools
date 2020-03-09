@@ -1,7 +1,7 @@
 import { DocumentNode } from "graphql";
 import { Operation } from "urql";
 import gql from "graphql-tag";
-import { startQuery } from "./index";
+import { handleResponse } from "./index";
 
 jest.mock("nanoid", () => ({
   __esModule: true,
@@ -15,14 +15,16 @@ interface TestCase {
 }
 
 const expectCorrectOutput = (testcase: TestCase) => {
-  const request: Operation = {
+  const operation: Operation = {
     query: testcase.query,
     variables: testcase.variables,
     operationName: "query",
     context: { meta: { cacheOutcome: "hit" } }
   } as any;
 
-  return expect(startQuery(request, testcase.data, {}));
+  return expect(
+    handleResponse({ operation, data: testcase.data, parsedNodes: {} })
+  );
 };
 
 it("int on query", () => {

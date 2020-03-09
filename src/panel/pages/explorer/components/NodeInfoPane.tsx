@@ -1,7 +1,7 @@
 import React, { FC, useContext, useMemo } from "react";
 import styled from "styled-components";
+import { Operation } from "urql";
 import { ParsedFieldNode, ParsedNodeMap } from "../../../context/Explorer/ast";
-import { Context, Variables } from "../../../context/Explorer/ast/types";
 import { Pane } from "../../../components";
 import { ExplorerContext } from "../../../context";
 import { Value } from "./Value";
@@ -70,7 +70,7 @@ const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => (
 );
 
 const gatherChildValues = (
-  values: ParsedNodeMap | ParsedNodeMap[] | undefined | Variables
+  values?: ParsedNodeMap | ParsedNodeMap[] | Operation["variables"]
 ) => {
   if (!values) {
     return null;
@@ -95,7 +95,7 @@ const gatherChildValues = (
   }
 };
 
-const getDescription = (status: Context["cacheOutcome"]) => {
+const getDescription = (status: ParsedFieldNode["cacheOutcome"]) => {
   switch (status) {
     case "hit": {
       return <Description>{"This result was served from cache."}</Description>;

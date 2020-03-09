@@ -1,6 +1,6 @@
 import stringify from "fast-json-stable-stringify";
 import nanoid from "nanoid";
-import { Operation, OperationDebugMeta } from "urql";
+import { Operation, OperationDebugMeta, OperationResult } from "urql";
 import {
   SelectionNode,
   Kind,
@@ -12,30 +12,24 @@ import {
   ASTNode
 } from "graphql";
 
-import { Scalar, Variables, Context, Fragments } from "./types";
-
 import { getFieldArguments, getNormalizedVariables } from "./variables";
 
 export interface ParsedFieldNode {
   _id: string;
   _owner: {};
-  cacheOutcome?: Context["cacheOutcome"];
+  cacheOutcome?: OperationDebugMeta["cacheOutcome"];
   key: string;
   name: string;
-  args?: Variables;
-  value?: Scalar | Scalar[] | null;
+  args?: Operation["variables"];
+  value?: OperationResult["data"];
   children?: ParsedNodeMap | (ParsedNodeMap | null)[];
 }
 
 export type ParsedNodeMap = Record<string, ParsedFieldNode>;
 
-type ResponseData = {
-  [fieldName: string]: ResponseData[] | ResponseData | Scalar | null;
-};
-
 interface HandleResponseArgs {
   operation: Operation;
-  data: ResponseData;
+  data: OperationResult["data"];
   parsedNodes?: ParsedNodeMap;
 }
 
@@ -61,7 +55,7 @@ export const handleResponse = ({
 
   const fragments = operation.query.definitions
     .filter(isFragmentNode)
-    .reduce<Fragments>(
+    .reduce<Record<string, FragmentDefinitionNode>>(
       (map, node) => ({
         ...map,
         [node.name.value]: node
@@ -88,12 +82,12 @@ export const handleResponse = ({
 };
 
 interface CopyFromDataArgs {
-  fragments: Fragments;
-  variables: Variables;
+  fragments: Record<string, FragmentDefinitionNode>;
+  variables: Operation["variables"];
   cacheOutcome: OperationDebugMeta["cacheOutcome"];
   parsedNodes: ParsedNodeMap;
   selections: readonly SelectionNode[];
-  data: ResponseData;
+  data: OperationResult["data"];
   owner: {};
 }
 
@@ -211,7 +205,7 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
   }, parsedNodes);
 };
 
-const getFieldKey = (fieldName: string, args?: Variables) =>
+const getFieldKey = (fieldName: string, args?: Operation["variables"]) =>
   args ? `${fieldName}(${stringify(args)})` : fieldName;
 
 const isFieldNode = (node: ASTNode): node is FieldNode =>
