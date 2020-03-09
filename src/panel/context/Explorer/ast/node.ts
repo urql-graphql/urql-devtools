@@ -10,10 +10,6 @@ import {
 
 import { SelectionSet, Scalar } from "./types";
 
-/** Returns either the field's name or the field's alias */
-export const getFieldAlias = (node: FieldNode): string =>
-  node.alias !== undefined ? node.alias.value : node.name.value;
-
 /** Returns the SelectionSet for a given inline or defined fragment node */
 export const getSelectionSet = (node: {
   selectionSet?: SelectionSetNode;

@@ -4,12 +4,7 @@ import { Operation } from "urql";
 
 import { Scalar, SelectionSet, Variables, Context, NullArray } from "./types";
 
-import {
-  getSelectionSet,
-  isFieldNode,
-  isInlineFragment,
-  getFieldAlias
-} from "./node";
+import { getSelectionSet, isFieldNode, isInlineFragment } from "./node";
 
 import { getFieldArguments, getNormalizedVariables } from "./variables";
 
@@ -102,7 +97,11 @@ function copyFromData(
       const fieldName = fieldNode.name.value || "query";
       const fieldArgs = getFieldArguments(fieldNode, ctx.variables);
       const fieldKey = getFieldKey(fieldName, fieldArgs);
-      const fieldValue = data[getFieldAlias(fieldNode)];
+      const fieldAlias =
+        fieldNode.alias !== undefined
+          ? fieldNode.alias.value
+          : fieldNode.name.value;
+      const fieldValue = data[fieldAlias];
 
       let node: FieldNode;
       if (map[fieldKey] === undefined) {
