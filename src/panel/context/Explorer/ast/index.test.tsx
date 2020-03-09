@@ -1,7 +1,7 @@
 import { DocumentNode } from "graphql";
 import { Operation } from "urql";
 import gql from "graphql-tag";
-import { startQuery } from "../";
+import { startQuery } from "./index";
 
 jest.mock("nanoid", () => ({
   __esModule: true,

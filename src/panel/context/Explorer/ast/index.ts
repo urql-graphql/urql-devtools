@@ -1,7 +1,13 @@
 import stringify from "fast-json-stable-stringify";
 import nanoid from "nanoid";
 import { Operation, OperationDebugMeta } from "urql";
-import { SelectionNode, Kind, FieldNode, InlineFragmentNode } from "graphql";
+import {
+  SelectionNode,
+  Kind,
+  FieldNode,
+  InlineFragmentNode,
+  FragmentSpreadNode
+} from "graphql";
 
 import { Scalar, Variables, Context, Fragments } from "./types";
 
@@ -18,14 +24,15 @@ export interface ParsedFieldNode {
   key: string;
   name: string;
   args?: Variables;
-  value?: DataField | null;
-  children?: ParsedNodeMap;
+  value?: Scalar | Scalar[] | null;
+  children?: ParsedNodeMap | (ParsedNodeMap | null)[];
 }
 
 export type ParsedNodeMap = Record<string, ParsedFieldNode>;
 
-interface Data {
-  [fieldName: string]: Data[] | Data | DataField | null;
+type RequestData = Record<string, FieldData> | DataField | null | FieldData[];
+interface ResponseData {
+  [fieldName: string]: ResponseData[] | ResponseData | DataField | null;
 }
 
 const getFieldKey = (fieldName: string, args?: Variables) =>
@@ -33,16 +40,16 @@ const getFieldKey = (fieldName: string, args?: Variables) =>
 
 export const startQuery = (
   request: Operation,
-  data: Data,
-  map: ParsedNodeMap = Object.create(null)
+  data: ResponseData,
+  parsedNodes: ParsedNodeMap = Object.create(null)
 ) => {
   if (request.operationName !== "query") {
-    return map;
+    return parsedNodes;
   }
 
   const operation = getMainOperation(request.query);
   if (operation.selectionSet.selections.length === 0) {
-    return map;
+    return parsedNodes;
   }
 
   return parseNodes({
@@ -51,7 +58,7 @@ export const startQuery = (
       request.variables
     ),
     selections: operation.selectionSet.selections,
-    parsedNodes: map,
+    parsedNodes,
     fragments: getFragments(request.query),
     cacheOutcome: request.context.meta && request.context.meta.cacheOutcome,
     data,
@@ -65,7 +72,7 @@ interface CopyFromDataArgs {
   cacheOutcome: OperationDebugMeta["cacheOutcome"];
   parsedNodes: ParsedNodeMap;
   selections: readonly SelectionNode[];
-  data: Data;
+  data: ResponseData;
   owner: {};
 }
 
@@ -93,12 +100,11 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
       });
     }
 
-    const fragmentDefinition = fragments[selectionNode.name.value];
-    if (fragmentDefinition) {
+    if (isFragmentSpread(selectionNode)) {
       return parseNodes({
         ...copyArgs,
         parsedNodes: parsedNodemap,
-        selections: fragmentDefinition.selectionSet.selections
+        selections: fragments[selectionNode.name.value].selectionSet.selections
       });
     }
 
@@ -116,7 +122,7 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
           : selectionNode.name.value
       ];
 
-    const node = parsedNodemap[key]
+    const node: ParsedFieldNode = parsedNodemap[key]
       ? {
           ...parsedNodemap[key],
           _owner: owner
@@ -131,23 +137,45 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
         };
 
     if (selectionNode.selectionSet && Array.isArray(value)) {
+      const children = (node.children || []) as ParsedNodeMap[];
       return {
         ...parsedNodemap,
         [key]: {
           ...node,
-          value: undefined,
-          children: value.reduce<ParsedNodeMap>(
-            (parsedNodes, data) =>
-              parseNodes({
-                ...copyArgs,
-                parsedNodes,
-                selections: selectionNode.selectionSet
-                  ? selectionNode.selectionSet.selections
-                  : [],
-                data
-              }),
+          children: value.map(
+            (data, i) =>
+              data === null
+                ? null
+                : parseNodes({
+                    ...copyArgs,
+                    parsedNodes: children[i],
+                    selections: selectionNode.selectionSet
+                      ? selectionNode.selectionSet.selections
+                      : [],
+                    data
+                  }),
             {}
           )
+        }
+      };
+    }
+
+    if (
+      selectionNode.selectionSet &&
+      !Array.isArray(value) &&
+      value &&
+      typeof value === "object"
+    ) {
+      return {
+        ...parsedNodemap,
+        [key]: {
+          ...node,
+          children: parseNodes({
+            ...copyArgs,
+            parsedNodes: {},
+            selections: selectionNode.selectionSet.selections,
+            data: value
+          })
         }
       };
     }
@@ -167,3 +195,6 @@ const isFieldNode = (node: SelectionNode): node is FieldNode =>
 
 const isInlineFragment = (node: SelectionNode): node is InlineFragmentNode =>
   node.kind === Kind.INLINE_FRAGMENT;
+
+const isFragmentSpread = (node: SelectionNode): node is FragmentSpreadNode =>
+  node.kind === Kind.FRAGMENT_SPREAD;

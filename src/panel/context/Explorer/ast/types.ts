@@ -9,7 +9,7 @@ export type NullArray<T> = (T | null)[];
 // GraphQL helper types
 export type SelectionSet = readonly SelectionNode[];
 export interface Fragments {
-  [fragmentName: string]: void | FragmentDefinitionNode;
+  [fragmentName: string]: FragmentDefinitionNode;
 }
 
 // Scalar types are not entities as part of response data
