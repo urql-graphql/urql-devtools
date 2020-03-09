@@ -1,11 +1,9 @@
 import stringify from "fast-json-stable-stringify";
 import nanoid from "nanoid";
 import { Operation } from "urql";
-import { SelectionNode } from "graphql";
+import { SelectionNode, FieldNode, Kind, InlineFragmentNode } from "graphql";
 
 import { Scalar, Variables, Context, NullArray } from "./types";
-
-import { isFieldNode, isInlineFragment } from "./node";
 
 import { getFieldArguments, getNormalizedVariables } from "./variables";
 
@@ -184,3 +182,9 @@ function copyFromData(
 
   return map;
 }
+
+const isFieldNode = (node: SelectionNode): node is FieldNode =>
+  node.kind === Kind.FIELD;
+
+const isInlineFragment = (node: SelectionNode): node is InlineFragmentNode =>
+  node.kind === Kind.INLINE_FRAGMENT;
