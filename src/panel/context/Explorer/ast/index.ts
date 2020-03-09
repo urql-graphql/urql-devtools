@@ -6,16 +6,15 @@ import {
   Kind,
   FieldNode,
   InlineFragmentNode,
-  FragmentSpreadNode
+  FragmentSpreadNode,
+  OperationDefinitionNode,
+  FragmentDefinitionNode,
+  ASTNode
 } from "graphql";
 
 import { Scalar, Variables, Context, Fragments } from "./types";
 
 import { getFieldArguments, getNormalizedVariables } from "./variables";
-
-import { getMainOperation, getFragments } from "./traversal";
-
-type DataField = Scalar | null;
 
 export interface ParsedFieldNode {
   _id: string;
@@ -30,37 +29,59 @@ export interface ParsedFieldNode {
 
 export type ParsedNodeMap = Record<string, ParsedFieldNode>;
 
-type RequestData = Record<string, FieldData> | DataField | null | FieldData[];
-interface ResponseData {
-  [fieldName: string]: ResponseData[] | ResponseData | DataField | null;
+type ResponseData = {
+  [fieldName: string]: ResponseData[] | ResponseData | Scalar | null;
+};
+
+interface HandleResponseArgs {
+  operation: Operation;
+  data: ResponseData;
+  parsedNodes?: ParsedNodeMap;
 }
 
-const getFieldKey = (fieldName: string, args?: Variables) =>
-  args ? `${fieldName}(${stringify(args)})` : fieldName;
-
-export const startQuery = (
-  request: Operation,
-  data: ResponseData,
-  parsedNodes: ParsedNodeMap = Object.create(null)
-) => {
-  if (request.operationName !== "query") {
+export const handleResponse = ({
+  operation,
+  data,
+  parsedNodes = {}
+}: HandleResponseArgs) => {
+  if (operation.operationName !== "query") {
     return parsedNodes;
   }
 
-  const operation = getMainOperation(request.query);
-  if (operation.selectionSet.selections.length === 0) {
+  const opNode = operation.query.definitions.find(
+    node => node.kind === Kind.OPERATION_DEFINITION
+  ) as OperationDefinitionNode;
+
+  if (!opNode) {
+    throw new Error(
+      "Invalid GraphQL document: All GraphQL documents must contain an OperationDefinition" +
+        "node for a query, subscription, or mutation."
+    );
+  }
+
+  const fragments = operation.query.definitions
+    .filter(isFragmentNode)
+    .reduce<Fragments>(
+      (map, node) => ({
+        ...map,
+        [node.name.value]: node
+      }),
+      {}
+    );
+
+  if (opNode.selectionSet.selections.length === 0) {
     return parsedNodes;
   }
 
   return parseNodes({
     variables: getNormalizedVariables(
-      operation.variableDefinitions,
-      request.variables
+      opNode.variableDefinitions,
+      operation.variables
     ),
-    selections: operation.selectionSet.selections,
+    selections: opNode.selectionSet.selections,
+    fragments,
     parsedNodes,
-    fragments: getFragments(request.query),
-    cacheOutcome: request.context.meta && request.context.meta.cacheOutcome,
+    cacheOutcome: operation.context.meta && operation.context.meta.cacheOutcome,
     data,
     owner: {}
   });
@@ -190,11 +211,18 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
   }, parsedNodes);
 };
 
-const isFieldNode = (node: SelectionNode): node is FieldNode =>
+const getFieldKey = (fieldName: string, args?: Variables) =>
+  args ? `${fieldName}(${stringify(args)})` : fieldName;
+
+const isFieldNode = (node: ASTNode): node is FieldNode =>
   node.kind === Kind.FIELD;
 
-const isInlineFragment = (node: SelectionNode): node is InlineFragmentNode =>
+const isInlineFragment = (node: ASTNode): node is InlineFragmentNode =>
   node.kind === Kind.INLINE_FRAGMENT;
 
-const isFragmentSpread = (node: SelectionNode): node is FragmentSpreadNode =>
+const isFragmentSpread = (node: ASTNode): node is FragmentSpreadNode =>
   node.kind === Kind.FRAGMENT_SPREAD;
+
+const isFragmentNode = (node: ASTNode): node is FragmentDefinitionNode => {
+  return node.kind === Kind.FRAGMENT_DEFINITION;
+};

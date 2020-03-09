@@ -11,7 +11,7 @@ import React, {
 
 import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
 import { DevtoolsContext } from "../Devtools";
-import { startQuery, ParsedNodeMap, ParsedFieldNode } from "./ast";
+import { handleResponse, ParsedNodeMap, ParsedFieldNode } from "./ast";
 
 export interface ExplorerContextValue {
   operations: ParsedNodeMap;
@@ -37,9 +37,13 @@ export const ExplorerProvider: FC = ({ children }) => {
         return;
       }
 
-      if (o.type === "response") {
+      if (o.type === "response" && o.data.data) {
         setOperations(operations =>
-          startQuery(o.data.operation, o.data.data, operations)
+          handleResponse({
+            operation: o.data.operation,
+            data: o.data.data,
+            parsedNodes: operations
+          })
         );
         return;
       }
