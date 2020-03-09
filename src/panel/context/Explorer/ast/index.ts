@@ -3,7 +3,7 @@ import nanoid from "nanoid";
 import { Operation, OperationDebugMeta } from "urql";
 import { SelectionNode, Kind, FieldNode, InlineFragmentNode } from "graphql";
 
-import { Scalar, Variables, Context, NullArray, Fragments } from "./types";
+import { Scalar, Variables, Context, Fragments } from "./types";
 
 import { getFieldArguments, getNormalizedVariables } from "./variables";
 
@@ -19,7 +19,7 @@ export interface ParsedFieldNode {
   name: string;
   args?: Variables;
   value?: DataField | null;
-  children?: ParsedNodeMap | NullArray<ParsedNodeMap>;
+  children?: ParsedNodeMap;
 }
 
 export type ParsedNodeMap = Record<string, ParsedFieldNode>;
@@ -57,30 +57,6 @@ export const startQuery = (
     data,
     owner: {}
   });
-};
-
-const copyNodeMap = (map: null | ParsedNodeMap): ParsedNodeMap => {
-  const newMap = Object.create(null);
-  return map !== null ? Object.assign(newMap, map) : newMap;
-};
-
-const copyParsedFieldNode = (node: ParsedFieldNode, owner: {}) => {
-  if (node._owner === owner) {
-    return node;
-  } else {
-    const newNode = {
-      ...node,
-      _owner: owner
-    };
-
-    if (Array.isArray(node.children)) {
-      newNode.children = node.children.map(copyNodeMap);
-    } else if (typeof node.children === "object") {
-      newNode.children = copyNodeMap(node.children);
-    }
-
-    return newNode;
-  }
 };
 
 interface CopyFromDataArgs {
@@ -141,7 +117,10 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
       ];
 
     const node = parsedNodemap[key]
-      ? copyParsedFieldNode(parsedNodemap[key], owner)
+      ? {
+          ...parsedNodemap[key],
+          _owner: owner
+        }
       : {
           _id: nanoid(),
           _owner: owner,
