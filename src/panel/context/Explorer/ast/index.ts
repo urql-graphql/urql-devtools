@@ -56,7 +56,13 @@ export const startQuery = (
   };
 
   const owner = {};
-  return copyFromData(ctx, copyNodeMap(map), select, data, owner);
+  return copyFromData(
+    ctx,
+    copyNodeMap(map),
+    operation.selectionSet.selections,
+    data,
+    owner
+  );
 };
 
 const copyNodeMap = (map: null | NodeMap): NodeMap => {
