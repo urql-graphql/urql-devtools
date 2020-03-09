@@ -1,10 +1,11 @@
 import stringify from "fast-json-stable-stringify";
 import nanoid from "nanoid";
 import { Operation } from "urql";
+import { SelectionNode } from "graphql";
 
-import { Scalar, SelectionSet, Variables, Context, NullArray } from "./types";
+import { Scalar, Variables, Context, NullArray } from "./types";
 
-import { getSelectionSet, isFieldNode, isInlineFragment } from "./node";
+import { isFieldNode, isInlineFragment } from "./node";
 
 import { getFieldArguments, getNormalizedVariables } from "./variables";
 
@@ -29,7 +30,7 @@ interface Data {
   [fieldName: string]: Data[] | Data | DataField;
 }
 
-export const getFieldKey = (fieldName: string, args?: Variables) =>
+const getFieldKey = (fieldName: string, args?: Variables) =>
   args ? `${fieldName}(${stringify(args)})` : fieldName;
 
 export const startQuery = (
@@ -42,9 +43,8 @@ export const startQuery = (
   }
 
   const operation = getMainOperation(request.query);
-  const select = getSelectionSet(operation);
 
-  if (select.length === 0) {
+  if (operation.selectionSet.selections.length === 0) {
     return map;
   }
 
@@ -88,7 +88,7 @@ const copyFieldNode = (node: FieldNode, owner: {}) => {
 function copyFromData(
   ctx: Context,
   map: NodeMap,
-  selection: SelectionSet,
+  selection: readonly SelectionNode[],
   data: Data,
   owner: {}
 ): NodeMap {
@@ -124,7 +124,9 @@ function copyFromData(
         fieldValue !== null
       ) {
         const childValue = fieldValue as Data | Data[];
-        const fieldSelection = getSelectionSet(fieldNode);
+        const fieldSelection = fieldNode.selectionSet
+          ? fieldNode.selectionSet.selections
+          : [];
 
         if (Array.isArray(childValue)) {
           const size = childValue.length;
@@ -168,8 +170,14 @@ function copyFromData(
       const fragmentNode = !isInlineFragment(fieldNode)
         ? ctx.fragments[fieldNode.name.value]
         : fieldNode;
-      if (fragmentNode !== undefined) {
-        copyFromData(ctx, map, getSelectionSet(fragmentNode), data, owner);
+      if (fragmentNode) {
+        copyFromData(
+          ctx,
+          map,
+          fragmentNode.selectionSet.selections,
+          data,
+          owner
+        );
       }
     }
   });
