@@ -6,8 +6,6 @@ import {
   OperationDefinitionNode,
   Kind
 } from "graphql";
-
-import { getName } from "./node";
 import { Fragments } from "./types";
 
 const isFragmentNode = (
@@ -35,8 +33,11 @@ export const getMainOperation = (
 };
 
 /** Returns a mapping from fragment names to their selections */
-export const getFragments = (doc: DocumentNode): Fragments =>
-  doc.definitions.filter(isFragmentNode).reduce((map: Fragments, node) => {
-    map[getName(node)] = node;
-    return map;
-  }, {});
+export const getFragments = (doc: DocumentNode) =>
+  doc.definitions.filter(isFragmentNode).reduce<Fragments>(
+    (map, node) => ({
+      ...map,
+      [node.name.value]: node
+    }),
+    {}
+  );

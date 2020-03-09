@@ -1,7 +1,6 @@
 /** Copied from https://github.com/FormidableLabs/urql-exchange-graphcache/blob/master/src/ast/node.ts */
 
 import {
-  NameNode,
   SelectionNode,
   SelectionSetNode,
   InlineFragmentNode,
@@ -11,9 +10,6 @@ import {
 } from "graphql";
 
 import { SelectionSet, Scalar } from "./types";
-
-/** Returns the name of a given node */
-export const getName = (node: { name: NameNode }): string => node.name.value;
 
 export const getOperationName = (node: OperationDefinitionNode) => {
   switch (node.operation) {
@@ -28,7 +24,7 @@ export const getOperationName = (node: OperationDefinitionNode) => {
 
 /** Returns either the field's name or the field's alias */
 export const getFieldAlias = (node: FieldNode): string =>
-  node.alias !== undefined ? node.alias.value : getName(node);
+  node.alias !== undefined ? node.alias.value : node.name.value;
 
 /** Returns the SelectionSet for a given inline or defined fragment node */
 export const getSelectionSet = (node: {

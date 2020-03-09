@@ -5,7 +5,6 @@ import { Operation } from "urql";
 import { Scalar, SelectionSet, Variables, Context, NullArray } from "./types";
 
 import {
-  getName,
   getSelectionSet,
   isFieldNode,
   isInlineFragment,
@@ -168,7 +167,7 @@ function copyFromData(
       }
     } else {
       const fragmentNode = !isInlineFragment(fieldNode)
-        ? ctx.fragments[getName(fieldNode)]
+        ? ctx.fragments[fieldNode.name.value]
         : fieldNode;
       if (fragmentNode !== undefined) {
         copyFromData(ctx, map, getSelectionSet(fragmentNode), data, owner);
