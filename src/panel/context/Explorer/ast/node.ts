@@ -5,22 +5,10 @@ import {
   SelectionSetNode,
   InlineFragmentNode,
   FieldNode,
-  OperationDefinitionNode,
   Kind
 } from "graphql";
 
 import { SelectionSet, Scalar } from "./types";
-
-export const getOperationName = (node: OperationDefinitionNode) => {
-  switch (node.operation) {
-    case "query":
-      return "Query";
-    case "mutation":
-      return "Mutation";
-    case "subscription":
-      return "Subscription";
-  }
-};
 
 /** Returns either the field's name or the field's alias */
 export const getFieldAlias = (node: FieldNode): string =>
