@@ -63,8 +63,6 @@ export const startQuery = (
     cacheOutcome: request.context.meta && request.context.meta.cacheOutcome
   };
 
-  console.log(ctx);
-
   const owner = {};
   return copyFromData(ctx, copyNodeMap(map), select, data, owner);
 };
