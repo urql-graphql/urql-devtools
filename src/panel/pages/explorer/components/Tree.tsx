@@ -61,7 +61,7 @@ const sortFields = (nodes: ParsedFieldNode[]) => {
   });
 };
 
-export const List = styled.ul`
+const List = styled.ul`
   margin: 0;
   padding-bottom: 0.3rem;
   padding-top: 0.3rem;

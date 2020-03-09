@@ -70,12 +70,3 @@ export type ParsedEvent =
   | ParsedErrorEvent
   | ParsedSubscriptionEvent
   | ParsedTeardownEvent;
-
-type Primitive = number | boolean | string | null;
-
-interface SerializedObject<T extends Primitive = Primitive> {
-  [key: string]: T | T[] | SerializedObject;
-}
-
-/** GraphQL value that has been serialized. */
-export type SerializedValue = Primitive | SerializedObject;

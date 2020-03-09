@@ -98,7 +98,7 @@ const PaneContainer = styled.div`
 
 const edgeWidth = 4;
 
-export const DraggingEdge = styled.div`
+const DraggingEdge = styled.div`
   position: absolute;
   z-index: 3;
   background: ${p => p.theme.dark["+1"]};
