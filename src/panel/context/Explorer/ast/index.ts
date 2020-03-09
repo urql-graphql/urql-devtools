@@ -1,15 +1,15 @@
 import stringify from "fast-json-stable-stringify";
 import nanoid from "nanoid";
-import { Operation } from "urql";
+import { Operation, OperationDebugMeta } from "urql";
 import { SelectionNode, Kind, FieldNode, InlineFragmentNode } from "graphql";
 
-import { Scalar, Variables, Context, NullArray } from "./types";
+import { Scalar, Variables, Context, NullArray, Fragments } from "./types";
 
 import { getFieldArguments, getNormalizedVariables } from "./variables";
 
 import { getMainOperation, getFragments } from "./traversal";
 
-type DataField = Scalar | NullArray<Scalar> | null;
+type DataField = Scalar | null;
 
 export interface ParsedFieldNode {
   _id: string;
@@ -25,7 +25,7 @@ export interface ParsedFieldNode {
 export type ParsedNodeMap = Record<string, ParsedFieldNode>;
 
 interface Data {
-  [fieldName: string]: Data[] | Data | DataField;
+  [fieldName: string]: Data[] | Data | DataField | null;
 }
 
 const getFieldKey = (fieldName: string, args?: Variables) =>
@@ -41,28 +41,22 @@ export const startQuery = (
   }
 
   const operation = getMainOperation(request.query);
-
   if (operation.selectionSet.selections.length === 0) {
     return map;
   }
 
-  const ctx = {
+  return parseNodes({
     variables: getNormalizedVariables(
       operation.variableDefinitions,
       request.variables
     ),
+    selections: operation.selectionSet.selections,
+    parsedNodes: map,
     fragments: getFragments(request.query),
-    cacheOutcome: request.context.meta && request.context.meta.cacheOutcome
-  };
-
-  const owner = {};
-  return copyFromData(
-    ctx,
-    copyNodeMap(map),
-    operation.selectionSet.selections,
+    cacheOutcome: request.context.meta && request.context.meta.cacheOutcome,
     data,
-    owner
-  );
+    owner: {}
+  });
 };
 
 const copyNodeMap = (map: null | ParsedNodeMap): ParsedNodeMap => {
@@ -89,105 +83,105 @@ const copyParsedFieldNode = (node: ParsedFieldNode, owner: {}) => {
   }
 };
 
-function copyFromData(
-  ctx: Context,
-  map: ParsedNodeMap,
-  selection: readonly SelectionNode[],
-  data: Data,
-  owner: {}
-): ParsedNodeMap {
-  selection.forEach(fieldNode => {
-    if (isFieldNode(fieldNode)) {
-      const fieldName = fieldNode.name.value || "query";
-      const fieldArgs = getFieldArguments(fieldNode, ctx.variables);
-      const fieldKey = getFieldKey(fieldName, fieldArgs);
-      const fieldAlias =
-        fieldNode.alias !== undefined
-          ? fieldNode.alias.value
-          : fieldNode.name.value;
-      const fieldValue = data[fieldAlias];
+interface CopyFromDataArgs {
+  fragments: Fragments;
+  variables: Variables;
+  cacheOutcome: OperationDebugMeta["cacheOutcome"];
+  parsedNodes: ParsedNodeMap;
+  selections: readonly SelectionNode[];
+  data: Data;
+  owner: {};
+}
 
-      let node: ParsedFieldNode;
-      if (map[fieldKey] === undefined) {
-        node = map[fieldKey] = {
+const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
+  const {
+    fragments,
+    variables,
+    cacheOutcome,
+    parsedNodes = {},
+    selections,
+    data,
+    owner
+  } = copyArgs;
+
+  return selections.reduce((parsedNodemap, selectionNode): ParsedNodeMap => {
+    if (!selectionNode) {
+      return parsedNodemap;
+    }
+
+    if (isInlineFragment(selectionNode)) {
+      return parseNodes({
+        ...copyArgs,
+        parsedNodes: parsedNodemap,
+        selections: selectionNode.selectionSet.selections
+      });
+    }
+
+    const fragmentDefinition = fragments[selectionNode.name.value];
+    if (fragmentDefinition) {
+      return parseNodes({
+        ...copyArgs,
+        parsedNodes: parsedNodemap,
+        selections: fragmentDefinition.selectionSet.selections
+      });
+    }
+
+    if (!isFieldNode(selectionNode)) {
+      return parsedNodemap;
+    }
+
+    const name = selectionNode.name.value || "query";
+    const args = getFieldArguments(selectionNode, variables);
+    const key = getFieldKey(name, args);
+    const value =
+      data[
+        selectionNode.alias !== undefined
+          ? selectionNode.alias.value
+          : selectionNode.name.value
+      ];
+
+    const node = parsedNodemap[key]
+      ? copyParsedFieldNode(parsedNodemap[key], owner)
+      : {
           _id: nanoid(),
           _owner: owner,
-          cacheOutcome: ctx.cacheOutcome,
-          key: fieldKey,
-          name: fieldName,
-          args: fieldArgs
+          cacheOutcome,
+          key,
+          name,
+          args
         };
-      } else {
-        node = map[fieldKey] = copyParsedFieldNode(map[fieldKey], owner);
-        node.cacheOutcome = ctx.cacheOutcome;
-      }
 
-      if (
-        fieldNode.selectionSet !== undefined &&
-        typeof fieldValue === "object" &&
-        fieldValue !== null
-      ) {
-        const childValue = fieldValue as Data | Data[];
-        const fieldSelection = fieldNode.selectionSet
-          ? fieldNode.selectionSet.selections
-          : [];
-
-        if (Array.isArray(childValue)) {
-          const size = childValue.length;
-          node.children = Array.isArray(node.children)
-            ? node.children
-            : new Array(size);
-          node.children.length = size;
-
-          for (let i = 0; i < size; i++) {
-            const childData: Data | null = childValue[i];
-            if (childData === null) {
-              node.children[i] = null;
-            } else {
-              const childMap = node.children[i] || Object.create(null);
-              node.children[i] = copyFromData(
-                ctx,
-                childMap,
-                fieldSelection,
-                childData,
-                owner
-              );
-            }
-          }
-        } else {
-          const childMap = node.children || Object.create(null);
-          node.children = copyFromData(
-            ctx,
-            childMap,
-            fieldSelection,
-            childValue,
-            owner
-          );
+    if (selectionNode.selectionSet && Array.isArray(value)) {
+      return {
+        ...parsedNodemap,
+        [key]: {
+          ...node,
+          value: undefined,
+          children: value.reduce<ParsedNodeMap>(
+            (parsedNodes, data) =>
+              parseNodes({
+                ...copyArgs,
+                parsedNodes,
+                selections: selectionNode.selectionSet
+                  ? selectionNode.selectionSet.selections
+                  : [],
+                data
+              }),
+            {}
+          )
         }
-
-        delete node.value;
-      } else {
-        node.value = fieldValue === undefined ? null : fieldValue;
-        delete node.children;
-      }
-    } else {
-      const fragmentNode = !isInlineFragment(fieldNode)
-        ? ctx.fragments[fieldNode.name.value]
-        : fieldNode;
-      if (fragmentNode) {
-        copyFromData(
-          ctx,
-          map,
-          fragmentNode.selectionSet.selections,
-          data,
-          owner
-        );
-      }
+      };
     }
-  });
 
-  return map;
-}
+    return {
+      ...parsedNodemap,
+      [key]: {
+        ...node,
+        value
+      }
+    };
+  }, parsedNodes);
+};
 
 const isFieldNode = (node: SelectionNode): node is FieldNode =>
   node.kind === Kind.FIELD;

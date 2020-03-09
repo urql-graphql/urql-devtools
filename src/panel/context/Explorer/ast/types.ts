@@ -4,7 +4,7 @@ import { FragmentDefinitionNode, SelectionNode } from "graphql";
 import { OperationDebugMeta } from "urql";
 
 // Helper types
-export type NullArray<T> = (null | T)[];
+export type NullArray<T> = (T | null)[];
 
 // GraphQL helper types
 export type SelectionSet = readonly SelectionNode[];
