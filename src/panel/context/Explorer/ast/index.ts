@@ -1,7 +1,7 @@
 import stringify from "fast-json-stable-stringify";
 import nanoid from "nanoid";
 import { Operation } from "urql";
-import { SelectionNode, FieldNode, Kind, InlineFragmentNode } from "graphql";
+import { SelectionNode, Kind, FieldNode, InlineFragmentNode } from "graphql";
 
 import { Scalar, Variables, Context, NullArray } from "./types";
 
@@ -11,7 +11,7 @@ import { getMainOperation, getFragments } from "./traversal";
 
 type DataField = Scalar | NullArray<Scalar> | null;
 
-export interface FieldNode {
+export interface ParsedFieldNode {
   _id: string;
   _owner: {};
   cacheOutcome?: Context["cacheOutcome"];
@@ -19,10 +19,10 @@ export interface FieldNode {
   name: string;
   args?: Variables;
   value?: DataField | null;
-  children?: NodeMap | NullArray<NodeMap>;
+  children?: ParsedNodeMap | NullArray<ParsedNodeMap>;
 }
 
-export type NodeMap = Record<string, FieldNode>;
+export type ParsedNodeMap = Record<string, ParsedFieldNode>;
 
 interface Data {
   [fieldName: string]: Data[] | Data | DataField;
@@ -34,7 +34,7 @@ const getFieldKey = (fieldName: string, args?: Variables) =>
 export const startQuery = (
   request: Operation,
   data: Data,
-  map: NodeMap = Object.create(null)
+  map: ParsedNodeMap = Object.create(null)
 ) => {
   if (request.operationName !== "query") {
     return map;
@@ -65,12 +65,12 @@ export const startQuery = (
   );
 };
 
-const copyNodeMap = (map: null | NodeMap): NodeMap => {
+const copyNodeMap = (map: null | ParsedNodeMap): ParsedNodeMap => {
   const newMap = Object.create(null);
   return map !== null ? Object.assign(newMap, map) : newMap;
 };
 
-const copyFieldNode = (node: FieldNode, owner: {}) => {
+const copyParsedFieldNode = (node: ParsedFieldNode, owner: {}) => {
   if (node._owner === owner) {
     return node;
   } else {
@@ -91,11 +91,11 @@ const copyFieldNode = (node: FieldNode, owner: {}) => {
 
 function copyFromData(
   ctx: Context,
-  map: NodeMap,
+  map: ParsedNodeMap,
   selection: readonly SelectionNode[],
   data: Data,
   owner: {}
-): NodeMap {
+): ParsedNodeMap {
   selection.forEach(fieldNode => {
     if (isFieldNode(fieldNode)) {
       const fieldName = fieldNode.name.value || "query";
@@ -107,7 +107,7 @@ function copyFromData(
           : fieldNode.name.value;
       const fieldValue = data[fieldAlias];
 
-      let node: FieldNode;
+      let node: ParsedFieldNode;
       if (map[fieldKey] === undefined) {
         node = map[fieldKey] = {
           _id: nanoid(),
@@ -118,7 +118,7 @@ function copyFromData(
           args: fieldArgs
         };
       } else {
-        node = map[fieldKey] = copyFieldNode(map[fieldKey], owner);
+        node = map[fieldKey] = copyParsedFieldNode(map[fieldKey], owner);
         node.cacheOutcome = ctx.cacheOutcome;
       }
 

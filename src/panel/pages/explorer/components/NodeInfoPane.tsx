@@ -1,6 +1,6 @@
 import React, { FC, useContext, useMemo } from "react";
 import styled from "styled-components";
-import { FieldNode, NodeMap } from "../../../context/Explorer/ast";
+import { ParsedFieldNode, ParsedNodeMap } from "../../../context/Explorer/ast";
 import { Context, Variables } from "../../../context/Explorer/ast/types";
 import { Pane } from "../../../components";
 import { ExplorerContext } from "../../../context";
@@ -29,7 +29,7 @@ export const NodeInfoPane: FC = () => {
   );
 };
 
-const NodeInfoContent: FC<{ node: FieldNode }> = ({ node }) => (
+const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => (
   <>
     <Container>
       <Title>Name</Title>
@@ -70,7 +70,7 @@ const NodeInfoContent: FC<{ node: FieldNode }> = ({ node }) => (
 );
 
 const gatherChildValues = (
-  values: NodeMap | NodeMap[] | undefined | Variables
+  values: ParsedNodeMap | ParsedNodeMap[] | undefined | Variables
 ) => {
   if (!values) {
     return null;
@@ -118,7 +118,7 @@ const getDescription = (status: Context["cacheOutcome"]) => {
   }
 };
 
-const renderChildren = (node: FieldNode) => {
+const renderChildren = (node: ParsedFieldNode) => {
   return (
     <Code key={node._id}>
       {Array.isArray(node.children) ? (

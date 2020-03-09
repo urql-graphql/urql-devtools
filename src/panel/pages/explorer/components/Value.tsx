@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useMemo, FC } from "react";
 import styled from "styled-components";
 import { animated } from "react-spring";
-import { FieldNode } from "../../../context/Explorer/ast";
+import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { useFlash } from "../hooks";
 
 export const Value: FC<{
-  value: FieldNode["value"];
+  value: ParsedFieldNode["value"];
   expand?: boolean;
   isRoot?: boolean;
 }> = ({ value, expand = false, isRoot = true }) => {

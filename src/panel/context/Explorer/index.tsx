@@ -11,12 +11,12 @@ import React, {
 
 import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
 import { DevtoolsContext } from "../Devtools";
-import { startQuery, NodeMap, FieldNode } from "./ast";
+import { startQuery, ParsedNodeMap, ParsedFieldNode } from "./ast";
 
 export interface ExplorerContextValue {
-  operations: NodeMap;
-  focusedNode?: FieldNode;
-  setFocusedNode: Dispatch<SetStateAction<FieldNode | undefined>>;
+  operations: ParsedNodeMap;
+  focusedNode?: ParsedFieldNode;
+  setFocusedNode: Dispatch<SetStateAction<ParsedFieldNode | undefined>>;
 }
 
 export const ExplorerContext = createContext<ExplorerContextValue>(null as any);
