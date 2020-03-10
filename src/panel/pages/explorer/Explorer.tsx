@@ -4,7 +4,7 @@ import { Background } from "../../components";
 import { ExplorerContext } from "../../context";
 import { Tree, NodeInfoPane } from "./components";
 
-export function Explorer() {
+export var Explorer = () => {
   const { operations } = useContext(ExplorerContext);
 
   return (
@@ -22,7 +22,7 @@ export function Explorer() {
       <NodeInfoPane />
     </Container>
   );
-}
+};
 
 const Container = styled(Background)`
   background-color: ${p => p.theme.dark["0"]};

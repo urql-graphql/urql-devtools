@@ -9,7 +9,7 @@ interface Props {
   displayAll: boolean;
 }
 
-export function Arguments({ args, displayAll }: Props) {
+export var Arguments = ({ args, displayAll }: Props) => {
   if (!args) {
     return null;
   }
@@ -39,7 +39,7 @@ export function Arguments({ args, displayAll }: Props) {
   }, [args]);
 
   return <ArgsContainer>({content})</ArgsContainer>;
-}
+};
 
 const GraphQLArgument: FC<{ argument: { key: string; value: any } }> = ({
   argument: { key, value }

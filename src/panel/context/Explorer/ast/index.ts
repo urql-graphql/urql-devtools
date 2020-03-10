@@ -11,7 +11,6 @@ import {
   FragmentDefinitionNode,
   ASTNode
 } from "graphql";
-
 import { getFieldArguments, getNormalizedVariables } from "./variables";
 
 export interface ParsedFieldNode {
