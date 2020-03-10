@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, FC } from "react";
 import styled from "styled-components";
 import { Background } from "../../components";
 import { ExplorerContext } from "../../context";
 import { Tree, NodeInfoPane } from "./components";
 
-export var Explorer = () => {
+export const Explorer: FC = () => {
   const { operations } = useContext(ExplorerContext);
 
   return (

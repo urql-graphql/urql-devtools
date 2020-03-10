@@ -4,12 +4,10 @@ import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { Key, Value } from "./Value";
 import { SeeMoreIcon } from "./Icons";
 
-interface Props {
+export const Arguments: FC<{
   args: ParsedFieldNode["args"];
   displayAll: boolean;
-}
-
-export var Arguments = ({ args, displayAll }: Props) => {
+}> = ({ args, displayAll }) => {
   if (!args) {
     return null;
   }
