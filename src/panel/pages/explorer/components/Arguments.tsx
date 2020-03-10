@@ -1,11 +1,11 @@
 import React, { useMemo, FC } from "react";
 import styled from "styled-components";
-import { FieldNode } from "../../../context/Explorer/ast";
+import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { Key, Value } from "./Value";
 import { SeeMoreIcon } from "./Icons";
 
 interface Props {
-  args: FieldNode["args"];
+  args: ParsedFieldNode["args"];
   displayAll: boolean;
 }
 

@@ -11,12 +11,12 @@ import React, {
 
 import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
 import { DevtoolsContext } from "../Devtools";
-import { startQuery, NodeMap, FieldNode } from "./ast";
+import { handleResponse, ParsedNodeMap, ParsedFieldNode } from "./ast";
 
 export interface ExplorerContextValue {
-  operations: NodeMap;
-  focusedNode?: FieldNode;
-  setFocusedNode: Dispatch<SetStateAction<FieldNode | undefined>>;
+  operations: ParsedNodeMap;
+  focusedNode?: ParsedFieldNode;
+  setFocusedNode: Dispatch<SetStateAction<ParsedFieldNode | undefined>>;
 }
 
 export const ExplorerContext = createContext<ExplorerContextValue>(null as any);
@@ -37,9 +37,13 @@ export const ExplorerProvider: FC = ({ children }) => {
         return;
       }
 
-      if (o.type === "response") {
+      if (o.type === "response" && o.data.data) {
         setOperations(operations =>
-          startQuery(o.data.operation, o.data.data, operations)
+          handleResponse({
+            operation: o.data.operation,
+            data: o.data.data,
+            parsedNodes: operations
+          })
         );
         return;
       }

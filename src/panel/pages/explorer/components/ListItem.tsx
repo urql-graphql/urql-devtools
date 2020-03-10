@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { FieldNode } from "../../../context/Explorer/ast";
+import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { ExplorerContext } from "../../../context";
 import { useFlash } from "../hooks";
 import { ArrowIcon } from "./Icons";
@@ -17,7 +17,7 @@ import { Value } from "./Value";
 import { Tree } from "./Tree";
 
 interface ListItemProps {
-  node: FieldNode;
+  node: ParsedFieldNode;
   depth?: number;
 }
 
@@ -103,7 +103,7 @@ export const SystemListItem = ({
   node,
   index
 }: {
-  node: FieldNode;
+  node: ParsedFieldNode;
   index?: number;
 }) => (
   <Item withChildren={false}>
