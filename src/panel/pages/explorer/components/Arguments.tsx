@@ -4,12 +4,10 @@ import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { Key, Value } from "./Value";
 import { SeeMoreIcon } from "./Icons";
 
-interface Props {
+export const Arguments: FC<{
   args: ParsedFieldNode["args"];
   displayAll: boolean;
-}
-
-export function Arguments({ args, displayAll }: Props) {
+}> = ({ args, displayAll }) => {
   if (!args) {
     return null;
   }
@@ -39,7 +37,7 @@ export function Arguments({ args, displayAll }: Props) {
   }, [args]);
 
   return <ArgsContainer>({content})</ArgsContainer>;
-}
+};
 
 const GraphQLArgument: FC<{ argument: { key: string; value: any } }> = ({
   argument: { key, value }

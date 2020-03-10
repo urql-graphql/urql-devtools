@@ -8,7 +8,6 @@ import React, {
   SetStateAction,
   Dispatch
 } from "react";
-
 import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
 import { DevtoolsContext } from "../Devtools";
 import { handleResponse, ParsedNodeMap, ParsedFieldNode } from "./ast";
