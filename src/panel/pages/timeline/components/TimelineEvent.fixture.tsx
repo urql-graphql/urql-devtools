@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ParsedEvent } from "../../../types";
+import { TimelineProvider } from "../../../context/Timeline";
 import { TimelineEvent } from "./TimelineEvent";
 
 const Wrapper = styled.div`
@@ -64,5 +65,12 @@ export default {
     <Wrapper>
       <TimelineEvent event={teardownEvent} />
     </Wrapper>
+  ),
+  "event with tooltip": (
+    <TimelineProvider>
+      <Wrapper>
+        <TimelineEvent event={queryEvent} />
+      </Wrapper>
+    </TimelineProvider>
   )
 };

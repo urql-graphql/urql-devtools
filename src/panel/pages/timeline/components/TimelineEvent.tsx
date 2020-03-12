@@ -1,8 +1,9 @@
-import React, { MouseEvent } from "react";
+import React from "react";
 import styled from "styled-components";
 import { ParsedEvent } from "../../../types";
 import { theme as importedTheme } from "../../../theme";
-import { useTimelineTooltip, Position } from "./TimelineTooltip";
+import { useTimelineContext } from "../../../context/Timeline";
+import { TooltipPosition } from "./TimelineTooltip";
 
 /** Convert parsed event to timeline event type. */
 const getEventType = (event: ParsedEvent) => {
@@ -23,6 +24,10 @@ const COLOR_MAPPING = {
   teardown: importedTheme.grey["-1"]
 };
 
+const Wrapper = styled.div`
+  padding: 50px;
+`;
+
 const Container = styled.div`
   border-radius: 50%;
   width: 10px;
@@ -31,26 +36,34 @@ const Container = styled.div`
   background: ${props => props.color};
 `;
 
-const getPosFromRef = (e: MouseEvent): Position => ({
-  x: e.clientX,
-  y: e.clientY
-});
+const getPosFromRef = (
+  ref: React.RefObject<HTMLDivElement>
+): TooltipPosition => {
+  const { x, y, width, height } = ref.current!.getBoundingClientRect(); //eslint-disable-line @typescript-eslint/no-non-null-assertion
+  return {
+    x: x + width / 2,
+    y: y + height / 2
+  };
+};
 
 export const TimelineEvent = ({ event }: { event: ParsedEvent }) => {
-  const [render, setPos] = useTimelineTooltip() as [
-    () => JSX.Element | null,
-    React.Dispatch<React.SetStateAction<Position | null>>
-  ];
+  const { setTooltipPosition } = useTimelineContext();
+  const ref = React.useRef<HTMLDivElement>(null);
   const eventColor = React.useMemo(() => COLOR_MAPPING[getEventType(event)], [
     event
   ]);
+
+  console.log(ref.current && ref.current.getBoundingClientRect());
+
   return (
-    <Container
-      color={eventColor}
-      onMouseEnter={e => setPos(getPosFromRef(e))}
-      onMouseLeave={() => setPos(null)}
-    >
-      {render()}
-    </Container>
+    <Wrapper>
+      <Container
+        ref={ref}
+        color={eventColor}
+        onMouseEnter={() => setTooltipPosition(getPosFromRef(ref))}
+        // TODO: triggering too often currently
+        onMouseOut={() => setTooltipPosition(null)}
+      />
+    </Wrapper>
   );
 };
