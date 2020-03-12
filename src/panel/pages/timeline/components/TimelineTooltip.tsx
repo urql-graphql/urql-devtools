@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 export interface Position {
@@ -27,8 +28,17 @@ export const TimelineTooltip = styled.p<{ pos?: Position }>`
     border-top: 8px solid ${p => p.theme.dark["-2"]};
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    left: 50px;
+    left: 20px;
     top: 100%;
     transform: translate(-50%, 0);
   }
 `;
+
+export const useTimelineTooltip = () => {
+  const [pos, setPos] = React.useState<Position | null>(null);
+
+  const render = React.useCallback(() => {
+    return pos ? <TimelineTooltip pos={pos} /> : null;
+  }, [pos]);
+  return [render, setPos];
+};
