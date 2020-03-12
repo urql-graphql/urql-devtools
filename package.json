@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "bestzip": "^2.1.4",
+    "d3-scale": "^3.2.1",
     "fast-json-stable-stringify": "^2.0.0",
     "nanoid": "^2.1.0",
     "prism-react-renderer": "^1.0.2",
@@ -73,6 +74,7 @@
     "@babel/preset-typescript": "^7.7.2",
     "@types/chrome": "0.0.86",
     "@types/codemirror": "0.0.76",
+    "@types/d3-scale": "^2.2.0",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/fast-json-stable-stringify": "^2.0.0",
