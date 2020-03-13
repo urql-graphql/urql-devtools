@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import React, { FC, useMemo, useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
 import {
   ParsedMutationEvent,
   ParsedQueryEvent,
@@ -6,33 +7,54 @@ import {
   ParsedResponseEvent,
   ParsedErrorEvent
 } from "../../../types";
+import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
 
 interface TimelineRequestProps {
   trigger: ParsedMutationEvent | ParsedQueryEvent | ParsedSubscriptionEvent;
   response?: ParsedResponseEvent | ParsedErrorEvent;
 }
 
-export const TimelineRequest = styled.div.attrs<TimelineRequestProps>(
-  props => ({
-    "data-type": !props.response
-      ? "fetching"
-      : props.response.type === "response"
-      ? "success"
-      : "error"
-  })
-)<TimelineRequestProps>`
+/** Convert parsed event to timeline event type. */
+const getResponseName = (response: TimelineRequestProps["response"]) => {
+  return !response
+    ? "fetching"
+    : response.type === "response"
+    ? "success"
+    : "error";
+};
+
+const RequestBar = styled.div`
   width: 10px;
   height: 40px;
-
-  &[data-type="fetching"] {
-    background: ${props => props.theme.blue["0"]};
-  }
-
-  &[data-type="success"] {
-    background: ${props => props.theme.green["0"]};
-  }
-
-  &[data-type="error"] {
-    background: ${props => props.theme.red["0"]};
-  }
+  background: ${props => props.color};
 `;
+
+export const TimelineRequest: FC<TimelineRequestProps> = ({
+  response,
+  ...elementProps
+}) => {
+  const theme = useContext(ThemeContext);
+  const { ref, tooltipProps, isVisible } = useTooltip();
+  const responseName = useMemo(() => getResponseName(response), [response]);
+
+  const responseColor = useMemo(
+    () =>
+      ({
+        fetching: theme.blue["0"],
+        success: theme.green["0"],
+        error: theme.red["0"]
+      }[responseName]),
+    [responseName, theme]
+  );
+
+  return (
+    <>
+      <RequestBar {...elementProps} color={responseColor} ref={ref} />
+      {isVisible && (
+        <TimelineTooltip {...tooltipProps}>
+          {`Request: ${responseName}`}
+        </TimelineTooltip>
+      )}
+    </>
+  );
+};

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TimelineTooltip, TooltipPosition } from "./TimelineTooltip";
+import { TimelineTooltip, useTooltip } from "./TimelineTooltip";
 
 const Wrapper = styled.div`
   display: flex;
@@ -9,7 +9,29 @@ const Wrapper = styled.div`
   flex-grow: 1;
 `;
 
-const position: TooltipPosition = { x: 50, y: 50 };
+const HoverableItem = () => {
+  const { ref, tooltipProps, isVisible } = useTooltip();
+
+  console.log({ ref, tooltipProps, isVisible });
+
+  return (
+    <>
+      <button
+        style={{
+          position: "absolute",
+          left: 200,
+          top: 200,
+          width: 100,
+          height: 30
+        }}
+        ref={ref}
+      >
+        Hover me!
+      </button>
+      {isVisible && <TimelineTooltip {...tooltipProps}>Hello!</TimelineTooltip>}
+    </>
+  );
+};
 
 export default {
   basic: (
@@ -17,11 +39,9 @@ export default {
       <TimelineTooltip>A network response or cache update</TimelineTooltip>
     </Wrapper>
   ),
-  positioned: (
+  onHover: (
     <Wrapper>
-      <TimelineTooltip position={position}>
-        A network response or cache update
-      </TimelineTooltip>
+      <HoverableItem />
     </Wrapper>
   )
 };

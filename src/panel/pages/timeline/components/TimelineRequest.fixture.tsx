@@ -9,7 +9,7 @@ import { TimelineRequest } from "./TimelineRequest";
 
 const Wrapper = styled.div`
   display: flex;
-  padding: 10px;
+  padding: 100px;
   background: ${props => props.theme.dark["0"]};
   flex-grow: 1;
 `;

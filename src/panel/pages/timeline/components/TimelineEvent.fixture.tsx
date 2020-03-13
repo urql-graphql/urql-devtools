@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { ParsedEvent } from "../../../types";
-import { TimelineProvider } from "../../../context/Timeline";
 import { TimelineEvent } from "./TimelineEvent";
 
 const Wrapper = styled.div`
@@ -9,6 +8,7 @@ const Wrapper = styled.div`
   padding: 10px;
   background: ${props => props.theme.dark["0"]};
   flex-grow: 1;
+  padding: 100px;
 `;
 
 const queryEvent: ParsedEvent = {
@@ -65,12 +65,5 @@ export default {
     <Wrapper>
       <TimelineEvent event={teardownEvent} />
     </Wrapper>
-  ),
-  "event with tooltip": (
-    <TimelineProvider>
-      <Wrapper>
-        <TimelineEvent event={queryEvent} />
-      </Wrapper>
-    </TimelineProvider>
   )
 };

@@ -10,10 +10,6 @@ import React, {
 } from "react";
 import { scaleLinear } from "d3-scale";
 import { ParsedEvent } from "../types";
-import {
-  TimelineTooltip,
-  TooltipPosition
-} from "../pages/timeline/components/TimelineTooltip";
 import { DevtoolsContext } from "./Devtools";
 
 interface TimelineContextValue {
@@ -21,9 +17,6 @@ interface TimelineContextValue {
   setContainer: (e: HTMLDivElement) => void;
   getTimePosition: (t: number) => number;
   timelineLength: number;
-  setTooltipPosition: React.Dispatch<
-    React.SetStateAction<TooltipPosition | null>
-  >;
 }
 
 const TimelineContext = createContext<TimelineContextValue>(null as any);
@@ -81,11 +74,6 @@ export const TimelineProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const domain = useTimelineDomain();
   const [events, setEvents] = useState<Record<string, ParsedEvent[]>>({});
-  // TODO: add tooltip message state
-  const [
-    tooltipPosition,
-    setTooltipPosition
-  ] = React.useState<TooltipPosition | null>(null);
 
   useEffect(() => {
     return addMessageHandler(message => {
@@ -107,7 +95,6 @@ export const TimelineProvider: FC = ({ children }) => {
   const value = useMemo(
     () => ({
       events,
-      setTooltipPosition,
       ...domain
     }),
     [domain, events]
@@ -115,9 +102,6 @@ export const TimelineProvider: FC = ({ children }) => {
 
   return (
     <TimelineContext.Provider value={value}>
-      {/* TimelineTooltip rendered here so the position
-          doesn't have to be passed with the setter */}
-      {tooltipPosition && <TimelineTooltip position={tooltipPosition} />}
       {children}
     </TimelineContext.Provider>
   );
