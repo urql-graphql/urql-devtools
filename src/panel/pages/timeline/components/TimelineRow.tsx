@@ -65,7 +65,7 @@ export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
           style={{
             position: "absolute",
             left: getTimePosition(eventStart),
-            right: 0
+            right: timelineLength - getTimePosition(Date.now())
           }}
         />
       ];

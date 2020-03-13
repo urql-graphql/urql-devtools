@@ -39,7 +39,7 @@ const useTimelineDomain = () => {
 
     setScale({
       scale: scaleLinear()
-        .domain([startTime.current, Date.now()])
+        .domain([startTime.current, startTime.current + 30000])
         .range([0, ref.current.clientWidth])
     });
   }, [setScale]);
