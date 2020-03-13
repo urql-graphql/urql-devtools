@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   padding: 10px;
   background: ${props => props.theme.dark["0"]};
   flex-grow: 1;
+  padding: 100px;
 `;
 
 const queryEvent: ParsedEvent = {
