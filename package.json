@@ -5,6 +5,7 @@
   "scripts": {
     "start": "webpack --watch",
     "cosmos": "cosmos",
+    "cosmos-export": "cosmos-export",
     "build": "NODE_ENV=\"production\" webpack",
     "bundle": "cd dist && bestzip ../extension.zip *",
     "lint": "eslint --ext .ts,.tsx src",
