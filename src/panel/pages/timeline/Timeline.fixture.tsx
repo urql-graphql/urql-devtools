@@ -4,8 +4,16 @@ import {
   OperationResponseMessage,
   OperationErrorMessage
 } from "@urql/devtools";
+import styled from "styled-components";
 import { TimelineProvider, DevtoolsContext } from "../../context";
 import { Timeline } from "./Timeline";
+
+const Wrapper = styled.div`
+  display: flex;
+  background: ${props => props.theme.dark["-2"]};
+  flex-grow: 1;
+  padding: 40px;
+`;
 
 const defaultEvents: (
   | OperationMessage
@@ -17,6 +25,30 @@ const defaultEvents: (
     data: {
       key: 1,
       operationName: "query"
+    }
+  },
+  {
+    type: "response",
+    data: {
+      operation: {
+        key: 1
+      }
+    }
+  },
+  {
+    type: "operation",
+    data: {
+      key: 1,
+      operationName: "query"
+    }
+  },
+  {
+    type: "teardown",
+    data: {
+      operationName: "query",
+      operation: {
+        key: 1
+      }
     }
   },
   {
@@ -52,7 +84,7 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
               // h({ ...events[i++ % events.length], timestamp: Date.now() });
               const interval = setInterval(() => {
                 h({ ...events[i++ % events.length], timestamp: Date.now() });
-                i === 3 ? clearInterval(interval) : null;
+                i === events.length ? clearInterval(interval) : null;
               }, 2000);
 
               return () => clearInterval(interval);
@@ -69,7 +101,9 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
 export default {
   basic: (
     <DevtoolsContextMock>
-      <Timeline />
+      <Wrapper>
+        <Timeline />
+      </Wrapper>
     </DevtoolsContextMock>
   )
 };
