@@ -53,8 +53,6 @@ export const TimelineEvent = ({ event }: { event: ParsedEvent }) => {
     event
   ]);
 
-  console.log(ref.current && ref.current.getBoundingClientRect());
-
   return (
     <Wrapper>
       <Container
