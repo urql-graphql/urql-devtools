@@ -10,12 +10,13 @@ beforeAll(async () => {
   try {
     browser = await puppeteer.launch({ args: ["--no-sandbox"] });
     fixtures = (
-      await getFixtureUrls({ cosmosConfig: detectCosmosConfig() })
+      await getFixtureUrls({
+        cosmosConfig: detectCosmosConfig(),
+        fullScreen: true
+      })
     ).map(url => ({
       id: url.replace(/.*?fixtureId\=/, ""),
-      url: `http://${url
-        .replace("?fixtureId", "_renderer.html?_fixtureId")
-        .replace("localhost", "cosmos")}`
+      url: `http://${url.replace("localhost", "cosmos")}`
     }));
   } catch (err) {
     console.error(err);
