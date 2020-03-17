@@ -6,7 +6,7 @@ import { TimelineEvent } from "./TimelineEvent";
 import { TimelineDuration } from "./TimelineDuration";
 
 export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
-  const { getTimePosition, timelineLength } = useTimelineContext();
+  const { scale, timelineLength } = useTimelineContext();
 
   const eventElements = useMemo(
     () =>
@@ -18,13 +18,13 @@ export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
             event={e}
             style={{
               position: "absolute",
-              left: getTimePosition(e.timestamp),
+              left: scale(e.timestamp),
               transform: "translateX(-50%) translateY(-50%)"
             }}
           />
         ];
       }, []),
-    [events, getTimePosition]
+    [events, scale]
   );
 
   const durationElements = useMemo(() => {
@@ -44,8 +44,8 @@ export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
             key={p.length}
             style={{
               position: "absolute",
-              left: getTimePosition(eventStart),
-              right: timelineLength - getTimePosition(e.timestamp)
+              left: scale(eventStart),
+              right: timelineLength - scale(e.timestamp)
             }}
           />
         );
@@ -64,15 +64,15 @@ export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
           key={mostEvents.length}
           style={{
             position: "absolute",
-            left: getTimePosition(eventStart),
-            right: timelineLength - getTimePosition(Date.now())
+            left: scale(eventStart),
+            right: timelineLength - scale(Date.now())
           }}
         />
       ];
     }
 
     return mostEvents;
-  }, [events, getTimePosition, timelineLength]);
+  }, [events, scale, timelineLength]);
 
   return (
     <Container>
@@ -83,7 +83,12 @@ export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
 };
 
 const Container = styled.div`
-  flex-grow: 1;
   position: relative;
-  padding: 20px 0;
+  height: 20px;
+  padding-top: 8px;
+  margin-top: 30px;
+
+  & + & {
+    margin-top: 8px;
+  }
 `;

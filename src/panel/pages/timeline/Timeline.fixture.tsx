@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   background: ${props => props.theme.dark["-2"]};
   flex-grow: 1;
   padding: 40px;
+  overflow: hidden;
 `;
 
 const defaultEvents: (
@@ -38,6 +39,21 @@ const defaultEvents: (
   {
     type: "operation",
     data: {
+      key: 2,
+      operationName: "query"
+    }
+  },
+  {
+    type: "response",
+    data: {
+      operation: {
+        key: 2
+      }
+    }
+  },
+  {
+    type: "operation",
+    data: {
       key: 1,
       operationName: "query"
     }
@@ -48,6 +64,15 @@ const defaultEvents: (
       operationName: "query",
       operation: {
         key: 1
+      }
+    }
+  },
+  {
+    type: "teardown",
+    data: {
+      operationName: "query",
+      operation: {
+        key: 2
       }
     }
   },
