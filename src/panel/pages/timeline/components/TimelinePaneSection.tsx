@@ -7,11 +7,19 @@ import { CodeHighlight } from "../../../components";
 interface TimelinePaneSectionProps {
   title: string;
   timestamp: number;
+  subSections: {
+    title?: string;
+    info?: [string, string];
+    code?: {
+      language: string;
+      code: string;
+    };
+  }[];
 }
 
 export const TimelinePaneSection: React.FC<TimelinePaneSectionProps> = ({
   title,
-  timestamp
+  subSections
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   return (
@@ -23,32 +31,48 @@ export const TimelinePaneSection: React.FC<TimelinePaneSectionProps> = ({
         />
         {title}
       </SectionTitle>
-      {isOpen && (
-        <>
-          {timestamp}
-          <CodeHighlight
-            language="graphql"
-            code={`
-query { 
-  todos(id: 1234) { 
-    id 
-    content 
-  } 
-} 
-          `}
-          />
-        </>
-      )}
+      {isOpen &&
+        subSections.map(section => (
+          <>
+            {section.title && <h3>{section.title}</h3>}
+
+            {/* TODO?: move into a list */}
+            {section.info && (
+              <InfoContainer>
+                <span>{section.info[0]}</span>
+                <InfoValue>{section.info[1]}</InfoValue>
+              </InfoContainer>
+            )}
+            {section.code && (
+              <CodeHighlight
+                language={section.code.language}
+                code={section.code.code}
+                isTimelinePane
+              />
+            )}
+          </>
+        ))}
     </PaneSection>
   );
 };
 
+const InfoContainer = styled.div`
+  width: 100%;
+  position: relative;
+  padding-bottom: 1rem;
+`;
+
+const InfoValue = styled.span`
+  position: absolute;
+  right: 0;
+`;
+
 const PaneSection = styled.section`
-  padding: 2rem;
+  padding: 1rem 2rem 0 2rem;
+  color: #fff;
 `;
 
 const SectionTitle = styled.h2`
-  color: #fff;
   cursor: pointer;
 `;
 

@@ -5,7 +5,12 @@ import { Background } from "../../components/Background";
 import { TimelineRow, TimelinePane } from "./components";
 
 export const Timeline: FC = () => {
-  const { setContainer, getTimePosition, events } = useTimelineContext();
+  const {
+    setContainer,
+    getTimePosition,
+    events,
+    selectedEvent
+  } = useTimelineContext();
 
   // console.log(events);
 
@@ -25,7 +30,7 @@ export const Timeline: FC = () => {
           <TimelineRow key={key} events={eventList} />
         ))}
       </TimelineList>
-      <TimelinePane event={{}} />
+      {selectedEvent && <TimelinePane event={selectedEvent} sections={[]} />}
     </Container>
   );
 };

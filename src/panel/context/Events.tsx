@@ -11,16 +11,14 @@ import React, {
 } from "react";
 
 import {
-  DevtoolsExchangeOutgoingMessage,
   OperationMessage,
   OperationResponseMessage,
-  OperationErrorMessage,
-  DisconnectMessage,
-  InitMessage
+  OperationErrorMessage
 } from "@urql/devtools";
 
 import {
   ParsedEvent,
+  PresentedEvent,
   ParsedMutationEvent,
   ParsedQueryEvent,
   ParsedResponseEvent,
@@ -54,11 +52,6 @@ interface FilterState {
   key: number[];
 }
 
-type PresentedEvent = Exclude<
-  DevtoolsExchangeOutgoingMessage,
-  InitMessage | DisconnectMessage
->;
-
 export const EventsContext = createContext<EventsContextValue>(null as any);
 
 export const EventsProvider: FC = ({ children }) => {
@@ -73,6 +66,7 @@ export const EventsProvider: FC = ({ children }) => {
     key: []
   });
 
+  console.log(rawEvents);
   /** Handle incoming events */
   useEffect(() => {
     return addMessageHandler(msg => {
