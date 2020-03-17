@@ -15,13 +15,15 @@ interface TimelinePaneSectionProps {
       code: string;
     };
   }[];
+  startOpen?: boolean;
 }
 
 export const TimelinePaneSection: React.FC<TimelinePaneSectionProps> = ({
   title,
-  subSections
+  subSections,
+  startOpen
 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(!!startOpen);
   return (
     <PaneSection>
       <SectionTitle onClick={() => setIsOpen(prevIsOpen => !prevIsOpen)}>

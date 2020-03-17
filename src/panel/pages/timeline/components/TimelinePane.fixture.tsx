@@ -3,6 +3,7 @@ import { TimelinePane } from "./TimelinePane";
 const mockQuerySections = [
   {
     title: "Query",
+    startOpen: true,
     subSections: [
       {
         code: {

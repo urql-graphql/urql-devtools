@@ -17,6 +17,7 @@ export const TimelinePane: FC<{ event: any; sections: any }> = ({
             key={section.title}
             title={section.title}
             timestamp={section.timestamp}
+            startOpen={section.startOpen}
             subSections={section.subSections}
           />
         ))}
