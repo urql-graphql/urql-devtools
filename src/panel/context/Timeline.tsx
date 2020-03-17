@@ -99,7 +99,7 @@ const useTimelineDomain = () => {
 
   const handleZoom = useCallback((e: WheelEvent) => {
     // Scale movement delta
-    const delta = e.deltaY * 0.05;
+    const delta = e.deltaY * 0.01;
     const newZoom =
       e.deltaY < 0
         ? (max([0.2, domain.current.zoom + delta]) as number)
