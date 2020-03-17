@@ -6,6 +6,8 @@ import { Tabs, Pane, CodeHighlight } from "../../../components";
 export const EventPane: FC<{ event: ParsedEvent }> = ({ event }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
 
+  console.log(event);
+
   useLayoutEffect(() => {
     return () => setActiveTab(0);
   }, [event]);

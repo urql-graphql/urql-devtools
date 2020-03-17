@@ -75,6 +75,8 @@ export const TimelineProvider: FC = ({ children }) => {
   const domain = useTimelineDomain();
   const [events, setEvents] = useState<Record<string, ParsedEvent[]>>({});
 
+  console.log(events);
+
   useEffect(() => {
     return addMessageHandler(message => {
       if (message.type === "init" || message.type === "disconnect") {
