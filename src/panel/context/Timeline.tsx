@@ -16,8 +16,8 @@ import { DevtoolsContext } from "./Devtools";
 
 interface TimelineContextValue {
   events: Record<string, any>;
-  selectedEvent: PresentedEvent | null;
-  setSelectedEvent: Dispatch<SetStateAction<PresentedEvent | null>>;
+  selectedEvent?: PresentedEvent;
+  setSelectedEvent: Dispatch<SetStateAction<PresentedEvent | undefined>>;
   setContainer: (e: HTMLDivElement) => void;
   getTimePosition: (t: number) => number;
   timelineLength: number;
@@ -78,9 +78,9 @@ export const TimelineProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const domain = useTimelineDomain();
   const [events, setEvents] = useState<Record<string, PresentedEvent[]>>({});
-  const [selectedEvent, setSelectedEvent] = useState<PresentedEvent | null>(
-    null
-  );
+  const [selectedEvent, setSelectedEvent] = useState<
+    PresentedEvent | undefined
+  >(undefined);
 
   useEffect(() => {
     return addMessageHandler(message => {

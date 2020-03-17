@@ -66,7 +66,6 @@ export const EventsProvider: FC = ({ children }) => {
     key: []
   });
 
-  console.log(rawEvents);
   /** Handle incoming events */
   useEffect(() => {
     return addMessageHandler(msg => {
