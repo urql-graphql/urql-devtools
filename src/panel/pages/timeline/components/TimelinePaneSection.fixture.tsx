@@ -11,12 +11,13 @@ const Wrapper = styled.div`
 `;
 
 const query = gql`
-query GetUsers(filter: String!) {
-  users {
-    id
-    name
+  query GetUsers($filter: String!) {
+    users(filter: $filter) {
+      id
+      name
+    }
   }
-}`;
+`;
 
 export default {
   "subheading (collapsed)": (

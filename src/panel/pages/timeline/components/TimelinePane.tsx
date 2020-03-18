@@ -1,10 +1,10 @@
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import { print } from "graphql/language/printer";
 import { Operation } from "urql";
 import { Pane } from "../../../components";
 import { ReceivedDebugEvent } from "../../../types";
-import { TimelinePaneSection, TimelineQueryInfo } from "./TimelinePaneSection";
+import { TimelineQueryInfo } from "./TimelinePaneSection";
 
 const genGraphQlCodeHiglight = (str: string) => ({
   code: { language: "graphql", code: str }
