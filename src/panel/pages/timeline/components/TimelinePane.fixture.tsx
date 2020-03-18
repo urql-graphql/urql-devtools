@@ -1,61 +1,31 @@
 import React from "react";
-import { TimelinePane } from "./TimelinePane";
-const mockQuerySections = [
-  {
-    title: "Query",
-    startOpen: true,
-    subSections: [
-      {
-        code: {
-          language: "graphql",
-          code: `query { 
+import { parse } from "graphql";
+import { TimelinePane, DebugEvent } from "./TimelinePane";
+const mockDebugEvent: DebugEvent = {
+  type: "operation",
+  message: "operation addition event",
+  operation: {
+    operationName: "query",
+    key: 1,
+    context: {
+      requestPolicy: "network-only",
+      url: "https://example.com/graphql"
+    },
+    query: parse(`query { 
   todos(id: 1234) { 
     id 
     content 
   } 
-}`
-        }
-      },
-      {
-        title: "Variables",
-        code: {
-          language: "graphql",
-          code: `{
-  "myVar": 1234
-}`
-        }
-      }
-    ]
+}`),
+    variables: {
+      myVar: 1234
+    }
+  },
+  data: {
+    myData: 4321
   }
-];
-
-const mockDetailsSections = [
-  {
-    title: "Event",
-    subSections: [
-      {
-        info: ["key1", "value1"] as [string, string]
-      },
-      {
-        info: ["key2", "value2"] as [string, string]
-      },
-      {
-        info: ["key3", "value3"] as [string, string]
-      },
-      {
-        info: ["key4", "value4"] as [string, string]
-      }
-    ]
-  }
-];
+};
 
 export default {
-  query: <TimelinePane sections={mockQuerySections} event={{}} />,
-  event: <TimelinePane sections={mockDetailsSections} event={{}} />,
-  combined: (
-    <TimelinePane
-      sections={[...mockQuerySections, ...mockDetailsSections]}
-      event={{}}
-    />
-  )
+  combined: <TimelinePane event={mockDebugEvent} />
 };

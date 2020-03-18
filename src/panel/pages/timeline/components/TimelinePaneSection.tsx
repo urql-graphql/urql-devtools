@@ -6,7 +6,7 @@ import { CodeHighlight } from "../../../components";
 
 interface TimelinePaneSectionProps {
   title: string;
-  timestamp: number;
+  startOpen?: boolean;
   subSections: {
     title?: string;
     info?: [string, string];
@@ -15,7 +15,6 @@ interface TimelinePaneSectionProps {
       code: string;
     };
   }[];
-  startOpen?: boolean;
 }
 
 export const TimelinePaneSection: React.FC<TimelinePaneSectionProps> = ({
