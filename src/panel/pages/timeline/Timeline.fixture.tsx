@@ -1,85 +1,66 @@
 import React, { FC, useMemo } from "react";
-import {
-  OperationMessage,
-  OperationResponseMessage,
-  OperationErrorMessage
-} from "@urql/devtools";
 import { TimelineProvider, DevtoolsContext } from "../../context";
+import { ReceivedDebugEvent } from "../../types";
 import { Timeline } from "./Timeline";
 
-const defaultEvents: (
-  | OperationMessage
-  | OperationResponseMessage
-  | OperationErrorMessage
-)[] = [
+const defaultEvents: ReceivedDebugEvent[] = [
   {
-    type: "operation",
+    type: "debug",
     data: {
-      key: 1,
-      operationName: "query"
-    }
-  },
-  {
-    type: "response",
-    data: {
+      type: "addition",
+      message: "A listener was added to the stream",
       operation: {
         key: 1
       }
     }
   },
   {
-    type: "operation",
+    type: "debug",
     data: {
-      key: 2,
-      operationName: "query"
+      type: "update",
+      message: "This is an update to the operation response / data",
+      operation: {
+        key: 1
+      }
     }
   },
   {
-    type: "response",
+    type: "debug",
     data: {
+      type: "update",
+      message: "This is an update to the operation response / data",
+      operation: {
+        key: 1
+      }
+    }
+  },
+  {
+    type: "debug",
+    data: {
+      type: "addition",
+      message: "A listener was added to the stream",
       operation: {
         key: 2
       }
     }
   },
   {
-    type: "operation",
+    type: "debug",
     data: {
-      key: 1,
-      operationName: "query"
-    }
-  },
-  {
-    type: "teardown",
-    data: {
-      operationName: "query",
+      type: "teardown",
+      message: "A teardown was triggered on the stream",
       operation: {
         key: 1
       }
     }
   },
   {
-    type: "teardown",
+    type: "debug",
     data: {
-      operationName: "query",
+      type: "teardown",
+      message: "A teardown was triggered on the stream",
       operation: {
         key: 2
-      }
-    }
-  },
-  {
-    type: "operation",
-    data: {
-      key: 1,
-      operationName: "query"
-    }
-  },
-  {
-    type: "teardown",
-    data: {
-      operationName: "query",
-      operation: {
-        key: 1
       }
     }
   }

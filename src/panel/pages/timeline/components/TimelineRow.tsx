@@ -34,17 +34,14 @@ export const TimelineRow: FC<{ events: ReceivedDebugEvent[] }> = ({
     let eventStart: number | undefined;
 
     const mostEvents = events.reduce<JSX.Element[]>((p, e) => {
-      const isTeardown =
-        e.type !== "operation" && e.data.operation.operationName !== "teardown";
-
       // First event to start timeline duration
-      if (eventStart === undefined && !isTeardown) {
+      if (eventStart === undefined && e.type !== "teardown") {
         eventStart = e.timestamp;
         return p;
       }
 
       // End of timeline duration
-      if (eventStart && isTeardown) {
+      if (eventStart && e.type === "teardown") {
         const newDuration = (
           <TimelineDuration
             key={`d-${p.length}`}

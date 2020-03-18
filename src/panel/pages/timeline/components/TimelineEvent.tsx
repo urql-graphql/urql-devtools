@@ -26,7 +26,7 @@ export const TimelineEvent: FC<{
   const eventColor = useMemo(() => {
     const colorMap: Record<string, string | undefined> = {
       addition: theme.green["0"],
-      update: theme.orange["0"],
+      update: theme.purple["0"],
       teardown: theme.grey["-1"]
     };
 
