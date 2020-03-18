@@ -1,177 +1,221 @@
 import stringify from "fast-json-stable-stringify";
 import nanoid from "nanoid";
-import { Operation } from "urql";
-
-import { Scalar, SelectionSet, Variables, Context, NullArray } from "./types";
-
+import { Operation, OperationDebugMeta, OperationResult } from "urql";
 import {
-  getName,
-  getSelectionSet,
-  isFieldNode,
-  isInlineFragment,
-  getFieldAlias
-} from "./node";
+  SelectionNode,
+  Kind,
+  FieldNode,
+  InlineFragmentNode,
+  FragmentSpreadNode,
+  OperationDefinitionNode,
+  FragmentDefinitionNode,
+  ASTNode
+} from "graphql";
+import { getFieldArguments, getNormalizedVariables } from "./variables";
 
-import { getFieldArguments, normalizeVariables } from "./variables";
-
-import { getMainOperation, getFragments } from "./traversal";
-
-type DataField = Scalar | NullArray<Scalar> | null;
-
-export interface FieldNode {
+export interface ParsedFieldNode {
   _id: string;
   _owner: {};
-  cacheOutcome?: Context["cacheOutcome"];
+  cacheOutcome?: OperationDebugMeta["cacheOutcome"];
   key: string;
   name: string;
-  args?: Variables | null;
-  value?: DataField | null;
-  children?: NodeMap | NullArray<NodeMap>;
+  args?: Operation["variables"];
+  value?: OperationResult["data"];
+  children?: ParsedNodeMap | (ParsedNodeMap | null)[];
 }
 
-export type NodeMap = Record<string, FieldNode>;
+export type ParsedNodeMap = Record<string, ParsedFieldNode>;
 
-interface Data {
-  [fieldName: string]: Data[] | Data | DataField;
+interface HandleResponseArgs {
+  operation: Operation;
+  data: OperationResult["data"];
+  parsedNodes?: ParsedNodeMap;
 }
 
-export const keyOfField = (fieldName: string, args?: null | Variables) =>
-  args ? `${fieldName}(${stringify(args)})` : fieldName;
-
-export const startQuery = (
-  request: Operation,
-  data: Data,
-  map: NodeMap = Object.create(null)
-) => {
-  if (request.operationName !== "query") {
-    return map;
+export const handleResponse = ({
+  operation,
+  data,
+  parsedNodes = {}
+}: HandleResponseArgs) => {
+  if (operation.operationName !== "query") {
+    return parsedNodes;
   }
 
-  const operation = getMainOperation(request.query);
-  const select = getSelectionSet(operation);
+  const opNode = operation.query.definitions.find(
+    node => node.kind === Kind.OPERATION_DEFINITION
+  ) as OperationDefinitionNode;
 
-  if (select.length === 0) {
-    return map;
+  if (!opNode) {
+    throw new Error(
+      "Invalid GraphQL document: All GraphQL documents must contain an OperationDefinition" +
+        "node for a query, subscription, or mutation."
+    );
   }
 
-  const ctx = {
-    variables: normalizeVariables(operation, request.variables),
-    fragments: getFragments(request.query),
-    cacheOutcome: request.context.meta && request.context.meta.cacheOutcome
-  };
+  const fragments = operation.query.definitions
+    .filter(isFragmentNode)
+    .reduce<Record<string, FragmentDefinitionNode>>(
+      (map, node) => ({
+        ...map,
+        [node.name.value]: node
+      }),
+      {}
+    );
 
-  const owner = {};
-  return copyFromData(ctx, copyNodeMap(map), select, data, owner);
+  if (opNode.selectionSet.selections.length === 0) {
+    return parsedNodes;
+  }
+
+  return parseNodes({
+    variables: getNormalizedVariables(
+      opNode.variableDefinitions,
+      operation.variables
+    ),
+    selections: opNode.selectionSet.selections,
+    fragments,
+    parsedNodes,
+    cacheOutcome: operation.context.meta && operation.context.meta.cacheOutcome,
+    data,
+    owner: {}
+  });
 };
 
-const copyNodeMap = (map: null | NodeMap): NodeMap => {
-  const newMap = Object.create(null);
-  return map !== null ? Object.assign(newMap, map) : newMap;
-};
+interface CopyFromDataArgs {
+  fragments: Record<string, FragmentDefinitionNode>;
+  variables: Operation["variables"];
+  cacheOutcome: OperationDebugMeta["cacheOutcome"];
+  parsedNodes: ParsedNodeMap;
+  selections: readonly SelectionNode[];
+  data: OperationResult["data"];
+  owner: {};
+}
 
-const copyFieldNode = (node: FieldNode, owner: {}) => {
-  if (node._owner === owner) {
-    return node;
-  } else {
-    const newNode = {
-      ...node,
-      _owner: owner
-    };
+const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
+  const {
+    fragments,
+    variables,
+    cacheOutcome,
+    parsedNodes = {},
+    selections,
+    data,
+    owner
+  } = copyArgs;
 
-    if (Array.isArray(node.children)) {
-      newNode.children = node.children.map(copyNodeMap);
-    } else if (typeof node.children === "object") {
-      newNode.children = copyNodeMap(node.children);
+  return selections.reduce((parsedNodemap, selectionNode): ParsedNodeMap => {
+    if (!selectionNode) {
+      return parsedNodemap;
     }
 
-    return newNode;
-  }
-};
+    if (isInlineFragment(selectionNode)) {
+      return parseNodes({
+        ...copyArgs,
+        parsedNodes: parsedNodemap,
+        selections: selectionNode.selectionSet.selections
+      });
+    }
 
-function copyFromData(
-  ctx: Context,
-  map: NodeMap,
-  selection: SelectionSet,
-  data: Data,
-  owner: {}
-): NodeMap {
-  selection.forEach(fieldNode => {
-    if (isFieldNode(fieldNode)) {
-      const fieldName = getName(fieldNode) || "query";
-      const fieldArgs = getFieldArguments(fieldNode, ctx.variables);
-      const fieldKey = keyOfField(fieldName, fieldArgs);
-      const fieldValue = data[getFieldAlias(fieldNode)];
+    if (isFragmentSpread(selectionNode)) {
+      return parseNodes({
+        ...copyArgs,
+        parsedNodes: parsedNodemap,
+        selections: fragments[selectionNode.name.value].selectionSet.selections
+      });
+    }
 
-      let node: FieldNode;
-      if (map[fieldKey] === undefined) {
-        node = map[fieldKey] = {
+    if (!isFieldNode(selectionNode)) {
+      return parsedNodemap;
+    }
+
+    const name = selectionNode.name.value || "query";
+    const args = getFieldArguments(selectionNode, variables);
+    const key = getFieldKey(name, args);
+    const value =
+      data[
+        selectionNode.alias !== undefined
+          ? selectionNode.alias.value
+          : selectionNode.name.value
+      ];
+
+    const node: ParsedFieldNode = parsedNodemap[key]
+      ? {
+          ...parsedNodemap[key],
+          _owner: owner
+        }
+      : {
           _id: nanoid(),
           _owner: owner,
-          cacheOutcome: ctx.cacheOutcome,
-          key: fieldKey,
-          name: fieldName,
-          args: fieldArgs
+          cacheOutcome,
+          key,
+          name,
+          args
         };
-      } else {
-        node = map[fieldKey] = copyFieldNode(map[fieldKey], owner);
-        node.cacheOutcome = ctx.cacheOutcome;
-      }
 
-      if (
-        fieldNode.selectionSet !== undefined &&
-        typeof fieldValue === "object" &&
-        fieldValue !== null
-      ) {
-        const childValue = fieldValue as Data | Data[];
-        const fieldSelection = getSelectionSet(fieldNode);
-
-        if (Array.isArray(childValue)) {
-          const size = childValue.length;
-          node.children = Array.isArray(node.children)
-            ? node.children
-            : new Array(size);
-          node.children.length = size;
-
-          for (let i = 0; i < size; i++) {
-            const childData: Data | null = childValue[i];
-            if (childData === null) {
-              node.children[i] = null;
-            } else {
-              const childMap = node.children[i] || Object.create(null);
-              node.children[i] = copyFromData(
-                ctx,
-                childMap,
-                fieldSelection,
-                childData,
-                owner
-              );
-            }
-          }
-        } else {
-          const childMap = node.children || Object.create(null);
-          node.children = copyFromData(
-            ctx,
-            childMap,
-            fieldSelection,
-            childValue,
-            owner
-          );
+    if (selectionNode.selectionSet && Array.isArray(value)) {
+      const children = (node.children || []) as ParsedNodeMap[];
+      return {
+        ...parsedNodemap,
+        [key]: {
+          ...node,
+          children: value.map(
+            (data, i) =>
+              data === null
+                ? null
+                : parseNodes({
+                    ...copyArgs,
+                    parsedNodes: children[i],
+                    selections: selectionNode.selectionSet
+                      ? selectionNode.selectionSet.selections
+                      : [],
+                    data
+                  }),
+            {}
+          )
         }
-
-        delete node.value;
-      } else {
-        node.value = fieldValue === undefined ? null : fieldValue;
-        delete node.children;
-      }
-    } else {
-      const fragmentNode = !isInlineFragment(fieldNode)
-        ? ctx.fragments[getName(fieldNode)]
-        : fieldNode;
-      if (fragmentNode !== undefined) {
-        copyFromData(ctx, map, getSelectionSet(fragmentNode), data, owner);
-      }
+      };
     }
-  });
 
-  return map;
-}
+    if (
+      selectionNode.selectionSet &&
+      !Array.isArray(value) &&
+      value &&
+      typeof value === "object"
+    ) {
+      return {
+        ...parsedNodemap,
+        [key]: {
+          ...node,
+          children: parseNodes({
+            ...copyArgs,
+            parsedNodes: {},
+            selections: selectionNode.selectionSet.selections,
+            data: value
+          })
+        }
+      };
+    }
+
+    return {
+      ...parsedNodemap,
+      [key]: {
+        ...node,
+        value
+      }
+    };
+  }, parsedNodes);
+};
+
+const getFieldKey = (fieldName: string, args?: Operation["variables"]) =>
+  args ? `${fieldName}(${stringify(args)})` : fieldName;
+
+const isFieldNode = (node: ASTNode): node is FieldNode =>
+  node.kind === Kind.FIELD;
+
+const isInlineFragment = (node: ASTNode): node is InlineFragmentNode =>
+  node.kind === Kind.INLINE_FRAGMENT;
+
+const isFragmentSpread = (node: ASTNode): node is FragmentSpreadNode =>
+  node.kind === Kind.FRAGMENT_SPREAD;
+
+const isFragmentNode = (node: ASTNode): node is FragmentDefinitionNode => {
+  return node.kind === Kind.FRAGMENT_DEFINITION;
+};

@@ -8,13 +8,26 @@ If you want to contribute, find an issue you think you can help with and get inv
 
 We use issues to track changes to the project over time so make an issue if you want to contribute to something that hasn't yet been proposed/reported!
 
-## How do I set up the project?
 
-Luckily it's not hard to get started. You can install dependencies using `yarn`. Please don't use `npm` to respect the lockfile.
+## Working on the devtools extension (quick)
 
-```sh
-yarn
+The quickest way to get started on devtools is to spin up the devtools extension fixtures.
+
 ```
+yarn cosmos
+```
+
+Fixtures will be put through visual regression so make sure to snapshot any changes to your changes or additions
+
+```
+yarn visual-regression
+```
+
+> Note: This script takes standard jest args (e.g. --watch, -u)
+
+## Working on the devtools extension (long)
+
+For a fully integrated experience, you can build and run the full devtools extension.
 
 Run `yarn start` to initiate the build of the extension.
 
@@ -52,7 +65,7 @@ const client = createClient({
 
 Start the example repo with `yarn start`.
 
-### Extension tips and tricks
+## Extension tips and tricks
 
 Some basic suggestions if you're new to building a chrome extension.
 

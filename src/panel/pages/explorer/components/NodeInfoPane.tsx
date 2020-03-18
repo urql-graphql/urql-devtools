@@ -1,7 +1,7 @@
 import React, { FC, useContext, useMemo } from "react";
 import styled from "styled-components";
-import { FieldNode, NodeMap } from "../../../context/Explorer/ast";
-import { Context, Variables } from "../../../context/Explorer/ast/types";
+import { Operation } from "urql";
+import { ParsedFieldNode, ParsedNodeMap } from "../../../context/Explorer/ast";
 import { Pane } from "../../../components";
 import { ExplorerContext } from "../../../context";
 import { Value } from "./Value";
@@ -29,7 +29,7 @@ export const NodeInfoPane: FC = () => {
   );
 };
 
-const NodeInfoContent: FC<{ node: FieldNode }> = ({ node }) => (
+const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => (
   <>
     <Container>
       <Title>Name</Title>
@@ -70,7 +70,7 @@ const NodeInfoContent: FC<{ node: FieldNode }> = ({ node }) => (
 );
 
 const gatherChildValues = (
-  values: NodeMap | NodeMap[] | undefined | Variables
+  values?: ParsedNodeMap | ParsedNodeMap[] | Operation["variables"]
 ) => {
   if (!values) {
     return null;
@@ -95,7 +95,7 @@ const gatherChildValues = (
   }
 };
 
-const getDescription = (status: Context["cacheOutcome"]) => {
+const getDescription = (status: ParsedFieldNode["cacheOutcome"]) => {
   switch (status) {
     case "hit": {
       return <Description>{"This result was served from cache."}</Description>;
@@ -118,7 +118,7 @@ const getDescription = (status: Context["cacheOutcome"]) => {
   }
 };
 
-const renderChildren = (node: FieldNode) => {
+const renderChildren = (node: ParsedFieldNode) => {
   return (
     <Code key={node._id}>
       {Array.isArray(node.children) ? (

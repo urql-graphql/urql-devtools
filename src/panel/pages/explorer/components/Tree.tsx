@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { NodeMap, FieldNode } from "../../../context/Explorer/ast";
+import { ParsedNodeMap, ParsedFieldNode } from "../../../context/Explorer/ast";
 import { ListItem, SystemListItem } from "./ListItem";
 
 interface TreeProps {
-  nodeMap: NodeMap | (NodeMap | null)[] | undefined;
+  nodeMap: ParsedNodeMap | (ParsedNodeMap | null)[] | undefined;
   depth?: number;
   index?: number;
 }
@@ -47,7 +47,7 @@ export const Tree: FC<TreeProps> = ({ nodeMap, depth = 0, index }) => {
   );
 };
 
-const sortFields = (nodes: FieldNode[]) => {
+const sortFields = (nodes: ParsedFieldNode[]) => {
   return nodes.sort((a, b) => {
     if (a.name === "id") {
       return -nodes.length;
@@ -61,7 +61,7 @@ const sortFields = (nodes: FieldNode[]) => {
   });
 };
 
-export const List = styled.ul`
+const List = styled.ul`
   margin: 0;
   padding-bottom: 0.3rem;
   padding-top: 0.3rem;
