@@ -12,8 +12,6 @@ const Wrapper = styled.div`
 const HoverableItem = () => {
   const { ref, tooltipProps, isVisible } = useTooltip();
 
-  console.log({ ref, tooltipProps, isVisible });
-
   return (
     <>
       <button

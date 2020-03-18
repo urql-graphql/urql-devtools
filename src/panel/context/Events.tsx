@@ -11,16 +11,14 @@ import React, {
 } from "react";
 
 import {
-  DevtoolsExchangeOutgoingMessage,
   OperationMessage,
   OperationResponseMessage,
-  OperationErrorMessage,
-  DisconnectMessage,
-  InitMessage
+  OperationErrorMessage
 } from "@urql/devtools";
 
 import {
   ParsedEvent,
+  PresentedEvent,
   ParsedMutationEvent,
   ParsedQueryEvent,
   ParsedResponseEvent,
@@ -53,11 +51,6 @@ interface FilterState {
   source: string[];
   key: number[];
 }
-
-type PresentedEvent = Exclude<
-  DevtoolsExchangeOutgoingMessage,
-  InitMessage | DisconnectMessage
->;
 
 export const EventsContext = createContext<EventsContextValue>(null as any);
 
@@ -125,14 +118,7 @@ export const EventsProvider: FC = ({ children }) => {
 
   /** Events which are cleaned for rendering */
   const events = useMemo(
-    () =>
-      rawEvents
-        .map(e =>
-          e.type === "operation"
-            ? parseOperation(rawEvents, e)
-            : parseResponse(e)
-        )
-        .filter(applyFilter),
+    () => genEventsFromRaw(rawEvents).filter(applyFilter),
     [applyFilter, rawEvents]
   );
 
@@ -148,6 +134,11 @@ export const EventsProvider: FC = ({ children }) => {
 
   return <EventsContext.Provider value={value} children={children} />;
 };
+
+export const genEventsFromRaw = (rawEvents: PresentedEvent[]) =>
+  rawEvents.map(e =>
+    e.type === "operation" ? parseOperation(rawEvents, e) : parseResponse(e)
+  );
 
 const parseOperation = (
   allEvents: PresentedEvent[],

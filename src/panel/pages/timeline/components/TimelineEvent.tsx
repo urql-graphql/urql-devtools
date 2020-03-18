@@ -1,10 +1,10 @@
 import React, { FC, useContext, useMemo } from "react";
 import styled, { ThemeContext } from "styled-components";
-import { ParsedEvent } from "../../../types";
+import { PresentedEvent } from "../../../types";
 import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
 
 /** Convert parsed event to timeline event type. */
-const getEventName = (event: ParsedEvent) => {
+const getEventName = (event: PresentedEvent) => {
   if (event.type === "teardown") {
     return "teardown";
   }
@@ -17,16 +17,22 @@ const getEventName = (event: ParsedEvent) => {
 };
 
 const EventDot = styled.div`
-  border-radius: 50%;
-  width: 10px;
-  height: 10px;
-  border: solid 2px ${props => props.theme.dark["+1"]};
   background: ${props => props.color};
+  border-radius: 50%;
+  border: solid 2px ${props => props.theme.dark["+1"]};
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
 `;
 
 export const TimelineEvent: FC<{
-  event: ParsedEvent;
-} & JSX.IntrinsicElements["div"]> = ({ event, ...elementProps }) => {
+  event: PresentedEvent;
+  selectEvent: () => void;
+} & JSX.IntrinsicElements["div"]> = ({
+  event,
+  selectEvent,
+  ...elementProps
+}) => {
   const theme = useContext(ThemeContext);
   const { ref, tooltipProps, isVisible } = useTooltip();
   const eventName = useMemo(() => getEventName(event), [event]);
@@ -43,7 +49,12 @@ export const TimelineEvent: FC<{
 
   return (
     <>
-      <EventDot {...elementProps} color={eventColor} ref={ref} />
+      <EventDot
+        {...elementProps}
+        color={eventColor}
+        ref={ref}
+        onClick={selectEvent}
+      />
       {isVisible && (
         <TimelineTooltip {...tooltipProps}>
           {`This is a query ${eventName}`}

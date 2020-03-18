@@ -1,19 +1,23 @@
 import React, {
   createContext,
+  Dispatch,
   useRef,
   useState,
   useCallback,
   useMemo,
   FC,
+  SetStateAction,
   useContext,
   useEffect
 } from "react";
 import { scaleLinear } from "d3-scale";
-import { ParsedEvent } from "../types";
+import { PresentedEvent } from "../types";
 import { DevtoolsContext } from "./Devtools";
 
 interface TimelineContextValue {
   events: Record<string, any>;
+  selectedEvent?: PresentedEvent;
+  setSelectedEvent: Dispatch<SetStateAction<PresentedEvent | undefined>>;
   setContainer: (e: HTMLDivElement) => void;
   getTimePosition: (t: number) => number;
   timelineLength: number;
@@ -73,7 +77,10 @@ const useTimelineDomain = () => {
 export const TimelineProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const domain = useTimelineDomain();
-  const [events, setEvents] = useState<Record<string, ParsedEvent[]>>({});
+  const [events, setEvents] = useState<Record<string, PresentedEvent[]>>({});
+  const [selectedEvent, setSelectedEvent] = useState<
+    PresentedEvent | undefined
+  >(undefined);
 
   useEffect(() => {
     return addMessageHandler(message => {
@@ -95,6 +102,8 @@ export const TimelineProvider: FC = ({ children }) => {
   const value = useMemo(
     () => ({
       events,
+      selectedEvent,
+      setSelectedEvent,
       ...domain
     }),
     [domain, events]
