@@ -4,17 +4,8 @@ import {
   OperationResponseMessage,
   OperationErrorMessage
 } from "@urql/devtools";
-import styled from "styled-components";
 import { TimelineProvider, DevtoolsContext } from "../../context";
 import { Timeline } from "./Timeline";
-
-const Wrapper = styled.div`
-  display: flex;
-  background: ${props => props.theme.dark["-2"]};
-  flex-grow: 1;
-  padding: 40px;
-  overflow: hidden;
-`;
 
 const defaultEvents: (
   | OperationMessage
@@ -126,9 +117,7 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
 export default {
   basic: (
     <DevtoolsContextMock>
-      <Wrapper>
-        <Timeline />
-      </Wrapper>
+      <Timeline />
     </DevtoolsContextMock>
   )
 };

@@ -25,6 +25,7 @@ export const CodeHighlight: FC<any> = props => (
 );
 
 const StyledCodeBlock = styled.pre`
-  background: ${props => props.theme.dark["-2"]} !important;
+  /* TODO: make conditional based on timeline pane */
+  background: ${props => props.theme.dark["0"]} !important;
   font-size: 12px !important;
 `;

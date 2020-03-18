@@ -1,12 +1,12 @@
 import React, { FC, useMemo } from "react";
 import styled from "styled-components";
-import { ParsedEvent } from "../../../types";
+import { PresentedEvent } from "../../../types";
 import { useTimelineContext } from "../../../context";
 import { TimelineEvent } from "./TimelineEvent";
 import { TimelineDuration } from "./TimelineDuration";
 
-export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
-  const { scale, timelineLength } = useTimelineContext();
+export const TimelineRow: FC<{ events: PresentedEvent[] }> = ({ events }) => {
+  const { scale, timelineLength, setSelectedEvent } = useTimelineContext();
 
   const eventElements = useMemo(
     () =>
@@ -14,8 +14,9 @@ export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
         return [
           ...p,
           <TimelineEvent
-            key={`e-${e.key}`}
+            key={`e-${e.timestamp}`}
             event={e}
+            selectEvent={() => setSelectedEvent(e)}
             style={{
               position: "absolute",
               left: scale(e.timestamp),
@@ -31,14 +32,17 @@ export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
     let eventStart: number | undefined;
 
     const mostEvents = events.reduce<JSX.Element[]>((p, e) => {
+      const isTeardown =
+        e.type !== "operation" && e.data.operation.operationName !== "teardown";
+
       // First event to start timeline duration
-      if (eventStart === undefined && e.type !== "teardown") {
+      if (eventStart === undefined && !isTeardown) {
         eventStart = e.timestamp;
         return p;
       }
 
       // End of timeline duration
-      if (eventStart && e.type === "teardown") {
+      if (eventStart && isTeardown) {
         const newDuration = (
           <TimelineDuration
             key={`d-${p.length}`}

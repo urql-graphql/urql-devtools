@@ -1,7 +1,8 @@
 import React, { FC, useMemo } from "react";
 import styled from "styled-components";
 import { useTimelineContext } from "../../context";
-import { TimelineRow, Tick } from "./components";
+import { Background } from "../../components/Background";
+import { TimelineRow, TimelinePane, Tick } from "./components";
 
 export const Timeline: FC = () => {
   const {
@@ -9,7 +10,8 @@ export const Timeline: FC = () => {
     scale,
     events,
     startTime,
-    container
+    container,
+    selectedEvent
   } = useTimelineContext();
 
   const ticks = useMemo(
@@ -24,29 +26,42 @@ export const Timeline: FC = () => {
 
   // We lie about the types to save having to do this check
   // in every component. This guard is needed.
-  if (!scale) return <Container ref={setContainer} />;
+  if (!container)
+    return (
+      <Page>
+        <TimelineList ref={setContainer} />
+      </Page>
+    );
 
   return (
-    <Container ref={setContainer}>
-      {ticks.map(t => (
-        <Tick
-          key={`p-${t.position}`}
-          label={t.label}
-          style={{ left: t.position }}
-        />
-      ))}
-      {Object.entries(events).map(([key, eventList]) => (
-        <TimelineRow key={key} events={eventList} />
-      ))}
-    </Container>
+    <Page>
+      <TimelineList ref={setContainer}>
+        {ticks.map(t => (
+          <Tick
+            key={`p-${t.position}`}
+            label={t.label}
+            style={{ left: t.position }}
+          />
+        ))}
+        {Object.entries(events).map(([key, eventList]) => (
+          <TimelineRow key={key} events={eventList} />
+        ))}
+      </TimelineList>
+      {selectedEvent && <TimelinePane event={selectedEvent} sections={[]} />}
+    </Page>
   );
 };
 
-const Container = styled.div`
+const Page = styled(Background)`
+  background-color: ${p => p.theme.dark["0"]};
+`;
+
+const TimelineList = styled.div`
   position: relative;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
+  margin: 40px 0;
 `;
 
 const getTickCount = (width: number) => {

@@ -1,23 +1,27 @@
 import React, {
   createContext,
+  Dispatch,
   useRef,
   useState,
   useCallback,
   useMemo,
   FC,
+  SetStateAction,
   useContext,
   useEffect,
   MutableRefObject
 } from "react";
 import { scaleLinear, ScaleLinear } from "d3-scale";
 import { max, min } from "d3-array";
-import { ParsedEvent } from "../types";
+import { PresentedEvent } from "../types";
 import { DevtoolsContext } from "./Devtools";
 
 interface TimelineContextValue {
+  selectedEvent?: PresentedEvent;
+  setSelectedEvent: Dispatch<SetStateAction<PresentedEvent | undefined>>;
   container: MutableRefObject<HTMLDivElement>;
   setContainer: (e: HTMLDivElement) => void;
-  events: Record<string, ParsedEvent[]>;
+  events: Record<string, any>;
   scale: ScaleLinear<number, number>;
   startTime: number;
   timelineLength: number;
@@ -33,7 +37,7 @@ const useTimelineDomain = () => {
     start: startTime.current,
     zoom: 1
   });
-  const ref = useRef<HTMLElement>(undefined as any);
+  const ref = useRef<HTMLDivElement>(undefined as any);
   const [scale, setScale] = useState<{
     scale: TimelineContextValue["scale"];
   }>({
@@ -158,7 +162,10 @@ const useTimelineDomain = () => {
 export const TimelineProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const domain = useTimelineDomain();
-  const [events, setEvents] = useState<Record<string, ParsedEvent[]>>({});
+  const [events, setEvents] = useState<Record<string, PresentedEvent[]>>({});
+  const [selectedEvent, setSelectedEvent] = useState<
+    PresentedEvent | undefined
+  >(undefined);
 
   useEffect(() => {
     return addMessageHandler(message => {
@@ -180,6 +187,8 @@ export const TimelineProvider: FC = ({ children }) => {
   const value = useMemo(
     () => ({
       events,
+      selectedEvent,
+      setSelectedEvent,
       ...domain
     }),
     [domain, events]
