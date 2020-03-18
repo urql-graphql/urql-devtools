@@ -1,7 +1,11 @@
 import React from "react";
-import { parse } from "graphql";
-import { TimelinePane, DebugEvent } from "./TimelinePane";
-const mockDebugEvent: DebugEvent = {
+import gql from "graphql-tag";
+import { ReceivedDebugEvent } from "../../../types";
+import { TimelinePane } from "./TimelinePane";
+
+const mockDebugEvent: ReceivedDebugEvent = {
+  key: 1,
+  timestamp: 1234,
   type: "operation",
   message: "operation addition event",
   operation: {
@@ -11,12 +15,14 @@ const mockDebugEvent: DebugEvent = {
       requestPolicy: "network-only",
       url: "https://example.com/graphql"
     },
-    query: parse(`query { 
-  todos(id: 1234) { 
-    id 
-    content 
-  } 
-}`),
+    query: gql`
+      query {
+        todos(id: 1234) {
+          id
+          content
+        }
+      }
+    `,
     variables: {
       myVar: 1234
     }

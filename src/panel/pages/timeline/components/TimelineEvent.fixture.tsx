@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ParsedEvent } from "../../../types";
+import { ReceivedDebugEvent } from "../../../types";
 import { TimelineEvent } from "./TimelineEvent";
 
 const Wrapper = styled.div`
@@ -11,59 +11,63 @@ const Wrapper = styled.div`
   padding: 100px;
 `;
 
-const queryEvent: ParsedEvent = {
+const props = {
+  selectEvent: () => false
+};
+
+const queryEvent: ReceivedDebugEvent = {
   type: "query"
 } as any;
 
-const mutationEvent: ParsedEvent = {
+const mutationEvent: ReceivedDebugEvent = {
   type: "mutation"
 } as any;
 
-const subscriptionEvent: ParsedEvent = {
+const subscriptionEvent: ReceivedDebugEvent = {
   type: "subscription"
 } as any;
 
-const responseEvent: ParsedEvent = {
+const responseEvent: ReceivedDebugEvent = {
   type: "response"
 } as any;
 
-const errorEvent: ParsedEvent = {
+const errorEvent: ReceivedDebugEvent = {
   type: "error"
 } as any;
 
-const teardownEvent: ParsedEvent = {
+const teardownEvent: ReceivedDebugEvent = {
   type: "teardown"
 } as any;
 
 export default {
   "addition (query)": (
     <Wrapper>
-      <TimelineEvent event={queryEvent} />
+      <TimelineEvent {...props} event={queryEvent} />
     </Wrapper>
   ),
   "addition (mutation)": (
     <Wrapper>
-      <TimelineEvent event={mutationEvent} />
+      <TimelineEvent {...props} event={mutationEvent} />
     </Wrapper>
   ),
   "addition (subscription)": (
     <Wrapper>
-      <TimelineEvent event={subscriptionEvent} />
+      <TimelineEvent {...props} event={subscriptionEvent} />
     </Wrapper>
   ),
   "update (response)": (
     <Wrapper>
-      <TimelineEvent event={responseEvent} />
+      <TimelineEvent {...props} event={responseEvent} />
     </Wrapper>
   ),
   "update (error)": (
     <Wrapper>
-      <TimelineEvent event={errorEvent} />
+      <TimelineEvent {...props} event={errorEvent} />
     </Wrapper>
   ),
   teardown: (
     <Wrapper>
-      <TimelineEvent event={teardownEvent} />
+      <TimelineEvent {...props} event={teardownEvent} />
     </Wrapper>
   )
 };

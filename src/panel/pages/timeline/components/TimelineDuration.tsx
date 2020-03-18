@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
 export const TimelineDuration = styled.div`
-  height: 40px;
+  height: 20px;
   background: ${props => props.theme.dark["+1"]};
 `;

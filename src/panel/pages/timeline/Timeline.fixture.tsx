@@ -1,61 +1,66 @@
 import React, { FC, useMemo } from "react";
-import {
-  OperationMessage,
-  OperationResponseMessage,
-  OperationErrorMessage
-} from "@urql/devtools";
 import { TimelineProvider, DevtoolsContext } from "../../context";
+import { ReceivedDebugEvent } from "../../types";
 import { Timeline } from "./Timeline";
 
-const defaultEvents: (
-  | OperationMessage
-  | OperationResponseMessage
-  | OperationErrorMessage
-)[] = [
+const defaultEvents: ReceivedDebugEvent[] = [
   {
-    type: "operation",
+    type: "debug",
     data: {
-      key: 1,
-      operationName: "query"
-    }
-  },
-  {
-    type: "response",
-    data: {
+      type: "addition",
+      message: "A listener was added to the stream",
       operation: {
         key: 1
       }
     }
   },
   {
-    type: "operation",
+    type: "debug",
     data: {
-      key: 1,
-      operationName: "query"
-    }
-  },
-  {
-    type: "teardown",
-    data: {
-      operationName: "query",
+      type: "update",
+      message: "This is an update to the operation response / data",
       operation: {
         key: 1
       }
     }
   },
   {
-    type: "operation",
+    type: "debug",
     data: {
-      key: 1,
-      operationName: "query"
+      type: "update",
+      message: "This is an update to the operation response / data",
+      operation: {
+        key: 1
+      }
     }
   },
   {
-    type: "teardown",
+    type: "debug",
     data: {
-      operationName: "query",
+      type: "addition",
+      message: "A listener was added to the stream",
+      operation: {
+        key: 2
+      }
+    }
+  },
+  {
+    type: "debug",
+    data: {
+      type: "teardown",
+      message: "A teardown was triggered on the stream",
       operation: {
         key: 1
+      }
+    }
+  },
+  {
+    type: "debug",
+    data: {
+      type: "teardown",
+      message: "A teardown was triggered on the stream",
+      operation: {
+        key: 2
       }
     }
   }
@@ -70,7 +75,7 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
       value={useMemo(
         () =>
           ({
-            addMessageHandler: h => {
+            addMessageHandler: (h: any) => {
               let i = 0;
 
               // h({ ...events[i++ % events.length], timestamp: Date.now() });

@@ -1,20 +1,7 @@
 import React, { FC, useContext, useMemo } from "react";
 import styled, { ThemeContext } from "styled-components";
-import { PresentedEvent } from "../../../types";
+import { ReceivedDebugEvent } from "../../../types";
 import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
-
-/** Convert parsed event to timeline event type. */
-const getEventName = (event: PresentedEvent) => {
-  if (event.type === "teardown") {
-    return "teardown";
-  }
-
-  if (event.type === "response" || event.type === "error") {
-    return "update";
-  }
-
-  return "addition";
-};
 
 const EventDot = styled.div`
   background: ${props => props.color};
@@ -26,26 +13,25 @@ const EventDot = styled.div`
 `;
 
 export const TimelineEvent: FC<{
-  event: PresentedEvent;
+  event: ReceivedDebugEvent;
   selectEvent: () => void;
-} & JSX.IntrinsicElements["div"]> = ({
+} & Omit<JSX.IntrinsicElements["div"], "event">> = ({
   event,
   selectEvent,
   ...elementProps
 }) => {
   const theme = useContext(ThemeContext);
   const { ref, tooltipProps, isVisible } = useTooltip();
-  const eventName = useMemo(() => getEventName(event), [event]);
 
-  const eventColor = React.useMemo(
-    () =>
-      ({
-        addition: theme.green["0"],
-        update: theme.orange["0"],
-        teardown: theme.grey["-1"]
-      }[eventName]),
-    [eventName, theme]
-  );
+  const eventColor = useMemo(() => {
+    const colorMap: Record<string, string | undefined> = {
+      addition: theme.green["0"],
+      update: theme.purple["0"],
+      teardown: theme.grey["-1"]
+    };
+
+    return colorMap[event.type] || theme.blue["0"];
+  }, [event.type, theme]);
 
   return (
     <>
@@ -56,9 +42,7 @@ export const TimelineEvent: FC<{
         onClick={selectEvent}
       />
       {isVisible && (
-        <TimelineTooltip {...tooltipProps}>
-          {`This is a query ${eventName}`}
-        </TimelineTooltip>
+        <TimelineTooltip {...tooltipProps}>{event.message}</TimelineTooltip>
       )}
     </>
   );
