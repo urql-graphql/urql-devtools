@@ -1,32 +1,8 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { print } from "graphql/language/printer";
-import { Operation } from "urql";
 import { Pane } from "../../../components";
 import { ReceivedDebugEvent } from "../../../types";
-import { TimelineQueryInfo } from "./TimelinePaneSection";
-
-const genGraphQlCodeHiglight = (str: string) => ({
-  code: { language: "graphql", code: str }
-});
-
-const parseOperation = (op: Operation) => [
-  // * Convert the DocumentNode to presentable string
-  genGraphQlCodeHiglight(print(op.query)),
-  ...(op.variables
-    ? [
-        {
-          title: "Variables",
-          ...genGraphQlCodeHiglight(JSON.stringify(op.variables, null, "  "))
-        }
-      ]
-    : [])
-];
-
-const getEventSubSections = (e: ReceivedDebugEvent) =>
-  Object.entries(e)
-    .filter(([key]) => !["operation", "data"].includes(key))
-    .map(([key, val]) => ({ info: [key, val] as [string, string] }));
+import { TimelineQuerySection } from "./TimelinePaneSection";
 
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
@@ -34,7 +10,7 @@ export const TimelinePane: FC<{ event: ReceivedDebugEvent }> = ({ event }) => (
   <Container>
     <Pane.Body>
       {/** Todo: Add event section here */}
-      <TimelineQueryInfo
+      <TimelineQuerySection
         query={event.operation.query}
         variables={event.operation.variables}
       />
@@ -44,7 +20,5 @@ export const TimelinePane: FC<{ event: ReceivedDebugEvent }> = ({ event }) => (
 );
 
 const Container = styled(Pane)`
-  && {
-    background-color: ${p => p.theme.dark["-3"]};
-  }
+  background-color: ${p => p.theme.dark["-3"]};
 `;

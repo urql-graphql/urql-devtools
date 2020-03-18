@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import gql from "graphql-tag";
-import { TimelineQueryInfo, TimelinePaneHeading } from "./TimelinePaneSection";
+import {
+  TimelineQuerySection,
+  TimelinePaneHeading
+} from "./TimelinePaneSection";
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,7 +35,7 @@ export default {
   ),
   "query section": (
     <Wrapper>
-      <TimelineQueryInfo query={query} variables={{ filter: "Will" }} />
+      <TimelineQuerySection query={query} variables={{ filter: "Will" }} />
     </Wrapper>
   )
 };
