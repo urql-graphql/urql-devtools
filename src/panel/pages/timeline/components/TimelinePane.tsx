@@ -4,7 +4,7 @@ import { print } from "graphql/language/printer";
 import { Operation } from "urql";
 import { Pane } from "../../../components";
 import { ReceivedDebugEvent } from "../../../types";
-import { TimelinePaneSection } from "./TimelinePaneSection";
+import { TimelinePaneSection, TimelineQueryInfo } from "./TimelinePaneSection";
 
 const genGraphQlCodeHiglight = (str: string) => ({
   code: { language: "graphql", code: str }
@@ -30,37 +30,18 @@ const getEventSubSections = (e: ReceivedDebugEvent) =>
 
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
-export const TimelinePane: FC<{ event: ReceivedDebugEvent }> = ({ event }) => {
-  const eventSubSections = useMemo(() => getEventSubSections(event), [event]);
-  const querySubSections = useMemo(() => parseOperation(event.operation), [
-    event.operation
-  ]);
-  const responseSubSections = useMemo(
-    () => [genGraphQlCodeHiglight(JSON.stringify(event.data, null, "  "))],
-    [event.data]
-  );
-
-  return (
-    <Container>
-      <Pane.Body>
-        {event && (
-          <>
-            <TimelinePaneSection
-              title="Event"
-              startOpen
-              subSections={eventSubSections}
-            />
-            <TimelinePaneSection title="Query" subSections={querySubSections} />
-            <TimelinePaneSection
-              title="Response"
-              subSections={responseSubSections}
-            />
-          </>
-        )}
-      </Pane.Body>
-    </Container>
-  );
-};
+export const TimelinePane: FC<{ event: ReceivedDebugEvent }> = ({ event }) => (
+  <Container>
+    <Pane.Body>
+      {/** Todo: Add event section here */}
+      <TimelineQueryInfo
+        query={event.operation.query}
+        variables={event.operation.variables}
+      />
+      {/** Todo: Add response section here */}
+    </Pane.Body>
+  </Container>
+);
 
 const Container = styled(Pane)`
   && {

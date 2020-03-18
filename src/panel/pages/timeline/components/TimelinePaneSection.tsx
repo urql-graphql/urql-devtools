@@ -1,7 +1,14 @@
-import React, { FC, useState, useCallback, ComponentProps } from "react";
+import React, {
+  FC,
+  useState,
+  useCallback,
+  ComponentProps,
+  useMemo
+} from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { DocumentNode, print } from "graphql";
 import { CodeHighlight } from "../../../components";
 
 export const TimelinePaneSection: React.FC<TimelinePaneSectionProps> = ({
@@ -81,11 +88,13 @@ export const TimelinePaneHeading: FC<{ collapsed?: boolean } & ComponentProps<
   </SectionTitle>
 );
 
-export const TimelineQueryInfo: FC<{ query: string; variables: object }> = ({
-  query,
-  variables
-}) => {
+export const TimelineQueryInfo: FC<{
+  query: DocumentNode;
+  variables?: object;
+}> = ({ query, variables }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const queryCode = useMemo(() => print(query), [query]);
 
   const handleToggle = useCallback(() => setIsCollapsed(c => !c), []);
 
@@ -96,7 +105,7 @@ export const TimelineQueryInfo: FC<{ query: string; variables: object }> = ({
       </TimelinePaneHeading>
       {!isCollapsed && (
         <>
-          <CodeHighlight language={"graphql"} code={query} />
+          <CodeHighlight language={"graphql"} code={queryCode} />
           <h3>Variables</h3>
           <CodeHighlight
             language={"javascript"}

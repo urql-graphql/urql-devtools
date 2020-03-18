@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import gql from "graphql-tag";
 import { TimelineQueryInfo, TimelinePaneHeading } from "./TimelinePaneSection";
 
 const Wrapper = styled.div`
@@ -9,7 +10,8 @@ const Wrapper = styled.div`
   background: ${props => props.theme.dark["-3"]};
 `;
 
-const query = `query GetUsers(filter: String!) {
+const query = gql`
+query GetUsers(filter: String!) {
   users {
     id
     name
