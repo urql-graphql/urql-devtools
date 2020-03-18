@@ -41,7 +41,9 @@ module.exports = {
     ]
   },
   output: {
-    path: `${__dirname}/dist`
+    path: `${__dirname}/dist`,
+    devtoolModuleFilenameTemplate: info =>
+      `urql-devtools:///${info.resourcePath}`
   },
   module: {
     rules: [

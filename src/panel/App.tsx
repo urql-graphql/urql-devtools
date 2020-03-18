@@ -5,7 +5,6 @@ import { ThemeProvider } from "styled-components";
 import { Disconnected, Events, Explorer, Request } from "./pages";
 import { Navigation } from "./Navigation";
 import { theme } from "./theme";
-
 import {
   DevtoolsProvider,
   EventsProvider,

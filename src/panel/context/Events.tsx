@@ -1,5 +1,4 @@
 import { print } from "graphql";
-
 import React, {
   createContext,
   FC,
@@ -9,7 +8,6 @@ import React, {
   useMemo,
   useCallback
 } from "react";
-
 import {
   DevtoolsExchangeOutgoingMessage,
   OperationMessage,
@@ -18,7 +16,6 @@ import {
   DisconnectMessage,
   InitMessage
 } from "@urql/devtools";
-
 import {
   ParsedEvent,
   ParsedMutationEvent,
@@ -29,7 +26,6 @@ import {
   ParsedSubscriptionEvent,
   ParsedTeardownEvent
 } from "../types";
-
 import { DevtoolsContext } from "./Devtools";
 
 export interface EventsContextValue {
