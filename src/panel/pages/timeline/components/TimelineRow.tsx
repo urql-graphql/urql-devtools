@@ -14,7 +14,7 @@ export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
         return [
           ...p,
           <TimelineEvent
-            key={e.key}
+            key={`e-${e.key}`}
             event={e}
             style={{
               position: "absolute",
@@ -41,7 +41,7 @@ export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
       if (eventStart && e.type === "teardown") {
         const newDuration = (
           <TimelineDuration
-            key={p.length}
+            key={`d-${p.length}`}
             style={{
               position: "absolute",
               left: scale(eventStart),

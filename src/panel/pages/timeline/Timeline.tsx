@@ -12,12 +12,9 @@ export const Timeline: FC = () => {
     container
   } = useTimelineContext();
 
-  // We lie about the types to save having to do this check
-  // in every component. This guard is needed.
-  if (!scale) return <Container ref={setContainer} />;
-
   const ticks = useMemo(
     () =>
+      scale &&
       scale.ticks(getTickCount(container.current.clientWidth)).map(t => ({
         label: `${t - startTime}ms`,
         position: scale(t)
@@ -25,10 +22,18 @@ export const Timeline: FC = () => {
     [scale]
   );
 
+  // We lie about the types to save having to do this check
+  // in every component. This guard is needed.
+  if (!scale) return <Container ref={setContainer} />;
+
   return (
     <Container ref={setContainer}>
       {ticks.map(t => (
-        <Tick key={t.position} label={t.label} style={{ left: t.position }} />
+        <Tick
+          key={`p-${t.position}`}
+          label={t.label}
+          style={{ left: t.position }}
+        />
       ))}
       {Object.entries(events).map(([key, eventList]) => (
         <TimelineRow key={key} events={eventList} />
