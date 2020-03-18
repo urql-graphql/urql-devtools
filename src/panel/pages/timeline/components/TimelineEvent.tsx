@@ -15,7 +15,7 @@ const EventDot = styled.div`
 export const TimelineEvent: FC<{
   event: ReceivedDebugEvent;
   selectEvent: () => void;
-} & JSX.IntrinsicElements["div"]> = ({
+} & Omit<JSX.IntrinsicElements["div"], "event">> = ({
   event,
   selectEvent,
   ...elementProps

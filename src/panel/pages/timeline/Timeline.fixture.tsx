@@ -94,7 +94,7 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
       value={useMemo(
         () =>
           ({
-            addMessageHandler: h => {
+            addMessageHandler: (h: any) => {
               let i = 0;
 
               // h({ ...events[i++ % events.length], timestamp: Date.now() });

@@ -17,7 +17,7 @@ export const Timeline: FC = () => {
   const ticks = useMemo(
     () =>
       scale &&
-      scale.ticks(getTickCount(container.current.clientWidth)).map(t => ({
+      scale.ticks(getTickCount(container.clientWidth)).map(t => ({
         label: `${t - startTime}ms`,
         position: scale(t)
       })),
@@ -47,7 +47,7 @@ export const Timeline: FC = () => {
           <TimelineRow key={key} events={eventList} />
         ))}
       </TimelineList>
-      {selectedEvent && <TimelinePane event={selectedEvent} sections={[]} />}
+      {selectedEvent && <TimelinePane event={selectedEvent} />}
     </Page>
   );
 };
