@@ -3,6 +3,7 @@ import {
   DisconnectMessage,
   InitMessage
 } from "@urql/devtools";
+import { Operation } from "urql";
 
 export type EventType =
   | "subscription"
@@ -67,6 +68,19 @@ export interface ParsedErrorEvent extends ParsedEventBase {
     { name: "error"; data: object | undefined },
     { name: "meta"; data: object }
   ];
+}
+
+// Todo - replace usage of this with DebugEvent from @urql/core - https://github.com/FormidableLabs/urql/pull/608
+export interface DebugEvent {
+  type: string;
+  message: string;
+  operation: Operation;
+  data: any;
+}
+
+export interface ReceivedDebugEvent extends DebugEvent {
+  key: number;
+  timestamp: number;
 }
 
 export type ParsedEvent =

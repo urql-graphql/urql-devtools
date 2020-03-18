@@ -3,14 +3,8 @@ import styled from "styled-components";
 import { print } from "graphql/language/printer";
 import { Operation } from "urql";
 import { Pane } from "../../../components";
+import { ReceivedDebugEvent } from "../../../types";
 import { TimelinePaneSection } from "./TimelinePaneSection";
-
-export interface DebugEvent {
-  type: string;
-  message: string;
-  operation: Operation;
-  data: any;
-}
 
 const genGraphQlCodeHiglight = (str: string) => ({
   code: { language: "graphql", code: str }
@@ -29,14 +23,14 @@ const parseOperation = (op: Operation) => [
     : [])
 ];
 
-const getEventSubSections = (e: DebugEvent) =>
+const getEventSubSections = (e: ReceivedDebugEvent) =>
   Object.entries(e)
     .filter(([key]) => !["operation", "data"].includes(key))
     .map(([key, val]) => ({ info: [key, val] as [string, string] }));
 
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
-export const TimelinePane: FC<{ event: DebugEvent }> = ({ event }) => {
+export const TimelinePane: FC<{ event: ReceivedDebugEvent }> = ({ event }) => {
   const eventSubSections = useMemo(() => getEventSubSections(event), [event]);
   const querySubSections = useMemo(() => parseOperation(event.operation), [
     event.operation

@@ -1,12 +1,14 @@
 import React, { FC, useMemo } from "react";
 import styled from "styled-components";
-import { PresentedEvent } from "../../../types";
+import { ReceivedDebugEvent } from "../../../types";
 import { useTimelineContext } from "../../../context";
 import { TimelineEvent } from "./TimelineEvent";
 import { TimelineDuration } from "./TimelineDuration";
 
-export const TimelineRow: FC<{ events: PresentedEvent[] }> = ({ events }) => {
-  const { scale, timelineLength, setSelectedEvent } = useTimelineContext();
+export const TimelineRow: FC<{ events: ReceivedDebugEvent[] }> = ({
+  events
+}) => {
+  const { container, scale, setSelectedEvent } = useTimelineContext();
 
   const eventElements = useMemo(
     () =>
@@ -14,7 +16,7 @@ export const TimelineRow: FC<{ events: PresentedEvent[] }> = ({ events }) => {
         return [
           ...p,
           <TimelineEvent
-            key={`e-${e.timestamp}`}
+            key={`e-${e.key}`}
             event={e}
             selectEvent={() => setSelectedEvent(e)}
             style={{
@@ -49,7 +51,7 @@ export const TimelineRow: FC<{ events: PresentedEvent[] }> = ({ events }) => {
             style={{
               position: "absolute",
               left: scale(eventStart),
-              right: timelineLength - scale(e.timestamp)
+              right: container.clientWidth - scale(e.timestamp)
             }}
           />
         );
@@ -69,14 +71,14 @@ export const TimelineRow: FC<{ events: PresentedEvent[] }> = ({ events }) => {
           style={{
             position: "absolute",
             left: scale(eventStart),
-            right: timelineLength - scale(Date.now())
+            right: container.clientWidth - scale(Date.now())
           }}
         />
       ];
     }
 
     return mostEvents;
-  }, [events, scale, timelineLength]);
+  }, [events, scale, container.clientWidth]);
 
   return (
     <Container>

@@ -8,23 +8,21 @@ import React, {
   FC,
   SetStateAction,
   useContext,
-  useEffect,
-  MutableRefObject
+  useEffect
 } from "react";
 import { scaleLinear, ScaleLinear } from "d3-scale";
 import { max, min } from "d3-array";
-import { PresentedEvent } from "../types";
+import { ReceivedDebugEvent } from "../types";
 import { DevtoolsContext } from "./Devtools";
 
 interface TimelineContextValue {
-  selectedEvent?: PresentedEvent;
-  setSelectedEvent: Dispatch<SetStateAction<PresentedEvent | undefined>>;
-  container: MutableRefObject<HTMLDivElement>;
+  selectedEvent?: ReceivedDebugEvent;
+  setSelectedEvent: Dispatch<SetStateAction<ReceivedDebugEvent | undefined>>;
+  container: HTMLDivElement;
   setContainer: (e: HTMLDivElement) => void;
-  events: Record<string, any>;
+  events: Record<string, ReceivedDebugEvent[]>;
   scale: ScaleLinear<number, number>;
   startTime: number;
-  timelineLength: number;
 }
 
 const TimelineContext = createContext<TimelineContextValue>(null as any);
@@ -149,11 +147,10 @@ const useTimelineDomain = () => {
 
   return useMemo(
     () => ({
-      container: ref,
+      container: ref.current,
       setContainer,
       startTime: startTime.current,
-      scale: scale.scale,
-      timelineLength: ref.current && ref.current.clientWidth
+      scale: scale.scale
     }),
     [scale, setContainer]
   );
@@ -162,24 +159,33 @@ const useTimelineDomain = () => {
 export const TimelineProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const domain = useTimelineDomain();
-  const [events, setEvents] = useState<Record<string, PresentedEvent[]>>({});
+  const [events, setEvents] = useState<Record<string, ReceivedDebugEvent[]>>(
+    {}
+  );
   const [selectedEvent, setSelectedEvent] = useState<
-    PresentedEvent | undefined
+    ReceivedDebugEvent | undefined
   >(undefined);
 
   useEffect(() => {
+    let count = 0;
+
+    // Todo - add debug event type to Devtools context
     return addMessageHandler(message => {
-      if (message.type === "init" || message.type === "disconnect") {
+      // @ts-ignore
+      if (message.type !== "debug") {
         return;
       }
 
-      const key =
-        message.type === "operation"
-          ? message.data.key
-          : message.data.operation.key;
+      const receivedEvent = {
+        key: count++,
+        timestamp: (message as any).timestamp,
+        ...(message as any).data
+      };
+      const opKey = receivedEvent.operation.key;
+
       setEvents(e => ({
         ...e,
-        [key]: [...(e[key] || []), message]
+        [opKey]: [...(e[opKey] || []), receivedEvent]
       }));
     });
   }, [addMessageHandler]);
