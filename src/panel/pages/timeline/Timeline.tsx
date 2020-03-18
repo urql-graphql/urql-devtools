@@ -16,11 +16,12 @@ export const Timeline: FC = () => {
 
   const ticks = useMemo(
     () =>
-      scale &&
-      scale.ticks(getTickCount(container.clientWidth)).map(t => ({
-        label: `${t - startTime}ms`,
-        position: scale(t)
-      })),
+      scale
+        ? scale.ticks(getTickCount(container.clientWidth)).map(t => ({
+            label: `${t - startTime}ms`,
+            position: scale(t)
+          }))
+        : [],
     [scale]
   );
 
