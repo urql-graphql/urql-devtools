@@ -1,21 +1,8 @@
-import React from "react";
+import React, { FC, useState, useCallback, ComponentProps } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { CodeHighlight } from "../../../components";
-
-interface TimelinePaneSectionProps {
-  title: string;
-  startOpen?: boolean;
-  subSections: {
-    title?: string;
-    info?: [string, string];
-    code?: {
-      language: string;
-      code: string;
-    };
-  }[];
-}
 
 export const TimelinePaneSection: React.FC<TimelinePaneSectionProps> = ({
   title,
@@ -75,8 +62,48 @@ const PaneSection = styled.section`
 
 const SectionTitle = styled.h2`
   cursor: pointer;
+  color: #fff;
 `;
 
 const OpenClosedArrow = styled(FontAwesomeIcon)`
   padding-right: 1rem;
 `;
+
+export const TimelinePaneHeading: FC<{ collapsed?: boolean } & ComponentProps<
+  typeof SectionTitle
+>> = ({ collapsed = false, children, ...props }) => (
+  <SectionTitle {...props}>
+    <OpenClosedArrow
+      icon={collapsed ? faAngleRight : faAngleDown}
+      color="#fff"
+    />
+    {children}
+  </SectionTitle>
+);
+
+export const TimelineQueryInfo: FC<{ query: string; variables: object }> = ({
+  query,
+  variables
+}) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const handleToggle = useCallback(() => setIsCollapsed(c => !c), []);
+
+  return (
+    <PaneSection>
+      <TimelinePaneHeading onClick={handleToggle} collapsed={isCollapsed}>
+        Query
+      </TimelinePaneHeading>
+      {!isCollapsed && (
+        <>
+          <CodeHighlight language={"graphql"} code={query} />
+          <h3>Variables</h3>
+          <CodeHighlight
+            language={"javascript"}
+            code={JSON.stringify(variables, null, 2)}
+          />
+        </>
+      )}
+    </PaneSection>
+  );
+};
