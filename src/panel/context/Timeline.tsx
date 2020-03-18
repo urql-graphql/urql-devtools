@@ -29,6 +29,8 @@ const TimelineContext = createContext<TimelineContextValue>(null as any);
 
 export const useTimelineContext = () => useContext(TimelineContext);
 
+const DEFAULT_WIDTH = 30000;
+
 const useTimelineDomain = () => {
   const startTime = useRef(Date.now());
   const domain = useRef({
@@ -48,7 +50,7 @@ const useTimelineDomain = () => {
     }
 
     // 30000ms at 1x zoom
-    const endTime = domain.current.zoom * 30000;
+    const endTime = domain.current.zoom * DEFAULT_WIDTH;
 
     const newScale = scaleLinear()
       .domain([domain.current.start, endTime])
@@ -78,26 +80,27 @@ const useTimelineDomain = () => {
     createScale();
   }, []);
 
-  const handlePan = useCallback((e: WheelEvent) => {
-    // Horizontal and vertical scroll can be used (max delta)
-    // Gets largest axis of movement
-    const delta =
-      max([Math.abs(e.deltaX), Math.abs(e.deltaY)]) === Math.abs(e.deltaX)
-        ? e.deltaX
-        : e.deltaY;
+  const handlePan = useCallback(
+    (movement: number) => {
+      const endTime =
+        domain.current.start + domain.current.zoom * DEFAULT_WIDTH;
+      // Convert pixel delta to time delta
+      const scaledDelta = scaleLinear()
+        .domain([domain.current.start, endTime])
+        .range([0, ref.current.clientWidth])
+        .invert(movement);
 
-    // Scale mouse movement to zoom delta
-    const scaledDelta = delta * 10;
+      // Normalize movement for different zoom levels
+      const newStart = 2 * domain.current.start - scaledDelta;
 
-    // Normalize movement for different zoom levels
-    const newStart = domain.current.start + domain.current.zoom * scaledDelta;
-
-    // Apply movement (limited left movement)
-    domain.current = {
-      ...domain.current,
-      start: max([newStart, startTime.current]) as number
-    };
-  }, []);
+      // Apply movement (limited left movement)
+      domain.current = {
+        ...domain.current,
+        start: max([newStart, startTime.current]) as number
+      };
+    },
+    [scale]
+  );
 
   const handleZoom = useCallback((e: WheelEvent) => {
     // Scale movement delta
@@ -113,25 +116,58 @@ const useTimelineDomain = () => {
     };
   }, []);
 
-  // Listen for scroll events
+  // Listen for drag events
   useEffect(() => {
     if (!ref.current) {
       return;
     }
 
-    const listener = (e: WheelEvent) => {
-      if (!e.ctrlKey) {
-        return handlePan(e);
-      }
-
-      if (e.deltaY) {
-        return handleZoom(e);
-      }
+    // dragstart -> mousemove -> mouseup
+    const dragStartListener = (e: DragEvent) => {
+      e.preventDefault();
+      ref.current.addEventListener("mousemove", mouseMoveListener);
+      window.addEventListener("mouseup", mouseUpListener);
     };
 
-    ref.current.addEventListener("wheel", listener);
-    return () => removeEventListener("wheel", listener);
+    const mouseMoveListener = (e: MouseEvent) => {
+      handlePan(e.movementX);
+    };
+
+    const mouseUpListener = () => {
+      ref.current.removeEventListener("mousemove", mouseMoveListener);
+      window.removeEventListener("mouseup", mouseUpListener);
+    };
+
+    ref.current.addEventListener("dragstart", dragStartListener);
+
+    return () => {
+      ref.current.removeEventListener("dragstart", dragStartListener);
+      ref.current.removeEventListener("mousemove", mouseMoveListener);
+      window.removeEventListener("mouseup", mouseUpListener);
+    };
   }, []);
+
+  // Listen for zoom events
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+
+    const wheelListener = (e: WheelEvent) => {
+      if (!e.ctrlKey && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        handlePan(-e.deltaX);
+        return;
+      }
+
+      e.preventDefault();
+      handleZoom(e);
+    };
+
+    ref.current.addEventListener("wheel", wheelListener);
+
+    return () => ref.current.removeEventListener("wheel", wheelListener);
+  }, [handleZoom, handlePan]);
 
   // Check scale each animation frame
   useEffect(() => {

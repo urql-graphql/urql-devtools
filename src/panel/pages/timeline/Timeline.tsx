@@ -36,7 +36,7 @@ export const Timeline: FC = () => {
 
   return (
     <Page>
-      <TimelineList ref={setContainer}>
+      <TimelineList ref={setContainer} draggable="true">
         {ticks.map(t => (
           <Tick
             key={`p-${t.position}`}
