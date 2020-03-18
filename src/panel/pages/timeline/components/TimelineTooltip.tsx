@@ -72,7 +72,6 @@ export const useTooltip = () => {
   }, []);
 
   const handleRef = useCallback(passedRef => {
-    console.log(passedRef);
     if (passedRef === null) {
       return;
     }
@@ -120,8 +119,6 @@ export const useTooltip = () => {
       ref.current.removeEventListener("mouseleave", setInvisible);
     };
   }, [hasRef]);
-
-  console.log({ ref: handleRef, tooltipProps, isVisible });
 
   return useMemo(() => ({ ref: handleRef, tooltipProps, isVisible }), [
     handleRef,

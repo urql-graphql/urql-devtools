@@ -1,12 +1,16 @@
 import React, { FC, useMemo } from "react";
 import styled from "styled-components";
-import { ParsedEvent } from "../../../types";
+import { PresentedEvent } from "../../../types";
 import { useTimelineContext } from "../../../context";
 import { TimelineEvent } from "./TimelineEvent";
 import { TimelineDuration } from "./TimelineDuration";
 
-export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
-  const { getTimePosition, timelineLength } = useTimelineContext();
+export const TimelineRow: FC<{ events: PresentedEvent[] }> = ({ events }) => {
+  const {
+    getTimePosition,
+    timelineLength,
+    setSelectedEvent
+  } = useTimelineContext();
 
   const eventElements = useMemo(
     () =>
@@ -16,6 +20,7 @@ export const TimelineRow: FC<{ events: ParsedEvent[] }> = ({ events }) => {
           <TimelineEvent
             key={e.key}
             event={e}
+            selectEvent={() => setSelectedEvent(e)}
             style={{
               position: "absolute",
               left: getTimePosition(e.timestamp),
