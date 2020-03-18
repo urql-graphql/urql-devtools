@@ -12,15 +12,13 @@ export const Timeline: FC = () => {
     selectedEvent
   } = useTimelineContext();
 
-  // console.log(events);
-
   // We lie about the types to save having to do this check
   // in every component. This guard is needed.
   if (!getTimePosition)
     return (
-      <Background>
+      <Container>
         <TimelineList ref={setContainer} />
-      </Background>
+      </Container>
     );
 
   return (

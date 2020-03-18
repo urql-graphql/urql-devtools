@@ -37,8 +37,6 @@ const getEventSubSections = (e: DebugEvent) =>
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
 export const TimelinePane: FC<{ event: DebugEvent }> = ({ event }) => {
-  console.log(event);
-
   const eventSubSections = useMemo(() => getEventSubSections(event), [event]);
   const querySubSections = useMemo(() => parseOperation(event.operation), [
     event.operation
