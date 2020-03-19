@@ -55,7 +55,7 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: docker-compose run regression --runInBand --ci
+      - run: docker-compose run regression "--runInBand --ci"
       - store_artifacts:
           path: src/panel/__image_snapshots__/__diff_output__/
 
