@@ -96,7 +96,7 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
 };
 
 export default {
-  basic: (
+  "basic [no snapshot]": (
     <DevtoolsContextMock>
       <Timeline />
     </DevtoolsContextMock>

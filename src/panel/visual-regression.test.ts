@@ -1,27 +1,49 @@
-import puppeteer from "puppeteer";
-import { detectCosmosConfig, getFixtureUrls } from "react-cosmos";
+import puppeteer, { Browser } from "puppeteer";
+import {
+  detectCosmosConfig,
+  getFixtureUrlsSync,
+  getFixturesSync
+} from "react-cosmos";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 expect.extend({ toMatchImageSnapshot });
 
-let fixtures: { id: string; url: string }[];
 let browser: puppeteer.Browser;
+
+// Urls of fixtures
+const fixtureUrls = getFixtureUrlsSync({
+  cosmosConfig: detectCosmosConfig(),
+  fullScreen: true
+});
+// ID and name for each fixture
+const fixtureElements = getFixturesSync({
+  cosmosConfig: detectCosmosConfig()
+});
+const fixtures = fixtureUrls.reduce<[string, string][]>((p, url, i) => {
+  const f = fixtureElements[i].fixtureId;
+
+  if (f.name.includes("[no snapshot]")) {
+    return p;
+  }
+
+  const targetUrl = process.env.TARGET_HOST
+    ? url.replace("localhost:5000", process.env.TARGET_HOST)
+    : url;
+
+  return [
+    ...p,
+    [`${/\/(\w+)\.fixture/.exec(f.path)[1]}-${f.name}`, `http://${targetUrl}`]
+  ];
+}, []);
 
 beforeAll(async () => {
   try {
     browser = await puppeteer.launch({ args: ["--no-sandbox"] });
-    fixtures = (
-      await getFixtureUrls({
-        cosmosConfig: detectCosmosConfig(),
-        fullScreen: true
-      })
-    ).map(url => ({
-      id: url.replace(/.*?fixtureId\=/, ""),
-      url: `http://${url.replace("localhost", "cosmos")}`
-    }));
   } catch (err) {
     console.error(err);
+    throw err;
   }
 
+  jest.retryTimes(5);
   jest.setTimeout(60000);
 });
 
@@ -29,20 +51,24 @@ afterAll(async () => {
   browser && (await browser.close());
 });
 
-describe("Fixtures", () => {
-  it("matches image snapshot", async () => {
-    for (const { id, url } of fixtures) {
-      const page = await browser.newPage();
-      await page.goto(url, { waitUntil: "load" });
-      await delay(200);
-      const image = await page.screenshot();
-      expect(image).toMatchImageSnapshot({
-        customSnapshotIdentifier: id,
-        failureThreshold: 0.01
-      });
-      await page.close();
-    }
-  }, 120000);
-});
+describe.each(fixtures)("%s", (id, url) => {
+  let page: puppeteer.Page;
 
-const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
+  beforeEach(async () => {
+    page = await browser.newPage();
+  });
+
+  afterEach(async () => {
+    await page.close();
+  });
+
+  it("matches snapshot", async () => {
+    await page.goto(url, { waitUntil: "load" });
+    await page.mouse.move(0, 0);
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot({
+      customSnapshotIdentifier: id,
+      failureThreshold: 0.01
+    });
+  });
+});
