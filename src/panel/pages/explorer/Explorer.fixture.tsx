@@ -82,7 +82,7 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents } & Partial<
 export default {
   basic: (
     <DevtoolsContextMock>
-      <Explorer />
+      <Explorer data-snapshot />
     </DevtoolsContextMock>
   ),
   updating: (
@@ -115,7 +115,7 @@ export default {
         return () => false;
       }}
     >
-      <Explorer />
+      <Explorer data-snapshot />
     </DevtoolsContextMock>
   )
 };

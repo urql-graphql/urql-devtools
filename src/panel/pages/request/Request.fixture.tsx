@@ -43,22 +43,22 @@ const RequestProviderMock: FC<Partial<ContextType<typeof RequestContext>>> = ({
 export default {
   basic: (
     <RequestProviderMock>
-      <Request />
+      <Request data-snapshot />
     </RequestProviderMock>
   ),
   fetching: (
     <RequestProviderMock fetching={true}>
-      <Request />
+      <Request data-snapshot />
     </RequestProviderMock>
   ),
   error: (
     <RequestProviderMock error={{ test: 1234 }}>
-      <Request />
+      <Request data-snapshot />
     </RequestProviderMock>
   ),
   response: (
     <RequestProviderMock response={{ example: 1234 }}>
-      <Request />
+      <Request data-snapshot />
     </RequestProviderMock>
   )
 };

@@ -18,7 +18,7 @@ export default {
     <ExplorerContext.Provider
       value={{ ...explorerContextValue, focusedNode: undefined }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "cache hit": (
@@ -31,7 +31,7 @@ export default {
         }
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "cache miss": (
@@ -44,7 +44,7 @@ export default {
         }
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "cache partial": (
@@ -57,7 +57,7 @@ export default {
         }
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "with args": (
@@ -73,7 +73,7 @@ export default {
         }
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "with value (object)": (
@@ -88,7 +88,7 @@ export default {
         }
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "with value (string)": (
@@ -101,7 +101,7 @@ export default {
         }
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "with children": (
@@ -119,7 +119,7 @@ export default {
         }
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   )
 };

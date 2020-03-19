@@ -1,11 +1,11 @@
-import React from "react";
+import React, { ComponentProps, FC } from "react";
 import styled from "styled-components";
 import { Background } from "../../components/Background";
 import { Query, Response } from "./components";
 
-export const Request = () => {
+export const Request: FC<ComponentProps<typeof Container>> = props => {
   return (
-    <Container>
+    <Container {...props}>
       <Query />
       <Response />
     </Container>

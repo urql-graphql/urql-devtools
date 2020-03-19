@@ -1,4 +1,4 @@
-import React, { FC, useContext, useMemo } from "react";
+import React, { FC, useContext, useMemo, ComponentProps } from "react";
 import styled from "styled-components";
 import { Operation } from "urql";
 import { ParsedFieldNode, ParsedNodeMap } from "../../../context/Explorer/ast";
@@ -7,7 +7,7 @@ import { ExplorerContext } from "../../../context";
 import { Value } from "./Value";
 import { CacheOutcomeIcon } from "./Icons";
 
-export const NodeInfoPane: FC = () => {
+export const NodeInfoPane: FC<ComponentProps<typeof Pane>> = props => {
   const { focusedNode } = useContext(ExplorerContext);
 
   const content = useMemo(() => {
@@ -23,7 +23,7 @@ export const NodeInfoPane: FC = () => {
   }, [focusedNode]);
 
   return (
-    <Pane>
+    <Pane {...props}>
       <PaneBody>{content}</PaneBody>
     </Pane>
   );

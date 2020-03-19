@@ -89,12 +89,12 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
 export default {
   basic: (
     <DevtoolsContextMock>
-      <Events />
+      <Events data-snapshot />
     </DevtoolsContextMock>
   ),
   empty: (
     <DevtoolsContextMock events={[]}>
-      <Events />
+      <Events data-snapshot />
     </DevtoolsContextMock>
   )
 };

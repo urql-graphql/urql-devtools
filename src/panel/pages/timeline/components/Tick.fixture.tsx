@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 
 export default {
   basic: (
-    <Wrapper>
+    <Wrapper data-snapshot>
       <Tick style={{ left: 20 }} label={"200ms"} />
     </Wrapper>
   )

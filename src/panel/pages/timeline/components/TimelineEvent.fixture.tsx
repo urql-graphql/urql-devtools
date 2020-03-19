@@ -42,32 +42,32 @@ const teardownEvent: ReceivedDebugEvent = {
 export default {
   "addition (query)": (
     <Wrapper>
-      <TimelineEvent {...props} event={queryEvent} />
+      <TimelineEvent data-snapshot {...props} event={queryEvent} />
     </Wrapper>
   ),
   "addition (mutation)": (
     <Wrapper>
-      <TimelineEvent {...props} event={mutationEvent} />
+      <TimelineEvent data-snapshot {...props} event={mutationEvent} />
     </Wrapper>
   ),
   "addition (subscription)": (
     <Wrapper>
-      <TimelineEvent {...props} event={subscriptionEvent} />
+      <TimelineEvent data-snapshot {...props} event={subscriptionEvent} />
     </Wrapper>
   ),
   "update (response)": (
     <Wrapper>
-      <TimelineEvent {...props} event={responseEvent} />
+      <TimelineEvent data-snapshot {...props} event={responseEvent} />
     </Wrapper>
   ),
   "update (error)": (
     <Wrapper>
-      <TimelineEvent {...props} event={errorEvent} />
+      <TimelineEvent data-snapshot {...props} event={errorEvent} />
     </Wrapper>
   ),
   teardown: (
     <Wrapper>
-      <TimelineEvent {...props} event={teardownEvent} />
+      <TimelineEvent data-snapshot {...props} event={teardownEvent} />
     </Wrapper>
   )
 };

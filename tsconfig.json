@@ -10,6 +10,6 @@
     "downlevelIteration": true,
     "resolveJsonModule": true
   },
-  "include": ["src", "src/**/*.test.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "src/**/visual-regression.test.ts"]
 }

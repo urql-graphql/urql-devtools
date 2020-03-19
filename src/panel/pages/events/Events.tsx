@@ -1,10 +1,16 @@
-import React, { useContext, useEffect, useState, FC } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  FC,
+  ComponentProps
+} from "react";
 import styled from "styled-components";
 import { EventsContext } from "../../context";
 import { Background } from "../../components/Background";
 import { EventPane, EventCard, Filters, Headers } from "./components";
 
-export const Events: FC = () => {
+export const Events: FC<ComponentProps<typeof Container>> = props => {
   const { events, selectedEvent } = useContext(EventsContext);
   const [filteringOn, setFilteringOn] = useState(false);
 
@@ -24,7 +30,7 @@ export const Events: FC = () => {
   }, []);
 
   return (
-    <Container>
+    <Container {...props}>
       <EventsList>
         <Filters />
         <Headers />
