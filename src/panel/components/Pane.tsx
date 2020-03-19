@@ -73,7 +73,7 @@ const PaneRoot: FC<ComponentProps<typeof PaneContainer>> = ({
   );
 
   return (
-    <PaneContainer {...props} style={{ ...props.style, style }}>
+    <PaneContainer {...props} style={{ ...props.style, ...style }}>
       {children}
       <DraggingEdge
         role="seperator"
