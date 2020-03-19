@@ -18,7 +18,7 @@ const fixtureElements = getFixturesSync({
 const fixtures = fixtureUrls.reduce<[string, string][]>((p, url, i) => {
   const f = fixtureElements[i].fixtureId;
 
-  if (f.name === null || f.name.includes("[no snapshot]")) {
+  if (f.name === null) {
     return p;
   }
 
