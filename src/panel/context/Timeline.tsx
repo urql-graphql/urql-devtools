@@ -82,8 +82,7 @@ const useTimelineDomain = () => {
 
   const handlePan = useCallback(
     (movement: number) => {
-      const endTime =
-        domain.current.start + domain.current.zoom * DEFAULT_WIDTH;
+      const endTime = domain.current.start + DEFAULT_WIDTH;
       // Convert pixel delta to time delta
       const scaledDelta = scaleLinear()
         .domain([domain.current.start, endTime])
@@ -96,7 +95,7 @@ const useTimelineDomain = () => {
       // Apply movement (limited left movement)
       domain.current = {
         ...domain.current,
-        start: max([newStart, startTime.current]) as number
+        start: newStart < startTime.current ? startTime.current : newStart
       };
     },
     [scale]
@@ -110,8 +109,24 @@ const useTimelineDomain = () => {
         ? (max([0.2, domain.current.zoom + delta]) as number)
         : (min([3, domain.current.zoom + delta]) as number);
 
+    // Gen new domain end based on zoom
+    const endTime =
+      domain.current.start + (domain.current.zoom + delta) * DEFAULT_WIDTH;
+
+    // Convert pixel delta to time delta based on mouse position
+    const scaledDelta = scaleLinear()
+      .domain([domain.current.start, endTime])
+      .range([0, ref.current.clientWidth])
+      .invert(e.clientX - ref.current.clientLeft);
+
+    const zoomDiff = newZoom - domain.current.zoom;
+    const startDiff = domain.current.start - scaledDelta;
+    const moveFactor = startDiff * zoomDiff;
+
+    const newStart = domain.current.start + moveFactor;
     domain.current = {
       ...domain.current,
+      start: newStart < startTime.current ? startTime.current : newStart,
       zoom: newZoom
     };
   }, []);
@@ -164,7 +179,9 @@ const useTimelineDomain = () => {
       handleZoom(e);
     };
 
-    ref.current.addEventListener("wheel", wheelListener);
+    // * Passive to prevent console warning - we might want to preventDefault
+    // * here in future
+    ref.current.addEventListener("wheel", wheelListener, { passive: true });
 
     return () => ref.current.removeEventListener("wheel", wheelListener);
   }, [handleZoom, handlePan]);
