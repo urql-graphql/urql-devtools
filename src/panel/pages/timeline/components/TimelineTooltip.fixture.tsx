@@ -34,7 +34,9 @@ const HoverableItem = () => {
 export default {
   basic: (
     <Wrapper>
-      <TimelineTooltip>A network response or cache update</TimelineTooltip>
+      <TimelineTooltip data-snapshot>
+        A network response or cache update
+      </TimelineTooltip>
     </Wrapper>
   ),
   onHover: (

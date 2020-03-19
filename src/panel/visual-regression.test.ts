@@ -1,4 +1,3 @@
-import puppeteer, { Browser } from "puppeteer";
 import {
   detectCosmosConfig,
   getFixtureUrlsSync,
@@ -6,8 +5,6 @@ import {
 } from "react-cosmos";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 expect.extend({ toMatchImageSnapshot });
-
-let browser: puppeteer.Browser;
 
 // Urls of fixtures
 const fixtureUrls = getFixtureUrlsSync({
@@ -21,54 +18,54 @@ const fixtureElements = getFixturesSync({
 const fixtures = fixtureUrls.reduce<[string, string][]>((p, url, i) => {
   const f = fixtureElements[i].fixtureId;
 
-  if (f.name.includes("[no snapshot]")) {
+  if (f.name === null || f.name.includes("[no snapshot]")) {
+    return p;
+  }
+
+  const fixtureRegex = /\/(\w+)\.fixture/.exec(f.path);
+
+  if (fixtureRegex === null) {
+    console.error("Error parsing fixture");
     return p;
   }
 
   const targetUrl = process.env.TARGET_HOST
     ? url.replace("localhost:5000", process.env.TARGET_HOST)
     : url;
-
-  return [
-    ...p,
-    [`${/\/(\w+)\.fixture/.exec(f.path)[1]}-${f.name}`, `http://${targetUrl}`]
-  ];
+  return [...p, [`${fixtureRegex[1]} - ${f.name}`, `http://${targetUrl}`]];
 }, []);
 
 beforeAll(async () => {
-  try {
-    browser = await puppeteer.launch({ args: ["--no-sandbox"] });
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-
   jest.retryTimes(5);
   jest.setTimeout(60000);
 });
 
-afterAll(async () => {
-  browser && (await browser.close());
-});
-
 describe.each(fixtures)("%s", (id, url) => {
-  let page: puppeteer.Page;
-
-  beforeEach(async () => {
-    page = await browser.newPage();
-  });
-
-  afterEach(async () => {
-    await page.close();
-  });
-
   it("matches snapshot", async () => {
     await page.goto(url, { waitUntil: "load" });
     await page.mouse.move(0, 0);
-    const image = await page.screenshot();
+    await delay(500);
+    const element = await page.$("[data-snapshot=true]");
+
+    if (element === null) {
+      console.warn(`No snapshot for fixture: ${id}`);
+      return;
+    }
+
+    const boundingBox = await element.boundingBox();
+    const image = await element.screenshot({
+      clip: {
+        x: boundingBox.x,
+        y: boundingBox.y,
+        width: Math.min(boundingBox.width, page.viewport().width),
+        height: Math.min(boundingBox.height, page.viewport().height)
+      }
+    });
     expect(image).toMatchImageSnapshot({
       customSnapshotIdentifier: id,
       failureThreshold: 0.01
     });
   });
 });
+
+const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));

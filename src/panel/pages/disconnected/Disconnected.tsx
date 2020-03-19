@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, ComponentProps } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import image from "../../../assets/icon.svg";
 
-export const Disconnected: FC = () => (
+export const Disconnected: FC<ComponentProps<typeof Container>> = props => (
   <>
     <GlobalStyle />
-    <Container>
+    <Container {...props}>
       <Logo alt={"Urql Eagle"} src={image} />
       <Header>Waiting for exchange</Header>
       <Hint>Make sure {"you're"} using the Urql Devtools exchange!</Hint>

@@ -3,12 +3,16 @@ import React, {
   useCallback,
   useState,
   useMemo,
-  MouseEventHandler
+  MouseEventHandler,
+  ComponentProps
 } from "react";
 import styled from "styled-components";
 import { useOrientationWatcher } from "../hooks";
 
-const PaneRoot: FC = ({ children }) => {
+const PaneRoot: FC<ComponentProps<typeof PaneContainer>> = ({
+  children,
+  ...props
+}) => {
   const [grabbed, setGrabbed] = useState(false);
   const [size, setSize] = useState({ x: 400, y: 400 });
   const { isPortrait } = useOrientationWatcher();
@@ -69,7 +73,7 @@ const PaneRoot: FC = ({ children }) => {
   );
 
   return (
-    <PaneContainer style={style}>
+    <PaneContainer {...props} style={{ ...props.style, style }}>
       {children}
       <DraggingEdge
         role="seperator"

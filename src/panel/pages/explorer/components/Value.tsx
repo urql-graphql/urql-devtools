@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo, FC } from "react";
+import React, { useEffect, useRef, useMemo, FC, ComponentProps } from "react";
 import styled from "styled-components";
 import { animated } from "react-spring";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
@@ -8,7 +8,12 @@ export const Value: FC<{
   value: ParsedFieldNode["value"];
   expand?: boolean;
   isRoot?: boolean;
-}> = ({ value, expand = false, isRoot = true }) => {
+} & ComponentProps<typeof animated.span>> = ({
+  value,
+  expand = false,
+  isRoot = true,
+  ...props
+}) => {
   const previousValue = useRef(value);
   const [flashProps, flash] = useFlash();
 
@@ -43,7 +48,11 @@ export const Value: FC<{
     return content;
   }
 
-  return <animated.span style={flashProps}>{content}</animated.span>;
+  return (
+    <animated.span {...props} style={{ ...props.style, ...flashProps }}>
+      {content}
+    </animated.span>
+  );
 };
 
 const ArrayValue: FC<{ value: any[]; expand: boolean }> = ({

@@ -25,16 +25,20 @@ const query = gql`
 export default {
   "subheading (collapsed)": (
     <Wrapper>
-      <TimelinePaneHeading collapsed={true}>My Heading</TimelinePaneHeading>
+      <TimelinePaneHeading data-snapshot collapsed={true}>
+        My Heading
+      </TimelinePaneHeading>
     </Wrapper>
   ),
   "subheading (expanded)": (
     <Wrapper>
-      <TimelinePaneHeading collapsed={false}>My Heading</TimelinePaneHeading>
+      <TimelinePaneHeading data-snapshot collapsed={false}>
+        My Heading
+      </TimelinePaneHeading>
     </Wrapper>
   ),
   "query section": (
-    <Wrapper>
+    <Wrapper data-snapshot>
       <TimelineQuerySection query={query} variables={{ filter: "Will" }} />
     </Wrapper>
   )

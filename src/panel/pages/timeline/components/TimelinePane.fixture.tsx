@@ -33,5 +33,5 @@ const mockDebugEvent: ReceivedDebugEvent = {
 };
 
 export default {
-  combined: <TimelinePane event={mockDebugEvent} />
+  combined: <TimelinePane data-snapshot event={mockDebugEvent} />
 };

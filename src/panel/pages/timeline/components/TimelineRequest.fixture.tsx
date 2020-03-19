@@ -29,17 +29,25 @@ const errorEvent: ParsedErrorEvent = {
 export default {
   fetching: (
     <Wrapper>
-      <TimelineRequest trigger={requestEvent} />
+      <TimelineRequest data-snapshot trigger={requestEvent} />
     </Wrapper>
   ),
   success: (
     <Wrapper>
-      <TimelineRequest trigger={requestEvent} response={responseEvent} />
+      <TimelineRequest
+        data-snapshot
+        trigger={requestEvent}
+        response={responseEvent}
+      />
     </Wrapper>
   ),
   error: (
     <Wrapper>
-      <TimelineRequest trigger={requestEvent} response={errorEvent} />
+      <TimelineRequest
+        data-snapshot
+        trigger={requestEvent}
+        response={errorEvent}
+      />
     </Wrapper>
   )
 };
