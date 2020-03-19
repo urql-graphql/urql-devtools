@@ -9,6 +9,8 @@ declare const global: {
   matchMedia: any;
 };
 
+declare const jasmine: jest.MatcherContext;
+
 (() => {
   // Setup enzyme
   configure({ adapter: new Adapter() });
