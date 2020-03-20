@@ -12,6 +12,8 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
+const collapseTransition = "300ms ease";
+
 const PaneSectionRoot: FC<{
   collapsed?: boolean;
   onCollapseToggle?: () => void;
@@ -74,7 +76,7 @@ const SectionHeading = styled.h2`
     margin-right: 10px;
     width: 20px !important;
     height: 20px;
-    transition: transform 300ms ease;
+    transition: transform ${collapseTransition};
   }
 
   &[aria-expanded="true"] > svg {
@@ -121,7 +123,7 @@ const Body: FC<{ collapsed?: boolean } & ComponentProps<
 
 const BodyContainer = styled.div`
   overflow: hidden;
-  transition: max-height 300ms ease;
+  transition: max-height ${collapseTransition};
 `;
 
 // @ts-ignore
