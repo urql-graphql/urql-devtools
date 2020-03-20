@@ -11,7 +11,6 @@ import React, {
   useEffect
 } from "react";
 import { scaleLinear, ScaleLinear } from "d3-scale";
-import { max, min } from "d3-array";
 import { ReceivedDebugEvent } from "../types";
 import { DevtoolsContext } from "./Devtools";
 
