@@ -4,7 +4,9 @@ import React, {
   useMemo,
   Children,
   cloneElement,
-  useRef
+  useRef,
+  useCallback,
+  useState
 } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -83,24 +85,34 @@ const SectionHeading = styled.h2`
 const Body: FC<{ collapsed?: boolean } & ComponentProps<
   typeof BodyContainer
 >> = ({ collapsed, ...props }) => {
+  const [initialHeight, setInitialHeight] = useState<number>();
   const ref = useRef<HTMLDivElement>();
+
+  const handleRef = useCallback((element: HTMLDivElement) => {
+    if (element === null) {
+      return;
+    }
+
+    ref.current = element;
+    setInitialHeight(element.scrollHeight);
+  }, []);
 
   const maxHeight = useMemo(() => {
     if (collapsed) {
       return 0;
     }
 
-    if (!ref.current) {
-      return undefined;
+    if (ref.current) {
+      return ref.current.scrollHeight;
     }
 
-    return ref.current.scrollHeight;
-  }, [collapsed]);
+    return initialHeight;
+  }, [collapsed, initialHeight]);
 
   return (
     <BodyContainer
       {...props}
-      ref={ref}
+      ref={handleRef}
       style={{ ...props.style, maxHeight }}
       aria-expanded={!collapsed}
     />
