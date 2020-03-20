@@ -107,7 +107,7 @@ const useTimelineDomain = () => {
     const delta = e.deltaY * 0.01;
     const newZoom =
       e.deltaY < 0
-        ? (max([0.2, domain.current.zoom + delta]) as number)
+        ? Math.max(0.2, domain.current.zoom + delta)
         : (min([3, domain.current.zoom + delta]) as number);
     const endTime = domain.current.start + domain.current.zoom * DEFAULT_WIDTH;
     const scale = scaleLinear()
