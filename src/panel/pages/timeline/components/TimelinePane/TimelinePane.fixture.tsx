@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { ReceivedDebugEvent } from "../../../types";
+import { ReceivedDebugEvent } from "../../../../types";
 import { TimelinePane } from "./TimelinePane";
 
 const mockDebugEvent: ReceivedDebugEvent = {
