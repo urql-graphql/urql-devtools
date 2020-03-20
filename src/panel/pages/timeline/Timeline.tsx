@@ -64,6 +64,9 @@ const TimelineList = styled.div`
   flex-direction: column;
   position: relative;
   margin: 40px 0;
+  &:active {
+    cursor: grabbing;
+  }
 `;
 
 const getTickCount = (width: number) => {
