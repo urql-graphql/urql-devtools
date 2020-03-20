@@ -120,7 +120,7 @@ const useTimelineDomain = () => {
     const newStart = mouseTime - newDifferenceFromStart;
     domain.current = {
       ...domain.current,
-      start: newStart < startTime.current ? startTime.current : newStart,
+      start: Math.max(newStart, startTime.current),
       zoom: newZoom
     };
   }, []);
