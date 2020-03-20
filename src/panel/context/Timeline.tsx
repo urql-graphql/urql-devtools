@@ -96,7 +96,7 @@ const useTimelineDomain = () => {
       // Apply movement (limited left movement)
       domain.current = {
         ...domain.current,
-        start: newStart < startTime.current ? startTime.current : newStart
+        start: Math.max(startTime.current, newStart)
       };
     },
     [scale]
