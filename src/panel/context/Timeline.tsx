@@ -82,7 +82,8 @@ const useTimelineDomain = () => {
 
   const handlePan = useCallback(
     (movement: number) => {
-      const endTime = domain.current.start + DEFAULT_WIDTH;
+      const endTime =
+        domain.current.start + DEFAULT_WIDTH * domain.current.zoom;
       // Convert pixel delta to time delta
       const scaledDelta = scaleLinear()
         .domain([domain.current.start, endTime])
@@ -102,28 +103,21 @@ const useTimelineDomain = () => {
   );
 
   const handleZoom = useCallback((e: WheelEvent) => {
-    // Scale movement delta
+    e.preventDefault();
     const delta = e.deltaY * 0.01;
     const newZoom =
       e.deltaY < 0
         ? (max([0.2, domain.current.zoom + delta]) as number)
         : (min([3, domain.current.zoom + delta]) as number);
-
-    // Gen new domain end based on zoom
-    const endTime =
-      domain.current.start + (domain.current.zoom + delta) * DEFAULT_WIDTH;
-
-    // Convert pixel delta to time delta based on mouse position
-    const scaledDelta = scaleLinear()
+    const endTime = domain.current.start + domain.current.zoom * DEFAULT_WIDTH;
+    const scale = scaleLinear()
       .domain([domain.current.start, endTime])
-      .range([0, ref.current.clientWidth])
-      .invert(e.clientX - ref.current.clientLeft);
-
-    const zoomDiff = newZoom - domain.current.zoom;
-    const startDiff = domain.current.start - scaledDelta;
-    const moveFactor = startDiff * zoomDiff;
-
-    const newStart = domain.current.start + moveFactor;
+      .range([0, ref.current.clientWidth]);
+    const scaleFactor = newZoom / domain.current.zoom;
+    const mouseTime = scale.invert(e.clientX);
+    const differenceFromStart = mouseTime - domain.current.start;
+    const newDifferenceFromStart = differenceFromStart * scaleFactor;
+    const newStart = mouseTime - newDifferenceFromStart;
     domain.current = {
       ...domain.current,
       start: newStart < startTime.current ? startTime.current : newStart,
@@ -179,9 +173,8 @@ const useTimelineDomain = () => {
       handleZoom(e);
     };
 
-    // * Passive to prevent console warning - we might want to preventDefault
-    // * here in future
-    ref.current.addEventListener("wheel", wheelListener, { passive: true });
+    // * Passive=false to prevent console warning as it uses preventDefault
+    ref.current.addEventListener("wheel", wheelListener, { passive: false });
 
     return () => ref.current.removeEventListener("wheel", wheelListener);
   }, [handleZoom, handlePan]);
