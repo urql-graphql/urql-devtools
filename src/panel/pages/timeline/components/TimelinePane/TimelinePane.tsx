@@ -2,7 +2,7 @@ import React, { FC, ComponentProps } from "react";
 import styled from "styled-components";
 import { Pane } from "../../../../components";
 import { ReceivedDebugEvent } from "../../../../types";
-import { TimelineQuerySection } from "./PaneSection";
+import { TimelineQuerySection } from "./TimelineQuerySection";
 
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
