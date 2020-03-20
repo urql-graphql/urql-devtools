@@ -19,7 +19,7 @@ const event = {
 export default {
   "query section": (
     <Wrapper data-snapshot>
-      <TimelineEventSection event={event} />
+      <TimelineEventSection data-snapshot event={event} />
     </Wrapper>
   )
 };

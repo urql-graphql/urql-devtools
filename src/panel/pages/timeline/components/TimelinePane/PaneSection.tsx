@@ -13,7 +13,12 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 const PaneSectionRoot: FC<{
   collapsed?: boolean;
   onCollapseToggle?: () => void;
-}> = ({ collapsed, onCollapseToggle, children }) => {
+} & ComponentProps<typeof PaneContainer>> = ({
+  collapsed,
+  onCollapseToggle,
+  children,
+  ...props
+}) => {
   const childNodes = Children.map(children, n => {
     if (typeof n !== "object" || n === null || !("type" in n)) {
       return n;
@@ -35,7 +40,11 @@ const PaneSectionRoot: FC<{
     return n;
   });
 
-  return <PaneContainer aria-expanded={!collapsed}>{childNodes}</PaneContainer>;
+  return (
+    <PaneContainer {...props} aria-expanded={!collapsed}>
+      {childNodes}
+    </PaneContainer>
+  );
 };
 
 const PaneContainer = styled.section`

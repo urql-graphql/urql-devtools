@@ -24,7 +24,7 @@ const Interactive = () => {
 export default {
   expanded: (
     <Wrapper>
-      <PaneSection>
+      <PaneSection data-snapshot>
         <PaneSection.Heading>Hi there</PaneSection.Heading>
         Hi
       </PaneSection>
@@ -32,7 +32,7 @@ export default {
   ),
   collapsed: (
     <Wrapper>
-      <PaneSection collapsed>
+      <PaneSection data-snapshot collapsed>
         <PaneSection.Heading>This is a heading</PaneSection.Heading>
         <PaneSection.Body>This is the body</PaneSection.Body>
       </PaneSection>
@@ -43,23 +43,4 @@ export default {
       <Interactive />
     </Wrapper>
   )
-  // "subheading (collapsed)": (
-  //   <Wrapper>
-  //     <TimelinePaneHeading data-snapshot collapsed={true}>
-  //       My Heading
-  //     </TimelinePaneHeading>
-  //   </Wrapper>
-  // ),
-  // "subheading (expanded)": (
-  //   <Wrapper>
-  //     <TimelinePaneHeading data-snapshot collapsed={false}>
-  //       My Heading
-  //     </TimelinePaneHeading>
-  //   </Wrapper>
-  // ),
-  // "query section": (
-  //   <Wrapper data-snapshot>
-  //     <TimelineQuerySection query={query} variables={{ filter: "Will" }} />
-  //   </Wrapper>
-  // )
 };

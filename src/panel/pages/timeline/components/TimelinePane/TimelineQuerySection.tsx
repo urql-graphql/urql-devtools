@@ -1,4 +1,10 @@
-import React, { useMemo, useState, useCallback, FC } from "react";
+import React, {
+  useMemo,
+  useState,
+  useCallback,
+  FC,
+  ComponentProps
+} from "react";
 import { print, DocumentNode } from "graphql";
 import { CodeHighlight } from "../../../../components";
 import { PaneSection } from "./PaneSection";
@@ -7,7 +13,7 @@ import { PaneSection } from "./PaneSection";
 export const TimelineQuerySection: FC<{
   query: DocumentNode;
   variables?: object;
-}> = ({ query, variables }) => {
+} & ComponentProps<typeof PaneSection>> = ({ query, variables, ...props }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const queryCode = useMemo(() => print(query), [query]);
@@ -15,7 +21,11 @@ export const TimelineQuerySection: FC<{
   const handleToggle = useCallback(() => setIsCollapsed(c => !c), []);
 
   return (
-    <PaneSection collapsed={isCollapsed} onCollapseToggle={handleToggle}>
+    <PaneSection
+      {...props}
+      collapsed={isCollapsed}
+      onCollapseToggle={handleToggle}
+    >
       <PaneSection.Heading>Query</PaneSection.Heading>
       <PaneSection.Body>
         <CodeHighlight language={"graphql"} code={queryCode} />
