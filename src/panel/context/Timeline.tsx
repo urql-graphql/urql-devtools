@@ -11,7 +11,6 @@ import React, {
   useEffect
 } from "react";
 import { scaleLinear, ScaleLinear } from "d3-scale";
-import { max, min } from "d3-array";
 import { ReceivedDebugEvent } from "../types";
 import { DevtoolsContext } from "./Devtools";
 
@@ -83,7 +82,7 @@ const useTimelineDomain = () => {
   const handlePan = useCallback(
     (movement: number) => {
       const endTime =
-        domain.current.start + domain.current.zoom * DEFAULT_WIDTH;
+        domain.current.start + DEFAULT_WIDTH * domain.current.zoom;
       // Convert pixel delta to time delta
       const scaledDelta = scaleLinear()
         .domain([domain.current.start, endTime])
@@ -96,22 +95,31 @@ const useTimelineDomain = () => {
       // Apply movement (limited left movement)
       domain.current = {
         ...domain.current,
-        start: max([newStart, startTime.current]) as number
+        start: Math.max(startTime.current, newStart)
       };
     },
     [scale]
   );
 
   const handleZoom = useCallback((e: WheelEvent) => {
-    // Scale movement delta
+    e.preventDefault();
     const delta = e.deltaY * 0.01;
     const newZoom =
       e.deltaY < 0
-        ? (max([0.2, domain.current.zoom + delta]) as number)
-        : (min([3, domain.current.zoom + delta]) as number);
-
+        ? Math.max(0.2, domain.current.zoom + delta)
+        : Math.min(3, domain.current.zoom + delta);
+    const endTime = domain.current.start + domain.current.zoom * DEFAULT_WIDTH;
+    const scale = scaleLinear()
+      .domain([domain.current.start, endTime])
+      .range([0, ref.current.clientWidth]);
+    const scaleFactor = newZoom / domain.current.zoom;
+    const mouseTime = scale.invert(e.clientX);
+    const differenceFromStart = mouseTime - domain.current.start;
+    const newDifferenceFromStart = differenceFromStart * scaleFactor;
+    const newStart = mouseTime - newDifferenceFromStart;
     domain.current = {
       ...domain.current,
+      start: Math.max(newStart, startTime.current),
       zoom: newZoom
     };
   }, []);
@@ -164,7 +172,8 @@ const useTimelineDomain = () => {
       handleZoom(e);
     };
 
-    ref.current.addEventListener("wheel", wheelListener);
+    // * Passive=false to prevent console warning as it uses preventDefault
+    ref.current.addEventListener("wheel", wheelListener, { passive: false });
 
     return () => ref.current.removeEventListener("wheel", wheelListener);
   }, [handleZoom, handlePan]);

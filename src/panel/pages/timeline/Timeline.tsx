@@ -58,11 +58,15 @@ const Page = styled(Background)`
 `;
 
 const TimelineList = styled.div`
-  position: relative;
+  cursor: grab;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
+  position: relative;
   margin: 40px 0;
+  &:active {
+    cursor: grabbing;
+  }
 `;
 
 const getTickCount = (width: number) => {
