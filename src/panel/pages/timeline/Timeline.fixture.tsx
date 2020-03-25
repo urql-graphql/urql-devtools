@@ -7,7 +7,7 @@ const defaultEvents: ReceivedDebugEvent[] = [
   {
     type: "debug",
     data: {
-      type: "addition",
+      type: "query",
       message: "A listener was added to the stream",
       operation: {
         key: 1
@@ -17,7 +17,7 @@ const defaultEvents: ReceivedDebugEvent[] = [
   {
     type: "debug",
     data: {
-      type: "update",
+      type: "response",
       message: "This is an update to the operation response / data",
       operation: {
         key: 1
@@ -27,7 +27,7 @@ const defaultEvents: ReceivedDebugEvent[] = [
   {
     type: "debug",
     data: {
-      type: "update",
+      type: "error",
       message: "This is an update to the operation response / data",
       operation: {
         key: 1
@@ -37,7 +37,7 @@ const defaultEvents: ReceivedDebugEvent[] = [
   {
     type: "debug",
     data: {
-      type: "addition",
+      type: "mutation",
       message: "A listener was added to the stream",
       operation: {
         key: 2

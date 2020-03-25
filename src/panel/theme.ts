@@ -3,7 +3,8 @@ export const theme = {
     "-1": "#607E90",
     "0": "#AAADB1",
     "+1": "#A5B0B7",
-    "+2": "#b4bfd1"
+    "+2": "#b4bfd1",
+    "+3": "#CECECE"
   },
   dark: {
     "-3": "#11151c",

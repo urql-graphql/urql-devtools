@@ -24,6 +24,7 @@ exports[`App on mount matches snapshot 1`] = `
       "grey": Object {
         "+1": "#A5B0B7",
         "+2": "#b4bfd1",
+        "+3": "#CECECE",
         "-1": "#607E90",
         "0": "#AAADB1",
       },

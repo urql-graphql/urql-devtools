@@ -15,59 +15,41 @@ const props = {
   selectEvent: () => false
 };
 
-const queryEvent: ReceivedDebugEvent = {
-  type: "query"
+const additionEvent: ReceivedDebugEvent = {
+  type: "addition"
 } as any;
 
-const mutationEvent: ReceivedDebugEvent = {
-  type: "mutation"
-} as any;
-
-const subscriptionEvent: ReceivedDebugEvent = {
-  type: "subscription"
-} as any;
-
-const responseEvent: ReceivedDebugEvent = {
-  type: "response"
-} as any;
-
-const errorEvent: ReceivedDebugEvent = {
-  type: "error"
+const updateEvent: ReceivedDebugEvent = {
+  type: "update"
 } as any;
 
 const teardownEvent: ReceivedDebugEvent = {
   type: "teardown"
 } as any;
 
+const otherEvent: ReceivedDebugEvent = {
+  type: "abcdefg"
+} as any;
+
 export default {
-  "addition (query)": (
+  addition: (
     <Wrapper>
-      <TimelineEvent data-snapshot {...props} event={queryEvent} />
+      <TimelineEvent data-snapshot {...props} event={additionEvent} />
     </Wrapper>
   ),
-  "addition (mutation)": (
+  update: (
     <Wrapper>
-      <TimelineEvent data-snapshot {...props} event={mutationEvent} />
-    </Wrapper>
-  ),
-  "addition (subscription)": (
-    <Wrapper>
-      <TimelineEvent data-snapshot {...props} event={subscriptionEvent} />
-    </Wrapper>
-  ),
-  "update (response)": (
-    <Wrapper>
-      <TimelineEvent data-snapshot {...props} event={responseEvent} />
-    </Wrapper>
-  ),
-  "update (error)": (
-    <Wrapper>
-      <TimelineEvent data-snapshot {...props} event={errorEvent} />
+      <TimelineEvent data-snapshot {...props} event={updateEvent} />
     </Wrapper>
   ),
   teardown: (
     <Wrapper>
       <TimelineEvent data-snapshot {...props} event={teardownEvent} />
+    </Wrapper>
+  ),
+  other: (
+    <Wrapper>
+      <TimelineEvent data-snapshot {...props} event={otherEvent} />
     </Wrapper>
   )
 };

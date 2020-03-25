@@ -1,45 +1,42 @@
-import React, { FC, useContext, useMemo } from "react";
-import styled, { ThemeContext } from "styled-components";
+import React, { FC, useMemo } from "react";
 import { ReceivedDebugEvent } from "../../../types";
+import AdditionIcon from "../../../../assets/events/addition.svg";
+import OtherIcon from "../../../../assets/events/other.svg";
+import TeardownIcon from "../../../../assets/events/teardown.svg";
+import UpdateIcon from "../../../../assets/events/update.svg";
 import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
 
-const EventDot = styled.div`
-  background: ${props => props.color};
-  border-radius: 50%;
-  border: solid 2px ${props => props.theme.dark["+1"]};
-  cursor: pointer;
-  height: 10px;
-  width: 10px;
-`;
+const shapeMap: Record<string, any> = {
+  addition: AdditionIcon,
+  update: UpdateIcon,
+  teardown: TeardownIcon,
+  other: OtherIcon
+};
 
 export const TimelineEvent: FC<{
   event: ReceivedDebugEvent;
-  selectEvent: () => void;
-} & Omit<JSX.IntrinsicElements["div"], "event">> = ({
-  event,
-  selectEvent,
-  ...elementProps
-}) => {
-  const theme = useContext(ThemeContext);
+} & Omit<JSX.IntrinsicElements["img"], "ref">> = ({ event, ...svgProps }) => {
   const { ref, tooltipProps, isVisible } = useTooltip();
 
-  const eventColor = useMemo(() => {
-    const colorMap: Record<string, string | undefined> = {
-      addition: theme.green["0"],
-      update: theme.purple["0"],
-      teardown: theme.grey["-1"]
-    };
+  const style = useMemo(
+    () =>
+      ["teardown", "update", "addition"].includes(event.type)
+        ? { cursor: "pointer", width: 10, height: 10 }
+        : { cursor: "pointer", width: 5, height: 5 },
+    [event.type]
+  );
 
-    return colorMap[event.type] || theme.blue["0"];
-  }, [event.type, theme]);
+  const Icon = useMemo(() => shapeMap[event.type] || shapeMap.other, [
+    shapeMap
+  ]);
 
   return (
     <>
-      <EventDot
-        {...elementProps}
-        color={eventColor}
+      <img
+        {...svgProps}
+        style={{ ...svgProps.style, ...style }}
+        src={Icon}
         ref={ref}
-        onClick={selectEvent}
       />
       {isVisible && (
         <TimelineTooltip {...tooltipProps}>{event.message}</TimelineTooltip>
