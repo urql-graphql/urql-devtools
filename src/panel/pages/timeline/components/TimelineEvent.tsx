@@ -1,15 +1,60 @@
-import React, { FC, useContext, useMemo } from "react";
-import styled, { ThemeContext } from "styled-components";
+import React, { FC, useMemo } from "react";
+import styled, {
+  css,
+  FlattenSimpleInterpolation,
+  FlattenInterpolation,
+  ThemeProps,
+  DefaultTheme
+} from "styled-components";
 import { ReceivedDebugEvent } from "../../../types";
 import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
 
-const EventDot = styled.div`
-  background: ${props => props.color};
-  border-radius: 50%;
-  border: solid 2px ${props => props.theme.dark["+1"]};
+const EVENT_SIZE = "10px";
+const shapeMap: Record<
+  string,
+  | FlattenSimpleInterpolation
+  | FlattenInterpolation<ThemeProps<DefaultTheme>>
+  | undefined
+> = {
+  addition: css`
+    border-radius: 50%;
+  `,
+  update: css`
+    border-radius: 0%;
+  `,
+  teardown: css`
+    position: relative;
+    background-color: transparent;
+    &:before,
+    &:after {
+      content: " ";
+      position: absolute;
+      height: 100%;
+      width: calc(${EVENT_SIZE} / 3);
+    }
+    &:before {
+      background-color: ${p => p.theme.grey["+3"]};
+      transform: translateX(100%) rotate(45deg);
+    }
+    &:after {
+      background-color: ${p => p.theme.grey["+3"]};
+      transform: translateX(100%) rotate(-45deg);
+    }
+  `
+};
+
+const eventTypeMapping = {
+  addition: ["query", "mutation", "subscription"],
+  mutation: ["response", "error"],
+  teardown: ["teardown"]
+};
+
+const EventShape = styled.div<JSX.IntrinsicElements["div"] & { group: string }>`
+  background-color: ${p => p.theme.grey["+3"]};
   cursor: pointer;
-  height: 10px;
-  width: 10px;
+  height: ${EVENT_SIZE};
+  width: ${EVENT_SIZE};
+  ${p => shapeMap[p.group]};
 `;
 
 export const TimelineEvent: FC<{
@@ -20,24 +65,21 @@ export const TimelineEvent: FC<{
   selectEvent,
   ...elementProps
 }) => {
-  const theme = useContext(ThemeContext);
   const { ref, tooltipProps, isVisible } = useTooltip();
+  const eventGroup = useMemo(() => {
+    const group = Object.entries(eventTypeMapping).find(([, v]) =>
+      v.includes(event.type)
+    );
+    if (!group) throw new Error("The event type was not found");
 
-  const eventColor = useMemo(() => {
-    const colorMap: Record<string, string | undefined> = {
-      addition: theme.green["0"],
-      update: theme.purple["0"],
-      teardown: theme.grey["-1"]
-    };
-
-    return colorMap[event.type] || theme.blue["0"];
-  }, [event.type, theme]);
+    return group[0];
+  }, [event.type]);
 
   return (
     <>
-      <EventDot
+      <EventShape
         {...elementProps}
-        color={eventColor}
+        group={eventGroup}
         ref={ref}
         onClick={selectEvent}
       />
