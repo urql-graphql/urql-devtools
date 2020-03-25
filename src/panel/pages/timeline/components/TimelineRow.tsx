@@ -18,7 +18,7 @@ export const TimelineRow: FC<{ events: ReceivedDebugEvent[] }> = ({
           <TimelineEvent
             key={`e-${e.key}`}
             event={e}
-            selectEvent={() => setSelectedEvent(e)}
+            onClick={() => setSelectedEvent(e)}
             style={{
               position: "absolute",
               left: scale(e.timestamp),
