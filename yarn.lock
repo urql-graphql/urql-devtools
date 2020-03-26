@@ -1674,6 +1674,13 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
+"@urql/core@1.11.0-debug.0":
+  version "1.11.0-debug.0"
+  resolved "https://registry.yarnpkg.com/@urql/core/-/core-1.11.0-debug.0.tgz#e1ddc930ae2d47b3c81f1ad68facd4196842f89e"
+  integrity sha512-T2vp4YY1MBVej96bPl7LrFhXDg3XbKLI+A+oXwgMHqemKtiAvEwvUonYUgaJkvXYN1uAZJkB5P+KGfFt5m1eMQ==
+  dependencies:
+    wonka "^4.0.9"
+
 "@urql/core@^1.10.5":
   version "1.10.7"
   resolved "https://registry.yarnpkg.com/@urql/core/-/core-1.10.7.tgz#4632088a9abd5884e08726242261ea39d3cdda40"
