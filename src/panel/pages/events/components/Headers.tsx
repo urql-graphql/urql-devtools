@@ -11,7 +11,7 @@ export const Headers = () => (
 );
 
 const BaseTitle = styled.h3`
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
   font-size: 13px;
   margin: 0;
   width: 50%;
@@ -45,7 +45,7 @@ const OperationKey = styled(BaseTitle)`
 
 const Container = styled.div`
   position: relative;
-  background-color: ${props => props.theme.dark[0]};
+  background-color: ${(props) => props.theme.dark[0]};
   width: auto;
   height: auto;
   padding: 10px 15px;

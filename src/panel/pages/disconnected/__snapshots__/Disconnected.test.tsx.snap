@@ -2,7 +2,7 @@
 
 exports[`on mount matches snapshot 1`] = `
 <Fragment>
-  <GlobalStyleComponent />
+  <Memo(GlobalStyleComponent) />
   <Container>
     <Logo
       alt="Urql Eagle"

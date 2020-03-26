@@ -1,7 +1,7 @@
 import {
   ContentScriptConnectionName,
   DevtoolsPanelConnectionName,
-  PanelOutgoingMessage
+  PanelOutgoingMessage,
 } from "../types";
 import { BackgroundEventTarget } from "./EventTarget";
 
@@ -16,8 +16,8 @@ const addToTarget = (tabId: number, port: chrome.runtime.Port) => {
 
   const target = targets[tabId];
   const portName = port.name;
-  target.addEventListener(portName, a => port.postMessage(a));
-  port.onMessage.addListener(e => target.dispatchEvent(portName, e));
+  target.addEventListener(portName, (a) => port.postMessage(a));
+  port.onMessage.addListener((e) => target.dispatchEvent(portName, e));
   port.onDisconnect.addListener(() => {
     target.dispatchEvent(portName, { type: "disconnect" });
     chrome.pageAction.setIcon({ tabId, path: "/assets/icon-disabled-32.png" });
@@ -60,10 +60,10 @@ const handleDevtoolsPanelConnection = (port: chrome.runtime.Port) => {
 
 const connectionHandlers: Record<string, (p: chrome.runtime.Port) => void> = {
   [ContentScriptConnectionName]: handleContentScriptConnection,
-  [DevtoolsPanelConnectionName]: handleDevtoolsPanelConnection
+  [DevtoolsPanelConnectionName]: handleDevtoolsPanelConnection,
 };
 
-chrome.runtime.onConnect.addListener(port => {
+chrome.runtime.onConnect.addListener((port) => {
   const handler = connectionHandlers[port.name];
   return handler && handler(port);
 });

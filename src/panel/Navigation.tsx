@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const navItems = [
   { link: "/explorer", label: "Explorer" },
   { link: "/events", label: "Events" },
-  { link: "/request", label: "Request" }
+  { link: "/request", label: "Request" },
 ];
 
 export const Navigation = () => (
@@ -22,14 +22,14 @@ const Container = styled.div`
   position: fixed;
   display: flex;
   align-items: center;
-  background-color: ${props => props.theme.dark["-1"]};
+  background-color: ${(props) => props.theme.dark["-1"]};
   height: 35px;
   top: 0;
   left: 0;
   right: 0;
 
   a {
-    color: ${p => p.theme.grey["+2"]};
+    color: ${(p) => p.theme.grey["+2"]};
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -39,7 +39,7 @@ const Container = styled.div`
     padding: 0 20px;
 
     &.active {
-      background-color: ${props => props.theme.dark["0"]};
+      background-color: ${(props) => props.theme.dark["0"]};
     }
 
     &:hover:not(.active) {

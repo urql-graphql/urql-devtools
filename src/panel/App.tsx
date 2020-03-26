@@ -10,7 +10,7 @@ import {
   EventsProvider,
   RequestProvider,
   ExplorerProvider,
-  useDevtoolsContext
+  useDevtoolsContext,
 } from "./context";
 
 export const App = () => {

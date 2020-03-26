@@ -9,7 +9,7 @@ interface TabsProps<T = any> {
 
 export const Tabs: FC<TabsProps> = ({ active, options, setActive }) => (
   <Container>
-    {options.map(o => (
+    {options.map((o) => (
       <Tab
         key={o.value}
         data-active={o.value === active}
@@ -29,7 +29,7 @@ const Tab = styled.h3`
   margin: 0;
   padding: 10px;
   font-size: 12px;
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
   opacity: 0.6;
 
   &[data-active="true"] {

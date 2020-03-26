@@ -28,19 +28,19 @@ export const Tree: FC<TreeProps> = ({ nodeMap, depth = 0, index }) => {
   }
 
   const fields = Object.values(nodeMap);
-  const typenameField = fields.find(x => x.name === "__typename");
+  const typenameField = fields.find((x) => x.name === "__typename");
   const childrenFields = sortFields(
-    fields.filter(x => x.children !== undefined)
+    fields.filter((x) => x.children !== undefined)
   );
   const scalarFields = sortFields(
-    fields.filter(x => x.children === undefined && x.name !== "__typename")
+    fields.filter((x) => x.children === undefined && x.name !== "__typename")
   );
   const role = depth === 0 ? "tree" : "group";
 
   return (
     <List role={role}>
       {typenameField && <SystemListItem node={typenameField} index={index} />}
-      {[...scalarFields, ...childrenFields].map(node => (
+      {[...scalarFields, ...childrenFields].map((node) => (
         <ListItem key={node._id} node={node} depth={depth} />
       ))}
     </List>
@@ -67,10 +67,10 @@ const List = styled.ul`
   padding-top: 0.3rem;
   padding-left: 0.5rem;
   margin-left: 5px;
-  border-left: 3px solid ${p => p.theme.border};
+  border-left: 3px solid ${(p) => p.theme.border};
   list-style: none;
   font-size: 14px;
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
 
   &:last-of-type {
     margin-bottom: 0;

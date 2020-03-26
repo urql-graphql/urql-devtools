@@ -12,11 +12,11 @@ beforeAll(async () => {
     fixtures = (
       await getFixtureUrls({
         cosmosConfig: detectCosmosConfig(),
-        fullScreen: true
+        fullScreen: true,
       })
-    ).map(url => ({
+    ).map((url) => ({
       id: url.replace(/.*?fixtureId\=/, ""),
-      url: `http://${url.replace("localhost", "cosmos")}`
+      url: `http://${url.replace("localhost", "cosmos")}`,
     }));
   } catch (err) {
     console.error(err);
@@ -38,11 +38,11 @@ describe("Fixtures", () => {
       const image = await page.screenshot();
       expect(image).toMatchImageSnapshot({
         customSnapshotIdentifier: id,
-        failureThreshold: 0.01
+        failureThreshold: 0.01,
       });
       await page.close();
     }
   }, 120000);
 });
 
-const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
+const delay = (t: number) => new Promise((resolve) => setTimeout(resolve, t));

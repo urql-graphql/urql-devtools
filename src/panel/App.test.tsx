@@ -1,7 +1,7 @@
 jest.mock("./context/Devtools.tsx", () => {
   return {
     ...jest.requireActual("./context/Devtools.tsx"),
-    useDevtoolsContext: jest.fn()
+    useDevtoolsContext: jest.fn(),
   };
 });
 import React from "react";
@@ -23,7 +23,7 @@ describe("App routes", () => {
     describe("on connected", () => {
       beforeEach(() => {
         mocked(useDevtoolsContext).mockReturnValue({
-          clientConnected: true
+          clientConnected: true,
         } as any);
       });
 
@@ -35,7 +35,7 @@ describe("App routes", () => {
     describe("on disconnected", () => {
       beforeEach(() => {
         mocked(useDevtoolsContext).mockReturnValue({
-          clientConnected: false
+          clientConnected: false,
         } as any);
       });
 

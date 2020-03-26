@@ -9,5 +9,5 @@ export default {
   "object - collapsed": <Value value={{ name: "Carla", age: 20 }} />,
   "object - expanded": <Value expand value={{ name: "Carla", age: 20 }} />,
   string: <Value value="hello" />,
-  null: <Value value={null} />
+  null: <Value value={null} />,
 };

@@ -1,6 +1,6 @@
 jest.mock("../../../hooks", () => ({
   useThemeContext: jest.fn(),
-  useEventsContext: jest.fn()
+  useEventsContext: jest.fn(),
 }));
 jest.mock("react-spring");
 import * as React from "react";
@@ -14,7 +14,7 @@ const events = {
   selectedEvent: undefined,
   selectEvent: jest.fn(),
   clearSelectedEvent: jest.fn(),
-  addFilter: jest.fn()
+  addFilter: jest.fn(),
 };
 
 mocked(useThemeContext).mockReturnValue(theme as any);
@@ -29,8 +29,8 @@ const event = {
     { name: "query", data: "data" },
     { name: "variables", data: {} },
     { name: "response", data: {} },
-    { name: "meta", data: {} }
-  ]
+    { name: "meta", data: {} },
+  ],
 } as const;
 
 describe("on mount", () => {

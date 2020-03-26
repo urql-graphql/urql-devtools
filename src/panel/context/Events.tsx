@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useContext,
   useMemo,
-  useCallback
+  useCallback,
 } from "react";
 import {
   DevtoolsExchangeOutgoingMessage,
@@ -14,7 +14,7 @@ import {
   OperationResponseMessage,
   OperationErrorMessage,
   DisconnectMessage,
-  InitMessage
+  InitMessage,
 } from "@urql/devtools";
 import {
   ParsedEvent,
@@ -24,7 +24,7 @@ import {
   ParsedErrorEvent,
   EventType,
   ParsedSubscriptionEvent,
-  ParsedTeardownEvent
+  ParsedTeardownEvent,
 } from "../types";
 import { DevtoolsContext } from "./Devtools";
 
@@ -66,34 +66,36 @@ export const EventsProvider: FC = ({ children }) => {
   const [filters, setFilters] = useState<FilterState>({
     type: [],
     source: [],
-    key: []
+    key: [],
   });
 
   /** Handle incoming events */
   useEffect(() => {
-    return addMessageHandler(msg => {
+    return addMessageHandler((msg) => {
       if (!["operation", "response", "error"].includes(msg.type)) {
         return;
       }
 
-      setRawEvents(o => [msg as PresentedEvent, ...o]);
+      setRawEvents((o) => [msg as PresentedEvent, ...o]);
     });
   }, []);
 
   const addFilter = useCallback<EventsContextValue["addFilter"]>(
     (property, value) =>
-      setFilters(f => ({
+      setFilters((f) => ({
         ...f,
-        [property]: [...new Set([...f[property], value])]
+        [property]: [...new Set([...f[property], value])],
       })),
     []
   );
 
   const removeFilter = useCallback<EventsContextValue["removeFilter"]>(
     (property, value) =>
-      setFilters(f => ({
+      setFilters((f) => ({
         ...f,
-        [property]: (f[property] as typeof value[]).filter(val => val !== value)
+        [property]: (f[property] as typeof value[]).filter(
+          (val) => val !== value
+        ),
       })),
     []
   );
@@ -123,7 +125,7 @@ export const EventsProvider: FC = ({ children }) => {
   const events = useMemo(
     () =>
       rawEvents
-        .map(e =>
+        .map((e) =>
           e.type === "operation"
             ? parseOperation(rawEvents, e)
             : parseResponse(e)
@@ -139,7 +141,7 @@ export const EventsProvider: FC = ({ children }) => {
     clearSelectedEvent,
     activeFilters: filters,
     addFilter,
-    removeFilter
+    removeFilter,
   };
 
   return <EventsContext.Provider value={value} children={children} />;
@@ -156,7 +158,7 @@ const parseOperation = (
   const shared = {
     key: event.data.key,
     source: (event.data.context.meta as any).source,
-    timestamp: event.timestamp
+    timestamp: event.timestamp,
   } as const;
   const queryPanel = { name: "query", data: print(event.data.query) } as const;
   const varsPanel = { name: "variables", data: event.data.variables } as const;
@@ -165,15 +167,15 @@ const parseOperation = (
     data: {
       key: event.data.key,
       operationName: event.data.operationName,
-      context: event.data.context
-    }
+      context: event.data.context,
+    },
   } as const;
 
   const type = event.data.operationName;
 
   const responseEvent = allEvents
     // Only events after the request
-    .filter(e => e.type !== "operation" && e.timestamp > event.timestamp)
+    .filter((e) => e.type !== "operation" && e.timestamp > event.timestamp)
     // First response for mutation, latest response for query
     .sort((a, b) =>
       type === "mutation"
@@ -181,7 +183,7 @@ const parseOperation = (
         : b.timestamp - a.timestamp
     )
     .find(
-      e =>
+      (e) =>
         (e as OperationErrorMessage | OperationResponseMessage).data.operation
           .key === event.data.key
     ) as OperationErrorMessage | OperationResponseMessage | undefined;
@@ -202,8 +204,8 @@ const parseOperation = (
         queryPanel,
         varsPanel,
         { name: "response", data: responseData },
-        metaPanel
-      ]
+        metaPanel,
+      ],
     };
   }
 
@@ -215,15 +217,15 @@ const parseOperation = (
         queryPanel,
         varsPanel,
         { name: "state", data: responseData },
-        metaPanel
-      ]
+        metaPanel,
+      ],
     };
   }
 
   return {
     type,
     ...shared,
-    panels: [metaPanel]
+    panels: [metaPanel],
   };
 };
 
@@ -233,15 +235,15 @@ const parseResponse = (
   const shared = {
     key: event.data.operation.key,
     source: (event.data.operation.context.meta as any).source,
-    timestamp: event.timestamp
+    timestamp: event.timestamp,
   };
   const metaPanel = {
     name: "meta",
     data: {
       key: event.data.operation.key,
       operationName: event.data.operation.operationName,
-      context: event.data.operation.context
-    }
+      context: event.data.operation.context,
+    },
   } as const;
 
   const type = event.data.error !== undefined ? "error" : ("response" as const);
@@ -250,7 +252,7 @@ const parseResponse = (
     return {
       type,
       ...shared,
-      panels: [{ name: "error", data: event.data.error }, metaPanel]
+      panels: [{ name: "error", data: event.data.error }, metaPanel],
     };
   }
 
@@ -259,7 +261,7 @@ const parseResponse = (
     return {
       type,
       ...shared,
-      panels: [{ name: "response", data: event.data.data }, metaPanel]
+      panels: [{ name: "response", data: event.data.data }, metaPanel],
     };
   }
 };

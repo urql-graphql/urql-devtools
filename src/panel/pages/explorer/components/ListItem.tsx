@@ -4,7 +4,7 @@ import React, {
   useCallback,
   FC,
   useEffect,
-  useRef
+  useRef,
 } from "react";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
@@ -48,7 +48,7 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   }, [isExpanded, node, focusedNode]);
 
   const handleFieldContainerClick = useCallback(
-    () => setFocusedNode(n => (n && n._id === node._id ? undefined : node)),
+    () => setFocusedNode((n) => (n && n._id === node._id ? undefined : node)),
     [isExpanded, node]
   );
 
@@ -101,7 +101,7 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
 
 export const SystemListItem = ({
   node,
-  index
+  index,
 }: {
   node: ParsedFieldNode;
   index?: number;
@@ -123,7 +123,7 @@ const Item = styled.li`
     withChildren ? "0" : "1rem"};
   min-height: 1.4rem;
   line-height: 1.4rem;
-  color: ${p => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.grey["-1"]};
 `;
 
 const FieldContainer = styled.button`
@@ -140,7 +140,7 @@ const FieldContainer = styled.button`
   line-height: 1.4rem;
   cursor: pointer;
 
-  color: ${p => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.grey["-1"]};
   text-align: left;
   font-size: 14px;
 
@@ -163,21 +163,21 @@ const OutlineContainer = styled(animated.div)`
   ${({ isActive }: { isActive: boolean }) =>
     isActive &&
     css`
-      background-color: ${p => p.theme.dark["-1"]};
-      outline: 1px dashed ${p => `${p.theme.pink["0"]}a0`};
+      background-color: ${(p) => p.theme.dark["-1"]};
+      outline: 1px dashed ${(p) => `${p.theme.pink["0"]}a0`};
       transition: all 0.3s linear;
     `};
 `;
 
 const Name = styled.span`
-  color: ${p => p.theme.pink["0"]};
+  color: ${(p) => p.theme.pink["0"]};
 `;
 
 const ChildrenName = styled.span`
   position: relative;
   margin-right: 3px;
   display: inline-block;
-  color: ${p => p.theme.purple["+1"]};
+  color: ${(p) => p.theme.purple["+1"]};
   font-weight: bold;
   font-size: 14px;
 `;
@@ -193,7 +193,7 @@ const Arrow = styled(ArrowIcon)`
 
   transform: ${({ active }: { active: boolean }) =>
     active ? "rotate(90deg)" : "rotate(0deg)"};
-  color: ${p => (p.active ? p.theme.pink["+2"] : p.theme.grey["-1"])};
+  color: ${(p) => (p.active ? p.theme.pink["+2"] : p.theme.grey["-1"])};
   transition: all 0.1s;
 `;
 
@@ -203,15 +203,15 @@ const Typename = styled.div`
   margin-bottom: 0.15rem;
   margin-top: -0.1rem;
   padding: 3px 5px;
-  border: 1px solid ${p => `${p.theme.grey["-1"]}50`};
+  border: 1px solid ${(p) => `${p.theme.grey["-1"]}50`};
   border-radius: 2px;
-  background-color: ${p => p.theme.dark["-1"]};
-  color: ${p => p.theme.grey["+2"]};
+  background-color: ${(p) => p.theme.dark["-1"]};
+  color: ${(p) => p.theme.grey["+2"]};
   font-size: 11px;
   line-height: 1rem;
 `;
 
 const Symbol = styled.span`
-  color: ${p => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.grey["-1"]};
   margin-right: 3px;
 `;

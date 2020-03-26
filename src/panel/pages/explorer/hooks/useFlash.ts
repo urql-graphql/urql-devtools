@@ -10,14 +10,14 @@ type UseFlashResponse = [object, Flash];
 /** Hook for flashing a screen element */
 export const useFlash = (): UseFlashResponse => {
   const [props, setSpring] = useSpring(() => ({
-    config: { duration: 300 }
+    config: { duration: 300 },
   }));
 
   const flash = useCallback(
     () =>
       setSpring({
         from: defaultState,
-        to: [flashState, defaultState]
+        to: [flashState, defaultState],
       } as any),
     [setSpring]
   );
