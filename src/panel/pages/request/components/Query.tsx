@@ -10,7 +10,7 @@ import "codemirror/addon/lint/lint.css";
 import "codemirror-graphql/lint";
 import "codemirror-graphql/hint";
 import "codemirror-graphql/mode";
-import CodeMirror from "codemirror";
+import CodeMirror, { ShowHintOptions } from "codemirror";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { RequestContext } from "../../../context";
@@ -28,9 +28,9 @@ export const Query = () => {
     }
 
     codemirror.setOption("extraKeys", {
-      ...codemirror.getOption("extraKeys"),
+      ...(codemirror.getOption("extraKeys") as object),
       "Ctrl-Enter": execute,
-      "Cmd-Enter": execute
+      "Cmd-Enter": execute,
     });
   }, [codemirror, execute]);
 
@@ -40,11 +40,16 @@ export const Query = () => {
       return;
     }
 
+    // TODO!: Update types
     codemirror.setOption("lint", { schema });
-    codemirror.setOption("hintOptions", { schema });
+    codemirror.setOption("hintOptions", ({
+      schema,
+    } as unknown) as ShowHintOptions);
     codemirror.setOption("extraKeys", {
-      // @ts-ignore
-      "Ctrl-Space": () => codemirror.showHint({ completeSingle: true })
+      "Ctrl-Space": () =>
+        codemirror.showHint(({
+          completeSingle: true,
+        } as unknown) as ShowHintOptions),
     });
   }, [codemirror, schema]);
 
@@ -59,7 +64,7 @@ export const Query = () => {
       tabSize: 2,
       lineNumbers: true,
       autoCloseBrackets: "{}[]\"\"''",
-      matchBrackets: true
+      matchBrackets: true,
     });
 
     editor.on("change", () => setQuery(editor.getValue()));
@@ -88,7 +93,7 @@ const Container = styled.div`
 
   .cm-s-material,
   .CodeMirror-gutters {
-    background: ${props => props.theme.dark["0"]} !important;
+    background: ${(props) => props.theme.dark["0"]} !important;
   }
 `;
 
@@ -96,6 +101,6 @@ const Heading = styled.h2`
   margin: 0;
   padding: 10px;
   font-size: 12px;
-  color: ${p => p.theme.grey["+2"]};
-  background: ${props => props.theme.dark["0"]} !important;
+  color: ${(p) => p.theme.grey["+2"]};
+  background: ${(props) => props.theme.dark["0"]} !important;
 `;

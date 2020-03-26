@@ -50,7 +50,7 @@ import {
   cacheExchange,
   createClient,
   dedupExchange,
-  fetchExchange
+  fetchExchange,
 } from "urql";
 
 import { devtoolsExchange } from "@urql/devtools";
@@ -58,7 +58,7 @@ import { devtoolsExchange } from "@urql/devtools";
 // ...
 const client = createClient({
   url: "http://localhost:3001/graphql",
-  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange]
+  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange],
 });
 ```
 

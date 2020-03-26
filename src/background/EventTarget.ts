@@ -13,7 +13,7 @@ export class BackgroundEventTarget<T extends any = any> {
   /** Dispatches event to all listeners excluding source */
   public dispatchEvent(source: string, event: T) {
     const targets = { ...this.listeners, [source]: undefined };
-    Object.values(targets).forEach(f => f && f(event));
+    Object.values(targets).forEach((f) => f && f(event));
   }
 
   public connectedSources() {

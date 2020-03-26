@@ -40,7 +40,7 @@ export const Arguments: FC<{
 };
 
 const GraphQLArgument: FC<{ argument: { key: string; value: any } }> = ({
-  argument: { key, value }
+  argument: { key, value },
 }) => {
   if (Array.isArray(value)) {
     return (
@@ -87,7 +87,7 @@ const ArgsContainer = styled.div`
 `;
 
 const ArgKey = styled.span`
-  color: ${p => p.theme.pink["0"]};
+  color: ${(p) => p.theme.pink["0"]};
 `;
 
 const ArgWrapper = styled.span`
@@ -101,7 +101,7 @@ const ArgWrapper = styled.span`
 const IconContainer = styled.div`
   display: inline-flex;
   align-items: flex-end;
-  color: ${p => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.grey["-1"]};
   font-size: 14px;
   cursor: pointer;
 `;
@@ -115,6 +115,6 @@ const SeeMore = styled(SeeMoreIcon)`
 `;
 
 const Symbol = styled.span`
-  color: ${p => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.grey["-1"]};
   margin-right: 5px;
 `;

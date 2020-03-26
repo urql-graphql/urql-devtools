@@ -6,7 +6,7 @@ import React, {
   FC,
   useMemo,
   SetStateAction,
-  Dispatch
+  Dispatch,
 } from "react";
 import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
 import { DevtoolsContext } from "../Devtools";
@@ -37,11 +37,11 @@ export const ExplorerProvider: FC = ({ children }) => {
       }
 
       if (o.type === "response" && o.data.data) {
-        setOperations(operations =>
+        setOperations((operations) =>
           handleResponse({
             operation: o.data.operation,
             data: o.data.data,
-            parsedNodes: operations
+            parsedNodes: operations,
           })
         );
         return;
@@ -53,7 +53,7 @@ export const ExplorerProvider: FC = ({ children }) => {
     () => ({
       focusedNode,
       setFocusedNode,
-      operations
+      operations,
     }),
     [operations, focusedNode, setFocusedNode]
   );

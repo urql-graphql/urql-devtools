@@ -1,5 +1,5 @@
 jest.mock("../hooks", () => ({
-  useOrientationWatcher: jest.fn()
+  useOrientationWatcher: jest.fn(),
 }));
 
 import React from "react";
@@ -29,7 +29,7 @@ describe("on mount", () => {
     beforeEach(() => {
       useOrientation.mockReturnValue({
         isPortrait: false,
-        isLandscape: true
+        isLandscape: true,
       });
     });
 

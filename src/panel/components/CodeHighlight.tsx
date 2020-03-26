@@ -3,7 +3,7 @@ import Highlight, { defaultProps } from "prism-react-renderer";
 import "./prism-theme.css";
 import styled from "styled-components";
 
-export const CodeHighlight: FC<any> = props => (
+export const CodeHighlight: FC<any> = (props) => (
   <Highlight {...defaultProps} style={{ background: "#1C1E26" }} {...props}>
     {({ className, style, tokens, getLineProps, getTokenProps }) => (
       <StyledCodeBlock
@@ -25,6 +25,6 @@ export const CodeHighlight: FC<any> = props => (
 );
 
 const StyledCodeBlock = styled.pre`
-  background: ${props => props.theme.dark["-2"]} !important;
+  background: ${(props) => props.theme.dark["-2"]} !important;
   font-size: 12px !important;
 `;

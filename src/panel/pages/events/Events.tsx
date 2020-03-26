@@ -31,7 +31,7 @@ export const Events: FC = () => {
         {events.length === 0 ? (
           <NoEvents>No Events</NoEvents>
         ) : (
-          events.map(event => (
+          events.map((event) => (
             <EventCard
               key={`${event.timestamp}-${event.type}`}
               event={event}
@@ -69,7 +69,7 @@ const EventsList = styled.div`
 `;
 
 const NoEvents = styled.h2`
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
   margin: 0;
   margin-top: 12px;
   font-style: italic;

@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import {
   OperationMessage,
   OperationResponseMessage,
-  OperationErrorMessage
+  OperationErrorMessage,
 } from "@urql/devtools";
 import { DevtoolsContext, EventsProvider } from "../../context";
 import { Events } from "./Events";
@@ -20,7 +20,7 @@ const defaultEvents: (
       key: 12345,
       operationName: "query",
       variables: {
-        myVar: 1234
+        myVar: 1234,
       },
       query: gql`
         {
@@ -34,10 +34,10 @@ const defaultEvents: (
         url: "http://asdsad",
         requestPolicy: "cache-and-network",
         meta: {
-          source: "MyComponent"
-        }
-      }
-    }
+          source: "MyComponent",
+        },
+      },
+    },
   },
   {
     type: "operation",
@@ -46,7 +46,7 @@ const defaultEvents: (
       key: 2211,
       operationName: "mutation",
       variables: {
-        id: 1
+        id: 1,
       },
       query: gql`
         mutation DeleteTodo($id: ID!) {
@@ -59,26 +59,26 @@ const defaultEvents: (
         url: "http://asdsad",
         requestPolicy: "cache-and-network",
         meta: {
-          source: "MyOtherComponent"
-        }
-      }
-    }
-  }
+          source: "MyOtherComponent",
+        },
+      },
+    },
+  },
 ];
 
 const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
   children,
-  events = defaultEvents
+  events = defaultEvents,
 }) => {
   return (
     <DevtoolsContext.Provider
       value={{
-        addMessageHandler: h => {
+        addMessageHandler: (h) => {
           events.forEach(h);
           return () => false;
         },
         clientConnected: true,
-        sendMessage: () => false
+        sendMessage: () => false,
       }}
     >
       <EventsProvider>{children}</EventsProvider>
@@ -96,5 +96,5 @@ export default {
     <DevtoolsContextMock events={[]}>
       <Events />
     </DevtoolsContextMock>
-  )
+  ),
 };

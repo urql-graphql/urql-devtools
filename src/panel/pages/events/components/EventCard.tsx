@@ -15,13 +15,13 @@ export const EventCard: FC<{
     selectedEvent,
     selectEvent,
     clearSelectedEvent,
-    addFilter
+    addFilter,
   } = useEventsContext();
 
   const slideInAnimation = useSpring({
     config: { duration: 200 },
     from: { transform: `translateY(100%)` },
-    to: { transform: `translateY(0%)` }
+    to: { transform: `translateY(0%)` },
   });
 
   const colors: { [key: string]: string } = {
@@ -30,11 +30,11 @@ export const EventCard: FC<{
     mutation: theme.purple[0],
     query: theme.blue[0],
     response: theme.green[0],
-    error: theme.red[0]
+    error: theme.red[0],
   };
 
   const handleContainerClick = useCallback<MouseEventHandler<HTMLDivElement>>(
-    e => {
+    (e) => {
       if (e.ctrlKey || e.metaKey) {
         return;
       }
@@ -47,7 +47,7 @@ export const EventCard: FC<{
   const handleFilterClick = useCallback(
     (
       property: Parameters<typeof addFilter>[0]
-    ): MouseEventHandler<HTMLDivElement> => e => {
+    ): MouseEventHandler<HTMLDivElement> => (e) => {
       if (!e.ctrlKey && !e.metaKey) {
         return;
       }
@@ -101,7 +101,7 @@ const getActiveStyles = (p: { isActive: boolean }) => {
 };
 
 const OperationName = styled.h3`
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
   font-size: 15px;
   margin: 0;
   width: 50%;
@@ -125,7 +125,7 @@ const OperationName = styled.h3`
 `;
 
 const OperationTime = styled.p`
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
   font-size: 14px;
   margin: 0;
   width: 50%;
@@ -139,12 +139,12 @@ const OperationTime = styled.p`
 `;
 
 const OperationAddInfo = styled.p`
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
   margin: 0;
   width: 50%;
 
   @media (min-width: 400px) {
-    color: ${p => p.theme.grey["+2"]};
+    color: ${(p) => p.theme.grey["+2"]};
     order: 2;
     font-size: 13px;
     width: 25%;
@@ -157,7 +157,7 @@ const OperationAddInfo = styled.p`
 
 const OperationKey = styled.p`
   margin: 0;
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
 
   @media (max-width: 399px) {
     width: 50%;
@@ -185,7 +185,7 @@ const Indicator = styled.div`
 
 const Container = styled(animated.div)`
   position: relative;
-  background-color: ${props => props.theme.dark[0]};
+  background-color: ${(props) => props.theme.dark[0]};
   width: auto;
   height: auto;
   display: flex;
@@ -193,7 +193,7 @@ const Container = styled(animated.div)`
   padding: 10px 15px;
 
   &:nth-child(2n) {
-    background-color: ${props => props.theme.dark["-1"]};
+    background-color: ${(props) => props.theme.dark["-1"]};
   }
 
   &:hover {
@@ -202,7 +202,7 @@ const Container = styled(animated.div)`
   }
 
   &[aria-selected="true"] {
-    background-color: ${props => props.theme.dark["+1"]};
+    background-color: ${(props) => props.theme.dark["+1"]};
   }
 
   @media (max-width: 399px) {

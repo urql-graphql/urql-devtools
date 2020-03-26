@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Background = styled.div`
   position: fixed;
-  background-color: ${props => props.theme.dark[0]};
+  background-color: ${(props) => props.theme.dark[0]};
   top: 35px;
   bottom: 0;
   left: 0;

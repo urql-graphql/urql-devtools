@@ -9,7 +9,7 @@ import {
   FragmentSpreadNode,
   OperationDefinitionNode,
   FragmentDefinitionNode,
-  ASTNode
+  ASTNode,
 } from "graphql";
 import { getFieldArguments, getNormalizedVariables } from "./variables";
 
@@ -35,14 +35,14 @@ interface HandleResponseArgs {
 export const handleResponse = ({
   operation,
   data,
-  parsedNodes = {}
+  parsedNodes = {},
 }: HandleResponseArgs) => {
   if (operation.operationName !== "query") {
     return parsedNodes;
   }
 
   const opNode = operation.query.definitions.find(
-    node => node.kind === Kind.OPERATION_DEFINITION
+    (node) => node.kind === Kind.OPERATION_DEFINITION
   ) as OperationDefinitionNode;
 
   if (!opNode) {
@@ -57,7 +57,7 @@ export const handleResponse = ({
     .reduce<Record<string, FragmentDefinitionNode>>(
       (map, node) => ({
         ...map,
-        [node.name.value]: node
+        [node.name.value]: node,
       }),
       {}
     );
@@ -76,7 +76,7 @@ export const handleResponse = ({
     parsedNodes,
     cacheOutcome: operation.context.meta && operation.context.meta.cacheOutcome,
     data,
-    owner: {}
+    owner: {},
   });
 };
 
@@ -98,7 +98,7 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
     parsedNodes = {},
     selections,
     data,
-    owner
+    owner,
   } = copyArgs;
 
   return selections.reduce((parsedNodemap, selectionNode): ParsedNodeMap => {
@@ -110,7 +110,7 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
       return parseNodes({
         ...copyArgs,
         parsedNodes: parsedNodemap,
-        selections: selectionNode.selectionSet.selections
+        selections: selectionNode.selectionSet.selections,
       });
     }
 
@@ -118,7 +118,7 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
       return parseNodes({
         ...copyArgs,
         parsedNodes: parsedNodemap,
-        selections: fragments[selectionNode.name.value].selectionSet.selections
+        selections: fragments[selectionNode.name.value].selectionSet.selections,
       });
     }
 
@@ -139,7 +139,7 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
     const node: ParsedFieldNode = parsedNodemap[key]
       ? {
           ...parsedNodemap[key],
-          _owner: owner
+          _owner: owner,
         }
       : {
           _id: nanoid(),
@@ -147,7 +147,7 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
           cacheOutcome,
           key,
           name,
-          args
+          args,
         };
 
     if (selectionNode.selectionSet && Array.isArray(value)) {
@@ -166,11 +166,11 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
                     selections: selectionNode.selectionSet
                       ? selectionNode.selectionSet.selections
                       : [],
-                    data
+                    data,
                   }),
             {}
-          )
-        }
+          ),
+        },
       };
     }
 
@@ -188,9 +188,9 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
             ...copyArgs,
             parsedNodes: {},
             selections: selectionNode.selectionSet.selections,
-            data: value
-          })
-        }
+            data: value,
+          }),
+        },
       };
     }
 
@@ -198,8 +198,8 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
       ...parsedNodemap,
       [key]: {
         ...node,
-        value
-      }
+        value,
+      },
     };
   }, parsedNodes);
 };

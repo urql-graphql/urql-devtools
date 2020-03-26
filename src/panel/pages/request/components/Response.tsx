@@ -29,15 +29,15 @@ const Heading = styled.h2`
   padding: 10px;
   font-size: 12px;
   color: #fff;
-  background: ${props => props.theme.blue["0"]};
+  background: ${(props) => props.theme.blue["0"]};
 
   &.success {
-    background: ${props => props.theme.green["0"]};
+    background: ${(props) => props.theme.green["0"]};
     color: #fff;
   }
 
   &.error {
-    background: ${props => props.theme.red["0"]};
+    background: ${(props) => props.theme.red["0"]};
     color: #fff;
   }
 `;
