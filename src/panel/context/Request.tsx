@@ -2,7 +2,6 @@ import React, {
   createContext,
   FC,
   useState,
-  useContext,
   useEffect,
   useCallback,
   useMemo,
@@ -10,7 +9,7 @@ import React, {
 import { print } from "graphql";
 import { GraphQLSchema } from "graphql";
 import { introspectSchema } from "graphql-tools";
-import { DevtoolsContext } from ".";
+import { useDevtoolsContext } from "./Devtools";
 
 interface RequestContextValue {
   query?: string;
@@ -25,7 +24,7 @@ interface RequestContextValue {
 export const RequestContext = createContext<RequestContextValue>(null as any);
 
 export const RequestProvider: FC = ({ children }) => {
-  const { sendMessage, addMessageHandler } = useContext(DevtoolsContext);
+  const { sendMessage, addMessageHandler } = useDevtoolsContext();
   const [state, setState] = useState<{
     fetching: boolean;
     response?: object;
@@ -46,21 +45,29 @@ export const RequestProvider: FC = ({ children }) => {
   // Listen for response for devtools
   useEffect(() => {
     return addMessageHandler((e) => {
-      setState((s) => {
-        if (
-          !s.fetching ||
-          (e.type !== "response" && e.type !== "error") ||
-          (e.data.operation.context.meta as any).source !== "Devtools"
-        ) {
-          return s;
-        }
+      if (e.type !== "debug") {
+        return;
+      }
 
-        return {
+      const debugEvent = e.data;
+
+      if (debugEvent.operation.context.meta?.source !== "Devtools") {
+        return;
+      }
+
+      if (debugEvent.type === "response") {
+        setState({
           fetching: false,
-          error: e.data.error,
-          response: e.data.data,
-        };
-      });
+          response: debugEvent.data.value,
+        });
+      }
+
+      if (debugEvent.type === "error") {
+        setState({
+          fetching: false,
+          error: debugEvent.data.value,
+        });
+      }
     });
   }, [addMessageHandler]);
 

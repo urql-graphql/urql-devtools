@@ -1,7 +1,7 @@
 import {
   DevtoolsExchangeOutgoingMessage,
   DisconnectMessage,
-  InitMessage
+  InitMessage,
 } from "@urql/devtools";
 import { DebugEvent, DebugEventTypes } from "@urql/core";
 

@@ -5,11 +5,11 @@ import { PaneSection } from "./PaneSection";
 
 /** Section presenting information specific to this debug event */
 export const TimelineEventSection: FC<{ event: ReceivedDebugEvent }> = ({
-  event
+  event,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const handleToggle = useCallback(() => setIsCollapsed(c => !c), []);
+  const handleToggle = useCallback(() => setIsCollapsed((c) => !c), []);
 
   return (
     <PaneSection collapsed={isCollapsed} onCollapseToggle={handleToggle}>

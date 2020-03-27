@@ -6,12 +6,12 @@ const Wrapper = styled.div`
   display: flex;
   flex-grow: 1;
   padding: 30px;
-  background: ${props => props.theme.dark["-3"]};
+  background: ${(props) => props.theme.dark["-3"]};
 `;
 
 const Interactive = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const handleToggle = useCallback(() => setCollapsed(c => !c), []);
+  const handleToggle = useCallback(() => setCollapsed((c) => !c), []);
 
   return (
     <PaneSection collapsed={collapsed} onCollapseToggle={handleToggle}>
@@ -42,5 +42,5 @@ export default {
     <Wrapper>
       <Interactive />
     </Wrapper>
-  )
+  ),
 };

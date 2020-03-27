@@ -14,7 +14,7 @@ const mockDebugEvent: ReceivedDebugEvent = {
     key: 1,
     context: {
       requestPolicy: "network-only",
-      url: "https://example.com/graphql"
+      url: "https://example.com/graphql",
     },
     query: gql`
       query {
@@ -25,14 +25,14 @@ const mockDebugEvent: ReceivedDebugEvent = {
       }
     `,
     variables: {
-      myVar: 1234
-    }
+      myVar: 1234,
+    },
   },
   data: {
-    myData: 4321
-  }
+    myData: 4321,
+  },
 };
 
 export default {
-  combined: <TimelinePane data-snapshot event={mockDebugEvent} />
+  combined: <TimelinePane data-snapshot event={mockDebugEvent} />,
 };

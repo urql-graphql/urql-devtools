@@ -11,24 +11,26 @@ const eventGroupIcon: Record<string, any> = {
   execution: ExecutionIcon,
   update: UpdateIcon,
   teardown: TeardownIcon,
-  other: OtherIcon
+  other: OtherIcon,
 };
 
 const Icon = styled.img<{ size: number }>`
   cursor: "pointer";
-  width: ${p => p.size}px;
-  height: ${p => p.size}px;
+  width: ${(p) => p.size}px;
+  height: ${(p) => p.size}px;
 `;
 
-export const TimelineEvent: FC<{
-  event: ReceivedDebugEvent;
-} & Omit<JSX.IntrinsicElements["img"], "ref">> = ({ event, ...svgProps }) => {
+export const TimelineEvent: FC<
+  {
+    event: ReceivedDebugEvent;
+  } & Omit<JSX.IntrinsicElements["img"], "ref">
+> = ({ event, ...svgProps }) => {
   const { ref, tooltipProps, isVisible } = useTooltip();
 
   const iconSize = useMemo(
     () =>
       Object.keys(eventGroupIcon)
-        .filter(k => k !== "other")
+        .filter((k) => k !== "other")
         .includes(event.type)
         ? 12
         : 8,

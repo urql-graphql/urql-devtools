@@ -10,9 +10,9 @@ const defaultEvents: ReceivedDebugEvent[] = [
       type: "execution",
       message: "A listener was added to the stream",
       operation: {
-        key: 1
-      }
-    }
+        key: 1,
+      },
+    },
   },
   {
     type: "debug",
@@ -20,9 +20,9 @@ const defaultEvents: ReceivedDebugEvent[] = [
       type: "update",
       message: "This is an update to the operation response / data",
       operation: {
-        key: 1
-      }
-    }
+        key: 1,
+      },
+    },
   },
   {
     type: "debug",
@@ -30,9 +30,19 @@ const defaultEvents: ReceivedDebugEvent[] = [
       type: "other",
       message: "This is an update to the operation response / data",
       operation: {
-        key: 1
-      }
-    }
+        key: 1,
+      },
+    },
+  },
+  {
+    type: "debug",
+    data: {
+      type: "other",
+      message: "This is an update to the operation response / data",
+      operation: {
+        key: 1,
+      },
+    },
   },
   {
     type: "debug",
@@ -40,9 +50,9 @@ const defaultEvents: ReceivedDebugEvent[] = [
       type: "error",
       message: "This is an update to the operation response / data",
       operation: {
-        key: 1
-      }
-    }
+        key: 1,
+      },
+    },
   },
   {
     type: "debug",
@@ -50,9 +60,9 @@ const defaultEvents: ReceivedDebugEvent[] = [
       type: "update",
       message: "A listener was added to the stream",
       operation: {
-        key: 2
-      }
-    }
+        key: 2,
+      },
+    },
   },
   {
     type: "debug",
@@ -60,9 +70,9 @@ const defaultEvents: ReceivedDebugEvent[] = [
       type: "teardown",
       message: "A teardown was triggered on the stream",
       operation: {
-        key: 1
-      }
-    }
+        key: 1,
+      },
+    },
   },
   {
     type: "debug",
@@ -70,15 +80,15 @@ const defaultEvents: ReceivedDebugEvent[] = [
       type: "teardown",
       message: "A teardown was triggered on the stream",
       operation: {
-        key: 2
-      }
-    }
-  }
+        key: 2,
+      },
+    },
+  },
 ] as any;
 
 const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
   children,
-  events = defaultEvents
+  events = defaultEvents,
 }) => {
   return (
     <DevtoolsContext.Provider
@@ -95,7 +105,7 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
               }, 2000);
 
               return () => clearInterval(interval);
-            }
+            },
           } as any),
         []
       )}
@@ -110,5 +120,5 @@ export default {
     <DevtoolsContextMock>
       <Timeline />
     </DevtoolsContextMock>
-  )
+  ),
 };

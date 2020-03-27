@@ -6,9 +6,9 @@ import { TimelineQuerySection } from "./TimelineQuerySection";
 
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
-export const TimelinePane: FC<{ event: ReceivedDebugEvent } & ComponentProps<
-  typeof Container
->> = ({ event, ...props }) => (
+export const TimelinePane: FC<
+  { event: ReceivedDebugEvent } & ComponentProps<typeof Container>
+> = ({ event, ...props }) => (
   <Container {...props}>
     <Pane.Body>
       {/** Todo: Add event section here */}
@@ -22,5 +22,5 @@ export const TimelinePane: FC<{ event: ReceivedDebugEvent } & ComponentProps<
 );
 
 const Container = styled(Pane)`
-  background-color: ${p => p.theme.dark["-3"]};
+  background-color: ${(p) => p.theme.dark["-3"]};
 `;

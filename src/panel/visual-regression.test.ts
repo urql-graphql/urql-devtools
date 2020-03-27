@@ -1,7 +1,7 @@
 import {
   detectCosmosConfig,
   getFixtureUrlsSync,
-  getFixturesSync
+  getFixturesSync,
 } from "react-cosmos";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 expect.extend({ toMatchImageSnapshot });
@@ -9,11 +9,11 @@ expect.extend({ toMatchImageSnapshot });
 // Urls of fixtures
 const fixtureUrls = getFixtureUrlsSync({
   cosmosConfig: detectCosmosConfig(),
-  fullScreen: true
+  fullScreen: true,
 });
 // ID and name for each fixture
 const fixtureElements = getFixturesSync({
-  cosmosConfig: detectCosmosConfig()
+  cosmosConfig: detectCosmosConfig(),
 });
 const fixtures = fixtureUrls.reduce<[string, string][]>((p, url, i) => {
   const f = fixtureElements[i].fixtureId;
@@ -58,14 +58,14 @@ describe.each(fixtures)("%s", (id, url) => {
         x: boundingBox.x,
         y: boundingBox.y,
         width: Math.min(boundingBox.width, page.viewport().width),
-        height: Math.min(boundingBox.height, page.viewport().height)
-      }
+        height: Math.min(boundingBox.height, page.viewport().height),
+      },
     });
     expect(image).toMatchImageSnapshot({
       customSnapshotIdentifier: id,
-      failureThreshold: 0.01
+      failureThreshold: 0.01,
     });
   });
 });
 
-const delay = (t: number) => new Promise(resolve => setTimeout(resolve, t));
+const delay = (t: number) => new Promise((resolve) => setTimeout(resolve, t));

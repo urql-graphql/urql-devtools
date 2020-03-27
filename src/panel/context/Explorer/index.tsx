@@ -35,14 +35,14 @@ export const ExplorerProvider: FC = ({ children }) => {
         setOperations({});
         return;
       }
+      
+      const debugEvent = e.data;
 
-      if (e.type !== "debug" || e.data.type !== "update") {
+      if (e.type !== "debug" || debugEvent.type !== "update") {
         return;
       }
 
-      const debugEvent = e.data;
-
-      if (debugEvent.type === "update" && debugEvent.data) {
+      if (debugEvent.data) {
         setOperations((operations) =>
           handleResponse({
             operation: debugEvent.operation,
