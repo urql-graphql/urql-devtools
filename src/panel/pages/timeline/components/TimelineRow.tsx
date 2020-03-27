@@ -1,11 +1,11 @@
 import React, { FC, useMemo } from "react";
 import styled from "styled-components";
-import { ReceivedDebugEvent } from "../../../types";
+import { DebugEvent } from "@urql/core";
 import { useTimelineContext } from "../../../context";
 import { TimelineEvent } from "./TimelineEvent";
 import { TimelineDuration } from "./TimelineDuration";
 
-export const TimelineRow: FC<{ events: ReceivedDebugEvent[] }> = ({
+export const TimelineRow: FC<{ events: DebugEvent<string>[] }> = ({
   events,
 }) => {
   const { container, scale, setSelectedEvent } = useTimelineContext();
@@ -16,7 +16,7 @@ export const TimelineRow: FC<{ events: ReceivedDebugEvent[] }> = ({
         return [
           ...p,
           <TimelineEvent
-            key={`e-${e.key}`}
+            key={`e-${p.length}`}
             event={e}
             onClick={() => setSelectedEvent(e)}
             style={{

@@ -3,7 +3,6 @@ import {
   DisconnectMessage,
   InitMessage,
 } from "@urql/devtools";
-import { DebugEvent, DebugEventTypes } from "@urql/core";
 
 export type EventType =
   | "subscription"
@@ -69,13 +68,6 @@ export interface ParsedErrorEvent extends ParsedEventBase {
     { name: "meta"; data: object }
   ];
 }
-
-export declare type ReceivedDebugEvent = DebugEvent<
-  keyof DebugEventTypes | string
-> & {
-  key: number;
-  timestamp: number;
-};
 
 export type ParsedEvent =
   | ParsedMutationEvent

@@ -1,10 +1,10 @@
 import React, { FC, useState, useCallback } from "react";
-import { ReceivedDebugEvent } from "../../../../types";
+import { DebugEvent } from "@urql/core";
 import { CodeHighlight } from "../../../../components";
 import { PaneSection } from "./PaneSection";
 
 /** Section presenting information specific to this debug event */
-export const TimelineEventSection: FC<{ event: ReceivedDebugEvent }> = ({
+export const TimelineEventSection: FC<{ event: DebugEvent<string> }> = ({
   event,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);

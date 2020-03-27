@@ -11,15 +11,15 @@ import React, {
   useEffect,
 } from "react";
 import { scaleLinear, ScaleLinear } from "d3-scale";
-import { ReceivedDebugEvent } from "../types";
+import { DebugEvent } from "@urql/core";
 import { DevtoolsContext } from "./Devtools";
 
 interface TimelineContextValue {
-  selectedEvent?: ReceivedDebugEvent;
-  setSelectedEvent: Dispatch<SetStateAction<ReceivedDebugEvent | undefined>>;
+  selectedEvent?: DebugEvent<string>;
+  setSelectedEvent: Dispatch<SetStateAction<DebugEvent<string> | undefined>>;
   container: HTMLDivElement;
   setContainer: (e: HTMLDivElement) => void;
-  events: Record<string, ReceivedDebugEvent[]>;
+  events: Record<string, DebugEvent<string>[]>;
   scale: ScaleLinear<number, number>;
   startTime: number;
 }
@@ -207,31 +207,25 @@ const useTimelineDomain = () => {
 export const TimelineProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const domain = useTimelineDomain();
-  const [events, setEvents] = useState<Record<string, ReceivedDebugEvent[]>>(
+  const [events, setEvents] = useState<Record<string, DebugEvent<string>[]>>(
     {}
   );
   const [selectedEvent, setSelectedEvent] = useState<
-    ReceivedDebugEvent | undefined
+    DebugEvent<string> | undefined
   >(undefined);
 
   useEffect(() => {
-    let count = 0;
-
     return addMessageHandler((message) => {
       if (message.type !== "debug") {
         return;
       }
 
-      const receivedEvent = {
-        key: count++,
-        timestamp: message.timestamp,
-        ...message.data,
-      };
-      const opKey = receivedEvent.operation.key;
+      const debugEvent = message.data;
+      const opKey = debugEvent.operation.key;
 
       setEvents((e) => ({
         ...e,
-        [opKey]: [...(e[opKey] || []), receivedEvent],
+        [opKey]: [...(e[opKey] || []), message.data],
       }));
     });
   }, [addMessageHandler]);

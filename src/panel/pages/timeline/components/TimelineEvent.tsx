@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from "react";
 import styled from "styled-components";
-import { ReceivedDebugEvent } from "../../../types";
+import { DebugEvent } from "@urql/core";
 import ExecutionIcon from "../../../../assets/events/execution.svg";
 import OtherIcon from "../../../../assets/events/other.svg";
 import TeardownIcon from "../../../../assets/events/teardown.svg";
@@ -22,7 +22,7 @@ const Icon = styled.img<{ size: number }>`
 
 export const TimelineEvent: FC<
   {
-    event: ReceivedDebugEvent;
+    event: DebugEvent<string>;
   } & Omit<JSX.IntrinsicElements["img"], "ref">
 > = ({ event, ...svgProps }) => {
   const { ref, tooltipProps, isVisible } = useTooltip();
