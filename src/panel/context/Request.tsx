@@ -2,7 +2,6 @@ import React, {
   createContext,
   FC,
   useState,
-  useContext,
   useEffect,
   useCallback,
   useMemo,
@@ -10,7 +9,7 @@ import React, {
 import { print } from "graphql";
 import { GraphQLSchema } from "graphql";
 import { introspectSchema } from "graphql-tools";
-import { DevtoolsContext } from ".";
+import { useDevtoolsContext } from "./Devtools";
 
 interface RequestContextValue {
   query?: string;
@@ -25,7 +24,7 @@ interface RequestContextValue {
 export const RequestContext = createContext<RequestContextValue>(null as any);
 
 export const RequestProvider: FC = ({ children }) => {
-  const { sendMessage, addMessageHandler } = useContext(DevtoolsContext);
+  const { sendMessage, addMessageHandler } = useDevtoolsContext();
   const [state, setState] = useState<{
     fetching: boolean;
     response?: object;
