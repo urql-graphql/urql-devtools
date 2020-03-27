@@ -95,7 +95,7 @@
     "@types/styled-components": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
-    "@urql/devtools": "0.1.2",
+    "@urql/devtools": "^1.0.0-dev.0",
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^25.2.1",
     "babel-loader": "^8.1.0",

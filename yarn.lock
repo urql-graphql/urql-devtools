@@ -1681,12 +1681,10 @@
   dependencies:
     wonka "^4.0.9"
 
-"@urql/devtools@0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@urql/devtools/-/devtools-0.1.2.tgz#0fb30ec45d7486f18435ec511b1aaa6ccfa7cb0c"
-  integrity sha512-JoQlxFmWPxpuvi8nstjLNRhp1sScNZNo3WiMw8f5PLFFApeUvf3Wa4nDK/zIxNZKd6eOzAyeSLy0RQ6+iVvYGQ==
-  dependencies:
-    wonka "^3.2.1"
+"@urql/devtools@^1.0.0-dev.0":
+  version "1.0.0-dev.0"
+  resolved "https://registry.yarnpkg.com/@urql/devtools/-/devtools-1.0.0-dev.0.tgz#56135f53d4668ea103964ce903fd997e05d26920"
+  integrity sha512-SjbBnSUc58i14u7gN8VhP5UP1wU6pSVUvx5uiaJTCuqu5jm72/ZuNrJgj9KI6XY/vpOXKj5h11zN57nGz2fpDw==
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -12164,11 +12162,6 @@ winreg@0.0.12:
   version "0.0.12"
   resolved "https://registry.yarnpkg.com/winreg/-/winreg-0.0.12.tgz#07105554ba1a9d08979251d129475bffae3006b7"
   integrity sha1-BxBVVLoanQiXklHRKUdb/64wBrc=
-
-wonka@^3.2.1:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/wonka/-/wonka-3.2.2.tgz#4d5c79fee2e6042066ba7aa86bd2f180487cc0c3"
-  integrity sha512-btmYyFDuDpJXJfELkFkoTjfyn0M+/a54/kjqt3qGN/h/90A8Ynq8qxG4b0uXBAOvJNRnWnL8+d0C3r6Clt8PYA==
 
 wonka@^4.0.9:
   version "4.0.9"
