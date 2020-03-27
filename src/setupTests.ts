@@ -4,6 +4,13 @@ import Adapter from "enzyme-adapter-react-16";
 import puppeteer from "puppeteer";
 
 declare const global: {
+  chrome: {
+    devtools: {
+      inspectedWindow: {
+        eval: () => any;
+      };
+    };
+  };
   browser: puppeteer.Browser;
   page: puppeteer.Page;
   matchMedia: any;
@@ -18,6 +25,14 @@ declare const jasmine: jest.MatcherContext;
   // Setup matchMedia mock
   global.matchMedia = jest.fn();
 
+  global.chrome = {
+    devtools: {
+      inspectedWindow: {
+        eval: jest.fn(),
+      },
+    },
+  };
+
   // Exit if not visual regression
   if (!jasmine.testPath.includes("visual-regression")) {
     return;
@@ -27,7 +42,7 @@ declare const jasmine: jest.MatcherContext;
   beforeAll(async () => {
     global.browser = await puppeteer.launch({
       args: process.env.USER === "root" ? ["--no-sandbox"] : [],
-      headless: process.env.HEADLESS !== "false"
+      headless: process.env.HEADLESS !== "false",
     });
   });
 

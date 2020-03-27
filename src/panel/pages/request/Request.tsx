@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Background } from "../../components/Background";
 import { Query, Response } from "./components";
 
-export const Request: FC<ComponentProps<typeof Container>> = props => {
+export const Request: FC<ComponentProps<typeof Container>> = (props) => {
   return (
     <Container {...props}>
       <Query />

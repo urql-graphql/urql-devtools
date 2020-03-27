@@ -4,7 +4,7 @@ import React, {
   useState,
   useMemo,
   MouseEventHandler,
-  ComponentProps
+  ComponentProps,
 } from "react";
 import styled from "styled-components";
 import { useOrientationWatcher } from "../hooks";
@@ -19,7 +19,7 @@ const PaneRoot: FC<ComponentProps<typeof PaneContainer>> = ({
 
   type position = { x: number; y: number };
   const handleClick = useCallback<MouseEventHandler>(
-    ce => {
+    (ce) => {
       // Right/middle click
       if (ce.button !== 0) {
         return;
@@ -33,11 +33,11 @@ const PaneRoot: FC<ComponentProps<typeof PaneContainer>> = ({
 
       const renderFrame = () => {
         window.requestAnimationFrame(() => {
-          setSize(s =>
+          setSize((s) =>
             isPortrait
               ? {
                   ...s,
-                  y: window.innerHeight - latestPosition.y
+                  y: window.innerHeight - latestPosition.y,
                 }
               : { ...s, x: window.innerWidth - latestPosition.x }
           );
@@ -89,7 +89,7 @@ const PaneContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background: ${props => props.theme.dark["-2"]};
+  background: ${(props) => props.theme.dark["-2"]};
 
   width: 100%;
   height: 400px;
@@ -105,7 +105,7 @@ const edgeWidth = 4;
 const DraggingEdge = styled.div`
   position: absolute;
   z-index: 3;
-  background: ${p => p.theme.dark["+1"]};
+  background: ${(p) => p.theme.dark["+1"]};
 
   cursor: ns-resize;
   width: 100%;
@@ -124,7 +124,7 @@ const DraggingEdge = styled.div`
   &:hover,
   &[aria-grabbed="true"] {
     transition: background 150ms ease;
-    background: ${p => p.theme.dark["+2"]};
+    background: ${(p) => p.theme.dark["+2"]};
   }
 `;
 

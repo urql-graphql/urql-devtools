@@ -30,17 +30,23 @@ export const ExplorerProvider: FC = ({ children }) => {
   >(undefined);
 
   useEffect(() => {
-    return addMessageHandler((o: DevtoolsExchangeOutgoingMessage) => {
-      if (o.type === "disconnect") {
+    return addMessageHandler((e: DevtoolsExchangeOutgoingMessage) => {
+      if (e.type === "disconnect") {
         setOperations({});
         return;
       }
 
-      if (o.type === "response" && o.data.data) {
+      if (e.type !== "debug") {
+        return;
+      }
+
+      const debugEvent = e.data;
+
+      if (debugEvent.type === "update" && debugEvent.data) {
         setOperations((operations) =>
           handleResponse({
-            operation: o.data.operation,
-            data: o.data.data,
+            operation: debugEvent.operation,
+            data: debugEvent.data,
             parsedNodes: operations,
           })
         );

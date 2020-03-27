@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from "react";
 import gql from "graphql-tag";
-import { OperationResponseMessage } from "@urql/devtools";
+import { DebugMessage } from "@urql/devtools";
 import {
   DevtoolsContext,
   ExplorerProvider,
@@ -8,10 +8,13 @@ import {
 } from "../../context";
 import { Explorer } from "./Explorer";
 
-const defaultEvents: OperationResponseMessage[] = [
-  ({
-    type: "response",
+const defaultEvents: DebugMessage[] = [
+  {
+    type: "debug",
     data: {
+      type: "update",
+      message: "Todo message",
+      source: "MyComponent",
       operation: {
         key: 12345,
         operationName: "query",
@@ -53,7 +56,7 @@ const defaultEvents: OperationResponseMessage[] = [
         ],
       },
     },
-  } as unknown) as OperationResponseMessage,
+  },
 ];
 
 const DevtoolsContextMock: FC<
@@ -90,8 +93,8 @@ export default {
       addMessageHandler={(h) => {
         const event = defaultEvents[0];
         let content = 1;
-        const update = () =>
-          h({
+        const update = () => {
+          const updatedDebugMessage = {
             ...event,
             data: {
               ...event.data,
@@ -105,7 +108,11 @@ export default {
                 ],
               },
             },
-          });
+          };
+
+          h(updatedDebugMessage);
+        };
+
         update();
         setInterval(() => {
           update();

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Value } from "./Value";
 
 const Wrapper = styled.div`
-  background: ${props => props.theme.dark[0]};
+  background: ${(props) => props.theme.dark[0]};
   padding: 20px;
   flex-grow: 1;
 `;
@@ -53,5 +53,5 @@ export default {
     <Wrapper>
       <Value data-snapshot value={null} />
     </Wrapper>
-  )
+  ),
 };

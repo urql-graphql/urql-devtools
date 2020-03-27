@@ -12,7 +12,7 @@
     "test": "jest --testPathIgnorePatterns visual-regression",
     "visual-regression": "./regression.sh",
     "visual-regression-exec": "jest visual-regression --runInBand",
-    "prettier-check": "prettier -c src/** README.md",
+    "prettier-check": "prettier -c .",
     "changelog": "docker run -it --rm -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator -u FormidableLabs -p urql-devtools"
   },
   "author": "Formidable",
@@ -95,6 +95,7 @@
     "@types/styled-components": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "@urql/core": "1.11.0-debug.0",
     "@urql/devtools": "1.0.0-dev.1",
     "@urql/core": "1.11.0-debug.0",
     "awesome-typescript-loader": "^5.2.1",

@@ -6,7 +6,7 @@ import React, {
   useCallback,
   MutableRefObject,
   FC,
-  ComponentProps
+  ComponentProps,
 } from "react";
 import styled from "styled-components";
 
@@ -26,7 +26,7 @@ export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
 
 const TooltipElement = styled.p<{ position?: TooltipPosition }>`
   position: relative;
-  background-color: ${p => p.theme.dark["+1"]};
+  background-color: ${(p) => p.theme.dark["+1"]};
   border-radius: 2px;
   color: #fff;
   font-size: 12px;
@@ -37,7 +37,7 @@ const TooltipElement = styled.p<{ position?: TooltipPosition }>`
     content: "";
     display: block;
     position: absolute;
-    border-top: 9px solid ${p => p.theme.dark["+1"]};
+    border-top: 9px solid ${(p) => p.theme.dark["+1"]};
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     margin-top: -1px;
@@ -66,12 +66,12 @@ export const useTooltip = () => {
         position: "fixed",
         left: x + width / 2,
         top: y,
-        transform: `translateX(-50%) translateY(-100%)`
-      }
+        transform: `translateX(-50%) translateY(-100%)`,
+      },
     });
   }, []);
 
-  const handleRef = useCallback(passedRef => {
+  const handleRef = useCallback((passedRef) => {
     if (passedRef === null) {
       return;
     }
@@ -91,7 +91,7 @@ export const useTooltip = () => {
     const rObserver = new ResizeObserver(calculateTooltipPosition);
     mObserver.observe(ref.current, {
       attributes: true,
-      childList: true
+      childList: true,
     });
     rObserver.observe(ref.current);
     return () => {
@@ -123,6 +123,6 @@ export const useTooltip = () => {
   return useMemo(() => ({ ref: handleRef, tooltipProps, isVisible }), [
     handleRef,
     tooltipProps,
-    isVisible
+    isVisible,
   ]);
 };

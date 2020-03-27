@@ -6,7 +6,7 @@ import React, {
   cloneElement,
   useRef,
   useCallback,
-  useState
+  useState,
 } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,16 +14,13 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const collapseTransition = "300ms ease";
 
-const PaneSectionRoot: FC<{
-  collapsed?: boolean;
-  onCollapseToggle?: () => void;
-} & ComponentProps<typeof PaneContainer>> = ({
-  collapsed,
-  onCollapseToggle,
-  children,
-  ...props
-}) => {
-  const childNodes = Children.map(children, n => {
+const PaneSectionRoot: FC<
+  {
+    collapsed?: boolean;
+    onCollapseToggle?: () => void;
+  } & ComponentProps<typeof PaneContainer>
+> = ({ collapsed, onCollapseToggle, children, ...props }) => {
+  const childNodes = Children.map(children, (n) => {
     if (typeof n !== "object" || n === null || !("type" in n)) {
       return n;
     }
@@ -31,13 +28,13 @@ const PaneSectionRoot: FC<{
     if (n.type === Heading) {
       return cloneElement(n, {
         collapsed,
-        onClick: onCollapseToggle
+        onClick: onCollapseToggle,
       });
     }
 
     if (n.type === Body) {
       return cloneElement(n, {
-        collapsed
+        collapsed,
       });
     }
 
@@ -57,9 +54,9 @@ const PaneContainer = styled.section`
 `;
 
 /** Collapsible heading for sections within a timeline pane */
-const Heading: FC<{ collapsed?: boolean } & ComponentProps<
-  typeof SectionHeading
->> = ({ collapsed, children, ...props }) => (
+const Heading: FC<
+  { collapsed?: boolean } & ComponentProps<typeof SectionHeading>
+> = ({ collapsed, children, ...props }) => (
   <SectionHeading aria-expanded={!collapsed} {...props}>
     <FontAwesomeIcon icon={faAngleRight} color="#fff" />
     {children}
@@ -84,9 +81,9 @@ const SectionHeading = styled.h2`
   }
 `;
 
-const Body: FC<{ collapsed?: boolean } & ComponentProps<
-  typeof BodyContainer
->> = ({ collapsed, ...props }) => {
+const Body: FC<
+  { collapsed?: boolean } & ComponentProps<typeof BodyContainer>
+> = ({ collapsed, ...props }) => {
   const [initialHeight, setInitialHeight] = useState<number>();
   const ref = useRef<HTMLDivElement>();
 
@@ -126,10 +123,8 @@ const BodyContainer = styled.div`
   transition: max-height ${collapseTransition};
 `;
 
-// @ts-ignore
-PaneSectionRoot.Heading = Heading;
-// @ts-ignore
-PaneSectionRoot.Body = Body;
+(PaneSectionRoot as PaneSection).Heading = Heading;
+(PaneSectionRoot as PaneSection).Body = Body;
 
 type PaneSection = typeof PaneSectionRoot & {
   Heading: typeof Heading;
