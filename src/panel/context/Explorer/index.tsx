@@ -30,7 +30,7 @@ export const ExplorerProvider: FC = ({ children }) => {
   >(undefined);
 
   useEffect(() => {
-    return addMessageHandler((e: DevtoolsExchangeOutgoingMessage) => {
+    return addMessageHandler((message: DevtoolsExchangeOutgoingMessage) => {
       if (e.type === "disconnect") {
         setOperations({});
         return;
