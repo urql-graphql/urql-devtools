@@ -13,6 +13,11 @@ export const TimelineRow: FC<{ events: DebugEvent<string>[] }> = ({
   const eventElements = useMemo(
     () =>
       events.reduce<JSX.Element[]>((p, e) => {
+        // Temporary filter until filtering is added
+        if (!["execution", "update", "teardown"].includes(e.type)) {
+          return p;
+        }
+
         return [
           ...p,
           <TimelineEvent
