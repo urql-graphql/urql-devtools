@@ -6,6 +6,7 @@ import OtherIcon from "../../../../assets/events/other.svg";
 import TeardownIcon from "../../../../assets/events/teardown.svg";
 import UpdateIcon from "../../../../assets/events/update.svg";
 import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
+
 const eventGroupIcon: Record<string, any> = {
   execution: ExecutionIcon,
   update: UpdateIcon,
@@ -15,8 +16,8 @@ const eventGroupIcon: Record<string, any> = {
 
 const Icon = styled.img<{ size: number }>`
   cursor: "pointer";
-  width: ${p => p.size};
-  height: ${p => p.size};
+  width: ${p => p.size}px;
+  height: ${p => p.size}px;
 `;
 
 export const TimelineEvent: FC<{
@@ -25,7 +26,12 @@ export const TimelineEvent: FC<{
   const { ref, tooltipProps, isVisible } = useTooltip();
 
   const iconSize = useMemo(
-    () => (["execution", "update", "teardown"].includes(event.type) ? 10 : 5),
+    () =>
+      Object.keys(eventGroupIcon)
+        .filter(k => k !== "other")
+        .includes(event.type)
+        ? 12
+        : 8,
     [event.type]
   );
 
