@@ -97,6 +97,7 @@
     "@typescript-eslint/parser": "^2.25.0",
     "@urql/core": "1.11.0-debug.0",
     "@urql/devtools": "1.0.0-dev.1",
+    "@urql/core": "1.11.0-debug.0",
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^25.2.1",
     "babel-loader": "^8.1.0",

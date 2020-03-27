@@ -37,6 +37,16 @@ const defaultEvents: ReceivedDebugEvent[] = [
   {
     type: "debug",
     data: {
+      type: "other",
+      message: "This is an update to the operation response / data",
+      operation: {
+        key: 1,
+      },
+    },
+  },
+  {
+    type: "debug",
+    data: {
       type: "error",
       message: "This is an update to the operation response / data",
       operation: {
