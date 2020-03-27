@@ -8,7 +8,7 @@ import React, {
   FC,
   SetStateAction,
   useContext,
-  useEffect
+  useEffect,
 } from "react";
 import { scaleLinear, ScaleLinear } from "d3-scale";
 import { ReceivedDebugEvent } from "../types";
@@ -34,13 +34,13 @@ const useTimelineDomain = () => {
   const startTime = useRef(Date.now());
   const domain = useRef({
     start: startTime.current,
-    zoom: 1
+    zoom: 1,
   });
   const ref = useRef<HTMLDivElement>(undefined as any);
   const [scale, setScale] = useState<{
     scale: TimelineContextValue["scale"];
   }>({
-    scale: undefined as any
+    scale: undefined as any,
   });
 
   const createScale = useCallback(() => {
@@ -55,7 +55,7 @@ const useTimelineDomain = () => {
       .domain([domain.current.start, endTime])
       .range([0, ref.current.clientWidth]);
 
-    setScale(oldScale => {
+    setScale((oldScale) => {
       if (
         oldScale.scale &&
         // Scale hasn't changed
@@ -69,15 +69,18 @@ const useTimelineDomain = () => {
       return {
         scale: scaleLinear()
           .domain([domain.current.start, domain.current.start + endTime])
-          .range([0, ref.current.clientWidth])
+          .range([0, ref.current.clientWidth]),
       };
     });
   }, [setScale]);
 
-  const setContainer = useCallback<TimelineContextValue["setContainer"]>(r => {
-    ref.current = r;
-    createScale();
-  }, []);
+  const setContainer = useCallback<TimelineContextValue["setContainer"]>(
+    (r) => {
+      ref.current = r;
+      createScale();
+    },
+    []
+  );
 
   const handlePan = useCallback(
     (movement: number) => {
@@ -95,7 +98,7 @@ const useTimelineDomain = () => {
       // Apply movement (limited left movement)
       domain.current = {
         ...domain.current,
-        start: Math.max(startTime.current, newStart)
+        start: Math.max(startTime.current, newStart),
       };
     },
     [scale]
@@ -120,7 +123,7 @@ const useTimelineDomain = () => {
     domain.current = {
       ...domain.current,
       start: Math.max(newStart, startTime.current),
-      zoom: newZoom
+      zoom: newZoom,
     };
   }, []);
 
@@ -195,7 +198,7 @@ const useTimelineDomain = () => {
       container: ref.current,
       setContainer,
       startTime: startTime.current,
-      scale: scale.scale
+      scale: scale.scale,
     }),
     [scale, setContainer]
   );
@@ -215,22 +218,21 @@ export const TimelineProvider: FC = ({ children }) => {
     let count = 0;
 
     // Todo - add debug event type to Devtools context
-    return addMessageHandler(message => {
-      // @ts-ignore
+    return addMessageHandler((message) => {
       if (message.type !== "debug") {
         return;
       }
 
       const receivedEvent = {
         key: count++,
-        timestamp: (message as any).timestamp,
-        ...(message as any).data
+        timestamp: message.timestamp,
+        ...message.data,
       };
       const opKey = receivedEvent.operation.key;
 
-      setEvents(e => ({
+      setEvents((e) => ({
         ...e,
-        [opKey]: [...(e[opKey] || []), receivedEvent]
+        [opKey]: [...(e[opKey] || []), receivedEvent],
       }));
     });
   }, [addMessageHandler]);
@@ -240,7 +242,7 @@ export const TimelineProvider: FC = ({ children }) => {
       events,
       selectedEvent,
       setSelectedEvent,
-      ...domain
+      ...domain,
     }),
     [domain, events]
   );
