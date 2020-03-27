@@ -36,7 +36,7 @@ export const ExplorerProvider: FC = ({ children }) => {
         return;
       }
 
-      if (e.type !== "debug") {
+      if (e.type !== "debug" || e.data.type !== "update") {
         return;
       }
 
