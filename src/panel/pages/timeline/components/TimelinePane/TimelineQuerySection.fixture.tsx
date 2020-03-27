@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-grow: 1;
   padding: 30px;
-  background: ${props => props.theme.dark["-3"]};
+  background: ${(props) => props.theme.dark["-3"]};
 `;
 
 const query = gql`
@@ -25,5 +25,5 @@ export default {
     <Wrapper data-snapshot>
       <TimelineQuerySection query={query} variables={{ filter: "Will" }} />
     </Wrapper>
-  )
+  ),
 };

@@ -6,29 +6,29 @@ import { TimelineEvent } from "./TimelineEvent";
 const Wrapper = styled.div`
   display: flex;
   padding: 10px;
-  background: ${props => props.theme.dark["0"]};
+  background: ${(props) => props.theme.dark["0"]};
   flex-grow: 1;
   padding: 100px;
 `;
 
 const props = {
-  selectEvent: () => false
+  selectEvent: () => false,
 };
 
 const additionEvent: ReceivedDebugEvent = {
-  type: "addition"
+  type: "addition",
 } as any;
 
 const updateEvent: ReceivedDebugEvent = {
-  type: "update"
+  type: "update",
 } as any;
 
 const teardownEvent: ReceivedDebugEvent = {
-  type: "teardown"
+  type: "teardown",
 } as any;
 
 const otherEvent: ReceivedDebugEvent = {
-  type: "abcdefg"
+  type: "abcdefg",
 } as any;
 
 export default {
@@ -51,5 +51,5 @@ export default {
     <Wrapper>
       <TimelineEvent data-snapshot {...props} event={otherEvent} />
     </Wrapper>
-  )
+  ),
 };

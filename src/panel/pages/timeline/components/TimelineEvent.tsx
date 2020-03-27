@@ -10,12 +10,14 @@ const shapeMap: Record<string, any> = {
   addition: AdditionIcon,
   update: UpdateIcon,
   teardown: TeardownIcon,
-  other: OtherIcon
+  other: OtherIcon,
 };
 
-export const TimelineEvent: FC<{
-  event: ReceivedDebugEvent;
-} & Omit<JSX.IntrinsicElements["img"], "ref">> = ({ event, ...svgProps }) => {
+export const TimelineEvent: FC<
+  {
+    event: ReceivedDebugEvent;
+  } & Omit<JSX.IntrinsicElements["img"], "ref">
+> = ({ event, ...svgProps }) => {
   const { ref, tooltipProps, isVisible } = useTooltip();
 
   const style = useMemo(
@@ -27,7 +29,7 @@ export const TimelineEvent: FC<{
   );
 
   const Icon = useMemo(() => shapeMap[event.type] || shapeMap.other, [
-    shapeMap
+    shapeMap,
   ]);
 
   return (

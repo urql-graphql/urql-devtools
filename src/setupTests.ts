@@ -27,7 +27,7 @@ declare const jasmine: jest.MatcherContext;
   beforeAll(async () => {
     global.browser = await puppeteer.launch({
       args: process.env.USER === "root" ? ["--no-sandbox"] : [],
-      headless: process.env.HEADLESS !== "false"
+      headless: process.env.HEADLESS !== "false",
     });
   });
 

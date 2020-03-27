@@ -6,7 +6,7 @@ import { TimelineEvent } from "./TimelineEvent";
 import { TimelineDuration } from "./TimelineDuration";
 
 export const TimelineRow: FC<{ events: ReceivedDebugEvent[] }> = ({
-  events
+  events,
 }) => {
   const { container, scale, setSelectedEvent } = useTimelineContext();
 
@@ -22,9 +22,9 @@ export const TimelineRow: FC<{ events: ReceivedDebugEvent[] }> = ({
             style={{
               position: "absolute",
               left: scale(e.timestamp),
-              transform: "translateX(-50%) translateY(-50%)"
+              transform: "translateX(-50%) translateY(-50%)",
             }}
-          />
+          />,
         ];
       }, []),
     [events, scale]
@@ -48,7 +48,7 @@ export const TimelineRow: FC<{ events: ReceivedDebugEvent[] }> = ({
             style={{
               position: "absolute",
               left: scale(eventStart),
-              right: container.clientWidth - scale(e.timestamp)
+              right: container.clientWidth - scale(e.timestamp),
             }}
           />
         );
@@ -68,9 +68,9 @@ export const TimelineRow: FC<{ events: ReceivedDebugEvent[] }> = ({
           style={{
             position: "absolute",
             left: scale(eventStart),
-            right: container.clientWidth - scale(Date.now())
+            right: container.clientWidth - scale(Date.now()),
           }}
-        />
+        />,
       ];
     }
 

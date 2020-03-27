@@ -5,7 +5,7 @@ import {
   ParsedQueryEvent,
   ParsedSubscriptionEvent,
   ParsedResponseEvent,
-  ParsedErrorEvent
+  ParsedErrorEvent,
 } from "../../../types";
 import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
 
@@ -26,7 +26,7 @@ const getResponseName = (response: TimelineRequestProps["response"]) => {
 const RequestBar = styled.div`
   width: 10px;
   height: 40px;
-  background: ${props => props.color};
+  background: ${(props) => props.color};
 `;
 
 export const TimelineRequest: FC<TimelineRequestProps> = ({
@@ -42,7 +42,7 @@ export const TimelineRequest: FC<TimelineRequestProps> = ({
       ({
         fetching: theme.blue["0"],
         success: theme.green["0"],
-        error: theme.red["0"]
+        error: theme.red["0"],
       }[responseName]),
     [responseName, theme]
   );
