@@ -11,15 +11,15 @@ export const Timeline: FC = () => {
     events,
     startTime,
     container,
-    selectedEvent
+    selectedEvent,
   } = useTimelineContext();
 
   const ticks = useMemo(
     () =>
       scale
-        ? scale.ticks(getTickCount(container.clientWidth)).map(t => ({
+        ? scale.ticks(getTickCount(container.clientWidth)).map((t) => ({
             label: `${t - startTime}ms`,
-            position: scale(t)
+            position: scale(t),
           }))
         : [],
     [scale]
@@ -37,7 +37,7 @@ export const Timeline: FC = () => {
   return (
     <Page>
       <TimelineList ref={setContainer} draggable="true">
-        {ticks.map(t => (
+        {ticks.map((t) => (
           <Tick
             key={`p-${t.position}`}
             label={t.label}
@@ -54,7 +54,7 @@ export const Timeline: FC = () => {
 };
 
 const Page = styled(Background)`
-  background-color: ${p => p.theme.dark["0"]};
+  background-color: ${(p) => p.theme.dark["0"]};
 `;
 
 const TimelineList = styled.div`

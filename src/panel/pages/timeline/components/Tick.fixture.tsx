@@ -4,7 +4,7 @@ import { Tick } from "./Tick";
 
 const Wrapper = styled.div`
   display: flex;
-  background: ${props => props.theme.dark["-2"]};
+  background: ${(props) => props.theme.dark["-2"]};
   flex-grow: 1;
   padding: 40px;
 `;
@@ -14,5 +14,5 @@ export default {
     <Wrapper data-snapshot>
       <Tick style={{ left: 20 }} label={"200ms"} />
     </Wrapper>
-  )
+  ),
 };

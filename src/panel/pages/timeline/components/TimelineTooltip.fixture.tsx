@@ -5,7 +5,7 @@ import { TimelineTooltip, useTooltip } from "./TimelineTooltip";
 const Wrapper = styled.div`
   display: flex;
   padding: 10px;
-  background: ${props => props.theme.dark["0"]};
+  background: ${(props) => props.theme.dark["0"]};
   flex-grow: 1;
 `;
 
@@ -20,7 +20,7 @@ const HoverableItem = () => {
           left: 200,
           top: 200,
           width: 100,
-          height: 30
+          height: 30,
         }}
         ref={ref}
       >
@@ -43,5 +43,5 @@ export default {
     <Wrapper>
       <HoverableItem />
     </Wrapper>
-  )
+  ),
 };
