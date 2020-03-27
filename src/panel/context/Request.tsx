@@ -46,21 +46,29 @@ export const RequestProvider: FC = ({ children }) => {
   // Listen for response for devtools
   useEffect(() => {
     return addMessageHandler((e) => {
-      setState((s) => {
-        if (
-          !s.fetching ||
-          (e.type !== "response" && e.type !== "error") ||
-          (e.data.operation.context.meta as any).source !== "Devtools"
-        ) {
-          return s;
-        }
+      if (e.type !== "debug") {
+        return;
+      }
 
-        return {
+      const debugEvent = e.data;
+
+      if (debugEvent.operation.context.meta?.source !== "Devtools") {
+        return;
+      }
+
+      if (debugEvent.type === "response") {
+        setState({
           fetching: false,
-          error: e.data.error,
-          response: e.data.data,
-        };
-      });
+          response: debugEvent.data.value,
+        });
+      }
+
+      if (debugEvent.type === "error") {
+        setState({
+          fetching: false,
+          error: debugEvent.data.value,
+        });
+      }
     });
   }, [addMessageHandler]);
 
