@@ -219,6 +219,9 @@ export const TimelineProvider: FC = ({ children }) => {
 
     // Todo - add debug event type to Devtools context
     return addMessageHandler((message) => {
+      // TODO!: Fix this mess
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       if (message.type !== "debug") {
         return;
       }

@@ -7,7 +7,8 @@ const mockDebugEvent: ReceivedDebugEvent = {
   key: 1,
   timestamp: 1234,
   type: "operation",
-  message: "operation addition event",
+  message: "operation execution event",
+  source: "MyComponent",
   operation: {
     operationName: "query",
     key: 1,

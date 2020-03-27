@@ -15,8 +15,8 @@ const props = {
   selectEvent: () => false,
 };
 
-const additionEvent: ReceivedDebugEvent = {
-  type: "addition",
+const executionEvent: ReceivedDebugEvent = {
+  type: "execution",
 } as any;
 
 const updateEvent: ReceivedDebugEvent = {
@@ -32,9 +32,9 @@ const otherEvent: ReceivedDebugEvent = {
 } as any;
 
 export default {
-  addition: (
+  execution: (
     <Wrapper>
-      <TimelineEvent data-snapshot {...props} event={additionEvent} />
+      <TimelineEvent data-snapshot {...props} event={executionEvent} />
     </Wrapper>
   ),
   update: (
