@@ -8,7 +8,7 @@ import {
 } from "../../context";
 import { Explorer } from "./Explorer";
 
-const defaultEvents: DebugMessage[] = [
+export const defaultEvents: DebugMessage[] = [
   {
     type: "debug",
     data: {
