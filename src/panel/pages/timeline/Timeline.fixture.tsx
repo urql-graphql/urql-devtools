@@ -1,9 +1,9 @@
 import React, { FC, useMemo } from "react";
+import { DebugEvent } from "@urql/core";
 import { TimelineProvider, DevtoolsContext } from "../../context";
-import { ReceivedDebugEvent } from "../../types";
 import { Timeline } from "./Timeline";
 
-const defaultEvents: ReceivedDebugEvent[] = [
+const defaultEvents: DebugEvent<string>[] = [
   {
     type: "debug",
     data: {
@@ -100,7 +100,14 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
 
               // h({ ...events[i++ % events.length], timestamp: Date.now() });
               const interval = setInterval(() => {
-                h({ ...events[i++ % events.length], timestamp: Date.now() });
+                const event = events[i++ % events.length];
+                h({
+                  ...event,
+                  data: {
+                    ...event.data,
+                    timestamp: Date.now(),
+                  },
+                });
                 i === events.length ? clearInterval(interval) : null;
               }, 2000);
 

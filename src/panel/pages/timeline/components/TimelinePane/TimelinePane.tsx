@@ -1,13 +1,13 @@
 import React, { FC, ComponentProps } from "react";
 import styled from "styled-components";
+import { DebugEvent } from "@urql/core";
 import { Pane } from "../../../../components";
-import { ReceivedDebugEvent } from "../../../../types";
 import { TimelineQuerySection } from "./TimelineQuerySection";
 
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
 export const TimelinePane: FC<
-  { event: ReceivedDebugEvent } & ComponentProps<typeof Container>
+  { event: DebugEvent<string> } & ComponentProps<typeof Container>
 > = ({ event, ...props }) => (
   <Container {...props}>
     <Pane.Body>

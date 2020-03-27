@@ -1,10 +1,9 @@
 import React from "react";
 import gql from "graphql-tag";
-import { ReceivedDebugEvent } from "../../../../types";
+import { DebugEvent } from "@urql/core";
 import { TimelinePane } from "./TimelinePane";
 
-const mockDebugEvent: ReceivedDebugEvent = {
-  key: 1,
+const mockDebugEvent: DebugEvent<string> = {
   timestamp: 1234,
   type: "operation",
   message: "operation execution event",

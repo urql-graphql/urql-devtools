@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReceivedDebugEvent } from "../../../types";
+import { DebugEvent } from "@urql/core";
 import { TimelineEvent } from "./TimelineEvent";
 
 const Wrapper = styled.div`
@@ -15,19 +15,19 @@ const props = {
   selectEvent: () => false,
 };
 
-const executionEvent: ReceivedDebugEvent = {
+const executionEvent: DebugEvent<string> = {
   type: "execution",
 } as any;
 
-const updateEvent: ReceivedDebugEvent = {
+const updateEvent: DebugEvent<string> = {
   type: "update",
 } as any;
 
-const teardownEvent: ReceivedDebugEvent = {
+const teardownEvent: DebugEvent<string> = {
   type: "teardown",
 } as any;
 
-const otherEvent: ReceivedDebugEvent = {
+const otherEvent: DebugEvent<string> = {
   type: "abcdefg",
 } as any;
 
