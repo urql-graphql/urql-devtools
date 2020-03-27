@@ -3,14 +3,14 @@ import React, {
   useEffect,
   useState,
   FC,
-  ComponentProps
+  ComponentProps,
 } from "react";
 import styled from "styled-components";
 import { EventsContext } from "../../context";
 import { Background } from "../../components/Background";
 import { EventPane, EventCard, Filters, Headers } from "./components";
 
-export const Events: FC<ComponentProps<typeof Container>> = props => {
+export const Events: FC<ComponentProps<typeof Container>> = (props) => {
   const { events, selectedEvent } = useContext(EventsContext);
   const [filteringOn, setFilteringOn] = useState(false);
 
@@ -37,7 +37,7 @@ export const Events: FC<ComponentProps<typeof Container>> = props => {
         {events.length === 0 ? (
           <NoEvents>No Events</NoEvents>
         ) : (
-          events.map(event => (
+          events.map((event) => (
             <EventCard
               key={`${event.timestamp}-${event.type}`}
               event={event}
@@ -75,7 +75,7 @@ const EventsList = styled.div`
 `;
 
 const NoEvents = styled.h2`
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
   margin: 0;
   margin-top: 12px;
   font-style: italic;

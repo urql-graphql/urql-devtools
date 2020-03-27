@@ -32,7 +32,7 @@ const RequestProviderMock: FC<Partial<ContextType<typeof RequestContext>>> = ({
       fetching: false,
       response: undefined,
       schema,
-      ...value
+      ...value,
     }),
     [value]
   );
@@ -60,5 +60,5 @@ export default {
     <RequestProviderMock response={{ example: 1234 }}>
       <Request data-snapshot />
     </RequestProviderMock>
-  )
+  ),
 };

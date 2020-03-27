@@ -5,7 +5,7 @@ import { handleResponse } from "./index";
 
 jest.mock("nanoid", () => ({
   __esModule: true,
-  default: () => "[nanoid]"
+  default: () => "[nanoid]",
 }));
 
 interface TestCase {
@@ -19,7 +19,7 @@ const expectCorrectOutput = (testcase: TestCase) => {
     query: testcase.query,
     variables: testcase.variables,
     operationName: "query",
-    context: { meta: { cacheOutcome: "hit" } }
+    context: { meta: { cacheOutcome: "hit" } },
   } as any;
 
   return expect(
@@ -35,7 +35,7 @@ it("int on query", () => {
         int
       }
     `,
-    data: { __typename: "Query", int: 42 }
+    data: { __typename: "Query", int: 42 },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -102,17 +102,17 @@ it("complex query", () => {
               {
                 id: "ck06q9uikf5iw0b53dyjb0fbf",
                 user: { id: "ck06q5r9ef4cb0b53xl6mzlo4", __typename: "User" },
-                __typename: "Vote"
-              }
+                __typename: "Vote",
+              },
             ],
             createdAt: "2019-09-03T15:28:04.052Z",
-            __typename: "Link"
-          }
+            __typename: "Link",
+          },
         ],
         count: 5,
-        __typename: "Feed"
-      }
-    }
+        __typename: "Feed",
+      },
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "feed({\\"first\\":10,\\"orderBy\\":\\"DESC\\",\\"skip\\":1})": Object {
@@ -283,7 +283,7 @@ it("aliased field on query", () => {
         anotherName: int
       }
     `,
-    data: { __typename: "Query", anotherName: 42 }
+    data: { __typename: "Query", anotherName: 42 },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -319,8 +319,8 @@ it("json on query", () => {
     // The `__typename` field should not mislead the cache
     data: {
       __typename: "Query",
-      json: { __typename: "Misleading", test: true }
-    }
+      json: { __typename: "Misleading", test: true },
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -356,7 +356,7 @@ it("nullable field on query", () => {
         missing
       }
     `,
-    data: { __typename: "Query", missing: null }
+    data: { __typename: "Query", missing: null },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -389,7 +389,7 @@ it("int field with arguments on query", () => {
         int(test: true)
       }
     `,
-    data: { __typename: "Query", int: 42 }
+    data: { __typename: "Query", int: 42 },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -428,7 +428,7 @@ it("non-keyable entity on query", () => {
       }
     `,
     // This entity has no `id` or `_id` field
-    data: { __typename: "Query", item: { __typename: "Item", name: "Test" } }
+    data: { __typename: "Query", item: { __typename: "Item", name: "Test" } },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -487,8 +487,8 @@ it("invalid entity on query", () => {
     // This entity comes back with an invalid typename (for some reason or another)
     data: {
       __typename: "Query",
-      item: { __typename: null, id: "123", name: "Test" }
-    }
+      item: { __typename: null, id: "123", name: "Test" },
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -553,7 +553,7 @@ it("non-IDable entity on query", () => {
       }
     `,
     // This entity has a `__typename` but no ID fields
-    data: { __typename: "Query", item: { __typename: "Item", name: "Test" } }
+    data: { __typename: "Query", item: { __typename: "Item", name: "Test" } },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -611,8 +611,8 @@ it("entity on query", () => {
     `,
     data: {
       __typename: "Query",
-      item: { __typename: "Item", id: "1", name: "Test" }
-    }
+      item: { __typename: "Item", id: "1", name: "Test" },
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -679,8 +679,8 @@ it("entity on aliased field on query", () => {
     `,
     data: {
       __typename: "Query",
-      anotherName: { __typename: "Item", id: "1", name: "Test" }
-    }
+      anotherName: { __typename: "Item", id: "1", name: "Test" },
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -747,8 +747,8 @@ it("entity with arguments on query", () => {
     `,
     data: {
       __typename: "Query",
-      item: { __typename: "Item", id: "1", name: "Test" }
-    }
+      item: { __typename: "Item", id: "1", name: "Test" },
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -818,8 +818,8 @@ it("entity with Int-like ID on query", () => {
     // This is the same as above, but with a number on `id`
     data: {
       __typename: "Query",
-      item: { __typename: "Item", id: 1, name: "Test" }
-    }
+      item: { __typename: "Item", id: 1, name: "Test" },
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -887,9 +887,9 @@ it("entity list on query", () => {
       __typename: "Query",
       items: [
         { __typename: "Item", id: 1 },
-        { __typename: "Item", id: 2 }
-      ]
-    }
+        { __typename: "Item", id: 2 },
+      ],
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -973,8 +973,8 @@ it("entity list on query and inline fragment", () => {
     `,
     data: {
       __typename: "Query",
-      items: [{ __typename: "Item", id: 1, test: true }, null]
-    }
+      items: [{ __typename: "Item", id: 1, test: true }, null],
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -1050,8 +1050,8 @@ it("entity list on query and spread fragment", () => {
     `,
     data: {
       __typename: "Query",
-      items: [{ __typename: "Item", id: 1, test: true }, null]
-    }
+      items: [{ __typename: "Item", id: 1, test: true }, null],
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -1129,10 +1129,10 @@ it("embedded invalid object on entity", () => {
         id: 1,
         author: {
           __typename: "Author",
-          name: "Stanley"
-        }
-      }
-    }
+          name: "Stanley",
+        },
+      },
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {
@@ -1228,10 +1228,10 @@ it("embedded object on entity", () => {
         author: {
           __typename: "Author",
           id: 1,
-          name: "Stanley"
-        }
-      }
-    }
+          name: "Stanley",
+        },
+      },
+    },
   }).toMatchInlineSnapshot(`
     Object {
       "__typename": Object {

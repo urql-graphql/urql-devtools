@@ -6,7 +6,7 @@ import React, {
   useRef,
   useCallback,
   useState,
-  useContext
+  useContext,
 } from "react";
 import { DevtoolsPanelConnectionName, PanelOutgoingMessage } from "../../types";
 
@@ -34,13 +34,13 @@ export const DevtoolsProvider: FC = ({ children }) => {
   >({});
 
   const sendMessage = useCallback<DevtoolsContextType["sendMessage"]>(
-    msg => connection.current.postMessage(msg),
+    (msg) => connection.current.postMessage(msg),
     []
   );
 
   const addMessageHandler = useCallback<
     DevtoolsContextType["addMessageHandler"]
-  >(callback => {
+  >((callback) => {
     const i = index++;
     messageHandlers.current[i] = callback;
 
@@ -53,11 +53,11 @@ export const DevtoolsProvider: FC = ({ children }) => {
     // Relay the tab ID to the background page
     connection.current.postMessage({
       type: "init",
-      tabId: chrome.devtools.inspectedWindow.tabId
+      tabId: chrome.devtools.inspectedWindow.tabId,
     });
 
     const handleMessage = (msg: DevtoolsExchangeOutgoingMessage) => {
-      return Object.values(messageHandlers.current).forEach(h => h(msg));
+      return Object.values(messageHandlers.current).forEach((h) => h(msg));
     };
 
     connection.current.onMessage.addListener(handleMessage);
@@ -66,7 +66,7 @@ export const DevtoolsProvider: FC = ({ children }) => {
 
   // Listen for client init connection
   useEffect(() => {
-    addMessageHandler(message => {
+    addMessageHandler((message) => {
       if (message.type === "init") {
         setClientConnected(true);
       } else if (message.type === "disconnect") {

@@ -17,7 +17,7 @@ export const EventPane: FC<{ event: ParsedEvent }> = ({ event }) => {
     () =>
       panels.map((p, i) => ({
         label: p.name,
-        value: i
+        value: i,
       })),
     [panels]
   );

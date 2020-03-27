@@ -17,17 +17,17 @@ export const Filters: FC = () => {
       ...filters,
       ...(activeFilters as Record<string, any>)[key].map((value: string[]) => ({
         type: key,
-        value
-      }))
+        value,
+      })),
     ],
     [] as FilterEntry[]
   );
 
-  const transitionFilters = useTransition(flattenedFilters, i => i.value, {
+  const transitionFilters = useTransition(flattenedFilters, (i) => i.value, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
-    config: { duration: 100 }
+    config: { duration: 100 },
   });
 
   const handleFilterClick = useCallback(
@@ -95,15 +95,15 @@ const FilterButton = styled(animated.button)`
   }
 
   &[data-type="key"] {
-    background: ${props => props.theme.blue[-2]};
+    background: ${(props) => props.theme.blue[-2]};
   }
 
   &[data-type="type"] {
-    background: ${props => props.theme.blue[-2]};
+    background: ${(props) => props.theme.blue[-2]};
   }
 
   &[data-type="source"] {
-    background: ${props => props.theme.blue[-2]};
+    background: ${(props) => props.theme.blue[-2]};
   }
 `;
 
@@ -114,7 +114,7 @@ const TextContainer = styled.div`
   justify-content: center;
   width: 100%;
   padding: 20px;
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
 `;
 
 const Title = styled.strong`

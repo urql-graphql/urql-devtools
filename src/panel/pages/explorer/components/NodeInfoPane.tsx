@@ -7,7 +7,7 @@ import { ExplorerContext } from "../../../context";
 import { Value } from "./Value";
 import { CacheOutcomeIcon } from "./Icons";
 
-export const NodeInfoPane: FC<ComponentProps<typeof Pane>> = props => {
+export const NodeInfoPane: FC<ComponentProps<typeof Pane>> = (props) => {
   const { focusedNode } = useContext(ExplorerContext);
 
   const content = useMemo(() => {
@@ -140,7 +140,7 @@ const Container = styled.div`
 
 const Title = styled.h3`
   text-transform: uppercase;
-  color: ${p => p.theme.purple["+1"]};
+  color: ${(p) => p.theme.purple["+1"]};
   font-size: 12px;
   font-weight: normal;
   margin-top: 0;
@@ -148,18 +148,18 @@ const Title = styled.h3`
 `;
 
 const Name = styled.code`
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
 `;
 
 const Description = styled.p`
-  color: ${p => p.theme.grey["+2"]}d4;
+  color: ${(p) => p.theme.grey["+2"]}d4;
   margin-bottom: 0;
   margin-top: 5px;
 `;
 
 const Code = styled.code`
   display: block;
-  color: ${p => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.grey["-1"]};
   white-space: pre;
 
   & > code {
@@ -176,7 +176,7 @@ const TextContainer = styled.div`
 
 const Text = styled.p`
   text-align: center;
-  color: ${p => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.grey["-1"]};
 `;
 
 const CacheIcon = styled(CacheOutcomeIcon)`

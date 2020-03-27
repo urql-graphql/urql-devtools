@@ -9,8 +9,8 @@ const explorerContextValue = {
     _id: "1234",
     _owner: {},
     name: "Hello",
-    key: "1234"
-  }
+    key: "1234",
+  },
 } as const;
 
 export default {
@@ -27,8 +27,8 @@ export default {
         ...explorerContextValue,
         focusedNode: {
           ...explorerContextValue.focusedNode,
-          cacheOutcome: "hit"
-        }
+          cacheOutcome: "hit",
+        },
       }}
     >
       <NodeInfoPane data-snapshot />
@@ -40,8 +40,8 @@ export default {
         ...explorerContextValue,
         focusedNode: {
           ...explorerContextValue.focusedNode,
-          cacheOutcome: "miss"
-        }
+          cacheOutcome: "miss",
+        },
       }}
     >
       <NodeInfoPane data-snapshot />
@@ -53,8 +53,8 @@ export default {
         ...explorerContextValue,
         focusedNode: {
           ...explorerContextValue.focusedNode,
-          cacheOutcome: "partial"
-        }
+          cacheOutcome: "partial",
+        },
       }}
     >
       <NodeInfoPane data-snapshot />
@@ -68,9 +68,9 @@ export default {
           ...explorerContextValue.focusedNode,
           args: {
             name: "hello",
-            age: 1234
-          }
-        }
+            age: 1234,
+          },
+        },
       }}
     >
       <NodeInfoPane data-snapshot />
@@ -83,9 +83,9 @@ export default {
         focusedNode: {
           ...explorerContextValue.focusedNode,
           value: {
-            property: "Object value"
-          }
-        }
+            property: "Object value",
+          },
+        },
       }}
     >
       <NodeInfoPane data-snapshot />
@@ -97,8 +97,8 @@ export default {
         ...explorerContextValue,
         focusedNode: {
           ...explorerContextValue.focusedNode,
-          value: "Hello"
-        }
+          value: "Hello",
+        },
       }}
     >
       <NodeInfoPane data-snapshot />
@@ -113,13 +113,13 @@ export default {
           children: {
             child1: {
               ...explorerContextValue.focusedNode,
-              value: "I'm a child node"
-            }
-          }
-        }
+              value: "I'm a child node",
+            },
+          },
+        },
       }}
     >
       <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
-  )
+  ),
 };

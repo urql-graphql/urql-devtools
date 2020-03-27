@@ -1,7 +1,7 @@
 import {
   FieldNode,
   OperationDefinitionNode,
-  valueFromASTUntyped
+  valueFromASTUntyped,
 } from "graphql";
 import { Operation } from "urql";
 import Maybe from "graphql/tsutils/Maybe";
@@ -18,7 +18,7 @@ export const getFieldArguments = (
   return node.arguments.reduce<Operation["variables"]>(
     (p, arg) => ({
       ...p,
-      [arg.name.value]: valueFromASTUntyped(arg.value, vars)
+      [arg.name.value]: valueFromASTUntyped(arg.value, vars),
     }),
     {}
   );
@@ -35,7 +35,7 @@ export const getNormalizedVariables = (
       [definition.variable.name.value]: valueFromASTUntyped(
         definition.variable,
         variables
-      )
+      ),
     }),
     {}
   );

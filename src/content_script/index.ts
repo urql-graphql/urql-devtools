@@ -1,7 +1,7 @@
 import {
   DevtoolsExchangeOutgoingMessage,
   DevtoolsExchangeOutgoingEventType,
-  DevtoolsExchangeIncomingEventType
+  DevtoolsExchangeIncomingEventType,
 } from "@urql/devtools";
 import { ContentScriptConnectionName } from "../types";
 
@@ -9,7 +9,7 @@ import { ContentScriptConnectionName } from "../types";
 let connection: chrome.runtime.Port | undefined;
 
 // Listen for init message from exchange
-window.addEventListener(DevtoolsExchangeOutgoingEventType, e => {
+window.addEventListener(DevtoolsExchangeOutgoingEventType, (e) => {
   const data = (e as CustomEvent<DevtoolsExchangeOutgoingMessage>).detail;
 
   if (data.type === "init") {

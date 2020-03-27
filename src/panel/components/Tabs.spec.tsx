@@ -8,9 +8,9 @@ const props = {
   active: "a",
   options: [
     { label: "first", value: "a" },
-    { label: "second", value: "b" }
+    { label: "second", value: "b" },
   ],
-  setActive: jest.fn()
+  setActive: jest.fn(),
 };
 
 describe("on mount", () => {

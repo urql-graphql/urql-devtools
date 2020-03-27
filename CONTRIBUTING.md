@@ -8,7 +8,6 @@ If you want to contribute, find an issue you think you can help with and get inv
 
 We use issues to track changes to the project over time so make an issue if you want to contribute to something that hasn't yet been proposed/reported!
 
-
 ## Working on the devtools extension (quick)
 
 The quickest way to get started on devtools is to spin up the devtools extension fixtures.
@@ -52,14 +51,14 @@ import {
   cacheExchange,
   createClient,
   dedupExchange,
-  fetchExchange
+  fetchExchange,
 } from "urql";
 import { devtoolsExchange } from "<path-to-devtools-dist>/exchange";
 
 // ...
 const client = createClient({
   url: "http://localhost:3001/graphql",
-  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange]
+  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange],
 });
 ```
 

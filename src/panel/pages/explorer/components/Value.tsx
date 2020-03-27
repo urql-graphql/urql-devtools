@@ -4,16 +4,13 @@ import { animated } from "react-spring";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { useFlash } from "../hooks";
 
-export const Value: FC<{
-  value: ParsedFieldNode["value"];
-  expand?: boolean;
-  isRoot?: boolean;
-} & ComponentProps<typeof animated.span>> = ({
-  value,
-  expand = false,
-  isRoot = true,
-  ...props
-}) => {
+export const Value: FC<
+  {
+    value: ParsedFieldNode["value"];
+    expand?: boolean;
+    isRoot?: boolean;
+  } & ComponentProps<typeof animated.span>
+> = ({ value, expand = false, isRoot = true, ...props }) => {
   const previousValue = useRef(value);
   const [flashProps, flash] = useFlash();
 
@@ -57,7 +54,7 @@ export const Value: FC<{
 
 const ArrayValue: FC<{ value: any[]; expand: boolean }> = ({
   value,
-  expand
+  expand,
 }) => {
   if (value.length === 0) {
     return <>{"[]"}</>;
@@ -83,7 +80,7 @@ const ArrayValue: FC<{ value: any[]; expand: boolean }> = ({
 
 const ObjectValue: FC<{ value: object; expand: boolean }> = ({
   value,
-  expand
+  expand,
 }) => {
   const entries = Object.entries(value);
 
@@ -111,7 +108,7 @@ const ObjectValue: FC<{ value: object; expand: boolean }> = ({
 };
 
 export const Key = styled.span`
-  color: ${p => p.theme.pink["0"]};
+  color: ${(p) => p.theme.pink["0"]};
 `;
 
 export const Symbol = styled.span`
@@ -132,5 +129,5 @@ const Wrapper = styled.div`
 `;
 
 const DescribedValue = styled.span`
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
 `;

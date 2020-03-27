@@ -20,15 +20,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const ThemeDecorator: FC = props => <ThemeProvider {...props} theme={theme} />;
+const ThemeDecorator: FC = (props) => (
+  <ThemeProvider {...props} theme={theme} />
+);
 
-const DevtoolsDecorator: FC = props => (
+const DevtoolsDecorator: FC = (props) => (
   <DevtoolsContext.Provider
     {...props}
     value={{
       addMessageHandler: () => () => false,
       clientConnected: true,
-      sendMessage: () => false
+      sendMessage: () => false,
     }}
   />
 );

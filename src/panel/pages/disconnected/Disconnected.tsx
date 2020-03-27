@@ -2,7 +2,7 @@ import React, { FC, ComponentProps } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import image from "../../../assets/icon.svg";
 
-export const Disconnected: FC<ComponentProps<typeof Container>> = props => (
+export const Disconnected: FC<ComponentProps<typeof Container>> = (props) => (
   <>
     <GlobalStyle />
     <Container {...props}>
@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: ${p => p.theme.dark["0"]};
+  background: ${(p) => p.theme.dark["0"]};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,13 +30,13 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
-  color: ${p => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.grey["+2"]};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
-  color: ${p => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.grey["-1"]};
 `;
 
 const Logo = styled.img`

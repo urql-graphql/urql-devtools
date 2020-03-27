@@ -4,7 +4,7 @@ import { OperationResponseMessage } from "@urql/devtools";
 import {
   DevtoolsContext,
   ExplorerProvider,
-  DevtoolsContextType
+  DevtoolsContextType,
 } from "../../context";
 import { Explorer } from "./Explorer";
 
@@ -18,8 +18,8 @@ const defaultEvents: OperationResponseMessage[] = [
         variables: {
           name: "carl",
           address: {
-            postcode: "E1"
-          }
+            postcode: "E1",
+          },
         },
         query: gql`
           query getTodos($name: String!, $address: Address!) {
@@ -34,40 +34,40 @@ const defaultEvents: OperationResponseMessage[] = [
           url: "http://asdsad",
           requestPolicy: "cache-and-network",
           meta: {
-            source: "MyComponent"
-          }
-        }
+            source: "MyComponent",
+          },
+        },
       },
       data: {
         todos: [
           {
             id: 1234,
             content: "My todo",
-            __typename: "Todo"
+            __typename: "Todo",
           },
           {
             id: 5678,
             content: "My other todo",
-            __typename: "Todo"
-          }
-        ]
-      }
-    }
-  } as unknown) as OperationResponseMessage
+            __typename: "Todo",
+          },
+        ],
+      },
+    },
+  } as unknown) as OperationResponseMessage,
 ];
 
-const DevtoolsContextMock: FC<{ events?: typeof defaultEvents } & Partial<
-  DevtoolsContextType
->> = ({ children, events = defaultEvents, ...val }) => {
+const DevtoolsContextMock: FC<
+  { events?: typeof defaultEvents } & Partial<DevtoolsContextType>
+> = ({ children, events = defaultEvents, ...val }) => {
   const value = useMemo<DevtoolsContextType>(
     () => ({
-      addMessageHandler: h => {
+      addMessageHandler: (h) => {
         events.forEach(h);
         return () => false;
       },
       clientConnected: true,
       sendMessage: () => false,
-      ...val
+      ...val,
     }),
     []
   );
@@ -87,7 +87,7 @@ export default {
   ),
   updating: (
     <DevtoolsContextMock
-      addMessageHandler={h => {
+      addMessageHandler={(h) => {
         const event = defaultEvents[0];
         let content = 1;
         const update = () =>
@@ -100,11 +100,11 @@ export default {
                   {
                     id: 123,
                     content: content.toString(),
-                    __typename: "Todo"
-                  }
-                ]
-              }
-            }
+                    __typename: "Todo",
+                  },
+                ],
+              },
+            },
           });
         update();
         setInterval(() => {
@@ -117,5 +117,5 @@ export default {
     >
       <Explorer data-snapshot />
     </DevtoolsContextMock>
-  )
+  ),
 };

@@ -5,7 +5,7 @@ import React, {
   useContext,
   useEffect,
   useCallback,
-  useMemo
+  useMemo,
 } from "react";
 import { print } from "graphql";
 import { GraphQLSchema } from "graphql";
@@ -38,15 +38,15 @@ export const RequestProvider: FC = ({ children }) => {
     setState({
       fetching: true,
       response: undefined,
-      error: undefined
+      error: undefined,
     });
     sendMessage({ type: "request", query: query || "" });
   }, [query, sendMessage]);
 
   // Listen for response for devtools
   useEffect(() => {
-    return addMessageHandler(e => {
-      setState(s => {
+    return addMessageHandler((e) => {
+      setState((s) => {
         if (
           !s.fetching ||
           (e.type !== "response" && e.type !== "error") ||
@@ -58,7 +58,7 @@ export const RequestProvider: FC = ({ children }) => {
         return {
           fetching: false,
           error: e.data.error,
-          response: e.data.data
+          response: e.data.data,
         };
       });
     });
@@ -73,12 +73,12 @@ export const RequestProvider: FC = ({ children }) => {
           return fetch(endpoint, {
             method: "POST",
             headers: {
-              "content-type": "application/json"
+              "content-type": "application/json",
             },
-            body: JSON.stringify({ query: print(query), variables })
+            body: JSON.stringify({ query: print(query), variables }),
           })
-            .then(data => data.json())
-            .catch(error => ({ data: null, error }));
+            .then((data) => data.json())
+            .catch((error) => ({ data: null, error }));
         });
 
         setSchema(schema);
@@ -92,7 +92,7 @@ export const RequestProvider: FC = ({ children }) => {
       setQuery,
       ...state,
       execute,
-      schema
+      schema,
     }),
     [query, state, execute, schema]
   );
