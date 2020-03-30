@@ -2,14 +2,13 @@ import React, {
   createContext,
   useState,
   useEffect,
-  useContext,
   FC,
   useMemo,
   SetStateAction,
   Dispatch,
 } from "react";
 import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
-import { DevtoolsContext } from "../Devtools";
+import { useDevtoolsContext } from "../Devtools";
 import { handleResponse, ParsedNodeMap, ParsedFieldNode } from "./ast";
 
 export interface ExplorerContextValue {
@@ -21,7 +20,7 @@ export interface ExplorerContextValue {
 export const ExplorerContext = createContext<ExplorerContextValue>(null as any);
 
 export const ExplorerProvider: FC = ({ children }) => {
-  const { addMessageHandler } = useContext(DevtoolsContext);
+  const { addMessageHandler } = useDevtoolsContext();
   const [operations, setOperations] = useState<
     ExplorerContextValue["operations"]
   >({});
@@ -30,19 +29,19 @@ export const ExplorerProvider: FC = ({ children }) => {
   >(undefined);
 
   useEffect(() => {
-    return addMessageHandler((e: DevtoolsExchangeOutgoingMessage) => {
-      if (e.type === "disconnect") {
+    return addMessageHandler((message: DevtoolsExchangeOutgoingMessage) => {
+      if (message.type === "disconnect") {
         setOperations({});
         return;
       }
 
-      if (e.type !== "debug") {
+      if (message.type !== "debug" || message.data.type !== "update") {
         return;
       }
 
-      const debugEvent = e.data;
+      const debugEvent = message.data;
 
-      if (debugEvent.type === "update" && debugEvent.data) {
+      if (debugEvent.data) {
         setOperations((operations) =>
           handleResponse({
             operation: debugEvent.operation,
@@ -63,6 +62,7 @@ export const ExplorerProvider: FC = ({ children }) => {
     }),
     [operations, focusedNode, setFocusedNode]
   );
+
   return (
     <ExplorerContext.Provider value={value}>
       {children}
