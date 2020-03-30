@@ -1,12 +1,12 @@
 import React, { FC, ComponentProps } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import image from "../../../assets/icon.svg";
+import Icon from "../../../assets/icon.svg";
 
 export const Disconnected: FC<ComponentProps<typeof Container>> = (props) => (
   <>
     <GlobalStyle />
     <Container {...props}>
-      <Logo alt={"Urql Eagle"} src={image} />
+      <Logo />
       <Header>Waiting for exchange</Header>
       <Hint>Make sure {"you're"} using the Urql Devtools exchange!</Hint>
     </Container>
@@ -39,6 +39,6 @@ const Hint = styled.p`
   color: ${(p) => p.theme.grey["-1"]};
 `;
 
-const Logo = styled.img`
+const Logo = styled(Icon)`
   width: 150px;
 `;
