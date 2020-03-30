@@ -17,8 +17,28 @@ const defaultEvents: DebugEvent<string>[] = [
   {
     type: "debug",
     data: {
+      type: "fetchRequest",
+      message: "An update occured",
+      operation: {
+        key: 1,
+      },
+    },
+  },
+  {
+    type: "debug",
+    data: {
       type: "update",
       message: "This is an update to the operation response / data",
+      operation: {
+        key: 1,
+      },
+    },
+  },
+  {
+    type: "debug",
+    data: {
+      type: "fetchResponse",
+      message: "The fetch request succeeded",
       operation: {
         key: 1,
       },
@@ -59,6 +79,26 @@ const defaultEvents: DebugEvent<string>[] = [
     data: {
       type: "update",
       message: "A listener was added to the stream",
+      operation: {
+        key: 2,
+      },
+    },
+  },
+  {
+    type: "debug",
+    data: {
+      type: "fetchRequest",
+      message: "An request was triggered",
+      operation: {
+        key: 2,
+      },
+    },
+  },
+  {
+    type: "debug",
+    data: {
+      type: "fetchError",
+      message: "An request errored",
       operation: {
         key: 2,
       },
