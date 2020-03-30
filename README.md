@@ -7,6 +7,9 @@
   <a href="https://spectrum.chat/urql">
     <img alt="Spectrum badge" src="https://withspectrum.github.io/badge/badge.svg" />
   </a>
+  <a href="https://app.netlify.com/sites/urql-devtools/deploys">
+    <img alt="Netlify Status" src="https://api.netlify.com/api/v1/badges/f4ef8f19-899e-48eb-945c-7c7d351884e8/deploy-status" />
+  </a>
 </div>
 
 ### Features:
