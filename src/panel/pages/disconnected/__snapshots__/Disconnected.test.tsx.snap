@@ -4,10 +4,7 @@ exports[`on mount matches snapshot 1`] = `
 <Fragment>
   <Memo(GlobalStyleComponent) />
   <Container>
-    <Logo
-      alt="Urql Eagle"
-      src={null}
-    />
+    <Logo />
     <Header>
       Waiting for exchange
     </Header>
