@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, ComponentProps } from "react";
 import styled from "styled-components";
 import { DebugEvent } from "@urql/core";
 import ExecutionIcon from "../../../../assets/events/execution.svg";
@@ -7,6 +7,24 @@ import TeardownIcon from "../../../../assets/events/teardown.svg";
 import UpdateIcon from "../../../../assets/events/update.svg";
 import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
 
+const Svg = styled.svg`
+  cursor: pointer;
+  filter: brightness(1);
+  transition: filter 300ms ease;
+
+  & > * {
+    fill: ${(props) => props.theme.grey["-1"]};
+  }
+
+  &:hover {
+    filter: brightness(1.5);
+  }
+
+  &:active {
+    filter: brightness(1.25);
+  }
+`;
+
 const eventGroupIcon: Record<string, any> = {
   execution: ExecutionIcon,
   update: UpdateIcon,
@@ -14,16 +32,10 @@ const eventGroupIcon: Record<string, any> = {
   other: OtherIcon,
 };
 
-const Icon = styled.img<{ size: number }>`
-  cursor: "pointer";
-  width: ${(p) => p.size}px;
-  height: ${(p) => p.size}px;
-`;
-
 export const TimelineEvent: FC<
   {
     event: DebugEvent<string>;
-  } & Omit<JSX.IntrinsicElements["img"], "ref">
+  } & ComponentProps<typeof Svg>
 > = ({ event, ...svgProps }) => {
   const { ref, tooltipProps, isVisible } = useTooltip();
 
@@ -37,14 +49,20 @@ export const TimelineEvent: FC<
     [event.type]
   );
 
-  const svgIcon = useMemo(
+  const Icon = useMemo(
     () => eventGroupIcon[event.type] || eventGroupIcon.other,
     []
   );
 
   return (
     <>
-      <Icon {...svgProps} size={iconSize} src={svgIcon} ref={ref} />
+      <Svg
+        as={Icon}
+        {...svgProps}
+        width={iconSize}
+        height={iconSize}
+        ref={ref}
+      />
       {isVisible && (
         <TimelineTooltip {...tooltipProps}>{event.message}</TimelineTooltip>
       )}
