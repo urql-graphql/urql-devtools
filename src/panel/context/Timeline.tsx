@@ -135,8 +135,6 @@ const useTimelineDomain = () => {
 
     // dragstart -> mousemove -> mouseup
     const dragStartListener = (e: DragEvent) => {
-      console.log(e);
-
       e.preventDefault();
       ref.current.addEventListener("mousemove", mouseMoveListener);
       window.addEventListener("mouseup", mouseUpListener);

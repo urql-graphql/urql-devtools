@@ -19,25 +19,26 @@ export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
   children,
   ...props
 }) => (
-  <div {...props} style={{ paddingBottom: 8, ...props.style }}>
+  <div {...props} style={{ paddingBottom: 8, zIndex: 9, ...props.style }}>
     <TooltipElement>{children}</TooltipElement>
   </div>
 );
 
 const TooltipElement = styled.p<{ position?: TooltipPosition }>`
   position: relative;
-  background-color: ${(p) => p.theme.dark["+1"]};
+  background-color: ${(p) => p.theme.dark["-3"]};
   border-radius: 2px;
   color: #fff;
   font-size: 12px;
   margin: 0;
   padding: 10px 20px;
+  z-index: 9;
 
   &::after {
     content: "";
     display: block;
     position: absolute;
-    border-top: 9px solid ${(p) => p.theme.dark["+1"]};
+    border-top: 9px solid ${(p) => p.theme.dark["-3"]};
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     margin-top: -1px;
