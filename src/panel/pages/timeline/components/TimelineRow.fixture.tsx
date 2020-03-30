@@ -34,12 +34,13 @@ export default {
       <Viewport>
         <TimelineContext.Provider value={context}>
           <TimelineRow
+            data-snapshot
             events={
               [
                 {
                   type: "execution",
                   message: "A listener was added to the stream",
-                  timestamp: Date.now() + 10000,
+                  timestamp: Date.now(),
                 },
                 {
                   type: "update",
@@ -55,6 +56,100 @@ export default {
                   type: "teardown",
                   message: "The operation stream was torn down",
                   timestamp: Date.now() + 80000,
+                },
+              ] as any
+            }
+          />
+        </TimelineContext.Provider>
+      </Viewport>
+    </Wrapper>
+  ),
+  "network success": (
+    <Wrapper>
+      <Viewport>
+        <TimelineContext.Provider value={context}>
+          <TimelineRow
+            data-snapshot
+            events={
+              [
+                {
+                  type: "execution",
+                  message: "A listener was added to the stream",
+                  timestamp: Date.now(),
+                },
+                {
+                  type: "fetchRequest",
+                  message: "An update occured",
+                  timestamp: Date.now(),
+                },
+                {
+                  type: "fetchResponse",
+                  message: "A listener was added to the stream",
+                  timestamp: Date.now() + 65000,
+                },
+                {
+                  type: "teardown",
+                  message: "The operation stream was torn down",
+                  timestamp: Date.now() + 80000,
+                },
+              ] as any
+            }
+          />
+        </TimelineContext.Provider>
+      </Viewport>
+    </Wrapper>
+  ),
+  "network error": (
+    <Wrapper>
+      <Viewport>
+        <TimelineContext.Provider value={context}>
+          <TimelineRow
+            data-snapshot
+            events={
+              [
+                {
+                  type: "execution",
+                  message: "A listener was added to the stream",
+                  timestamp: Date.now(),
+                },
+                {
+                  type: "fetchRequest",
+                  message: "An update occured",
+                  timestamp: Date.now(),
+                },
+                {
+                  type: "fetchError",
+                  message: "A listener was added to the stream",
+                  timestamp: Date.now() + 65000,
+                },
+                {
+                  type: "teardown",
+                  message: "The operation stream was torn down",
+                  timestamp: Date.now() + 80000,
+                },
+              ] as any
+            }
+          />
+        </TimelineContext.Provider>
+      </Viewport>
+    </Wrapper>
+  ),
+  "network fetching": (
+    <Wrapper>
+      <Viewport>
+        <TimelineContext.Provider value={context}>
+          <TimelineRow
+            events={
+              [
+                {
+                  type: "execution",
+                  message: "A listener was added to the stream",
+                  timestamp: Date.now(),
+                },
+                {
+                  type: "fetchRequest",
+                  message: "An update occured",
+                  timestamp: Date.now(),
                 },
               ] as any
             }
