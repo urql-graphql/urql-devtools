@@ -1,11 +1,6 @@
-import styled from "styled-components";
 import React, { FC, ComponentProps } from "react";
+import styled from "styled-components";
 import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
-
-export const TimelineAliveDuration = styled.div`
-  height: 20px;
-  background: ${(props) => props.theme.dark["+1"]};
-`;
 
 type NetworkState = "fetching" | "success" | "error";
 

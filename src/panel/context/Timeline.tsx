@@ -24,7 +24,7 @@ interface TimelineContextValue {
   startTime: number;
 }
 
-const TimelineContext = createContext<TimelineContextValue>(null as any);
+export const TimelineContext = createContext<TimelineContextValue>(null as any);
 
 export const useTimelineContext = () => useContext(TimelineContext);
 

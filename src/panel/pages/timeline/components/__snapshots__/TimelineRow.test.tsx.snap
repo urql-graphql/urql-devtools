@@ -1,0 +1,225 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`on fetching matches snapshot 1`] = `
+.c4 {
+  height: 20px;
+  background: #2e3240;
+}
+
+.c5 {
+  height: 10px;
+}
+
+.c5[data-state="fetching"] {
+  background: #0084D1;
+}
+
+.c5[data-state="success"] {
+  background: #2DAF7E;
+}
+
+.c5[data-state="error"] {
+  background: #EE6352;
+}
+
+.c3 {
+  position: relative;
+  height: 20px;
+  padding-top: 8px;
+  margin-top: 30px;
+}
+
+.c3 + .c2 {
+  margin-top: 8px;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 20px;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background: #1C1E26;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  max-width: 300px;
+}
+
+<ThemeDecorator>
+  <ThemeProvider
+    theme={
+      Object {
+        "blue": Object {
+          "-1": "#0084D1",
+          "-2": "#0067A3",
+          "0": "#00A1FF",
+        },
+        "border": "#CAE3F212",
+        "dark": Object {
+          "+1": "#2e3240",
+          "+2": "#3e4270",
+          "-1": "#15161c",
+          "-2": "#12141a",
+          "-3": "#11151c",
+          "0": "#1C1E26",
+        },
+        "green": Object {
+          "0": "#2DAF7E",
+        },
+        "grey": Object {
+          "+1": "#A5B0B7",
+          "+2": "#b4bfd1",
+          "+3": "#CECECE",
+          "-1": "#607E90",
+          "0": "#AAADB1",
+        },
+        "orange": Object {
+          "0": "#EB9028",
+        },
+        "pink": Object {
+          "+2": "#EC3E66",
+          "0": "#B877DB",
+        },
+        "purple": Object {
+          "+1": "#8899E3",
+          "0": "#7776d2",
+        },
+        "red": Object {
+          "+1": "#EC8275",
+          "0": "#EE6352",
+        },
+      }
+    }
+  >
+    <Wrapper>
+      <div
+        className="c0"
+      >
+        <Viewport>
+          <div
+            className="c1"
+          >
+            <TimelineRow
+              events={
+                Array [
+                  Object {
+                    "message": "A listener was added to the stream",
+                    "timestamp": 3000,
+                    "type": "execution",
+                  },
+                  Object {
+                    "message": "An update occured",
+                    "timestamp": 3000,
+                    "type": "fetchRequest",
+                  },
+                ]
+              }
+            >
+              <Container>
+                <div
+                  className="c2 c3"
+                >
+                  <TimelineAliveDuration
+                    key="ad-0"
+                    style={
+                      Object {
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 300,
+                      }
+                    }
+                  >
+                    <div
+                      className="c4"
+                      style={
+                        Object {
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 300,
+                        }
+                      }
+                    />
+                  </TimelineAliveDuration>
+                  <TimelineNetworkDuration
+                    key="nd-0"
+                    state="fetching"
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 300,
+                      }
+                    }
+                  >
+                    <NetworkDuration
+                      data-state="fetching"
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 300,
+                        }
+                      }
+                    >
+                      <div
+                        className="c5"
+                        data-state="fetching"
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 300,
+                          }
+                        }
+                      />
+                    </NetworkDuration>
+                  </TimelineNetworkDuration>
+                  <TimelineEvent
+                    event={
+                      Object {
+                        "message": "A listener was added to the stream",
+                        "timestamp": 3000,
+                        "type": "execution",
+                      }
+                    }
+                    key="e-0"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "left": 0,
+                        "position": "absolute",
+                        "transform": "translateX(-50%) translateY(-50%)",
+                      }
+                    }
+                  >
+                    TimelineEvent
+                  </TimelineEvent>
+                </div>
+              </Container>
+            </TimelineRow>
+          </div>
+        </Viewport>
+      </div>
+    </Wrapper>
+  </ThemeProvider>
+</ThemeDecorator>
+`;
