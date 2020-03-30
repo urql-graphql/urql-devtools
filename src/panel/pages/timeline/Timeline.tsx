@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useTimelineContext } from "../../context";
 import { Background } from "../../components/Background";
 import { TimelineRow, TimelinePane, Tick } from "./components";
+import { TimelineIcon } from "./components/TimelineIcon";
 
 export const Timeline: FC = () => {
   const {
@@ -25,18 +26,33 @@ export const Timeline: FC = () => {
     [scale]
   );
 
+  const operations = useMemo(
+    () =>
+      Object.entries(events).map(([key, eventList]) => ({
+        key,
+        operationName: eventList[0].operation.operationName,
+      })),
+    [events]
+  );
+
   // We lie about the types to save having to do this check
   // in every component. This guard is needed.
   if (!container)
     return (
       <Page>
-        <TimelineList ref={setContainer} />
+        {/* Key is needed to retain the order for the ref */}
+        <TimelineList ref={setContainer} key="TimelineList" />
       </Page>
     );
 
   return (
     <Page>
-      <TimelineList ref={setContainer} draggable="true">
+      <TimelineIcons>
+        {operations.map((op) => (
+          <TimelineIcon key={op.key} operation={op.operationName} />
+        ))}
+      </TimelineIcons>
+      <TimelineList ref={setContainer} draggable="true" key="TimelineList">
         {ticks.map((t) => (
           <Tick
             key={`p-${t.position}`}
@@ -53,8 +69,23 @@ export const Timeline: FC = () => {
   );
 };
 
+const SPACING = 40;
+const ROW_PADDING = 8;
+
 const Page = styled(Background)`
   background-color: ${(p) => p.theme.dark["0"]};
+`;
+
+const TimelineIcons = styled.div`
+  background-color: ${(p) => p.theme.dark["-3"]};
+  display: grid;
+  justify-content: center;
+  grid-template-rows: 20px;
+  grid-row-gap: ${ROW_PADDING * 2}px;
+  width: ${SPACING}px;
+  /* TimelineList outer margin + inner margin + padding */
+  padding: ${SPACING + ROW_PADDING + 30}px 0;
+  z-index: 1;
 `;
 
 const TimelineList = styled.div`
@@ -63,7 +94,7 @@ const TimelineList = styled.div`
   flex-grow: 1;
   flex-direction: column;
   position: relative;
-  margin: 40px 0;
+  margin: ${SPACING}px 0;
   &:active {
     cursor: grabbing;
   }

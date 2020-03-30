@@ -11,6 +11,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "A listener was added to the stream",
       operation: {
         key: 1,
+        operationName: "query",
       },
     },
   },
@@ -21,6 +22,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "An update occured",
       operation: {
         key: 1,
+        operationName: "query",
       },
     },
   },
@@ -31,6 +33,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "This is an update to the operation response / data",
       operation: {
         key: 1,
+        operationName: "query",
       },
     },
   },
@@ -41,6 +44,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "The fetch request succeeded",
       operation: {
         key: 1,
+        operationName: "query",
       },
     },
   },
@@ -51,6 +55,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "This is an update to the operation response / data",
       operation: {
         key: 1,
+        operationName: "query",
       },
     },
   },
@@ -61,6 +66,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "This is an update to the operation response / data",
       operation: {
         key: 1,
+        operationName: "query",
       },
     },
   },
@@ -71,6 +77,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "This is an update to the operation response / data",
       operation: {
         key: 1,
+        operationName: "query",
       },
     },
   },
@@ -81,6 +88,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "A listener was added to the stream",
       operation: {
         key: 2,
+        operationName: "mutation",
       },
     },
   },
@@ -91,6 +99,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "An request was triggered",
       operation: {
         key: 2,
+        operationName: "mutation",
       },
     },
   },
@@ -101,6 +110,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "An request errored",
       operation: {
         key: 2,
+        operationName: "mutation",
       },
     },
   },
@@ -111,6 +121,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "A teardown was triggered on the stream",
       operation: {
         key: 1,
+        operationName: "query",
       },
     },
   },
@@ -121,6 +132,7 @@ const defaultEvents: DebugEvent<string>[] = [
       message: "A teardown was triggered on the stream",
       operation: {
         key: 2,
+        operationName: "mutation",
       },
     },
   },
