@@ -135,7 +135,7 @@ exports[`on fetching matches snapshot 1`] = `
                 <div
                   className="c2 c3"
                 >
-                  <TimelineDuration
+                  <TimelineAliveDuration
                     key="ad-0"
                     style={
                       Object {
@@ -155,7 +155,7 @@ exports[`on fetching matches snapshot 1`] = `
                         }
                       }
                     />
-                  </TimelineDuration>
+                  </TimelineAliveDuration>
                   <TimelineNetworkDuration
                     key="nd-0"
                     state="fetching"
@@ -168,8 +168,7 @@ exports[`on fetching matches snapshot 1`] = `
                       }
                     }
                   >
-                    <div
-                      className="c5"
+                    <NetworkDuration
                       data-state="fetching"
                       style={
                         Object {
@@ -179,7 +178,20 @@ exports[`on fetching matches snapshot 1`] = `
                           "right": 300,
                         }
                       }
-                    />
+                    >
+                      <div
+                        className="c5"
+                        data-state="fetching"
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 300,
+                          }
+                        }
+                      />
+                    </NetworkDuration>
                   </TimelineNetworkDuration>
                   <TimelineEvent
                     event={

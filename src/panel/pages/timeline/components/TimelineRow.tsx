@@ -1,14 +1,16 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, ComponentProps } from "react";
 import styled from "styled-components";
 import { DebugEvent } from "@urql/core";
 import { useTimelineContext } from "../../../context";
 import { TimelineEvent } from "./TimelineEvent";
-import { TimelineDuration } from "./TimelineDuration";
-import { TimelineNetworkDuration } from "./TimelineNetworkDuration";
+import {
+  TimelineAliveDuration,
+  TimelineNetworkDuration,
+} from "./TimelineDuration";
 
-export const TimelineRow: FC<{ events: DebugEvent<string>[] }> = ({
-  events,
-}) => {
+export const TimelineRow: FC<
+  { events: DebugEvent<string>[] } & ComponentProps<typeof Container>
+> = ({ events, ...props }) => {
   const { container, scale, setSelectedEvent } = useTimelineContext();
 
   const eventElements = useMemo(
@@ -118,7 +120,7 @@ export const TimelineRow: FC<{ events: DebugEvent<string>[] }> = ({
           start: undefined,
           elements: [
             ...p.elements,
-            <TimelineDuration
+            <TimelineAliveDuration
               key={`d-${p.elements.length}`}
               style={{
                 position: "absolute",
@@ -149,7 +151,7 @@ export const TimelineRow: FC<{ events: DebugEvent<string>[] }> = ({
 
     const finalAliveDuration = reducedDurations.alive.start
       ? [
-          <TimelineDuration
+          <TimelineAliveDuration
             key={`ad-${reducedDurations.alive.elements.length}`}
             style={{
               position: "absolute",
@@ -184,7 +186,7 @@ export const TimelineRow: FC<{ events: DebugEvent<string>[] }> = ({
   }, [events, scale, container.clientWidth]);
 
   return (
-    <Container>
+    <Container {...props}>
       <>{durationElements}</>
       <>{eventElements}</>
     </Container>

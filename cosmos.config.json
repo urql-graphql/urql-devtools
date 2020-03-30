@@ -1,5 +1,5 @@
 {
-  "watchDirs": ["src/panel"],
+  "watchDirs": ["src/panel/!__image_snapshots__"],
   "webpack": {
     "configPath": "",
     "overridePath": "cosmos.override.js"

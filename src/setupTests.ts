@@ -14,6 +14,7 @@ declare const global: {
   browser: puppeteer.Browser;
   page: puppeteer.Page;
   matchMedia: any;
+  ResizeObserver: ResizeObserver;
 };
 
 declare const jasmine: jest.MatcherContext;
@@ -22,9 +23,14 @@ declare const jasmine: jest.MatcherContext;
   // Setup enzyme
   configure({ adapter: new Adapter() });
 
-  // Setup matchMedia mock
+  global.ResizeObserver = function ResizeObserver() {
+    return {
+      observe: jest.fn(),
+      disconnect: jest.fn(),
+      unobserve: jest.fn(),
+    };
+  } as any;
   global.matchMedia = jest.fn();
-
   global.chrome = {
     devtools: {
       inspectedWindow: {

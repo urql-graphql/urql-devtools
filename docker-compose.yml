@@ -6,7 +6,7 @@ services:
     working_dir: /app
     volumes:
       - .:/app
-      - node_modules:/app/node_modules
+      - node_modules:/app/node_modules/
     entrypoint: /bin/sh -c
     command:
       - yarn --frozen-lockfile && yarn cosmos
@@ -22,7 +22,7 @@ services:
       - USER=root
     entrypoint: ["/bin/bash", "-c"]
     command:
-      - npx wait-on http://cosmos:5000 && yarn run visual-regression-exec
+      - npx wait-on http://cosmos:5000 && yarn jest --clearCache && yarn run visual-regression-exec
     depends_on:
       - cosmos
 

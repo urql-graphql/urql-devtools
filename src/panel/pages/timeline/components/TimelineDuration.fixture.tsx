@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { TimelineNetworkDuration } from "./TimelineNetworkDuration";
+import {
+  TimelineAliveDuration,
+  TimelineNetworkDuration,
+} from "./TimelineDuration";
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,17 +17,22 @@ const Wrapper = styled.div`
 `;
 
 export default {
-  fetching: (
+  "Alive: basic": (
+    <Wrapper>
+      <TimelineAliveDuration data-snapshot />
+    </Wrapper>
+  ),
+  "Network: fetching": (
     <Wrapper>
       <TimelineNetworkDuration data-snapshot state="fetching" />
     </Wrapper>
   ),
-  success: (
+  "Network: success": (
     <Wrapper>
       <TimelineNetworkDuration data-snapshot state="success" />
     </Wrapper>
   ),
-  error: (
+  "Network: error": (
     <Wrapper>
       <TimelineNetworkDuration data-snapshot state="error" />
     </Wrapper>
