@@ -76,11 +76,12 @@ describe("DebugMessage", () => {
     );
   });
 });
+
 describe("unknown message", () => {
   beforeEach(() => {
     addMessageHandler.mockImplementationOnce((cb) => cb({ type: "unknown" }));
   });
-  it.skip("doesn't call handleResponse", async (done) => {
+  it("doesn't call handleResponse", async (done) => {
     await act(async () => {
       mount(
         <ExplorerProvider>
@@ -94,7 +95,7 @@ describe("unknown message", () => {
   });
 });
 
-describe.only("disconnect message", () => {
+describe("disconnect message", () => {
   beforeEach(async () => {
     addMessageHandler.mockImplementationOnce((cb) => cb(defaultEvents[0]));
     await act(async () => {
