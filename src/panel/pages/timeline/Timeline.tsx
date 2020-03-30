@@ -18,10 +18,17 @@ export const Timeline: FC = () => {
   const ticks = useMemo(
     () =>
       scale
-        ? scale.ticks(getTickCount(container.clientWidth)).map((t) => ({
-            label: `${t - startTime}ms`,
-            position: scale(t),
-          }))
+        ? scale.ticks(getTickCount(container.clientWidth)).map((t) => {
+            const delta = t - startTime;
+
+            // Round up numbers (200ms, 300ms, etc)
+            const time = Math.round(delta / 1000) * 1000;
+
+            return {
+              label: `${time}ms`,
+              position: scale(time + startTime),
+            };
+          })
         : [],
     [scale]
   );
@@ -52,13 +59,9 @@ export const Timeline: FC = () => {
           <TimelineIcon key={op.key} operation={op.operationName} />
         ))}
       </TimelineIcons>
-      <TimelineList ref={setContainer} draggable="true" key="TimelineList">
-        {ticks.map((t) => (
-          <Tick
-            key={`p-${t.position}`}
-            label={t.label}
-            style={{ left: t.position }}
-          />
+      <TimelineList ref={setContainer} draggable="true">
+        {ticks.map((t, i) => (
+          <Tick key={`p-${i}`} label={t.label} style={{ left: t.position }} />
         ))}
         {Object.entries(events).map(([key, eventList]) => (
           <TimelineRow key={key} events={eventList} />
