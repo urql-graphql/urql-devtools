@@ -1,8 +1,21 @@
 import React, { FC, useMemo } from "react";
 import { DebugEvent } from "@urql/core";
+import gql from "graphql-tag";
 import { TimelineProvider, DevtoolsContext } from "../../context";
 import { Timeline } from "./Timeline";
 
+const query = gql`
+  query Users {
+    users {
+      id
+      name
+      posts {
+        id
+        title
+      }
+    }
+  }
+`;
 const defaultEvents: DebugEvent[] = [
   {
     type: "debug",
@@ -11,7 +24,9 @@ const defaultEvents: DebugEvent[] = [
       message: "A listener was added to the stream",
       operation: {
         key: 1,
+        query,
       },
+      query,
     },
   },
   {
@@ -21,6 +36,7 @@ const defaultEvents: DebugEvent[] = [
       message: "An update occured",
       operation: {
         key: 1,
+        query,
       },
     },
   },
@@ -31,6 +47,7 @@ const defaultEvents: DebugEvent[] = [
       message: "This is an update to the operation response / data",
       operation: {
         key: 1,
+        query,
       },
     },
   },
@@ -41,6 +58,7 @@ const defaultEvents: DebugEvent[] = [
       message: "The fetch request succeeded",
       operation: {
         key: 1,
+        query,
       },
     },
   },
@@ -51,6 +69,7 @@ const defaultEvents: DebugEvent[] = [
       message: "This is an update to the operation response / data",
       operation: {
         key: 1,
+        query,
       },
     },
   },
@@ -61,6 +80,7 @@ const defaultEvents: DebugEvent[] = [
       message: "This is an update to the operation response / data",
       operation: {
         key: 1,
+        query,
       },
     },
   },
@@ -71,6 +91,7 @@ const defaultEvents: DebugEvent[] = [
       message: "This is an update to the operation response / data",
       operation: {
         key: 1,
+        query,
       },
     },
   },
@@ -81,6 +102,7 @@ const defaultEvents: DebugEvent[] = [
       message: "A listener was added to the stream",
       operation: {
         key: 2,
+        query,
       },
     },
   },
@@ -91,6 +113,7 @@ const defaultEvents: DebugEvent[] = [
       message: "An request was triggered",
       operation: {
         key: 2,
+        query,
       },
     },
   },
@@ -101,6 +124,7 @@ const defaultEvents: DebugEvent[] = [
       message: "An request errored",
       operation: {
         key: 2,
+        query,
       },
     },
   },
@@ -111,6 +135,7 @@ const defaultEvents: DebugEvent[] = [
       message: "A teardown was triggered on the stream",
       operation: {
         key: 1,
+        query,
       },
     },
   },
@@ -121,6 +146,7 @@ const defaultEvents: DebugEvent[] = [
       message: "A teardown was triggered on the stream",
       operation: {
         key: 2,
+        query,
       },
     },
   },
