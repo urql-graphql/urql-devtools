@@ -32,7 +32,6 @@ const TooltipElement = styled.p<{ position?: TooltipPosition }>`
   font-size: 12px;
   margin: 0;
   padding: 10px 20px;
-  z-index: 9;
 
   &::after {
     content: "";
@@ -50,6 +49,7 @@ const TooltipElement = styled.p<{ position?: TooltipPosition }>`
 
 export const useTooltip = () => {
   const ref: MutableRefObject<HTMLElement | null> = useRef<HTMLElement>(null);
+  const mouseX = useRef<number | undefined>(undefined);
   const [hasRef, setHasRef] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [tooltipProps, setTooltipProps] = useState<
@@ -65,7 +65,8 @@ export const useTooltip = () => {
     setTooltipProps({
       style: {
         position: "fixed",
-        left: x + width / 2,
+        // * 12px for event size
+        left: width > 12 ? mouseX.current : x + width / 2,
         top: y,
         transform: `translateX(-50%) translateY(-100%)`,
       },
@@ -107,17 +108,26 @@ export const useTooltip = () => {
       return;
     }
 
-    const setVisible = () => setIsVisible(true);
+    const handleMouseEnter = (e: MouseEvent) => {
+      handleMouseMove(e);
+      setIsVisible(true);
+    };
     const setInvisible = () => setIsVisible(false);
-    ref.current.addEventListener("mouseenter", setVisible);
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.current = e.clientX;
+      calculateTooltipPosition();
+    };
+    ref.current.addEventListener("mouseenter", handleMouseEnter);
     ref.current.addEventListener("mouseleave", setInvisible);
+    ref.current.addEventListener("mousemove", handleMouseMove);
     return () => {
       if (!ref.current) {
         return;
       }
 
-      ref.current.removeEventListener("mouseenter", setVisible);
+      ref.current.removeEventListener("mouseenter", handleMouseEnter);
       ref.current.removeEventListener("mouseleave", setInvisible);
+      ref.current.removeEventListener("mousemove", handleMouseMove);
     };
   }, [hasRef]);
 
