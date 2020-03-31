@@ -15,16 +15,29 @@ export interface TooltipPosition {
   y: number;
 }
 
-export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
-  children,
-  ...props
-}) => (
-  <div {...props} style={{ paddingBottom: 8, zIndex: 9, ...props.style }}>
-    <TooltipElement>{children}</TooltipElement>
-  </div>
-);
+type TimelineTooltipProps = {
+  handleTooltipRef?: (passedRef: any) => void;
+  tooltipOffset?: number;
+};
 
-const TooltipElement = styled.p<{ position?: TooltipPosition }>`
+export const TimelineTooltip: FC<
+  JSX.IntrinsicElements["div"] & TimelineTooltipProps
+> = ({ children, handleTooltipRef, tooltipOffset, ...props }) => {
+  const offset = useMemo(() => (tooltipOffset ? tooltipOffset : 0), [
+    tooltipOffset,
+  ]);
+  return (
+    <div
+      {...props}
+      style={{ marginLeft: tooltipOffset, ...props.style }}
+      ref={handleTooltipRef}
+    >
+      <TooltipElement offset={offset}>{children}</TooltipElement>
+    </div>
+  );
+};
+
+const TooltipElement = styled.p<{ position?: TooltipPosition; offset: number }>`
   position: relative;
   background-color: ${(p) => p.theme.dark["-3"]};
   border-radius: 2px;
@@ -32,7 +45,7 @@ const TooltipElement = styled.p<{ position?: TooltipPosition }>`
   font-size: 12px;
   margin: 0;
   padding: 10px 20px;
-  z-index: 9;
+  white-space: nowrap;
 
   &::after {
     content: "";
@@ -42,59 +55,103 @@ const TooltipElement = styled.p<{ position?: TooltipPosition }>`
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     margin-top: -1px;
-    left: 50%;
+    left: calc(50% - ${(p) => p.offset}px);
     top: 100%;
     transform: translate(-50%, 0);
   }
 `;
 
 export const useTooltip = () => {
-  const ref: MutableRefObject<HTMLElement | null> = useRef<HTMLElement>(null);
+  const containerRef: MutableRefObject<HTMLElement | null> = useRef<
+    HTMLElement
+  >(null);
+  const tooltipRef: MutableRefObject<HTMLElement | null> = useRef<HTMLElement>(
+    null
+  );
+  const tooltipOffset: MutableRefObject<number> = useRef(0);
+  const mouseX = useRef<number | undefined>(undefined);
   const [hasRef, setHasRef] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [tooltipProps, setTooltipProps] = useState<
-    ComponentProps<typeof TimelineTooltip>
+    ComponentProps<typeof TimelineTooltip> & TimelineTooltipProps
   >({});
 
   const calculateTooltipPosition = useCallback(() => {
-    if (!ref.current) {
+    if (!containerRef.current) {
       return;
     }
 
-    const { x, y, width } = ref.current.getBoundingClientRect(); //eslint-disable-line @typescript-eslint/no-non-null-assertion
-    setTooltipProps({
+    const { x, y, width } = containerRef.current.getBoundingClientRect(); //eslint-disable-line @typescript-eslint/no-non-null-assertion
+
+    const newTooltipProps: ComponentProps<typeof TimelineTooltip> &
+      TimelineTooltipProps = {
       style: {
         position: "fixed",
         left: x + width / 2,
         top: y,
         transform: `translateX(-50%) translateY(-100%)`,
+        paddingBottom: 8,
+        zIndex: 9,
       },
+      handleTooltipRef,
+      tooltipOffset: tooltipOffset.current,
+    };
+
+    if (!tooltipRef.current || !!tooltipOffset.current) {
+      setTooltipProps(newTooltipProps);
+      return;
+    }
+
+    const offsetRight =
+      window.innerWidth - tooltipRef.current.getBoundingClientRect().right;
+    const offsetLeft = tooltipRef.current.getBoundingClientRect().left;
+
+    // * add an offset to the tooltip if it would be rendered out of bounds
+    if (offsetLeft < 0) {
+      tooltipOffset.current = Math.abs(offsetLeft) + 8;
+    }
+
+    if (offsetRight < 0) {
+      tooltipOffset.current = offsetRight - 8;
+    }
+
+    setTooltipProps({
+      ...newTooltipProps,
+      tooltipOffset: tooltipOffset.current,
     });
   }, []);
 
-  const handleRef = useCallback((passedRef) => {
+  const handleContainerRef = useCallback((passedRef) => {
     if (passedRef === null) {
       return;
     }
 
-    ref.current = passedRef;
+    containerRef.current = passedRef;
     calculateTooltipPosition();
     setHasRef(true);
   }, []);
 
+  const handleTooltipRef = useCallback((passedRef) => {
+    if (passedRef === null) {
+      return;
+    }
+
+    tooltipRef.current = passedRef;
+  }, []);
+
   // Update position on resize
   useEffect(() => {
-    if (!ref.current) {
+    if (!containerRef.current) {
       return;
     }
 
     const mObserver = new MutationObserver(calculateTooltipPosition);
     const rObserver = new ResizeObserver(calculateTooltipPosition);
-    mObserver.observe(ref.current, {
+    mObserver.observe(containerRef.current, {
       attributes: true,
       childList: true,
     });
-    rObserver.observe(ref.current);
+    rObserver.observe(containerRef.current);
     return () => {
       mObserver.disconnect();
       rObserver.disconnect();
@@ -103,27 +160,40 @@ export const useTooltip = () => {
 
   // Set visible on mouse enter
   useEffect(() => {
-    if (!ref.current) {
+    if (!containerRef.current) {
       return;
     }
 
-    const setVisible = () => setIsVisible(true);
+    const handleMouseEnter = (e: MouseEvent) => {
+      handleMouseMove(e);
+      setIsVisible(true);
+    };
     const setInvisible = () => setIsVisible(false);
-    ref.current.addEventListener("mouseenter", setVisible);
-    ref.current.addEventListener("mouseleave", setInvisible);
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.current = e.clientX;
+      calculateTooltipPosition();
+    };
+    containerRef.current.addEventListener("mouseenter", handleMouseEnter);
+    containerRef.current.addEventListener("mouseleave", setInvisible);
+    containerRef.current.addEventListener("mousemove", handleMouseMove);
     return () => {
-      if (!ref.current) {
+      if (!containerRef.current) {
         return;
       }
 
-      ref.current.removeEventListener("mouseenter", setVisible);
-      ref.current.removeEventListener("mouseleave", setInvisible);
+      containerRef.current.removeEventListener("mouseenter", handleMouseEnter);
+      containerRef.current.removeEventListener("mouseleave", setInvisible);
+      containerRef.current.removeEventListener("mousemove", handleMouseMove);
     };
   }, [hasRef]);
 
-  return useMemo(() => ({ ref: handleRef, tooltipProps, isVisible }), [
-    handleRef,
-    tooltipProps,
-    isVisible,
-  ]);
+  return useMemo(
+    () => ({
+      containerRef: handleContainerRef,
+      tooltipRef: handleTooltipRef,
+      tooltipProps,
+      isVisible,
+    }),
+    [handleContainerRef, handleTooltipRef, tooltipProps, isVisible]
+  );
 };

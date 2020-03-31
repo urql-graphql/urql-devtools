@@ -37,7 +37,7 @@ export const TimelineEvent: FC<
     event: DebugEvent<string>;
   } & ComponentProps<typeof Svg>
 > = ({ event, ...svgProps }) => {
-  const { ref, tooltipProps, isVisible } = useTooltip();
+  const { containerRef, tooltipProps, isVisible } = useTooltip();
 
   const iconSize = useMemo(
     () =>
@@ -61,7 +61,7 @@ export const TimelineEvent: FC<
         {...svgProps}
         width={iconSize}
         height={iconSize}
-        ref={ref}
+        ref={containerRef}
       />
       {isVisible && (
         <TimelineTooltip {...tooltipProps}>{event.message}</TimelineTooltip>

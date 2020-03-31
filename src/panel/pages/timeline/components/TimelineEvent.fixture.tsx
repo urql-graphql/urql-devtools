@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   padding: 10px;
   background: ${(props) => props.theme.dark["0"]};
   flex-grow: 1;
-  padding: 100px;
+  padding: 100px 30px;
 `;
 
 const props = {
@@ -17,6 +17,11 @@ const props = {
 
 const executionEvent: DebugEvent<string> = {
   type: "execution",
+} as any;
+
+const executionEventWithMessage: DebugEvent<string> = {
+  ...executionEvent,
+  message: "currently executing",
 } as any;
 
 const updateEvent: DebugEvent<string> = {
@@ -35,6 +40,15 @@ export default {
   execution: (
     <Wrapper>
       <TimelineEvent data-snapshot {...props} event={executionEvent} />
+    </Wrapper>
+  ),
+  "execution (with tooltip)": (
+    <Wrapper>
+      <TimelineEvent
+        data-snapshot
+        {...props}
+        event={executionEventWithMessage}
+      />
     </Wrapper>
   ),
   update: (
