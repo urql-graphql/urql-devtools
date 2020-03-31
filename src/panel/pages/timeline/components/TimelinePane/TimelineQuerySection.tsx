@@ -31,11 +31,15 @@ export const TimelineQuerySection: FC<
       <PaneSection.Heading>Query</PaneSection.Heading>
       <PaneSection.Body>
         <CodeHighlight language={"graphql"} code={queryCode} />
-        <h3>Variables</h3>
-        <CodeHighlight
-          language={"javascript"}
-          code={JSON.stringify(variables, null, 2)}
-        />
+        {variables && (
+          <>
+            <h3>Variables</h3>
+            <CodeHighlight
+              language={"javascript"}
+              code={JSON.stringify(variables, null, 2)}
+            />
+          </>
+        )}
       </PaneSection.Body>
     </PaneSection>
   );

@@ -21,9 +21,14 @@ const query = gql`
 `;
 
 export default {
-  "query section": (
+  basic: (
     <Wrapper data-snapshot>
       <TimelineQuerySection query={query} variables={{ filter: "Will" }} />
+    </Wrapper>
+  ),
+  "basic (without variables)": (
+    <Wrapper data-snapshot>
+      <TimelineQuerySection query={query} />
     </Wrapper>
   ),
 };
