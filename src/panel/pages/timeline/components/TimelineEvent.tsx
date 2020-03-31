@@ -34,7 +34,7 @@ const eventGroupIcon: Record<string, any> = {
 
 export const TimelineEvent: FC<
   {
-    event: DebugEvent<string>;
+    event: DebugEvent;
   } & ComponentProps<typeof Svg>
 > = ({ event, ...svgProps }) => {
   const { ref, tooltipProps, isVisible } = useTooltip();

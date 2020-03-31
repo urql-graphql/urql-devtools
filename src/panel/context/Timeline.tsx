@@ -15,11 +15,11 @@ import { DebugEvent } from "@urql/core";
 import { DevtoolsContext } from "./Devtools";
 
 interface TimelineContextValue {
-  selectedEvent?: DebugEvent<string>;
-  setSelectedEvent: Dispatch<SetStateAction<DebugEvent<string> | undefined>>;
+  selectedEvent?: DebugEvent;
+  setSelectedEvent: Dispatch<SetStateAction<DebugEvent | undefined>>;
   container: HTMLDivElement;
   setContainer: (e: HTMLDivElement) => void;
-  events: Record<string, DebugEvent<string>[]>;
+  events: Record<string, DebugEvent[]>;
   scale: ScaleLinear<number, number>;
   startTime: number;
 }
@@ -207,12 +207,10 @@ const useTimelineDomain = () => {
 export const TimelineProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const domain = useTimelineDomain();
-  const [events, setEvents] = useState<Record<string, DebugEvent<string>[]>>(
-    {}
+  const [events, setEvents] = useState<Record<string, DebugEvent[]>>({});
+  const [selectedEvent, setSelectedEvent] = useState<DebugEvent | undefined>(
+    undefined
   );
-  const [selectedEvent, setSelectedEvent] = useState<
-    DebugEvent<string> | undefined
-  >(undefined);
 
   useEffect(() => {
     return addMessageHandler((message) => {

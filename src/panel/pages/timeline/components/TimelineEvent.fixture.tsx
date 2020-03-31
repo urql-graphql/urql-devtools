@@ -15,19 +15,19 @@ const props = {
   selectEvent: () => false,
 };
 
-const executionEvent: DebugEvent<string> = {
+const executionEvent: DebugEvent = {
   type: "execution",
 } as any;
 
-const updateEvent: DebugEvent<string> = {
+const updateEvent: DebugEvent = {
   type: "update",
 } as any;
 
-const teardownEvent: DebugEvent<string> = {
+const teardownEvent: DebugEvent = {
   type: "teardown",
 } as any;
 
-const otherEvent: DebugEvent<string> = {
+const otherEvent: DebugEvent = {
   type: "abcdefg",
 } as any;
 
