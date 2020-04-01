@@ -7,6 +7,7 @@ export const TimelineSourceIcon = styled.div<{
     const [color, index] = colors[kind];
     return (theme as any)[color][index];
   }};
+  cursor: pointer;
   color: #fff;
   height: 20px;
   line-height: 20px;

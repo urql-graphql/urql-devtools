@@ -18,12 +18,12 @@ import { useTimelineContext } from "../../../../context";
 export const TimelinePane: FC<
   ({ event: DebugEvent } | { source: Operation }) &
     ComponentProps<typeof Container>
-> = ({ event, operation, ...props }) => {
+> = ({ event, source, ...props }) => {
   const content = useMemo(() => {
-    if (operation) {
+    if (source) {
       return (
         <>
-          <SourceSection operation={operation} />
+          <SourceSection operation={source} />
         </>
       );
     }

@@ -1,7 +1,12 @@
 import React from "react";
 import gql from "graphql-tag";
 import { DebugEvent } from "@urql/core";
+import { TimelineContext } from "../../../../context";
 import { TimelinePane } from "./TimelinePane";
+
+const state = {
+  startTime: 1000,
+} as any;
 
 const mockDebugEvent: DebugEvent = {
   timestamp: 1234,
@@ -33,24 +38,34 @@ const mockDebugEvent: DebugEvent = {
 };
 
 export default {
-  basic: <TimelinePane data-snapshot event={mockDebugEvent} />,
-  "without variables": (
-    <TimelinePane
-      data-snapshot
-      event={{
-        ...mockDebugEvent,
-        operation: { ...mockDebugEvent.operation, variables: undefined },
-      }}
-    />
+  event: (
+    <TimelineContext.Provider value={state}>
+      <TimelinePane data-snapshot event={mockDebugEvent} />
+    </TimelineContext.Provider>
   ),
-  "without metadata": (
-    <TimelinePane
-      data-snapshot
-      event={{
-        ...mockDebugEvent,
-        data: undefined,
-        operation: { ...mockDebugEvent.operation, variables: undefined },
-      }}
-    />
+  "event (without metadata)": (
+    <TimelineContext.Provider value={state}>
+      <TimelinePane
+        data-snapshot
+        event={{
+          ...mockDebugEvent,
+          data: undefined,
+          operation: { ...mockDebugEvent.operation, variables: undefined },
+        }}
+      />
+    </TimelineContext.Provider>
+  ),
+  source: (
+    <TimelineContext.Provider value={state}>
+      <TimelinePane data-snapshot source={mockDebugEvent.operation} />
+    </TimelineContext.Provider>
+  ),
+  "source (without variables)": (
+    <TimelineContext.Provider value={state}>
+      <TimelinePane
+        data-snapshot
+        source={{ ...mockDebugEvent.operation, variables: undefined }}
+      />
+    </TimelineContext.Provider>
   ),
 };

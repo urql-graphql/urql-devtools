@@ -53,9 +53,7 @@ export const Timeline: FC = () => {
   const handleSourceClick = useCallback(
     (o: Operation) => () =>
       setSelectedSource((current) =>
-        console.log({ current, o }) || (current && current.key === o.key)
-          ? undefined
-          : o
+        current && current.key === o.key ? undefined : o
       ),
     []
   );
