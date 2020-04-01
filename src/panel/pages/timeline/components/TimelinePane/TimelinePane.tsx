@@ -11,21 +11,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { print } from "graphql";
 import { Pane, CodeHighlight } from "../../../../components";
+import { useTimelineContext } from "../../../../context";
 
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
 export const TimelinePane: FC<
   ({ event: DebugEvent } | { source: Operation }) &
     ComponentProps<typeof Container>
-> = ({ event, source, ...props }) => {
+> = ({ event, operation, ...props }) => {
   const content = useMemo(() => {
-    if (source) {
+    if (operation) {
       return (
         <>
-          <SourceSection operation={source} />
+          <SourceSection operation={operation} />
         </>
       );
     }
+
+    // Conditional check for network event here
 
     return (
       <>
@@ -33,7 +36,7 @@ export const TimelinePane: FC<
         <SourceSection operation={event.operation} />
       </>
     );
-  }, [event, source]);
+  }, [event]);
 
   return (
     <Container {...props}>
@@ -43,33 +46,35 @@ export const TimelinePane: FC<
 };
 
 /** Info about the event clicked by the user. */
-const EventSection: FC<{ event: DebugEvent }> = ({ event }) => (
-  <PaneSection>
-    <h1>Event</h1>
-    <p>
-      <Icon icon={faRss} />
-      <b style={{ fontFamily: '"IBM Plex Mono", monospace' }}>{event.type}</b>
-    </p>
-    <p>
-      <Icon icon={faQuoteLeft} />
-      {event.message}
-    </p>
-    <p>
-      <Icon icon={faStopwatch} />
-      {event.timestamp}
-    </p>
-    {event.data && (
-      <>
-        <h2>Metadata</h2>
-        <CodeHighlight
-          language={"javascript"}
-          code={JSON.stringify(event.data, null, 2)}
-        />
-      </>
-    )}
-  </PaneSection>
-);
-
+const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
+  const { startTime } = useTimelineContext();
+  return (
+    <PaneSection>
+      <h1>Event</h1>
+      <p>
+        <Icon icon={faRss} />
+        <b style={{ fontFamily: '"IBM Plex Mono", monospace' }}>{event.type}</b>
+      </p>
+      <p>
+        <Icon icon={faQuoteLeft} />
+        {event.message}
+      </p>
+      <p>
+        <Icon icon={faStopwatch} />
+        {`${event.timestamp - startTime}ms`}
+      </p>
+      {event.data && (
+        <>
+          <h2>Metadata</h2>
+          <CodeHighlight
+            language={"javascript"}
+            code={JSON.stringify(event.data, null, 2)}
+          />
+        </>
+      )}
+    </PaneSection>
+  );
+};
 /** Info about the source operation for the given event. */
 const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
   <PaneSection>
@@ -134,6 +139,7 @@ const PaneSection = styled.section`
 
   p {
     font-size: 12px;
+    margin: 20px 10px;
   }
 
   @media (max-aspect-ratio: 1/1) {
