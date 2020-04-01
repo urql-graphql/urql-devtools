@@ -3,7 +3,7 @@ import { DebugEvent } from "@urql/core";
 import { TimelineProvider, DevtoolsContext } from "../../context";
 import { Timeline } from "./Timeline";
 
-const defaultEvents: DebugEvent<string>[] = [
+const defaultEvents: DebugEvent[] = [
   {
     type: "debug",
     data: {

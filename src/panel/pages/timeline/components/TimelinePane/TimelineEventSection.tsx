@@ -4,9 +4,7 @@ import { CodeHighlight } from "../../../../components";
 import { PaneSection } from "./PaneSection";
 
 /** Section presenting information specific to this debug event */
-export const TimelineEventSection: FC<{ event: DebugEvent<string> }> = ({
-  event,
-}) => {
+export const TimelineEventSection: FC<{ event: DebugEvent }> = ({ event }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleToggle = useCallback(() => setIsCollapsed((c) => !c), []);

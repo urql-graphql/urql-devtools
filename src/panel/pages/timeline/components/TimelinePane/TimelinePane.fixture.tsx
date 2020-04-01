@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { DebugEvent } from "@urql/core";
 import { TimelinePane } from "./TimelinePane";
 
-const mockDebugEvent: DebugEvent<string> = {
+const mockDebugEvent: DebugEvent = {
   timestamp: 1234,
   type: "operation",
   message: "operation execution event",
