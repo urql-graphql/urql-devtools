@@ -1,7 +1,45 @@
 import React, { FC, useMemo } from "react";
 import { DebugEvent } from "@urql/core";
+import gql from "graphql-tag";
 import { TimelineProvider, DevtoolsContext } from "../../context";
 import { Timeline } from "./Timeline";
+
+const operation1 = {
+  key: 1,
+  operationName: "query",
+  query: gql`
+    query Users {
+      users {
+        id
+        name
+        posts {
+          id
+          title
+        }
+      }
+    }
+  `,
+};
+
+const operation2 = {
+  key: 2,
+  operationName: "mutation",
+  query: gql`
+    mutation AddUser($id: ID!) {
+      addUser(id: $id) {
+        id
+        name
+        posts {
+          id
+          title
+        }
+      }
+    }
+  `,
+  variables: {
+    id: 1234,
+  },
+};
 
 const defaultEvents: DebugEvent[] = [
   {
@@ -9,10 +47,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "execution",
       message: "A listener was added to the stream",
-      operation: {
-        key: 1,
-        operationName: "query",
-      },
+      operation: operation1,
     },
   },
   {
@@ -20,10 +55,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "fetchRequest",
       message: "An update occured",
-      operation: {
-        key: 1,
-        operationName: "query",
-      },
+      operation: operation1,
     },
   },
   {
@@ -31,10 +63,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "update",
       message: "This is an update to the operation response / data",
-      operation: {
-        key: 1,
-        operationName: "query",
-      },
+      operation: operation1,
     },
   },
   {
@@ -42,10 +71,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "fetchResponse",
       message: "The fetch request succeeded",
-      operation: {
-        key: 1,
-        operationName: "query",
-      },
+      operation: operation1,
     },
   },
   {
@@ -53,10 +79,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "other",
       message: "This is an update to the operation response / data",
-      operation: {
-        key: 1,
-        operationName: "query",
-      },
+      operation: operation1,
     },
   },
   {
@@ -64,10 +87,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "other",
       message: "This is an update to the operation response / data",
-      operation: {
-        key: 1,
-        operationName: "query",
-      },
+      operation: operation1,
     },
   },
   {
@@ -75,10 +95,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "error",
       message: "This is an update to the operation response / data",
-      operation: {
-        key: 1,
-        operationName: "query",
-      },
+      operation: operation1,
     },
   },
   {
@@ -86,10 +103,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "update",
       message: "A listener was added to the stream",
-      operation: {
-        key: 2,
-        operationName: "mutation",
-      },
+      operation: operation2,
     },
   },
   {
@@ -97,10 +111,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "fetchRequest",
       message: "An request was triggered",
-      operation: {
-        key: 2,
-        operationName: "mutation",
-      },
+      operation: operation2,
     },
   },
   {
@@ -108,10 +119,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "fetchError",
       message: "An request errored",
-      operation: {
-        key: 2,
-        operationName: "mutation",
-      },
+      operation: operation2,
     },
   },
   {
@@ -119,10 +127,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "teardown",
       message: "A teardown was triggered on the stream",
-      operation: {
-        key: 1,
-        operationName: "query",
-      },
+      operation: operation1,
     },
   },
   {
@@ -130,10 +135,7 @@ const defaultEvents: DebugEvent[] = [
     data: {
       type: "teardown",
       message: "A teardown was triggered on the stream",
-      operation: {
-        key: 2,
-        operationName: "mutation",
-      },
+      operation: operation2,
     },
   },
 ] as any;

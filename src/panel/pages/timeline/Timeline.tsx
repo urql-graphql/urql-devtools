@@ -1,9 +1,10 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
+import { Operation } from "urql";
 import { useTimelineContext } from "../../context";
 import { Background } from "../../components/Background";
 import { TimelineRow, TimelinePane, Tick } from "./components";
-import { TimelineIcon } from "./components/TimelineIcon";
+import { TimelineSourceIcon } from "./components/TimelineSourceIcon";
 
 export const Timeline: FC = () => {
   const {
@@ -13,7 +14,23 @@ export const Timeline: FC = () => {
     startTime,
     container,
     selectedEvent,
+    setSelectedEvent,
   } = useTimelineContext();
+  const [selectedSource, setSelectedSource] = useState<Operation | undefined>();
+
+  // Unmount source pane on event select
+  useEffect(() => {
+    if (selectedEvent) {
+      setSelectedSource(undefined);
+    }
+  }, [selectedEvent]);
+
+  // Unmount event pane on source select
+  useEffect(() => {
+    if (selectedSource) {
+      setSelectedEvent(undefined);
+    }
+  }, [selectedSource]);
 
   const ticks = useMemo(
     () =>
@@ -33,14 +50,47 @@ export const Timeline: FC = () => {
     [scale]
   );
 
-  const operations = useMemo(
+  const handleSourceClick = useCallback(
+    (o: Operation) => () =>
+      setSelectedSource((current) =>
+        current && current.key === o.key ? undefined : o
+      ),
+    []
+  );
+
+  const sources = useMemo<Operation[]>(
     () =>
-      Object.entries(events).map(([key, eventList]) => ({
-        key,
-        operationName: eventList[0].operation.operationName,
-      })),
+      Object.values(events).map((eventList) => {
+        const source = eventList.find(
+          (e) => e.operation.operationName !== "teardown"
+        );
+
+        // Only events for given source is teardown
+        // Unknown source type
+        // TODO: infer type from operation.query
+        if (source === undefined) {
+          return eventList[0].operation;
+        }
+
+        return source.operation;
+      }),
     [events]
   );
+
+  const paneProps = useMemo(() => {
+    if (selectedSource) {
+      return {
+        source: selectedSource,
+      };
+    }
+
+    if (selectedEvent) {
+      return {
+        event: selectedEvent,
+      };
+    }
+    return undefined;
+  }, [selectedSource, selectedEvent]);
 
   // We lie about the types to save having to do this check
   // in every component. This guard is needed.
@@ -58,8 +108,12 @@ export const Timeline: FC = () => {
     <Page>
       <TimelineContainer>
         <TimelineIcons>
-          {operations.map((op) => (
-            <TimelineIcon key={op.key} operation={op.operationName} />
+          {sources.map((s) => (
+            <TimelineSourceIcon
+              key={s.key}
+              kind={s.operationName === "teardown" ? "query" : s.operationName}
+              onClick={handleSourceClick(s)}
+            />
           ))}
         </TimelineIcons>
         <TimelineList ref={setContainer} draggable="true" key="TimelineList">
@@ -71,7 +125,7 @@ export const Timeline: FC = () => {
           ))}
         </TimelineList>
       </TimelineContainer>
-      {selectedEvent && <TimelinePane event={selectedEvent} />}
+      {paneProps && <TimelinePane {...paneProps} />}
     </Page>
   );
 };
