@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TimelineIcon } from "./TimelineIcon";
+import { TimelineSourceIcon } from "./TimelineSourceIcon";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,17 +13,17 @@ const Wrapper = styled.div`
 export default {
   query: (
     <Wrapper>
-      <TimelineIcon data-snapshot operation="query" />
+      <TimelineSourceIcon data-snapshot kind="query" />
     </Wrapper>
   ),
   mutation: (
     <Wrapper>
-      <TimelineIcon data-snapshot operation="mutation" />
+      <TimelineSourceIcon data-snapshot kind="mutation" />
     </Wrapper>
   ),
   subscription: (
     <Wrapper>
-      <TimelineIcon data-snapshot operation="subscription" />
+      <TimelineSourceIcon data-snapshot kind="subscription" />
     </Wrapper>
   ),
 };

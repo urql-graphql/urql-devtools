@@ -1,4 +1,4 @@
-import React, { FC, ComponentProps } from "react";
+import React, { FC, ComponentProps, useMemo } from "react";
 import styled from "styled-components";
 import { DebugEvent, Operation } from "@urql/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,14 +15,29 @@ import { Pane, CodeHighlight } from "../../../../components";
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
 export const TimelinePane: FC<
-  { event: DebugEvent } & ComponentProps<typeof Container>
-> = ({ event, ...props }) => {
-  return (
-    <Container {...props}>
-      <Body>
+  ({ event: DebugEvent } | { source: Operation }) &
+    ComponentProps<typeof Container>
+> = ({ event, source, ...props }) => {
+  const content = useMemo(() => {
+    if (source) {
+      return (
+        <>
+          <SourceSection operation={source} />
+        </>
+      );
+    }
+
+    return (
+      <>
         <EventSection event={event} />
         <SourceSection operation={event.operation} />
-      </Body>
+      </>
+    );
+  }, [event, source]);
+
+  return (
+    <Container {...props}>
+      <Body>{content}</Body>
     </Container>
   );
 };
@@ -119,7 +134,6 @@ const PaneSection = styled.section`
 
   p {
     font-size: 12px;
-    margin: 20px 10px;
   }
 
   @media (max-aspect-ratio: 1/1) {
