@@ -20,6 +20,9 @@ interface TimelineContextValue {
   container: HTMLDivElement;
   setContainer: (e: HTMLDivElement) => void;
   events: Record<string, DebugEvent[]>;
+  exchanges: string[];
+  filter: { source: string[] };
+  setFilter: Dispatch<SetStateAction<TimelineContextValue["filter"]>>;
   scale: ScaleLinear<number, number>;
   startTime: number;
 }
@@ -207,6 +210,10 @@ const useTimelineDomain = () => {
 export const TimelineProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const domain = useTimelineDomain();
+  const [exchanges, setExchanges] = useState<string[]>([]);
+  const [filter, setFilter] = useState<{ source: string[] }>({
+    source: ["devtoolsExchange"],
+  });
   const [events, setEvents] = useState<Record<string, DebugEvent[]>>({});
   const [selectedEvent, setSelectedEvent] = useState<DebugEvent | undefined>(
     undefined
@@ -225,12 +232,18 @@ export const TimelineProvider: FC = ({ children }) => {
         ...e,
         [opKey]: [...(e[opKey] || []), message.data],
       }));
+      setExchanges((e) =>
+        e.includes(debugEvent.source) ? e : [...e, debugEvent.source]
+      );
     });
   }, [addMessageHandler]);
 
   const value = useMemo(
     () => ({
       events,
+      setFilter,
+      filter,
+      exchanges,
       selectedEvent,
       setSelectedEvent,
       ...domain,

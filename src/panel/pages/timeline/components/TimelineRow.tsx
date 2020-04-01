@@ -11,16 +11,11 @@ import {
 export const TimelineRow: FC<
   { events: DebugEvent[] } & ComponentProps<typeof Container>
 > = ({ events, ...props }) => {
-  const { container, scale, setSelectedEvent } = useTimelineContext();
+  const { container, scale, setSelectedEvent, filter } = useTimelineContext();
 
   const eventElements = useMemo(
     () =>
       events.reduce<JSX.Element[]>((p, e) => {
-        // Temporary filter until filtering is added
-        if (!["execution", "update", "teardown"].includes(e.type)) {
-          return p;
-        }
-
         const handleClick = () =>
           setSelectedEvent((current) => (current === e ? undefined : e));
 
@@ -34,6 +29,7 @@ export const TimelineRow: FC<
               position: "absolute",
               left: scale(e.timestamp),
               transform: "translateX(-50%) translateY(-50%)",
+              visibility: filter.source.includes(e.source) || "hidden",
             }}
           />,
         ];

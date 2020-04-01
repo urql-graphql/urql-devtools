@@ -5,6 +5,7 @@ import { useTimelineContext } from "../../context";
 import { Background } from "../../components/Background";
 import { TimelineRow, TimelinePane, Tick } from "./components";
 import { TimelineSourceIcon } from "./components/TimelineSourceIcon";
+import { Settings } from "./components/Settings";
 
 export const Timeline: FC = () => {
   const {
@@ -106,25 +107,34 @@ export const Timeline: FC = () => {
 
   return (
     <Page>
-      <TimelineContainer>
-        <TimelineIcons>
-          {sources.map((s) => (
-            <TimelineSourceIcon
-              key={s.key}
-              kind={s.operationName === "teardown" ? "query" : s.operationName}
-              onClick={handleSourceClick(s)}
-            />
-          ))}
-        </TimelineIcons>
-        <TimelineList ref={setContainer} draggable="true" key="TimelineList">
-          {ticks.map((t, i) => (
-            <Tick key={`p-${i}`} label={t.label} style={{ left: t.position }} />
-          ))}
-          {Object.entries(events).map(([key, eventList]) => (
-            <TimelineRow key={key} events={eventList} />
-          ))}
-        </TimelineList>
-      </TimelineContainer>
+      <PageContent>
+        <Settings />
+        <TimelineContainer>
+          <TimelineIcons>
+            {sources.map((s) => (
+              <TimelineSourceIcon
+                key={s.key}
+                kind={
+                  s.operationName === "teardown" ? "query" : s.operationName
+                }
+                onClick={handleSourceClick(s)}
+              />
+            ))}
+          </TimelineIcons>
+          <TimelineList ref={setContainer} draggable="true" key="TimelineList">
+            {ticks.map((t, i) => (
+              <Tick
+                key={`p-${i}`}
+                label={t.label}
+                style={{ left: t.position }}
+              />
+            ))}
+            {Object.entries(events).map(([key, eventList]) => (
+              <TimelineRow key={key} events={eventList} />
+            ))}
+          </TimelineList>
+        </TimelineContainer>
+      </PageContent>
       {paneProps && <TimelinePane {...paneProps} />}
     </Page>
   );
@@ -135,6 +145,12 @@ const ROW_PADDING = 8;
 
 const Page = styled(Background)`
   background-color: ${(p) => p.theme.dark["0"]};
+`;
+
+const PageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 `;
 
 const TimelineContainer = styled.div`
