@@ -6,7 +6,7 @@ import React, {
   cloneElement,
   useRef,
   useCallback,
-  useState,
+  useState
 } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,7 +20,7 @@ const PaneSectionRoot: FC<
     onCollapseToggle?: () => void;
   } & ComponentProps<typeof PaneContainer>
 > = ({ collapsed, onCollapseToggle, children, ...props }) => {
-  const childNodes = Children.map(children, (n) => {
+  const childNodes = Children.map(children, n => {
     if (typeof n !== "object" || n === null || !("type" in n)) {
       return n;
     }
@@ -28,13 +28,13 @@ const PaneSectionRoot: FC<
     if (n.type === Heading) {
       return cloneElement(n, {
         collapsed,
-        onClick: onCollapseToggle,
+        onClick: onCollapseToggle
       });
     }
 
     if (n.type === Body) {
       return cloneElement(n, {
-        collapsed,
+        collapsed
       });
     }
 
@@ -63,16 +63,17 @@ const Heading: FC<
   </SectionHeading>
 );
 
-const SectionHeading = styled.h2`
+const SectionHeading = styled.h4`
   user-select: none;
   cursor: pointer;
   color: #fff;
+  margin-bottom: 0;
 
   & > svg {
     box-sizing: content-box;
-    margin-right: 10px;
-    width: 20px !important;
-    height: 20px;
+    margin-right: 0.2em;
+    width: 1em !important;
+    height: 1em;
     transition: transform ${collapseTransition};
   }
 

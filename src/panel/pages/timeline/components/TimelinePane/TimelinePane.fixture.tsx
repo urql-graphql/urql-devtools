@@ -5,8 +5,8 @@ import { TimelinePane } from "./TimelinePane";
 
 const mockDebugEvent: DebugEvent = {
   timestamp: 1234,
-  type: "operation",
-  message: "operation execution event",
+  type: "execution",
+  message: "An operation was executed",
   source: "MyComponent",
   operation: {
     operationName: "query",
@@ -33,5 +33,24 @@ const mockDebugEvent: DebugEvent = {
 };
 
 export default {
-  combined: <TimelinePane data-snapshot event={mockDebugEvent} />,
+  basic: <TimelinePane data-snapshot event={mockDebugEvent} />,
+  "without variables": (
+    <TimelinePane
+      data-snapshot
+      event={{
+        ...mockDebugEvent,
+        operation: { ...mockDebugEvent.operation, variables: undefined },
+      }}
+    />
+  ),
+  "without metadata": (
+    <TimelinePane
+      data-snapshot
+      event={{
+        ...mockDebugEvent,
+        data: undefined,
+        operation: { ...mockDebugEvent.operation, variables: undefined },
+      }}
+    />
+  ),
 };

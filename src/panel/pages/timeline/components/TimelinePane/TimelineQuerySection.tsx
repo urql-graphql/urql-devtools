@@ -3,9 +3,10 @@ import React, {
   useState,
   useCallback,
   FC,
-  ComponentProps,
+  ComponentProps
 } from "react";
 import { print, DocumentNode } from "graphql";
+import styled from "styled-components";
 import { CodeHighlight } from "../../../../components";
 import { PaneSection } from "./PaneSection";
 
@@ -20,7 +21,7 @@ export const TimelineQuerySection: FC<
 
   const queryCode = useMemo(() => print(query), [query]);
 
-  const handleToggle = useCallback(() => setIsCollapsed((c) => !c), []);
+  const handleToggle = useCallback(() => setIsCollapsed(c => !c), []);
 
   return (
     <PaneSection
@@ -33,7 +34,7 @@ export const TimelineQuerySection: FC<
         <CodeHighlight language={"graphql"} code={queryCode} />
         {variables && (
           <>
-            <h3>Variables</h3>
+            <Subheading>Variables</Subheading>
             <CodeHighlight
               language={"javascript"}
               code={JSON.stringify(variables, null, 2)}
@@ -44,3 +45,7 @@ export const TimelineQuerySection: FC<
     </PaneSection>
   );
 };
+
+const Subheading = styled.h5`
+  margin-bottom: 0;
+`;
