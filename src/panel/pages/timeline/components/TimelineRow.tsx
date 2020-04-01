@@ -9,7 +9,7 @@ import {
 } from "./TimelineDuration";
 
 export const TimelineRow: FC<
-  { events: DebugEvent<string>[] } & ComponentProps<typeof Container>
+  { events: DebugEvent[] } & ComponentProps<typeof Container>
 > = ({ events, ...props }) => {
   const { container, scale, setSelectedEvent } = useTimelineContext();
 

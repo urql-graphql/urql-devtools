@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 const HoverableItem = () => {
-  const { ref, tooltipProps, isVisible } = useTooltip();
+  const { targetRef, tooltipProps, isVisible } = useTooltip();
 
   return (
     <>
@@ -22,7 +22,7 @@ const HoverableItem = () => {
           width: 100,
           height: 30,
         }}
-        ref={ref}
+        ref={targetRef}
       >
         Hover me!
       </button>
