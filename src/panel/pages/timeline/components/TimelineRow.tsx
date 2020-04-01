@@ -21,12 +21,15 @@ export const TimelineRow: FC<
           return p;
         }
 
+        const handleClick = () =>
+          setSelectedEvent((current) => (current === e ? undefined : e));
+
         return [
           ...p,
           <TimelineEvent
             key={`e-${p.length}`}
             event={e}
-            onClick={() => setSelectedEvent(e)}
+            onClick={handleClick}
             style={{
               position: "absolute",
               left: scale(e.timestamp),
