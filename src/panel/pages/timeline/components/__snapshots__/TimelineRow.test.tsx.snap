@@ -7,6 +7,7 @@ exports[`on fetching matches snapshot 1`] = `
 }
 
 .c5 {
+  cursor: pointer;
   height: 10px;
 }
 
@@ -158,6 +159,7 @@ exports[`on fetching matches snapshot 1`] = `
                   </TimelineAliveDuration>
                   <TimelineNetworkDuration
                     key="nd-0"
+                    onClick={[Function]}
                     state="fetching"
                     style={
                       Object {
@@ -170,6 +172,7 @@ exports[`on fetching matches snapshot 1`] = `
                   >
                     <NetworkDuration
                       data-state="fetching"
+                      onClick={[Function]}
                       style={
                         Object {
                           "bottom": 0,
@@ -182,6 +185,7 @@ exports[`on fetching matches snapshot 1`] = `
                       <div
                         className="c5"
                         data-state="fetching"
+                        onClick={[Function]}
                         style={
                           Object {
                             "bottom": 0,
