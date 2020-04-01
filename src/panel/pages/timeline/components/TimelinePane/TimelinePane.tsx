@@ -92,7 +92,11 @@ const Container = styled(Pane)`
 
 const Body = styled(Pane.Body)`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+
+  @media (min-aspect-ratio: 1/1) {
+    flex-direction: column;
+  }
 `;
 
 const PaneSection = styled.section`
@@ -100,7 +104,6 @@ const PaneSection = styled.section`
   background: ${(props) => props.theme.dark[0]};
   padding: 10px;
   margin: 10px;
-  width: 300px;
   flex-grow: 1;
 
   h1 {
@@ -116,6 +119,13 @@ const PaneSection = styled.section`
 
   p {
     font-size: 12px;
+    margin: 20px 10px;
+  }
+
+  @media (max-aspect-ratio: 1/1) {
+    flex-basis: 0;
+    max-height: 100%;
+    overflow: scroll;
   }
 `;
 
