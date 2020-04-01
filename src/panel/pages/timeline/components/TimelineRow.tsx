@@ -42,7 +42,10 @@ export const TimelineRow: FC<
   );
 
   const durationElements = useMemo(() => {
-    type ReduceState = { elements: JSX.Element[]; start: number | undefined };
+    type ReduceState = {
+      elements: JSX.Element[];
+      start: DebugEvent | undefined;
+    };
 
     // Network durations
     const reduceNetwork = <T extends string>(
@@ -53,7 +56,7 @@ export const TimelineRow: FC<
       if (p.start === undefined && e.type === "fetchRequest") {
         return {
           ...p,
-          start: e.timestamp,
+          start: e,
         };
       }
 
@@ -73,10 +76,11 @@ export const TimelineRow: FC<
               state="success"
               style={{
                 position: "absolute",
-                left: scale(p.start),
+                left: scale(p.start.timestamp),
                 right: container.clientWidth - scale(e.timestamp),
                 bottom: 0,
               }}
+              onClick={() => setSelectedEvent(e)}
             />,
           ],
         };
@@ -92,10 +96,11 @@ export const TimelineRow: FC<
               state="error"
               style={{
                 position: "absolute",
-                left: scale(p.start),
+                left: scale(p.start.timestamp),
                 right: container.clientWidth - scale(e.timestamp),
                 bottom: 0,
               }}
+              onClick={() => setSelectedEvent(e)}
             />,
           ],
         };
@@ -113,7 +118,7 @@ export const TimelineRow: FC<
       if (p.start === undefined && e.type !== "teardown") {
         return {
           ...p,
-          start: e.timestamp,
+          start: e,
         };
       }
 
@@ -127,7 +132,7 @@ export const TimelineRow: FC<
               key={`d-${p.elements.length}`}
               style={{
                 position: "absolute",
-                left: scale(p.start),
+                left: scale(p.start.timestamp),
                 right: container.clientWidth - scale(e.timestamp),
               }}
             />,
@@ -158,7 +163,7 @@ export const TimelineRow: FC<
             key={`ad-${reducedDurations.alive.elements.length}`}
             style={{
               position: "absolute",
-              left: scale(reducedDurations.alive.start),
+              left: scale(reducedDurations.alive.start.timestamp),
               right: container.clientWidth - scale(Date.now()),
             }}
           />,
@@ -172,10 +177,11 @@ export const TimelineRow: FC<
             state="fetching"
             style={{
               position: "absolute",
-              left: scale(reducedDurations.network.start),
+              left: scale(reducedDurations.network.start.timestamp),
               right: container.clientWidth - scale(Date.now()),
               bottom: 0,
             }}
+            onClick={() => setSelectedEvent(reducedDurations.network.start)}
           />,
         ]
       : [];
@@ -186,7 +192,7 @@ export const TimelineRow: FC<
       ...reducedDurations.network.elements,
       ...finalNetworkDuration,
     ];
-  }, [events, scale, container.clientWidth]);
+  }, [events, scale, container.clientWidth, setSelectedEvent]);
 
   return (
     <Container {...props}>

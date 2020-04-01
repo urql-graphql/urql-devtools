@@ -10,6 +10,7 @@ export const TimelineAliveDuration = styled.div`
 type NetworkState = "fetching" | "success" | "error";
 
 export const NetworkDuration = styled.div`
+  cursor: pointer;
   height: 10px;
 
   &[data-state="fetching"] {
