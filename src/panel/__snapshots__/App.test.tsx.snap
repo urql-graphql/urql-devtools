@@ -54,12 +54,12 @@ exports[`App on mount matches snapshot 1`] = `
 
 exports[`App routes on mount on connected matches snapshot 1`] = `
 <HashRouter>
-  <EventsProvider>
+  <TimelineProvider>
     <Route
       component={[Function]}
       path="/events"
     />
-  </EventsProvider>
+  </TimelineProvider>
   <RequestProvider>
     <Route
       component={[Function]}
