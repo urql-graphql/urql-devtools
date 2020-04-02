@@ -36,7 +36,7 @@ export const TimelinePane: FC<
         <SourceSection operation={event.operation} />
       </>
     );
-  }, [event]);
+  }, [event, source]);
 
   return (
     <Container {...props}>
