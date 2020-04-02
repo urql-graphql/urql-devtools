@@ -39,7 +39,7 @@ export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
       {exchanges.map((e) => (
         <FilterButton
           key={e}
-          aria-role="checkbox"
+          role="checkbox"
           aria-selected={filter.source.includes(e)}
           onClick={handleFilterToggle(e)}
         >

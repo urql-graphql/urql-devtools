@@ -32,16 +32,16 @@ const MockTimelineProvider: FC = ({ children }) => {
 
 export default {
   settings: (
-    <Wrapper data-snapshot>
+    <Wrapper>
       <MockTimelineProvider>
-        <Settings />
+        <Settings data-snapshot />
       </MockTimelineProvider>
     </Wrapper>
   ),
   filter: (
-    <Wrapper data-snapshot>
+    <Wrapper>
       <MockTimelineProvider>
-        <Filter />
+        <Filter data-snapshot />
       </MockTimelineProvider>
     </Wrapper>
   ),
