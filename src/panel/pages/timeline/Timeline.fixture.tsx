@@ -48,6 +48,7 @@ const defaultEvents: DebugEvent[] = [
       type: "execution",
       message: "A listener was added to the stream",
       operation: operation1,
+      source: "devtoolsExchange",
     },
   },
   {
@@ -56,6 +57,7 @@ const defaultEvents: DebugEvent[] = [
       type: "fetchRequest",
       message: "An update occured",
       operation: operation1,
+      source: "fetchExchange",
     },
   },
   {
@@ -64,6 +66,7 @@ const defaultEvents: DebugEvent[] = [
       type: "update",
       message: "This is an update to the operation response / data",
       operation: operation1,
+      source: "devtoolsExchange",
     },
   },
   {
@@ -72,6 +75,7 @@ const defaultEvents: DebugEvent[] = [
       type: "fetchResponse",
       message: "The fetch request succeeded",
       operation: operation1,
+      source: "fetchExchange",
     },
   },
   {
@@ -80,6 +84,7 @@ const defaultEvents: DebugEvent[] = [
       type: "other",
       message: "This is an update to the operation response / data",
       operation: operation1,
+      source: "otherExchange",
     },
   },
   {
@@ -88,6 +93,7 @@ const defaultEvents: DebugEvent[] = [
       type: "other",
       message: "This is an update to the operation response / data",
       operation: operation1,
+      source: "otherExchange",
     },
   },
   {
@@ -96,6 +102,7 @@ const defaultEvents: DebugEvent[] = [
       type: "error",
       message: "This is an update to the operation response / data",
       operation: operation1,
+      source: "fetchExchange",
     },
   },
   {
@@ -104,6 +111,7 @@ const defaultEvents: DebugEvent[] = [
       type: "update",
       message: "A listener was added to the stream",
       operation: operation2,
+      source: "fetchExchange",
     },
   },
   {
@@ -112,6 +120,7 @@ const defaultEvents: DebugEvent[] = [
       type: "fetchRequest",
       message: "An request was triggered",
       operation: operation2,
+      source: "fetchExchange",
     },
   },
   {
@@ -120,6 +129,7 @@ const defaultEvents: DebugEvent[] = [
       type: "fetchError",
       message: "An request errored",
       operation: operation2,
+      source: "fetchExchange",
     },
   },
   {
@@ -128,6 +138,7 @@ const defaultEvents: DebugEvent[] = [
       type: "teardown",
       message: "A teardown was triggered on the stream",
       operation: operation1,
+      source: "devtoolsExchange",
     },
   },
   {
@@ -136,6 +147,7 @@ const defaultEvents: DebugEvent[] = [
       type: "teardown",
       message: "A teardown was triggered on the stream",
       operation: operation2,
+      source: "devtoolsExchange",
     },
   },
 ] as any;

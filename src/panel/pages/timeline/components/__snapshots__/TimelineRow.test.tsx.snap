@@ -121,11 +121,13 @@ exports[`on fetching matches snapshot 1`] = `
                 Array [
                   Object {
                     "message": "A listener was added to the stream",
+                    "source": "devtoolsExchange",
                     "timestamp": 3000,
                     "type": "execution",
                   },
                   Object {
                     "message": "An update occured",
+                    "source": "devtoolsExchange",
                     "timestamp": 3000,
                     "type": "fetchRequest",
                   },
@@ -201,6 +203,7 @@ exports[`on fetching matches snapshot 1`] = `
                     event={
                       Object {
                         "message": "A listener was added to the stream",
+                        "source": "devtoolsExchange",
                         "timestamp": 3000,
                         "type": "execution",
                       }
@@ -212,6 +215,29 @@ exports[`on fetching matches snapshot 1`] = `
                         "left": 0,
                         "position": "absolute",
                         "transform": "translateX(-50%) translateY(-50%)",
+                        "visibility": true,
+                      }
+                    }
+                  >
+                    TimelineEvent
+                  </TimelineEvent>
+                  <TimelineEvent
+                    event={
+                      Object {
+                        "message": "An update occured",
+                        "source": "devtoolsExchange",
+                        "timestamp": 3000,
+                        "type": "fetchRequest",
+                      }
+                    }
+                    key="e-1"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "left": 0,
+                        "position": "absolute",
+                        "transform": "translateX(-50%) translateY(-50%)",
+                        "visibility": true,
                       }
                     }
                   >
