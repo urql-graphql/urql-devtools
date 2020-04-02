@@ -93,17 +93,22 @@ export const Timeline: FC = () => {
     return undefined;
   }, [selectedSource, selectedEvent]);
 
-  // We lie about the types to save having to do this check
-  // in every component. This guard is needed.
-  if (!container)
-    return (
-      <Page>
-        <TimelineContainer>
-          {/* Key is needed to retain the order for the ref */}
-          <TimelineList ref={setContainer} key="TimelineList" />
-        </TimelineContainer>
-      </Page>
-    );
+  const content = useMemo(
+    () =>
+      // We lie about the types to save having to do this check
+      // in every child component. This guard is needed.
+      !container ? null : (
+        <>
+          {ticks.map((t, i) => (
+            <Tick key={`p-${i}`} label={t.label} style={{ left: t.position }} />
+          ))}
+          {Object.entries(events).map(([key, eventList]) => (
+            <TimelineRow key={key} events={eventList} />
+          ))}
+        </>
+      ),
+    [container, events, ticks]
+  );
 
   return (
     <Page>
@@ -122,16 +127,7 @@ export const Timeline: FC = () => {
             ))}
           </TimelineIcons>
           <TimelineList ref={setContainer} draggable="true" key="TimelineList">
-            {ticks.map((t, i) => (
-              <Tick
-                key={`p-${i}`}
-                label={t.label}
-                style={{ left: t.position }}
-              />
-            ))}
-            {Object.entries(events).map(([key, eventList]) => (
-              <TimelineRow key={key} events={eventList} />
-            ))}
+            {content}
           </TimelineList>
         </TimelineContainer>
       </PageContent>
