@@ -136,9 +136,6 @@ export const Timeline: FC = () => {
   );
 };
 
-const SPACING = 40;
-const ROW_PADDING = 8;
-
 const Page = styled(Background)`
   background-color: ${(p) => p.theme.dark["0"]};
 `;
@@ -155,26 +152,35 @@ const TimelineContainer = styled.div`
 `;
 
 const TimelineIcons = styled.div`
-  background-color: ${(p) => p.theme.dark["-3"]};
-  display: grid;
-  justify-content: center;
-  grid-template-rows: 20px;
-  grid-row-gap: ${ROW_PADDING * 2}px;
-  /* TimelineList outer margin + inner margin + padding */
-  padding: ${SPACING + ROW_PADDING + 30}px 0;
-  position: relative;
-  width: ${SPACING}px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
   z-index: 1;
+
+  > :first-child {
+    margin-top: 78px;
+  }
+
+  > * {
+    margin-bottom: 16px;
+  }
+
+  > *:after {
+    content: "";
+    width: 200px;
+    height: 200px;
+  }
 `;
 
 const TimelineList = styled.div`
   cursor: grab;
   display: flex;
-  width: calc(100% - ${SPACING}px);
   flex-direction: column;
   flex-grow: 1;
   position: relative;
-  margin: ${SPACING}px 0;
+  padding: 40px 0;
+  overflow: hidden;
   &:active {
     cursor: grabbing;
   }
