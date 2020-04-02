@@ -92,7 +92,7 @@ export default {
                   source: "devtoolsExchange",
                 },
                 {
-                  type: "fetchResponse",
+                  type: "fetchSuccess",
                   message: "A listener was added to the stream",
                   timestamp: Date.now() + 65000,
                   source: "devtoolsExchange",

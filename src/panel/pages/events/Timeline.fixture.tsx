@@ -72,7 +72,7 @@ const defaultEvents: DebugEvent[] = [
   {
     type: "debug",
     data: {
-      type: "fetchResponse",
+      type: "fetchSuccess",
       message: "The fetch request succeeded",
       operation: operation1,
       source: "fetchExchange",
