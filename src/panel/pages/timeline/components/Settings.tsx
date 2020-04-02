@@ -1,15 +1,26 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, FC, ComponentProps } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { Collapsible } from "../../../components";
 import { useTimelineContext } from "../../../context";
 
-export const Settings = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const { exchanges, filter, setFilter } = useTimelineContext();
-
+export const Settings: FC<ComponentProps<typeof Container>> = (props) => {
+  const [collapsed, setCollapsed] = useState(true);
   const handleExpandToggle = useCallback(() => setCollapsed((c) => !c), []);
+
+  return (
+    <Container {...props}>
+      <Icon icon={faCog} onClick={handleExpandToggle} />
+      <Content collapsed={collapsed}>
+        <Filter />
+      </Content>
+    </Container>
+  );
+};
+
+export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
+  const { exchanges, filter, setFilter } = useTimelineContext();
 
   const handleFilterToggle = useCallback(
     (v: string) => () =>
@@ -23,24 +34,19 @@ export const Settings = () => {
   );
 
   return (
-    <Container>
-      <Icon icon={faCog} onClick={handleExpandToggle} />
-      <Content collapsed={collapsed}>
-        <FilterList>
-          <FilterTitle>source</FilterTitle>
-          {exchanges.map((e) => (
-            <FilterButton
-              key={e}
-              aria-role="checkbox"
-              aria-selected={filter.source.includes(e)}
-              onClick={handleFilterToggle(e)}
-            >
-              {e.replace(/Exchange$/, "")}
-            </FilterButton>
-          ))}
-        </FilterList>
-      </Content>
-    </Container>
+    <FilterList {...props}>
+      <FilterTitle>source</FilterTitle>
+      {exchanges.map((e) => (
+        <FilterButton
+          key={e}
+          aria-role="checkbox"
+          aria-selected={filter.source.includes(e)}
+          onClick={handleFilterToggle(e)}
+        >
+          {e.replace(/Exchange$/, "")}
+        </FilterButton>
+      ))}
+    </FilterList>
   );
 };
 
