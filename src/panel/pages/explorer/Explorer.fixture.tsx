@@ -15,6 +15,7 @@ export const defaultEvents: DebugMessage[] = [
       type: "update",
       message: "Todo message",
       source: "MyComponent",
+      timestamp: Date.now(),
       operation: {
         key: 12345,
         operationName: "query",
