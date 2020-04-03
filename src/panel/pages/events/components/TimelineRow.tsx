@@ -62,7 +62,7 @@ export const TimelineRow: FC<
       }
 
       // Response
-      if (e.type === "fetchResponse") {
+      if (e.type === "fetchSuccess") {
         return {
           start: undefined,
           elements: [

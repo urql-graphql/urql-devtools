@@ -16,7 +16,6 @@ export const Tick = styled.div<{ label: string }>`
     display: block;
     text-align: center;
     width: 100px;
-    margin-top: -25px;
     margin-left: -50px;
   }
 
@@ -24,7 +23,7 @@ export const Tick = styled.div<{ label: string }>`
     content: "";
     position: absolute;
     width: 2px;
-    top: 0;
+    top: 25px;
     bottom: 0;
     background: ${(props) => props.theme.dark["+1"]};
     opacity: 0.3;
