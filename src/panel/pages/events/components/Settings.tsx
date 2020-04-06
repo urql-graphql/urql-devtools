@@ -106,7 +106,7 @@ const FilterGroup = styled.div`
   align-items: center;
 
   & + & {
-    border-left: solid 2px ${(p) => p.theme.grey["-4"]};
+    border-left: solid 2px ${(p) => p.theme.dark["+8"]};
   }
 `;
 
