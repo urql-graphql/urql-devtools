@@ -9,6 +9,7 @@ import React, {
   SetStateAction,
   useContext,
   useEffect,
+  useLayoutEffect,
 } from "react";
 import { scaleLinear, ScaleLinear } from "d3-scale";
 import { DebugEvent } from "@urql/core";
@@ -131,7 +132,7 @@ const useTimelineDomain = () => {
   }, []);
 
   // Listen for drag events
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!ref.current) {
       return;
     }
@@ -139,8 +140,12 @@ const useTimelineDomain = () => {
     // dragstart -> mousemove -> mouseup
     const dragStartListener = (e: DragEvent) => {
       e.preventDefault();
-      ref.current.addEventListener("mousemove", mouseMoveListener);
-      window.addEventListener("mouseup", mouseUpListener);
+      ref.current.addEventListener("mousemove", mouseMoveListener, {
+        passive: true,
+      });
+      window.addEventListener("mouseup", mouseUpListener, {
+        passive: true,
+      });
     };
 
     const mouseMoveListener = (e: MouseEvent) => {
@@ -159,7 +164,7 @@ const useTimelineDomain = () => {
       ref.current.removeEventListener("mousemove", mouseMoveListener);
       window.removeEventListener("mouseup", mouseUpListener);
     };
-  }, []);
+  }, [ref.current]);
 
   // Listen for zoom events
   useEffect(() => {
@@ -168,17 +173,23 @@ const useTimelineDomain = () => {
     }
 
     const wheelListener = (e: WheelEvent) => {
+      // Horizontal scroll
       if (!e.ctrlKey && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         e.preventDefault();
         handlePan(-e.deltaX);
         return;
       }
 
+      // Vertical scroll
+      if (!e.ctrlKey) {
+        return;
+      }
+
+      // Zoom
       e.preventDefault();
       handleZoom(e);
     };
 
-    // * Passive=false to prevent console warning as it uses preventDefault
     ref.current.addEventListener("wheel", wheelListener, { passive: false });
 
     return () => ref.current.removeEventListener("wheel", wheelListener);
