@@ -20,11 +20,11 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const ThemeDecorator: FC = (props) => (
+export const ThemeDecorator: FC = (props) => (
   <ThemeProvider {...props} theme={theme} />
 );
 
-const DevtoolsDecorator: FC = (props) => (
+export const DevtoolsDecorator: FC = (props) => (
   <DevtoolsContext.Provider
     {...props}
     value={{

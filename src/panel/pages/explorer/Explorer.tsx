@@ -1,14 +1,14 @@
-import React, { useContext, FC } from "react";
+import React, { useContext, FC, ComponentProps } from "react";
 import styled from "styled-components";
 import { Background } from "../../components";
 import { ExplorerContext } from "../../context";
 import { Tree, NodeInfoPane } from "./components";
 
-export const Explorer: FC = () => {
+export const Explorer: FC<ComponentProps<typeof Container>> = (props) => {
   const { operations } = useContext(ExplorerContext);
 
   return (
-    <Container>
+    <Container {...props}>
       <ListContainer>
         {Object.keys(operations).length ? (
           <Tree nodeMap={operations} />

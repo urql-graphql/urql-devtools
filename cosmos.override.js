@@ -8,7 +8,7 @@ module.exports = (c) => ({
       ...c.module.rules,
       {
         test: /\.svg$/,
-        use: ["url-loader"],
+        use: ["svg-react-loader"],
       },
     ],
   },

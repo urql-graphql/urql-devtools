@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": ["dom"],
+    "lib": ["dom", "esnext"],
     "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
@@ -10,6 +10,6 @@
     "downlevelIteration": true,
     "resolveJsonModule": true
   },
-  "include": ["src", "src/**/*.test.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "src/**/visual-regression.test.ts"]
 }

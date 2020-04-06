@@ -1,0 +1,387 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`on fetching matches snapshot 1`] = `
+.c4 {
+  height: 20px;
+  background: #141414;
+}
+
+.c5 {
+  cursor: pointer;
+  height: 10px;
+}
+
+.c5[data-state="fetching"] {
+  background: #0077e6;
+}
+
+.c5[data-state="success"] {
+  background: #80DF68;
+}
+
+.c5[data-state="error"] {
+  background: #FF4D58;
+}
+
+.c3 {
+  position: relative;
+  height: 20px;
+  padding-top: 8px;
+  margin-top: 30px;
+}
+
+.c3 + .c2 {
+  margin-top: 8px;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 20px;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background: #000;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  max-width: 300px;
+}
+
+<ThemeDecorator>
+  <ThemeProvider
+    theme={
+      Object {
+        "blue": Object {
+          "+1": "#1a90ff",
+          "+2": "#339dff",
+          "+3": "#4da9ff",
+          "+4": "#66b5ff",
+          "+5": "#80c1ff",
+          "+6": "#99ceff",
+          "+7": "#b3daff",
+          "+8": "#cce6ff",
+          "+9": "#e5f3ff",
+          "-1": "#0077e6",
+          "-2": "#006acc",
+          "-3": "#005cb3",
+          "-4": "#004f99",
+          "-5": "#004280",
+          "-6": "#003566",
+          "-7": "#00284d",
+          "-8": "#001a33",
+          "-9": "#000d19",
+          "0": "#0084FF",
+        },
+        "dark": Object {
+          "+1": "#050505",
+          "+2": "#0a0a0a",
+          "+3": "#0f0f0f",
+          "+4": "#141414",
+          "+5": "#1a1a1a",
+          "+6": "#1f1f1f",
+          "+7": "#242424",
+          "+8": "#292929",
+          "+9": "#2e2e2e",
+          "0": "#000",
+        },
+        "green": Object {
+          "+1": "#92e37d",
+          "+2": "#a3e892",
+          "+3": "#b5eca7",
+          "+4": "#c7f1bc",
+          "+5": "#d8f5d1",
+          "+6": "#eafae6",
+          "+7": "#fcfefb",
+          "+8": "#fff",
+          "+9": "#fff",
+          "-1": "#6edb53",
+          "-2": "#5dd63e",
+          "-3": "#4dcf2c",
+          "-4": "#45ba27",
+          "-5": "#3da523",
+          "-6": "#35901e",
+          "-7": "#2d7b1a",
+          "-8": "#266516",
+          "-9": "#1e5011",
+          "0": "#80DF68",
+        },
+        "grey": Object {
+          "+1": "#858585",
+          "+2": "#8a8a8a",
+          "+3": "#8f8f8f",
+          "+4": "#949494",
+          "+5": "#9a9a9a",
+          "+6": "#9f9f9f",
+          "+7": "#a4a4a4",
+          "+8": "#a9a9a9",
+          "+9": "#aeaeae",
+          "-1": "#7b7b7b",
+          "-2": "#767676",
+          "-3": "#717171",
+          "-4": "#6c6c6c",
+          "-5": "#676767",
+          "-6": "#616161",
+          "-7": "#5c5c5c",
+          "-8": "#575757",
+          "-9": "#525252",
+          "0": "#808080",
+        },
+        "light": Object {
+          "-1": "#fafafa",
+          "-2": "#f5f5f5",
+          "-3": "#f0f0f0",
+          "-4": "#ebebeb",
+          "-5": "#e6e6e6",
+          "-6": "#e0e0e0",
+          "-7": "#dbdbdb",
+          "-8": "#d6d6d6",
+          "-9": "#d1d1d1",
+          "0": "#fff",
+        },
+        "orange": Object {
+          "+1": "#ff8b5a",
+          "+2": "#ff9d73",
+          "+3": "#ffaf8d",
+          "+4": "#ffc1a6",
+          "+5": "#ffd2c0",
+          "+6": "#ffe4d9",
+          "+7": "#fff6f3",
+          "+8": "#fff",
+          "+9": "#fff",
+          "-1": "#ff6726",
+          "-2": "#ff550d",
+          "-3": "#f34800",
+          "-4": "#d94100",
+          "-5": "#c03900",
+          "-6": "#a63200",
+          "-7": "#8d2a00",
+          "-8": "#732200",
+          "-9": "#5a1b00",
+          "0": "#FF7940",
+        },
+        "pink": Object {
+          "+1": "#fb7ec8",
+          "+2": "#fc96d3",
+          "+3": "#fcafdd",
+          "+4": "#fdc8e8",
+          "+5": "#fee0f2",
+          "+6": "#fff9fd",
+          "+7": "#fff",
+          "+8": "#fff",
+          "+9": "#fff",
+          "-1": "#f94cb4",
+          "-2": "#f834a9",
+          "-3": "#f81b9f",
+          "-4": "#f10893",
+          "-5": "#d80784",
+          "-6": "#c00675",
+          "-7": "#a70566",
+          "-8": "#8e0557",
+          "-9": "#760448",
+          "0": "#FA65BE",
+        },
+        "purple": Object {
+          "+1": "#9053f4",
+          "+2": "#a06bf5",
+          "+3": "#af83f7",
+          "+4": "#be9bf8",
+          "+5": "#ceb3fa",
+          "+6": "#ddcafc",
+          "+7": "#ede2fd",
+          "+8": "#fcfaff",
+          "+9": "#fff",
+          "-1": "#7223f0",
+          "-2": "#6310ea",
+          "-3": "#590ed3",
+          "-4": "#4f0cbb",
+          "-5": "#450ba3",
+          "-6": "#3b098b",
+          "-7": "#310873",
+          "-8": "#27065b",
+          "-9": "#1c0443",
+          "0": "#813BF2",
+        },
+        "red": Object {
+          "+1": "#ff6770",
+          "+2": "#ff8088",
+          "+3": "#ff9aa0",
+          "+4": "#ffb3b8",
+          "+5": "#ffcdd0",
+          "+6": "#ffe6e8",
+          "+7": "#fff",
+          "+8": "#fff",
+          "+9": "#fff",
+          "-1": "#ff3340",
+          "-2": "#ff1a28",
+          "-3": "#ff0010",
+          "-4": "#e6000e",
+          "-5": "#cd000d",
+          "-6": "#b3000b",
+          "-7": "#9a0009",
+          "-8": "#800008",
+          "-9": "#670006",
+          "0": "#FF4D58",
+        },
+      }
+    }
+  >
+    <Wrapper>
+      <div
+        className="c0"
+      >
+        <Viewport>
+          <div
+            className="c1"
+          >
+            <TimelineRow
+              events={
+                Array [
+                  Object {
+                    "message": "A listener was added to the stream",
+                    "source": "devtoolsExchange",
+                    "timestamp": 3000,
+                    "type": "execution",
+                  },
+                  Object {
+                    "message": "An update occured",
+                    "source": "devtoolsExchange",
+                    "timestamp": 3000,
+                    "type": "fetchRequest",
+                  },
+                ]
+              }
+            >
+              <Container>
+                <div
+                  className="c2 c3"
+                >
+                  <TimelineAliveDuration
+                    key="ad-0"
+                    style={
+                      Object {
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 300,
+                      }
+                    }
+                  >
+                    <div
+                      className="c4"
+                      style={
+                        Object {
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 300,
+                        }
+                      }
+                    />
+                  </TimelineAliveDuration>
+                  <TimelineNetworkDuration
+                    key="nd-0"
+                    onClick={[Function]}
+                    state="fetching"
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 300,
+                      }
+                    }
+                  >
+                    <NetworkDuration
+                      data-state="fetching"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 300,
+                        }
+                      }
+                    >
+                      <div
+                        className="c5"
+                        data-state="fetching"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 300,
+                          }
+                        }
+                      />
+                    </NetworkDuration>
+                  </TimelineNetworkDuration>
+                  <TimelineEvent
+                    event={
+                      Object {
+                        "message": "A listener was added to the stream",
+                        "source": "devtoolsExchange",
+                        "timestamp": 3000,
+                        "type": "execution",
+                      }
+                    }
+                    key="e-0"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "left": 0,
+                        "position": "absolute",
+                        "transform": "translateX(-50%) translateY(-50%)",
+                        "visibility": true,
+                      }
+                    }
+                  >
+                    TimelineEvent
+                  </TimelineEvent>
+                  <TimelineEvent
+                    event={
+                      Object {
+                        "message": "An update occured",
+                        "source": "devtoolsExchange",
+                        "timestamp": 3000,
+                        "type": "fetchRequest",
+                      }
+                    }
+                    key="e-1"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "left": 0,
+                        "position": "absolute",
+                        "transform": "translateX(-50%) translateY(-50%)",
+                        "visibility": true,
+                      }
+                    }
+                  >
+                    TimelineEvent
+                  </TimelineEvent>
+                </div>
+              </Container>
+            </TimelineRow>
+          </div>
+        </Viewport>
+      </div>
+    </Wrapper>
+  </ThemeProvider>
+</ThemeDecorator>
+`;

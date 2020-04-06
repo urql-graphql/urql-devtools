@@ -2,15 +2,15 @@ import "./App.css";
 import React, { FC } from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { Disconnected, Events, Explorer, Request } from "./pages";
+import { Disconnected, Explorer, Request, Timeline } from "./pages";
 import { Navigation } from "./Navigation";
 import { theme } from "./theme";
 import {
   DevtoolsProvider,
-  EventsProvider,
   RequestProvider,
   ExplorerProvider,
   useDevtoolsContext,
+  TimelineProvider,
 } from "./context";
 
 export const App = () => {
@@ -32,9 +32,9 @@ export const AppRoutes: FC = () => {
 
   return (
     <HashRouter>
-      <EventsProvider>
-        <Route path="/events" component={Events} />
-      </EventsProvider>
+      <TimelineProvider>
+        <Route path="/events" component={Timeline} />
+      </TimelineProvider>
       <RequestProvider>
         <Route path="/request" component={Request} />
       </RequestProvider>

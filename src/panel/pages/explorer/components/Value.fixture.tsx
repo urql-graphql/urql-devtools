@@ -1,13 +1,57 @@
 import React from "react";
+import styled from "styled-components";
 import { Value } from "./Value";
 
+const Wrapper = styled.div`
+  background: ${(props) => props.theme.dark[0]};
+  padding: 20px;
+  flex-grow: 1;
+`;
+
 export default {
-  "array - empty": <Value value={[]} />,
-  "array - colllapsed": <Value value={["item 1", "item 2"]} />,
-  "array - expanded": <Value expand value={["item 1", "item 2"]} />,
-  "object - empty": <Value value={{}} />,
-  "object - collapsed": <Value value={{ name: "Carla", age: 20 }} />,
-  "object - expanded": <Value expand value={{ name: "Carla", age: 20 }} />,
-  string: <Value value="hello" />,
-  null: <Value value={null} />,
+  "array - empty": (
+    <Wrapper>
+      <Value data-snapshot value={[]} />
+    </Wrapper>
+  ),
+  "array - colllapsed": (
+    <Wrapper>
+      <Value data-snapshot value={["item 1", "item 2"]} />
+    </Wrapper>
+  ),
+  "array - expanded": (
+    <Wrapper>
+      <Value data-snapshot expand value={["item 1", "item 2"]} />
+    </Wrapper>
+  ),
+  "object - empty": (
+    <Wrapper>
+      <Value data-snapshot value={{}} />
+    </Wrapper>
+  ),
+  "object - collapsed": (
+    <Wrapper>
+      <Value data-snapshot value={{ name: "Carla", age: 20 }} />
+    </Wrapper>
+  ),
+  "object - expanded": (
+    <Wrapper>
+      <Value
+        data-snapshot
+        expand
+        style={{ display: "block" }}
+        value={{ name: "Carla", age: 20 }}
+      />
+    </Wrapper>
+  ),
+  string: (
+    <Wrapper>
+      <Value data-snapshot value="hello" />
+    </Wrapper>
+  ),
+  null: (
+    <Wrapper>
+      <Value data-snapshot value={null} />
+    </Wrapper>
+  ),
 };
