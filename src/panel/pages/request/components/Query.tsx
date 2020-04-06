@@ -74,7 +74,6 @@ export const Query = () => {
 
   return (
     <Container>
-      <Heading>Query</Heading>
       <textarea
         ref={handleRef}
         value={
@@ -95,12 +94,4 @@ const Container = styled.div`
   .CodeMirror-gutters {
     background: ${(props) => props.theme.dark["0"]} !important;
   }
-`;
-
-const Heading = styled.h2`
-  margin: 0;
-  padding: 10px;
-  font-size: 12px;
-  color: ${(p) => p.theme.grey["+2"]};
-  background: ${(props) => props.theme.dark["0"]} !important;
 `;

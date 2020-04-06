@@ -35,7 +35,6 @@ export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
 
   return (
     <FilterList {...props}>
-      <FilterTitle>source</FilterTitle>
       {exchanges.map((e) => (
         <FilterButton
           key={e}
@@ -53,47 +52,39 @@ export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
 const FilterList = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px;
+  margin-top: 5px;
 `;
 
 const FilterButton = styled.button`
-  background: ${(props) => props.theme.dark["0"]};
+  background: ${(props) => props.theme.dark["+6"]};
+  color: ${(p) => p.theme.grey["0"]};
   padding: 5px 10px;
   border: none;
   font-size: 12px;
   margin: 5px;
-  color: rgba(255, 255, 255, 0.5);
   border-radius: 2px;
   font-weight: bold;
   cursor: pointer;
   outline: none;
 
   &[aria-selected="true"] {
-    background: #fff;
-    color: #000;
+    background: ${(p) => p.theme.light["0"]};
+    color: ${(p) => p.theme.dark["0"]};
   }
-`;
-
-const FilterTitle = styled.p`
-  margin: 0 15px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #fff;
 `;
 
 const Icon = styled(FontAwesomeIcon)`
-  color: #fff;
-  opacity: 0.7;
+  cursor: pointer;
+  color: ${(p) => p.theme.light["-7"]};
   font-size: 14px;
   margin: 3px;
-  margin-left: auto;
 
   &:hover {
-    opacity: 0.8;
+    color: ${(p) => p.theme.light["0"]};
   }
 
   &:active {
-    opacity: 0.75;
+    color: ${(p) => p.theme.light["-5"]};
   }
 `;
 
@@ -109,5 +100,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background: ${(props) => props.theme.dark["-1"]};
+  padding: 5px 10px;
+  background: ${(props) => props.theme.dark["0"]};
+  border-bottom: solid 1px ${(p) => p.theme.dark["+4"]};
 `;

@@ -89,7 +89,8 @@ const PaneContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background: ${(props) => props.theme.dark["-2"]};
+  background: ${(props) => props.theme.dark["0"]};
+  border-top: solid 1px ${(props) => props.theme.dark["+4"]};
 
   width: 100%;
   height: 400px;
@@ -97,6 +98,8 @@ const PaneContainer = styled.div`
   @media (min-aspect-ratio: 1/1) {
     width: 400px;
     height: 100%;
+    border-top: none;
+    border-left: solid 1px ${(props) => props.theme.dark["+4"]};
   }
 `;
 
@@ -105,7 +108,7 @@ const edgeWidth = 4;
 const DraggingEdge = styled.div`
   position: absolute;
   z-index: 3;
-  background: ${(p) => p.theme.dark["+1"]};
+  opacity: 0;
 
   cursor: ns-resize;
   width: 100%;
@@ -119,12 +122,6 @@ const DraggingEdge = styled.div`
     top: 0;
     left: -${edgeWidth / 2}px;
     cursor: ew-resize;
-  }
-
-  &:hover,
-  &[aria-grabbed="true"] {
-    transition: background 150ms ease;
-    background: ${(p) => p.theme.dark["+2"]};
   }
 `;
 

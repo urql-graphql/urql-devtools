@@ -23,6 +23,7 @@ export const TimelinePane: FC<
     if (source) {
       return (
         <>
+          <PaneSection />
           <SourceSection operation={source} />
         </>
       );
@@ -86,13 +87,6 @@ const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
       <Icon icon={faVenusMars} />
       {operation.operationName}
     </p>
-    {console.log(
-      print(operation.query).substring(
-        0,
-        print(operation.query).lastIndexOf("\n")
-      )
-    )}
-
     <h2>Query</h2>
     <CodeHighlight
       language={"graphql"}
@@ -107,12 +101,13 @@ const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
 );
 
 const Container = styled(Pane)`
-  background-color: ${(p) => p.theme.dark["-3"]};
+  background-color: ${(p) => p.theme.dark["+3"]};
 `;
 
 const Body = styled(Pane.Body)`
   display: flex;
   flex-direction: row;
+  flex-grow: 1;
 
   @media (min-aspect-ratio: 1/1) {
     flex-direction: column;
@@ -122,14 +117,22 @@ const Body = styled(Pane.Body)`
 const PaneSection = styled.section`
   color: #fff;
   background: ${(props) => props.theme.dark[0]};
-  padding: 10px;
-  margin: 10px;
+  max-height: 50%;
+  padding: 20px;
+  overflow: scroll;
   flex-grow: 1;
+  flex-basis: 0;
 
   h1 {
-    font-size: 20px;
-    margin-top: 0;
-    margin-bottom: 20px;
+    background-color: ${(p) => p.theme.dark["+3"]};
+    position: sticky;
+    top: -20px;
+    margin: -20px;
+    padding: 2px 10px;
+    font-size: 14px;
+    font-weight: 400;
+    border-bottom: solid 1px ${(p) => p.theme.dark["+5"]};
+    z-index: 1;
   }
 
   h2 {
@@ -139,13 +142,24 @@ const PaneSection = styled.section`
 
   p {
     font-size: 12px;
-    margin: 20px 10px;
+    margin: 10px 0;
+  }
+
+  & + & {
+    border-top: solid 1px ${(p) => p.theme.dark["+3"]};
   }
 
   @media (max-aspect-ratio: 1/1) {
+    & + & {
+      border-left: solid 1px ${(p) => p.theme.dark["+3"]};
+      border-top: none !important;
+    }
     flex-basis: 0;
     max-height: 100%;
-    overflow: scroll;
+  }
+
+  h1 + * {
+    margin-top: 30px;
   }
 `;
 

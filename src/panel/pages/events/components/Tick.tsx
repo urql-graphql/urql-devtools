@@ -7,7 +7,7 @@ export const Tick = styled.div<{ label: string }>`
   bottom: 0;
 
   &:before {
-    content: "${(props) => props.label}";
+    content: "${(p) => p.label}";
     font-family: "Roboto";
     font-size: 12px;
     color: #fff;
@@ -25,7 +25,7 @@ export const Tick = styled.div<{ label: string }>`
     width: 2px;
     top: 25px;
     bottom: 0;
-    background: ${(props) => props.theme.dark["+1"]};
+    background: ${(p) => p.theme.dark["+5"]};
     opacity: 0.3;
   }
 `;

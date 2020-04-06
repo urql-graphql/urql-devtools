@@ -45,7 +45,7 @@ export const ExplorerProvider: FC = ({ children }) => {
         setOperations((operations) =>
           handleResponse({
             operation: debugEvent.operation,
-            data: debugEvent.data,
+            data: debugEvent.data.value,
             parsedNodes: operations,
           })
         );

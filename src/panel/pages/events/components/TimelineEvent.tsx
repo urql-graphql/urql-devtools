@@ -13,15 +13,15 @@ const Svg = styled.svg`
   transition: filter 300ms ease;
 
   & > * {
-    fill: ${(props) => props.theme.grey["-1"]};
+    fill: ${(props) => props.theme.grey["0"]};
   }
 
-  &:hover {
-    filter: brightness(1.5);
+  &:hover > * {
+    fill: ${(props) => props.theme.grey["+8"]};
   }
 
-  &:active {
-    filter: brightness(1.25);
+  &:active > * {
+    fill: ${(props) => props.theme.grey["+4"]};
   }
 `;
 

@@ -111,39 +111,53 @@ export const Timeline: FC = () => {
   );
 
   return (
-    <Page>
-      <PageContent>
+    <>
+      <Page>
         <Settings />
-        <TimelineContainer>
-          <TimelineIcons>
-            {sources.map((s) => (
-              <TimelineSourceIcon
-                key={s.key}
-                kind={
-                  s.operationName === "teardown" ? "query" : s.operationName
-                }
-                onClick={handleSourceClick(s)}
-              />
-            ))}
-          </TimelineIcons>
-          <TimelineList ref={setContainer} draggable="true" key="TimelineList">
-            {content}
-          </TimelineList>
-        </TimelineContainer>
-      </PageContent>
-      {paneProps && <TimelinePane {...paneProps} />}
-    </Page>
+        <PageContent>
+          <TimelineContainer>
+            <TimelineIcons>
+              {sources.map((s) => (
+                <TimelineSourceIcon
+                  key={s.key}
+                  kind={
+                    s.operationName === "teardown" ? "query" : s.operationName
+                  }
+                  onClick={handleSourceClick(s)}
+                />
+              ))}
+            </TimelineIcons>
+            <TimelineList
+              ref={setContainer}
+              draggable="true"
+              key="TimelineList"
+            >
+              {content}
+            </TimelineList>
+          </TimelineContainer>
+          {paneProps && <TimelinePane {...paneProps} />}
+        </PageContent>
+      </Page>
+    </>
   );
 };
 
 const Page = styled(Background)`
   background-color: ${(p) => p.theme.dark["0"]};
+  @media (min-aspect-ratio: 1/1) {
+    flex-direction: column;
+  }
 `;
 
 const PageContent = styled.div`
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+
+  @media (min-aspect-ratio: 1/1) {
+    flex-direction: row;
+  }
 `;
 
 const TimelineContainer = styled.div`

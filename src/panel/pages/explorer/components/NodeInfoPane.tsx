@@ -140,7 +140,7 @@ const Container = styled.div`
 
 const Title = styled.h3`
   text-transform: uppercase;
-  color: ${(p) => p.theme.purple["+1"]};
+  color: ${(p) => p.theme.light["0"]};
   font-size: 12px;
   font-weight: normal;
   margin-top: 0;

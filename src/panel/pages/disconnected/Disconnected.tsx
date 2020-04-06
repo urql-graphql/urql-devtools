@@ -30,15 +30,19 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
-  color: ${(p) => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.light["0"]};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
-  color: ${(p) => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.grey["+4"]};
 `;
 
 const Logo = styled(Icon)`
   width: 150px;
+
+  > * {
+    fill: ${(p) => p.theme.light["0"]};
+  }
 `;

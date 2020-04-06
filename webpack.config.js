@@ -66,7 +66,10 @@ module.exports = {
       /graphql-language-service-interface[\/\\]dist/,
       /\.js$/
     ),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ["**/*"],
+      cleanAfterEveryBuildPatterns: ["!*", "!*/**"],
+    }),
     new CopyWebpackPlugin(
       [
         { from: "src/assets/", to: "assets/" },
