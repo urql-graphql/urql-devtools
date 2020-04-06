@@ -48,6 +48,9 @@ export const TimelineRow: FC<
       p: ReduceState,
       e: DebugEvent<T>
     ) => {
+      const handleClick = () =>
+        setSelectedEvent((event) => (event === e ? undefined : e));
+
       // Request started
       if (p.start === undefined && e.type === "fetchRequest") {
         return {
@@ -76,7 +79,7 @@ export const TimelineRow: FC<
                 right: container.clientWidth - scale(e.timestamp),
                 bottom: 0,
               }}
-              onClick={() => setSelectedEvent(e)}
+              onClick={handleClick}
             />,
           ],
         };
@@ -96,7 +99,7 @@ export const TimelineRow: FC<
                 right: container.clientWidth - scale(e.timestamp),
                 bottom: 0,
               }}
-              onClick={() => setSelectedEvent(e)}
+              onClick={handleClick}
             />,
           ],
         };
