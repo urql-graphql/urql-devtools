@@ -87,13 +87,6 @@ const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
       <Icon icon={faVenusMars} />
       {operation.operationName}
     </p>
-    {console.log(
-      print(operation.query).substring(
-        0,
-        print(operation.query).lastIndexOf("\n")
-      )
-    )}
-
     <h2>Query</h2>
     <CodeHighlight
       language={"graphql"}
