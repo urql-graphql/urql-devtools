@@ -1,17 +1,36 @@
 import React, { useState, useCallback, FC, ComponentProps } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCog,
+  faFastBackward,
+  faFastForward,
+} from "@fortawesome/free-solid-svg-icons";
 import { Collapsible } from "../../../components";
 import { useTimelineContext } from "../../../context";
 
 export const Settings: FC<ComponentProps<typeof Container>> = (props) => {
   const [collapsed, setCollapsed] = useState(true);
   const handleExpandToggle = useCallback(() => setCollapsed((c) => !c), []);
+  const { setPosition, startTime } = useTimelineContext();
+
+  const handleBackClick = useCallback(() => setPosition(startTime), [
+    setPosition,
+    startTime,
+  ]);
+
+  const handleForwardClick = useCallback(() => setPosition(Date.now()), [
+    setPosition,
+    startTime,
+  ]);
 
   return (
     <Container {...props}>
-      <Icon icon={faCog} onClick={handleExpandToggle} />
+      <TopRow>
+        <Icon icon={faCog} onClick={handleExpandToggle} />
+        <Icon icon={faFastBackward} onClick={handleBackClick} />
+        <Icon icon={faFastForward} onClick={handleForwardClick} />
+      </TopRow>
       <Content collapsed={collapsed}>
         <Filter />
       </Content>
@@ -77,7 +96,7 @@ const Icon = styled(FontAwesomeIcon)`
   cursor: pointer;
   color: ${(p) => p.theme.light["-7"]};
   font-size: 14px;
-  margin: 3px;
+  margin: 3px 5px;
 
   &:hover {
     color: ${(p) => p.theme.light["0"]};
@@ -86,6 +105,10 @@ const Icon = styled(FontAwesomeIcon)`
   &:active {
     color: ${(p) => p.theme.light["-5"]};
   }
+`;
+
+const TopRow = styled.div`
+  display: flex;
 `;
 
 const Content = styled(Collapsible)`

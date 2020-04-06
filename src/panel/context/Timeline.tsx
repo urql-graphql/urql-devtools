@@ -24,6 +24,7 @@ interface TimelineContextValue {
   exchanges: string[];
   filter: { source: string[] };
   setFilter: Dispatch<SetStateAction<TimelineContextValue["filter"]>>;
+  setPosition: (time: number) => void;
   scale: ScaleLinear<number, number>;
   startTime: number;
 }
@@ -77,6 +78,18 @@ const useTimelineDomain = () => {
       };
     });
   }, [setScale]);
+
+  const setPosition = useCallback((t: number) => {
+    if (t < startTime.current) {
+      console.warn("Cannot move position behind 'startTime'");
+    }
+
+    domain.current = {
+      ...domain.current,
+      start: Math.max(startTime.current, t),
+    };
+    createScale();
+  }, []);
 
   const setContainer = useCallback<TimelineContextValue["setContainer"]>(
     (r) => {
@@ -212,6 +225,7 @@ const useTimelineDomain = () => {
       container: ref.current,
       setContainer,
       startTime: startTime.current,
+      setPosition,
       scale: scale.scale,
     }),
     [scale, setContainer]
