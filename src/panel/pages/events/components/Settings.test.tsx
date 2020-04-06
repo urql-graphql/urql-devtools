@@ -9,7 +9,7 @@ beforeEach(jest.clearAllMocks);
 describe("on icon click", () => {
   it("expands content", () => {
     const wrapper = mount(<ThemeDecorator>{fixtures.settings}</ThemeDecorator>);
-    wrapper.find("svg").simulate("click");
+    wrapper.find("svg").at(0).simulate("click");
     wrapper.update();
     expect(wrapper.find("Content").props()).toHaveProperty("collapsed", false);
   });
