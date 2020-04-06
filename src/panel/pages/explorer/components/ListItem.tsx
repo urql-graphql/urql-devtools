@@ -163,21 +163,21 @@ const OutlineContainer = styled(animated.div)`
   ${({ isActive }: { isActive: boolean }) =>
     isActive &&
     css`
-      background-color: ${(p) => p.theme.dark["-1"]};
-      outline: 1px dashed ${(p) => `${p.theme.pink["0"]}a0`};
+      background-color: ${(p) => p.theme.dark["+2"]};
+      outline: 1px dashed ${(p) => `${p.theme.light["0"]}`};
       transition: all 0.3s linear;
     `};
 `;
 
 const Name = styled.span`
-  color: ${(p) => p.theme.pink["0"]};
+  color: ${(p) => p.theme.light["0"]};
 `;
 
 const ChildrenName = styled.span`
   position: relative;
   margin-right: 3px;
   display: inline-block;
-  color: ${(p) => p.theme.purple["+1"]};
+  color: ${(p) => p.theme.light["0"]};
   font-weight: bold;
   font-size: 14px;
 `;
@@ -193,7 +193,7 @@ const Arrow = styled(ArrowIcon)`
 
   transform: ${({ active }: { active: boolean }) =>
     active ? "rotate(90deg)" : "rotate(0deg)"};
-  color: ${(p) => (p.active ? p.theme.pink["+2"] : p.theme.grey["-1"])};
+  color: ${(p) => (p.active ? p.theme.light["0"] : p.theme.light["-5"])};
   transition: all 0.1s;
 `;
 
@@ -203,7 +203,7 @@ const Typename = styled.div`
   margin-bottom: 0.15rem;
   margin-top: -0.1rem;
   padding: 3px 5px;
-  border: 1px solid ${(p) => `${p.theme.grey["-1"]}50`};
+  border: 1px solid ${(p) => `${p.theme.grey["-1"]}`};
   border-radius: 2px;
   background-color: ${(p) => p.theme.dark["-1"]};
   color: ${(p) => p.theme.grey["+2"]};

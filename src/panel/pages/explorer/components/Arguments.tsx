@@ -87,7 +87,7 @@ const ArgsContainer = styled.div`
 `;
 
 const ArgKey = styled.span`
-  color: ${(p) => p.theme.pink["0"]};
+  color: ${(p) => p.theme.grey["+2"]};
 `;
 
 const ArgWrapper = styled.span`

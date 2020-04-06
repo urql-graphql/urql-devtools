@@ -108,7 +108,7 @@ const ObjectValue: FC<{ value: object; expand: boolean }> = ({
 };
 
 export const Key = styled.span`
-  color: ${(p) => p.theme.pink["0"]};
+  color: ${(p) => p.theme.grey["+4"]};
 `;
 
 export const Symbol = styled.span`
