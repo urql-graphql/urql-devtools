@@ -6,6 +6,7 @@ import { Tree, NodeInfoPane } from "./components";
 
 export const Explorer: FC<ComponentProps<typeof Container>> = (props) => {
   const { operations } = useContext(ExplorerContext);
+  console.log(operations);
 
   return (
     <Container {...props}>

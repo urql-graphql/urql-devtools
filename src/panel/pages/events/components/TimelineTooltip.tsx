@@ -39,9 +39,9 @@ export const TimelineTooltip: FC<
 
 const TooltipElement = styled.p<{ position?: TooltipPosition; offset: number }>`
   position: relative;
-  background-color: ${(p) => p.theme.dark["-3"]};
+  background-color: ${(p) => p.theme.dark["+3"]};
   border-radius: 2px;
-  color: #fff;
+  color: ${(p) => p.theme.light["0"]};
   font-size: 12px;
   margin: 0;
   padding: 10px 20px;
@@ -51,7 +51,7 @@ const TooltipElement = styled.p<{ position?: TooltipPosition; offset: number }>`
     content: "";
     display: block;
     position: absolute;
-    border-top: 9px solid ${(p) => p.theme.dark["-3"]};
+    border-top: 9px solid ${(p) => p.theme.dark["+3"]};
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     margin-top: -1px;

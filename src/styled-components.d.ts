@@ -1,30 +1,14 @@
 import "styled-components";
+import { theme } from "./panel/theme";
+
+type Theme = typeof theme;
 
 declare module "styled-components" {
-  interface Breakpoint {
-    min: string;
-    max: string;
-  }
-
-  type ColorRange = {
-    "-3": string;
-    "-2": string;
-    "-1": string;
-    "0": string;
-    "+1": string;
-    "+2": string;
-    "+3": string;
-  };
-
+  /* eslint-disable-next-line */
+  // export interface DefaultTheme extends Theme {}
   export interface DefaultTheme {
-    grey: Omit<ColorRange, "-3" | "-2">;
-    dark: Omit<ColorRange, "+3">;
-    blue: Omit<ColorRange, "-3" | "+1" | "+2" | "+3">;
-    green: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+2" | "+3">;
-    red: Omit<ColorRange, "-3" | "-2" | "-1" | "+2" | "+3">;
-    orange: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+2" | "+3">;
-    purple: Omit<ColorRange, "-3" | "-2" | "-1" | "+2" | "+3">;
-    pink: Omit<ColorRange, "-3" | "-2" | "-1" | "+1" | "+3">;
-    border: string;
+    [key: string]: {
+      [key: string]: string;
+    };
   }
 }

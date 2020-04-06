@@ -3,12 +3,9 @@ import styled from "styled-components";
 export const TimelineSourceIcon = styled.div<{
   kind: "query" | "mutation" | "subscription";
 }>`
-  background-color: ${({ kind, theme }) => {
-    const [color, index] = colors[kind];
-    return (theme as any)[color][index];
-  }};
+  background-color: ${(p) => p.theme.light["0"]};
+  color: ${(p) => p.theme.dark["0"]};
   cursor: pointer;
-  color: #fff;
   height: 20px;
   line-height: 20px;
   text-align: center;
@@ -18,9 +15,3 @@ export const TimelineSourceIcon = styled.div<{
     content: "${({ kind }) => kind[0].toUpperCase()}";
   }
 `;
-
-const colors = {
-  query: ["blue", "-1"],
-  mutation: ["green", "0"],
-  subscription: ["red", "0"],
-};
