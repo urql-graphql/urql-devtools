@@ -19,10 +19,10 @@ module.exports = {
     background: `${__dirname}/src/background/background.ts`,
     devtools: `${__dirname}/src/devtools/devtools.ts`,
     panel: `${__dirname}/src/panel/panel.tsx`,
-    content_script: `${__dirname}/src/content_script/index.ts`,
+    content_script: `${__dirname}/src/content_script/index.ts`
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx"],
+    extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx"]
   },
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   optimization: {
@@ -34,39 +34,42 @@ module.exports = {
         terserOptions: {
           output: {
             ascii_only: true,
-            comments: false,
-          },
-        },
-      }),
-    ],
+            comments: false
+          }
+        }
+      })
+    ]
   },
   output: {
     path: `${__dirname}/dist`,
-    devtoolModuleFilenameTemplate: (info) =>
-      `urql-devtools:///${info.resourcePath}`,
+    devtoolModuleFilenameTemplate: info =>
+      `urql-devtools:///${info.resourcePath}`
   },
   module: {
     rules: [
       {
         test: /\.*tsx?$/,
-        loader: "awesome-typescript-loader",
+        loader: "awesome-typescript-loader"
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader"]
       },
       {
         test: /\.svg$/,
-        use: ["svg-react-loader"],
-      },
-    ],
+        use: ["svg-react-loader"]
+      }
+    ]
   },
   plugins: [
     new webpack.ContextReplacementPlugin(
       /graphql-language-service-interface[\/\\]dist/,
       /\.js$/
     ),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ["**/*"],
+      cleanAfterEveryBuildPatterns: ["!*", "!*/**"]
+    }),
     new CopyWebpackPlugin(
       [
         { from: "src/assets/", to: "assets/" },
@@ -77,26 +80,26 @@ module.exports = {
               JSON.stringify(
                 {
                   ...JSON.parse(content.toString()),
-                  version: process.env.npm_package_version,
+                  version: process.env.npm_package_version
                 },
                 null,
                 2
               )
             );
-          },
-        },
+          }
+        }
       ],
       { copyUnmodified: true }
     ),
     new HtmlWebpackPlugin({
       template: `${__dirname}/src/devtools/devtools.html`,
       filename: "devtools.html",
-      chunks: ["devtools"],
+      chunks: ["devtools"]
     }),
     new HtmlWebpackPlugin({
       template: `${__dirname}/src/panel/panel.html`,
       filename: "panel.html",
-      chunks: ["panel"],
-    }),
-  ],
+      chunks: ["panel"]
+    })
+  ]
 };
