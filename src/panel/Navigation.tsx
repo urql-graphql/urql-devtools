@@ -24,7 +24,7 @@ const Container = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.dark["0"]};
   border-bottom: solid 1px ${(p) => p.theme.dark["+4"]};
-  height: 35px;
+  height: 30px;
   top: 0;
   left: 0;
   right: 0;
@@ -35,9 +35,9 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     height: 100%;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 400;
-    padding: 0 20px;
+    padding: 0 15px;
 
     &.active {
       color: ${(p) => p.theme.light["0"]};

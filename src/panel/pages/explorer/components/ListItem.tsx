@@ -205,7 +205,7 @@ const Typename = styled.div`
   padding: 3px 5px;
   border: 1px solid ${(p) => `${p.theme.grey["-1"]}`};
   border-radius: 2px;
-  background-color: ${(p) => p.theme.dark["-1"]};
+  background-color: ${(p) => p.theme.dark["+1"]};
   color: ${(p) => p.theme.grey["+2"]};
   font-size: 11px;
   line-height: 1rem;

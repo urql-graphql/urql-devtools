@@ -101,7 +101,7 @@ const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
 );
 
 const Container = styled(Pane)`
-  background-color: ${(p) => p.theme.dark["-3"]};
+  background-color: ${(p) => p.theme.dark["+3"]};
 `;
 
 const Body = styled(Pane.Body)`
