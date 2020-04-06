@@ -55,7 +55,9 @@ export const RequestProvider: FC = ({ children }) => {
         return;
       }
 
-      if (debugEvent.type === "response") {
+      console.log(debugEvent);
+
+      if (debugEvent.type === "update") {
         setState({
           fetching: false,
           response: debugEvent.data.value,
