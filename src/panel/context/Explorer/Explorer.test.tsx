@@ -71,7 +71,7 @@ describe("DebugMessage", () => {
     expect(handleResponse).toHaveBeenCalledWith(
       expect.objectContaining({
         operation: defaultEvents[0].data.operation,
-        data: defaultEvents[0].data.data,
+        data: defaultEvents[0].data.data.value,
       })
     );
   });
