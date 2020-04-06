@@ -12,13 +12,19 @@ const Wrapper = styled.div`
 `;
 
 const MockTimelineProvider: FC = ({ children }) => {
-  const [filter, setFilter] = useState({ source: ["devtoolsExchange"] });
+  const [filter, setFilter] = useState({
+    source: ["devtoolsExchange"],
+    graphqlType: ["query", "mutation", "subscription"],
+  });
 
   const value = useMemo(
     () => ({
       filter,
       setFilter,
-      exchanges: ["devtoolsExchange", "fetchExchange", "graphCacheExchange"],
+      filterables: {
+        source: ["devtoolsExchange", "fetchExchange", "graphCacheExchange"],
+        graphqlType: ["query", "mutation", "subscription"],
+      },
     }),
     [filter]
   );
