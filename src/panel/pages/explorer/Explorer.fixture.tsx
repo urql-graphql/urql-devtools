@@ -43,18 +43,20 @@ export const defaultEvents: DebugMessage[] = [
         },
       },
       data: {
-        todos: [
-          {
-            id: 1234,
-            content: "My todo",
-            __typename: "Todo",
-          },
-          {
-            id: 5678,
-            content: "My other todo",
-            __typename: "Todo",
-          },
-        ],
+        value: {
+          todos: [
+            {
+              id: 1234,
+              content: "My todo",
+              __typename: "Todo",
+            },
+            {
+              id: 5678,
+              content: "My other todo",
+              __typename: "Todo",
+            },
+          ],
+        },
       },
     },
   },
@@ -100,13 +102,15 @@ export default {
             data: {
               ...event.data,
               data: {
-                todos: [
-                  {
-                    id: 123,
-                    content: content.toString(),
-                    __typename: "Todo",
-                  },
-                ],
+                value: {
+                  todos: [
+                    {
+                      id: 123,
+                      content: content.toString(),
+                      __typename: "Todo",
+                    },
+                  ],
+                },
               },
             },
           };

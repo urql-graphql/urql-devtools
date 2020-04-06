@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ComponentProps } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
@@ -8,8 +8,8 @@ const navItems = [
   { link: "/request", label: "Request" },
 ];
 
-export const Navigation = () => (
-  <Container>
+export const Navigation: FC<ComponentProps<typeof Container>> = (props) => (
+  <Container {...props}>
     {navItems.map((item, index) => (
       <NavLink key={index} to={item.link}>
         {item.label}

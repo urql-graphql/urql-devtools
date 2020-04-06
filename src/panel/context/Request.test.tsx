@@ -120,7 +120,7 @@ describe("on debug message", () => {
     });
   });
 
-  describe("on response", () => {
+  describe("on update", () => {
     const response = { test: "response" };
 
     beforeEach(() => {
@@ -130,7 +130,7 @@ describe("on debug message", () => {
         handler({
           type: "debug",
           data: {
-            type: "response",
+            type: "update",
             operation: {
               context: {
                 meta: {

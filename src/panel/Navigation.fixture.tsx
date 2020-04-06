@@ -2,5 +2,5 @@ import React from "react";
 import { Navigation } from "./Navigation";
 
 export default {
-  basic: <Navigation />,
+  basic: <Navigation data-snapshot />,
 };
