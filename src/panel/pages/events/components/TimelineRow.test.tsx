@@ -16,6 +16,7 @@ describe("on fetching", () => {
   describe("network duration", () => {
     it("is fetching", () => {
       const fixtures = require("./TimelineRow.fixture").default;
+      dateNow.mockReturnValue(5000);
       const wrapper = mount(
         <ThemeDecorator>{fixtures["network fetching"]}</ThemeDecorator>
       );
@@ -36,7 +37,7 @@ describe("on fetching", () => {
           "bottom": 0,
           "left": 0,
           "position": "absolute",
-          "right": 300,
+          "right": 280,
         }
       `);
     });
