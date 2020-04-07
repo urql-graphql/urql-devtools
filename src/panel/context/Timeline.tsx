@@ -132,8 +132,8 @@ const useTimelineDomain = () => {
     const delta = e.deltaY * 0.01;
     const newZoom =
       e.deltaY < 0
-        ? Math.max(0.2, domain.current.zoom + delta)
-        : Math.min(3, domain.current.zoom + delta);
+        ? Math.max(0.05, domain.current.zoom + delta)
+        : Math.min(5, domain.current.zoom + delta);
     const endTime = domain.current.start + domain.current.zoom * DEFAULT_WIDTH;
     const scale = scaleLinear()
       .domain([domain.current.start, endTime])
@@ -179,8 +179,8 @@ const useTimelineDomain = () => {
     ref.current.addEventListener("dragstart", dragStartListener);
 
     return () => {
-      ref.current.removeEventListener("dragstart", dragStartListener);
-      ref.current.removeEventListener("mousemove", mouseMoveListener);
+      ref.current?.removeEventListener("dragstart", dragStartListener);
+      ref.current?.removeEventListener("mousemove", mouseMoveListener);
       window.removeEventListener("mouseup", mouseUpListener);
     };
   }, [ref.current]);
