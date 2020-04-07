@@ -144,8 +144,8 @@ const defaultEvents: DebugEvent[] = [
   {
     type: "debug",
     data: {
-      type: "teardown",
-      message: "A teardown was triggered on the stream",
+      type: "update",
+      message: "An update was triggered on the stream",
       operation: operation2,
       source: "devtoolsExchange",
     },

@@ -108,11 +108,19 @@ export const TimelineRow: FC<
       return p;
     };
 
+    /** Semaphore */
+    let activeMutations = 0;
+
     // Alive durations
     const reduceAlive = <T extends string>(
       p: ReduceState,
       e: DebugEvent<T>
     ) => {
+      // Semaphore addition
+      if (e.operation.operationName === "mutation" && e.type === "execution") {
+        activeMutations++;
+      }
+
       // First event to start timeline duration
       if (p.start === undefined && e.type !== "teardown") {
         return {
@@ -121,8 +129,24 @@ export const TimelineRow: FC<
         };
       }
 
+      if (p.start === undefined) {
+        return p;
+      }
+
+      const isMutationResponse =
+        e.operation.operationName === "mutation" &&
+        (e.type === "update" || e.type === "error");
+
+      // Semaphore removal
+      if (isMutationResponse) {
+        activeMutations = Math.max(0, activeMutations - 1);
+      }
+
       // End of timeline duration
-      if (p.start && e.type === "teardown") {
+      if (
+        e.type === "teardown" ||
+        (isMutationResponse && activeMutations === 0)
+      ) {
         return {
           start: undefined,
           elements: [
