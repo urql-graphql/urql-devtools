@@ -27,9 +27,17 @@ export const Settings: FC<ComponentProps<typeof Container>> = (props) => {
   return (
     <Container {...props}>
       <TopRow>
-        <Icon icon={faCog} onClick={handleExpandToggle} />
-        <Icon icon={faFastBackward} onClick={handleBackClick} />
-        <Icon icon={faFastForward} onClick={handleForwardClick} />
+        <Icon title="Show filters" icon={faCog} onClick={handleExpandToggle} />
+        <Icon
+          title="Back to start [Home]"
+          icon={faFastBackward}
+          onClick={handleBackClick}
+        />
+        <Icon
+          title="Forward to current time [End]"
+          icon={faFastForward}
+          onClick={handleForwardClick}
+        />
       </TopRow>
       <Content collapsed={collapsed}>
         <Filter />
@@ -69,6 +77,7 @@ export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
         {filterables.graphqlType.map((e) => (
           <FilterButton
             key={e}
+            title="Toggle Graphql operation type"
             role="checkbox"
             aria-selected={filter.graphqlType.includes(e)}
             onClick={handleTypeToggle(e)}
@@ -81,6 +90,7 @@ export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
         {filterables.source.map((e) => (
           <FilterButton
             key={e}
+            title="Toggle debug event source"
             role="checkbox"
             aria-selected={filter.source.includes(e)}
             onClick={handleSourceToggle(e)}
