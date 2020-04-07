@@ -51,6 +51,7 @@ jobs:
       - run: TZ=Europe/London yarn run test --coverage
 
   visual regression:
+    parallelism: 4
     machine:
       image: ubuntu-1604:201903-01
     steps:
