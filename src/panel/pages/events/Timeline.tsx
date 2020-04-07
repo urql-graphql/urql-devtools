@@ -16,6 +16,7 @@ export const Timeline: FC = () => {
     container,
     selectedEvent,
     setSelectedEvent,
+    setPosition,
     filter,
   } = useTimelineContext();
   const [selectedSource, setSelectedSource] = useState<Operation | undefined>();
@@ -33,6 +34,24 @@ export const Timeline: FC = () => {
       setSelectedEvent(undefined);
     }
   }, [selectedSource]);
+
+  // Add keyboard shortcut listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Back to beginning
+      if (e.key === "Home") {
+        setPosition(startTime);
+      }
+
+      // Skip to current time
+      if (e.key === "End") {
+        setPosition(Date.now());
+      }
+    };
+
+    addEventListener("keydown", handleKeyDown, { passive: true });
+    return () => removeEventListener("keydown", handleKeyDown);
+  }, [setPosition, startTime]);
 
   const ticks = useMemo(
     () =>
