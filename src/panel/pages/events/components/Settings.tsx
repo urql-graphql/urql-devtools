@@ -39,9 +39,9 @@ export const Settings: FC<ComponentProps<typeof Container>> = (props) => {
 };
 
 export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
-  const { exchanges, filter, setFilter } = useTimelineContext();
+  const { filterables, filter, setFilter } = useTimelineContext();
 
-  const handleFilterToggle = useCallback(
+  const handleSourceToggle = useCallback(
     (v: string) => () =>
       setFilter((state) => ({
         ...state,
@@ -52,18 +52,43 @@ export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
     [setFilter]
   );
 
+  const handleTypeToggle = useCallback(
+    (v: string) => () =>
+      setFilter((state) => ({
+        ...state,
+        graphqlType: state.graphqlType.includes(v)
+          ? state.graphqlType.filter((f) => f !== v)
+          : [...state.graphqlType, v],
+      })),
+    [setFilter]
+  );
+
   return (
     <FilterList {...props}>
-      {exchanges.map((e) => (
-        <FilterButton
-          key={e}
-          role="checkbox"
-          aria-selected={filter.source.includes(e)}
-          onClick={handleFilterToggle(e)}
-        >
-          {e.replace(/Exchange$/, "")}
-        </FilterButton>
-      ))}
+      <FilterGroup>
+        {filterables.graphqlType.map((e) => (
+          <FilterButton
+            key={e}
+            role="checkbox"
+            aria-selected={filter.graphqlType.includes(e)}
+            onClick={handleTypeToggle(e)}
+          >
+            {e}
+          </FilterButton>
+        ))}
+      </FilterGroup>
+      <FilterGroup>
+        {filterables.source.map((e) => (
+          <FilterButton
+            key={e}
+            role="checkbox"
+            aria-selected={filter.source.includes(e)}
+            onClick={handleSourceToggle(e)}
+          >
+            {e.replace(/Exchange$/, "")}
+          </FilterButton>
+        ))}
+      </FilterGroup>
     </FilterList>
   );
 };
@@ -74,13 +99,24 @@ const FilterList = styled.div`
   margin-top: 5px;
 `;
 
+const FilterGroup = styled.div`
+  margin: 5px 0;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+
+  & + & {
+    border-left: solid 2px ${(p) => p.theme.dark["+8"]};
+  }
+`;
+
 const FilterButton = styled.button`
   background: ${(props) => props.theme.dark["+6"]};
   color: ${(p) => p.theme.grey["0"]};
   padding: 5px 10px;
   border: none;
   font-size: 12px;
-  margin: 5px;
+  margin: 0 5px;
   border-radius: 2px;
   font-weight: bold;
   cursor: pointer;

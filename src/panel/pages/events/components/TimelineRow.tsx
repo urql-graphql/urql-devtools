@@ -205,7 +205,6 @@ const Container = styled.div`
   position: relative;
   height: 20px;
   padding-top: 8px;
-  margin-top: 30px;
 
   & + & {
     margin-top: 8px;

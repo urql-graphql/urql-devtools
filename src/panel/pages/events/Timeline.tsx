@@ -16,6 +16,7 @@ export const Timeline: FC = () => {
     container,
     selectedEvent,
     setSelectedEvent,
+    filter,
   } = useTimelineContext();
   const [selectedSource, setSelectedSource] = useState<Operation | undefined>();
 
@@ -102,12 +103,20 @@ export const Timeline: FC = () => {
           {ticks.map((t, i) => (
             <Tick key={`p-${i}`} label={t.label} style={{ left: t.position }} />
           ))}
-          {Object.entries(events).map(([key, eventList]) => (
-            <TimelineRow key={key} events={eventList} />
+          {Object.entries(events).map(([key, eventList], i) => (
+            <TimelineRow
+              key={key}
+              events={eventList}
+              style={{
+                display: filter.graphqlType.includes(sources[i].operationName)
+                  ? undefined
+                  : "none",
+              }}
+            />
           ))}
         </>
       ),
-    [container, events, ticks]
+    [container, events, ticks, sources]
   );
 
   return (
@@ -124,6 +133,11 @@ export const Timeline: FC = () => {
                     s.operationName === "teardown" ? "query" : s.operationName
                   }
                   onClick={handleSourceClick(s)}
+                  style={{
+                    display: filter.graphqlType.includes(s.operationName)
+                      ? undefined
+                      : "none",
+                  }}
                 />
               ))}
             </TimelineIcons>
@@ -170,11 +184,8 @@ const TimelineIcons = styled.div`
   flex-direction: column;
   align-items: center;
   width: 40px;
+  padding-top: 78px;
   z-index: 1;
-
-  > :first-child {
-    margin-top: 78px;
-  }
 
   > * {
     margin-bottom: 16px;
@@ -193,7 +204,7 @@ const TimelineList = styled.div`
   flex-direction: column;
   flex-grow: 1;
   position: relative;
-  padding: 40px 0;
+  padding: 70px 0;
   overflow: hidden;
   &:active {
     cursor: grabbing;

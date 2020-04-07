@@ -27,7 +27,6 @@ exports[`on fetching matches snapshot 1`] = `
   position: relative;
   height: 20px;
   padding-top: 8px;
-  margin-top: 30px;
 }
 
 .c3 + .c2 {

@@ -21,8 +21,14 @@ interface TimelineContextValue {
   container: HTMLDivElement;
   setContainer: (e: HTMLDivElement) => void;
   events: Record<string, DebugEvent[]>;
-  exchanges: string[];
-  filter: { source: string[] };
+  filterables: {
+    source: string[];
+    graphqlType: string[];
+  };
+  filter: {
+    source: string[];
+    graphqlType: string[];
+  };
   setFilter: Dispatch<SetStateAction<TimelineContextValue["filter"]>>;
   setPosition: (time: number) => void;
   scale: ScaleLinear<number, number>;
@@ -235,9 +241,15 @@ const useTimelineDomain = () => {
 export const TimelineProvider: FC = ({ children }) => {
   const { addMessageHandler } = useContext(DevtoolsContext);
   const domain = useTimelineDomain();
-  const [exchanges, setExchanges] = useState<string[]>([]);
-  const [filter, setFilter] = useState<{ source: string[] }>({
+  const [filterables, setFilterables] = useState<
+    TimelineContextValue["filterables"]
+  >({
     source: ["devtoolsExchange"],
+    graphqlType: ["query", "subscription", "mutation"],
+  });
+  const [filter, setFilter] = useState<TimelineContextValue["filter"]>({
+    source: ["devtoolsExchange"],
+    graphqlType: ["query", "subscription", "mutation"],
   });
   const [events, setEvents] = useState<Record<string, DebugEvent[]>>({});
   const [selectedEvent, setSelectedEvent] = useState<DebugEvent | undefined>(
@@ -257,9 +269,12 @@ export const TimelineProvider: FC = ({ children }) => {
         ...e,
         [opKey]: [...(e[opKey] || []), message.data],
       }));
-      setExchanges((e) =>
-        e.includes(debugEvent.source) ? e : [...e, debugEvent.source]
-      );
+      setFilterables((f) => ({
+        ...f,
+        source: f.source.includes(debugEvent.source)
+          ? f.source
+          : [...f.source, debugEvent.source],
+      }));
     });
   }, [addMessageHandler]);
 
@@ -268,7 +283,7 @@ export const TimelineProvider: FC = ({ children }) => {
       events,
       setFilter,
       filter,
-      exchanges,
+      filterables,
       selectedEvent,
       setSelectedEvent,
       ...domain,
