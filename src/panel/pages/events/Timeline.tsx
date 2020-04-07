@@ -129,6 +129,7 @@ export const Timeline: FC = () => {
               {sources.map((s) => (
                 <TimelineSourceIcon
                   key={s.key}
+                  title="Source operation"
                   kind={
                     s.operationName === "teardown" ? "query" : s.operationName
                   }
