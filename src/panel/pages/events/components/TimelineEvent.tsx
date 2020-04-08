@@ -1,4 +1,10 @@
-import React, { FC, useMemo, useState, ComponentProps } from "react";
+import React, {
+  FC,
+  useMemo,
+  useState,
+  ComponentProps,
+  useCallback,
+} from "react";
 import styled from "styled-components";
 import { DebugEvent } from "@urql/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -79,6 +85,8 @@ export const TimelineEventGroup: FC<ComponentProps<typeof Svg>> = ({
   const { ref, tooltipProps } = useTooltip();
   const [isExpanded, setExpanded] = useState(false);
 
+  const handleMouseLeave = useCallback(() => setExpanded(false), []);
+
   return (
     <>
       <SvgContainer ref={ref} {...props}>
@@ -89,7 +97,11 @@ export const TimelineEventGroup: FC<ComponentProps<typeof Svg>> = ({
           style={{ width: 10, height: 10 }}
         />
       </SvgContainer>
-      {isExpanded && <EventPopout {...tooltipProps}>{children}</EventPopout>}
+      {isExpanded && (
+        <EventPopout {...tooltipProps} onMouseLeave={handleMouseLeave}>
+          {children}
+        </EventPopout>
+      )}
     </>
   );
 };

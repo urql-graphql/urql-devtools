@@ -31,7 +31,7 @@ export const TimelineRow: FC<
           if (
             scale(event.timestamp) -
               scale(groups[previousIndex][0].event.timestamp) <
-            15
+            5
           ) {
             return [
               ...groups.slice(0, previousIndex),

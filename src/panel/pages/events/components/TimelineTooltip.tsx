@@ -8,6 +8,7 @@ import React, {
   ComponentProps,
 } from "react";
 import styled from "styled-components";
+import { Portal } from "../../../components/TooltipPortal";
 
 export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
   children,
@@ -35,18 +36,20 @@ export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
   }, [styleProp, ref]);
 
   return (
-    <TooltipElement
-      {...props}
-      ref={ref}
-      offset={offset}
-      style={{ ...styleProp, marginLeft: offset }}
-    >
-      {children}
-    </TooltipElement>
+    <Portal>
+      <TooltipElement
+        {...props}
+        ref={ref}
+        data-offset={offset}
+        style={{ ...styleProp, marginLeft: offset }}
+      >
+        {children}
+      </TooltipElement>
+    </Portal>
   );
 };
 
-const TooltipElement = styled.p<{ offset: number }>`
+const TooltipElement = styled.div`
   position: relative;
   background-color: ${(p) => p.theme.dark["+3"]};
   border-radius: 2px;
@@ -64,7 +67,7 @@ const TooltipElement = styled.p<{ offset: number }>`
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     margin-top: -1px;
-    left: calc(50% - ${(p) => p.offset}px);
+    left: calc(50% - ${(p) => p["data-offset"]}px);
     top: 100%;
     transform: translate(-50%, 0);
   }
@@ -86,15 +89,13 @@ export const useTooltip = () => {
 
     const { x, y, width } = ref.current.getBoundingClientRect();
 
-    console.log(x, y);
     setTooltipProps({
       style: {
         position: "fixed",
-        // * 12px for event size
+        // 12px for event size
         left: width > 12 ? mouseX.current : x + width / 2,
         bottom: window.innerHeight - y + 10,
         transform: `translateX(-50%)`,
-        zIndex: 100,
       },
     });
   }, []);
