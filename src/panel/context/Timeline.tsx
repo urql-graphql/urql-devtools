@@ -265,7 +265,6 @@ export const TimelineProvider: FC = ({ children }) => {
       const debugEvent = message.data;
       const opKey = debugEvent.operation.key;
 
-      console.log(message);
       setEvents((e) => ({
         ...e,
         [opKey]: [...(e[opKey] || []), message.data],

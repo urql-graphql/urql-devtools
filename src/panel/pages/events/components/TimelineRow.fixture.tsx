@@ -205,7 +205,7 @@ export default {
                   type: "fetchRequest",
                   message: "An update occured",
                   timestamp: Date.now(),
-                  source: "devtoolsExchange",
+                  source: "fetchExchange",
                   operation: {
                     operationName: "query",
                   },

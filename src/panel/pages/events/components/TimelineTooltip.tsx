@@ -8,7 +8,7 @@ import React, {
   ComponentProps,
 } from "react";
 import styled from "styled-components";
-import { Portal } from "../../../components/TooltipPortal";
+import { Portal } from "../../../components";
 
 export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
   children,
