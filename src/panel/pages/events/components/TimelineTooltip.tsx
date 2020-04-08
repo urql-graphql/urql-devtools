@@ -15,6 +15,7 @@ export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
   style: styleProp,
   ...props
 }) => {
+  const previousOffset = useRef(0);
   const ref = useRef<HTMLDivElement>(null);
 
   const offset = useMemo(() => {
@@ -25,22 +26,26 @@ export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
     const { left, right } = ref.current.getBoundingClientRect();
 
     if (left < 0) {
-      return Math.abs(left) + 8;
+      console.log("LESS THAN 0", left);
+      return Math.abs(left) + 10;
     }
 
     if (right > window.innerWidth) {
+      console.log("LESS THAN RIGHT");
       return window.innerWidth - right - 9;
     }
 
-    return 0;
+    return previousOffset.current;
   }, [styleProp, ref]);
+
+  previousOffset.current = offset;
 
   return (
     <Portal>
       <TooltipElement
         {...props}
         ref={ref}
-        data-offset={offset}
+        positionOffset={offset}
         style={{ ...styleProp, marginLeft: offset }}
       >
         {children}
@@ -49,7 +54,7 @@ export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
   );
 };
 
-const TooltipElement = styled.div`
+const TooltipElement = styled.div<{ positionOffset: number }>`
   position: relative;
   background-color: ${(p) => p.theme.dark["+3"]};
   border-radius: 2px;
@@ -67,7 +72,7 @@ const TooltipElement = styled.div`
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     margin-top: -1px;
-    left: calc(50% - ${(p) => p["data-offset"]}px);
+    left: calc(50% - ${(p) => p.positionOffset}px);
     top: 100%;
     transform: translate(-50%, 0);
   }
