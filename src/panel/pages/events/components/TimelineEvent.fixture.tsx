@@ -68,7 +68,12 @@ export default {
   ),
   group: (
     <Wrapper>
-      <TimelineEventGroup data-snapshot {...props} event={otherEvent}>
+      <TimelineEventGroup
+        data-snapshot
+        {...props}
+        style={{ height: "min-content" }}
+        event={otherEvent}
+      >
         <TimelineEvent data-snapshot {...props} event={executionEvent} />
         <TimelineEvent data-snapshot {...props} event={updateEvent} />
       </TimelineEventGroup>

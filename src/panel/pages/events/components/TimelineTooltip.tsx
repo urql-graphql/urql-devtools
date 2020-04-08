@@ -26,13 +26,11 @@ export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
     const { left, right } = ref.current.getBoundingClientRect();
 
     if (left < 0) {
-      console.log("LESS THAN 0", left);
       return Math.abs(left) + 10;
     }
 
     if (right > window.innerWidth) {
-      console.log("LESS THAN RIGHT");
-      return window.innerWidth - right - 9;
+      return window.innerWidth - right - 10;
     }
 
     return previousOffset.current;

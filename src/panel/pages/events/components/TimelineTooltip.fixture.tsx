@@ -33,7 +33,7 @@ const HoverableItem = () => {
 
 export default {
   basic: (
-    <Wrapper>
+    <Wrapper id="portal">
       <TimelineTooltip data-snapshot>
         A network response or cache update
       </TimelineTooltip>
