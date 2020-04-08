@@ -1,4 +1,4 @@
-import React, { FC, useMemo, ComponentProps } from "react";
+import React, { FC, useMemo, ComponentProps, cloneElement } from "react";
 import styled from "styled-components";
 import { DebugEvent } from "@urql/core";
 import { useTimelineContext } from "../../../context";
@@ -29,7 +29,7 @@ export const TimelineRow: FC<
               position: "absolute",
               left: scale(e.timestamp),
               transform: "translateX(-50%) translateY(-50%)",
-              visibility: filter.source.includes(e.source) || "hidden",
+              display: filter.source.includes(e.source) ? undefined : "none",
             }}
           />,
         ];
@@ -219,8 +219,31 @@ export const TimelineRow: FC<
 
   return (
     <Container {...props}>
-      <>{durationElements}</>
-      <>{eventElements}</>
+      <>
+        {durationElements
+          .filter(
+            (e) =>
+              e.props.style.right < container.clientWidth &&
+              e.props.style.left < container.clientWidth
+          )
+          .map((e) =>
+            cloneElement(e, {
+              ...e.props,
+              style: {
+                ...e.props.style,
+                left: Math.max(0, e.props.style.left),
+                right: Math.max(0, e.props.style.right),
+              },
+            })
+          )}
+      </>
+      <>
+        {eventElements.filter(
+          (e) =>
+            e.props.style.left > -20 &&
+            e.props.style.left < container.clientWidth + 20
+        )}
+      </>
     </Container>
   );
 };
