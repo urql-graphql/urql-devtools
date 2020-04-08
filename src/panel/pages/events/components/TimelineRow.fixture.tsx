@@ -7,7 +7,7 @@ import { TimelineRow } from "./TimelineRow";
 const Wrapper = styled.div`
   display: flex;
   flex-grow: 1;
-  padding: 20px;
+  padding: 70px;
   flex-direction: column;
   background: ${(props) => props.theme.dark["0"]};
 `;
