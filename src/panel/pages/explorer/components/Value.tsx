@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { animated } from "react-spring";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { useFlash } from "../hooks";
+import { CodeHighlight, InlineCodeHighlight } from "../../../components";
 
 export const Value: FC<
   {
@@ -31,11 +32,18 @@ export const Value: FC<
     }
 
     if (typeof value === "object" && !!value) {
-      return <ObjectValue {...props} value={value as object} />;
+      return (
+        <CodeHighlight code={JSON.stringify(value, null, 2)} language="json" />
+      );
     }
 
     if (typeof value === "string") {
-      return <DescribedValue>{`"${value}"`}</DescribedValue>;
+      return (
+        <InlineCodeHighlight
+          code={JSON.stringify(value, null, 2)}
+          language="json"
+        />
+      );
     }
 
     return <DescribedValue>{`${value}`}</DescribedValue>;
@@ -78,35 +86,6 @@ const ArrayValue: FC<{ value: any[]; expand: boolean }> = ({
   return <DescribedValue>{`Array (${value.length})`}</DescribedValue>;
 };
 
-const ObjectValue: FC<{ value: object; expand: boolean }> = ({
-  value,
-  expand,
-}) => {
-  const entries = Object.entries(value);
-
-  if (entries.length === 0) {
-    return <>{"{}"}</>;
-  }
-
-  if (expand) {
-    return (
-      <Wrapper>
-        {"{"}
-        {entries.map(([k, v]) => (
-          <Container key={k}>
-            <Key>{k}</Key>
-            <Symbol>:</Symbol>
-            <Value isRoot={false} value={v} expand={expand} />
-          </Container>
-        ))}
-        {"}"}
-      </Wrapper>
-    );
-  }
-
-  return <DescribedValue>{`Object`}</DescribedValue>;
-};
-
 export const Key = styled.span`
   color: ${(p) => p.theme.grey["+4"]};
 `;
@@ -116,15 +95,6 @@ export const Symbol = styled.span`
 
   &:last-of-type {
     margin-right: 0;
-  }
-`;
-
-const Container = styled.span``;
-
-const Wrapper = styled.div`
-  & > ${Container} {
-    display: block;
-    padding-left: 1rem;
   }
 `;
 

@@ -11,9 +11,9 @@ import styled, { css } from "styled-components";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { ExplorerContext } from "../../../context";
 import { useFlash } from "../hooks";
+import { InlineCodeHighlight } from "../../../components";
 import { ArrowIcon } from "./Icons";
 import { Arguments } from "./Arguments";
-import { Value } from "./Value";
 import { Tree } from "./Tree";
 
 interface ListItemProps {
@@ -52,20 +52,6 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
     [isExpanded, node]
   );
 
-  const contents = (
-    <>
-      <Name>{node.name}</Name>
-      <Arguments args={node.args} displayAll={isExpanded} />
-      <Symbol>{`:`}</Symbol>
-      <ValueWrapper>
-        <Value
-          value={node.children !== undefined ? node.children : node.value}
-          expand={true}
-        />
-      </ValueWrapper>
-    </>
-  );
-
   if (
     (Array.isArray(node.children) && node.children.length > 0) ||
     node.children
@@ -76,7 +62,7 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
           <OutlineContainer style={flashStyle} isActive={isExpanded}>
             <Arrow active={isExpanded} />
             <ChildrenName>{node.name}</ChildrenName>
-            <Arguments args={node.args} displayAll={isExpanded} />
+            <Arguments args={node.args} />
           </OutlineContainer>
         </FieldContainer>
         {isExpanded && <Tree nodeMap={node.children} depth={depth + 1} />}
@@ -84,20 +70,39 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
     );
   }
 
-  return (
-    <Item role="treeitem" withChildren={false}>
-      {node.args ? (
+  const contents = (
+    <ListItemKeyVal>
+      <Name>{node.name}</Name>
+      {": "}
+      <InlineCodeHighlight
+        code={JSON.stringify(node.children || node.value) || "undefined"}
+        language="json"
+      />
+    </ListItemKeyVal>
+  );
+
+  if (node.args) {
+    return (
+      <Item role="treeitem" withChildren={false}>
         <FieldContainer onClick={handleFieldContainerClick}>
           <OutlineContainer style={flashStyle} isActive={isExpanded}>
             {contents}
           </OutlineContainer>
         </FieldContainer>
-      ) : (
-        <>{contents}</>
-      )}
+      </Item>
+    );
+  }
+
+  return (
+    <Item role="treeitem" withChildren={false}>
+      {contents}
     </Item>
   );
 };
+
+const ListItemKeyVal = styled.div`
+  margin: 0;
+`;
 
 export const SystemListItem = ({
   node,
@@ -152,6 +157,10 @@ const FieldContainer = styled.button`
 `;
 
 const OutlineContainer = styled(animated.div)`
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  align-items: center;
   position: absolute;
   bottom: 0;
   top: 0;
@@ -170,24 +179,22 @@ const OutlineContainer = styled(animated.div)`
 `;
 
 const Name = styled.span`
-  color: ${(p) => p.theme.light["0"]};
+  color: ${(p) => p.theme.light["-4"]};
 `;
 
 const ChildrenName = styled.span`
-  position: relative;
+  flex-shrink: 0;
   margin-right: 3px;
-  display: inline-block;
   color: ${(p) => p.theme.light["0"]};
   font-weight: bold;
   font-size: 14px;
 `;
 
 const Arrow = styled(ArrowIcon)`
-  display: inline-block;
+  flex-shrink: 0;
   height: 10px;
   width: 10px;
 
-  margin-top: -4px;
   margin-left: 2px;
   margin-right: 5px;
 
@@ -209,9 +216,4 @@ const Typename = styled.div`
   color: ${(p) => p.theme.grey["+2"]};
   font-size: 11px;
   line-height: 1rem;
-`;
-
-const Symbol = styled.span`
-  color: ${(p) => p.theme.grey["-1"]};
-  margin-right: 3px;
 `;
