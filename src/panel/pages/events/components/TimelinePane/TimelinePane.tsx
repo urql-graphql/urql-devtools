@@ -2,13 +2,7 @@ import React, { FC, ComponentProps, useMemo } from "react";
 import styled from "styled-components";
 import { DebugEvent, Operation } from "@urql/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faRss,
-  faQuoteLeft,
-  faStopwatch,
-  faKey,
-  faVenusMars,
-} from "@fortawesome/free-solid-svg-icons";
+import { faQuoteLeft, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { print } from "graphql";
 import { Pane, CodeHighlight } from "../../../../components";
 import { useTimelineContext } from "../../../../context";
@@ -16,26 +10,31 @@ import { useTimelineContext } from "../../../../context";
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
 export const TimelinePane: FC<
-  ({ event: DebugEvent } | { source: Operation }) &
+  ({ event: DebugEvent } | { source: Operation } | {}) &
     ComponentProps<typeof Container>
 > = ({ event, source, ...props }) => {
   const content = useMemo(() => {
     if (source) {
       return (
         <>
-          <PaneSection />
           <SourceSection operation={source} />
         </>
       );
     }
 
-    // Conditional check for network event here
+    if (event) {
+      return (
+        <>
+          <EventSection event={event} />
+          <SourceSection operation={event.operation} />
+        </>
+      );
+    }
 
     return (
-      <>
-        <EventSection event={event} />
-        <SourceSection operation={event.operation} />
-      </>
+      <GetStartedSection>
+        Click around on the timeline to get started...
+      </GetStartedSection>
     );
   }, [event, source]);
 
@@ -51,22 +50,22 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
   const { startTime } = useTimelineContext();
   return (
     <PaneSection>
-      <h1>Event</h1>
-      <p>
-        <Icon icon={faRss} />
-        <b style={{ fontFamily: '"IBM Plex Mono", monospace' }}>{event.type}</b>
-      </p>
+      <Heading>Event</Heading>
+      <p>{event.type}</p>
+      <Heading>Message</Heading>
       <p>
         <Icon icon={faQuoteLeft} />
         {event.message}
       </p>
+      <Heading>Timestamp</Heading>
       <p>
         <Icon icon={faStopwatch} />
         {`${event.timestamp - startTime}ms`}
       </p>
       {event.data && (
         <>
-          <h2>Metadata</h2>
+          <br />
+          <Heading>Metadata</Heading>
           <CodeHighlight
             language={"javascript"}
             code={JSON.stringify(event.data, null, 2)}
@@ -79,20 +78,17 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
 /** Info about the source operation for the given event. */
 const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
   <PaneSection>
-    <h1>Source</h1>
-    <p>
-      <Icon icon={faKey} /> {operation.key}
-    </p>
-    <p>
-      <Icon icon={faVenusMars} />
-      {operation.operationName}
-    </p>
-    <h2>Query</h2>
+    <Heading>Key</Heading>
+    <p>{operation.key}</p>
+    <Heading>Operation type</Heading>
+    <p>{operation.operationName}</p>
+    <br />
+    <Heading>Query</Heading>
     <CodeHighlight
       language={"graphql"}
       code={removeTrailingNewline(print(operation.query))}
     />
-    <h2>Variables</h2>
+    <Heading>Variables</Heading>
     <CodeHighlight
       language={"javascript"}
       code={JSON.stringify(operation.variables || {}, null, 2)}
@@ -114,57 +110,64 @@ const Body = styled(Pane.Body)`
   }
 `;
 
-const PaneSection = styled.section`
+const Heading = styled.h3`
   color: #fff;
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: 14px;
+  margin-bottom: 5px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+`;
+
+const PaneSection = styled.section`
+  color: ${(p) => p.theme.grey["+5"]};
+  box-sizing: border-box;
   background: ${(props) => props.theme.dark[0]};
-  max-height: 50%;
   padding: 20px;
   overflow: scroll;
-  flex-grow: 1;
-  flex-basis: 0;
-
-  h1 {
-    background-color: ${(p) => p.theme.dark["+3"]};
-    position: sticky;
-    top: -20px;
-    margin: -20px;
-    padding: 2px 10px;
-    font-size: 14px;
-    font-weight: 400;
-    border-bottom: solid 1px ${(p) => p.theme.dark["+5"]};
-    z-index: 1;
-  }
-
-  h2 {
-    margin-top: 20px;
-    font-size: 14px;
-  }
 
   p {
     font-size: 12px;
     margin: 10px 0;
   }
 
-  & + & {
-    border-top: solid 1px ${(p) => p.theme.dark["+3"]};
-  }
-
   @media (max-aspect-ratio: 1/1) {
+    flex-basis: 50%;
+    flex-grow: 1;
+
     & + & {
+      max-height: 100%;
+      min-width: 50%;
       border-left: solid 1px ${(p) => p.theme.dark["+3"]};
-      border-top: none !important;
     }
-    flex-basis: 0;
-    max-height: 100%;
   }
 
-  h1 + * {
-    margin-top: 30px;
+  @media (min-aspect-ratio: 1/1) {
+    &:first-child:not(:only-child) {
+      max-height: 50%;
+      height: min-content;
+    }
+
+    & + & {
+      flex-grow: 1;
+      flex-basis: 0;
+      border-top: solid 1px ${(p) => p.theme.dark["+3"]};
+    }
   }
 `;
 
+const GetStartedSection = styled(PaneSection)`
+  flex-grow: 1;
+  padding: 50px 30px;
+  text-align: center;
+  color: ${(p) => p.theme.grey["0"]};
+`;
+
 const Icon = styled(FontAwesomeIcon)`
-  margin-right: 1em;
+  margin-right: 8px;
 `;
 
 const removeTrailingNewline = (s: string) =>

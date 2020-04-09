@@ -110,7 +110,7 @@ export const Timeline: FC = () => {
         event: selectedEvent,
       };
     }
-    return undefined;
+    return {};
   }, [selectedSource, selectedEvent]);
 
   const content = useMemo(
@@ -169,7 +169,7 @@ export const Timeline: FC = () => {
               {content}
             </TimelineList>
           </TimelineContainer>
-          {paneProps && <TimelinePane {...paneProps} />}
+          {<TimelinePane {...paneProps} />}
         </PageContent>
       </Page>
     </>
