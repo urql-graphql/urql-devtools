@@ -1,4 +1,12 @@
-import React, { FC, useContext, useMemo, ComponentProps } from "react";
+import React, {
+  FC,
+  useContext,
+  useMemo,
+  ComponentProps,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import styled from "styled-components";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { Pane, CodeHighlight } from "../../../components";
@@ -27,42 +35,69 @@ export const NodeInfoPane: FC<ComponentProps<typeof Pane>> = (props) => {
   );
 };
 
-const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => (
-  <>
-    <Container>
-      <Title>Name</Title>
-      <Name>{node.name}</Name>
-    </Container>
-    {node.cacheOutcome ? (
+const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => {
+  const previousNode = useRef(node);
+  const [expanded, setExpanded] = useState(false);
+
+  const value = useMemo(
+    () =>
+      node.value || node.children
+        ? JSON.stringify(node.value || node.children, null, 2)
+        : false,
+    [node.value, node.children]
+  );
+
+  const isExpanded = useMemo(
+    () =>
+      (value && value.length < 10000) ||
+      (expanded && previousNode.current._id == node._id),
+    [node._id, expanded, value]
+  );
+
+  const handleReveal = useCallback(() => setExpanded(true), []);
+
+  previousNode.current = node;
+
+  return (
+    <>
       <Container>
-        <Title>Cache Outcome</Title>
-        <div>
-          <CacheIcon state={node.cacheOutcome} />
-          <Name>{node.cacheOutcome}</Name>
-          {getDescription(node.cacheOutcome)}
-        </div>
+        <Title>Name</Title>
+        <Name>{node.name}</Name>
       </Container>
-    ) : null}
-    {node.args ? (
-      <Container>
-        <Title>Arguments</Title>
-        <CodeHighlight
-          code={JSON.stringify(node.args, null, 2)}
-          language="json"
-        />
-      </Container>
-    ) : null}
-    {node.value || node.children ? (
-      <Container>
-        <Title>Value</Title>
-        <CodeHighlight
-          code={JSON.stringify(node.children || node.value, null, 2)}
-          language="json"
-        />
-      </Container>
-    ) : null}
-  </>
-);
+      {node.cacheOutcome ? (
+        <Container>
+          <Title>Cache Outcome</Title>
+          <div>
+            <CacheIcon state={node.cacheOutcome} />
+            <Name>{node.cacheOutcome}</Name>
+            {getDescription(node.cacheOutcome)}
+          </div>
+        </Container>
+      ) : null}
+      {node.args ? (
+        <Container>
+          <Title>Arguments</Title>
+          <CodeHighlight
+            code={JSON.stringify(node.args, null, 2)}
+            language="json"
+          />
+        </Container>
+      ) : null}
+      {value ? (
+        <Container>
+          <Title>Value</Title>
+          {isExpanded ? (
+            <CodeHighlight code={value} language="json" />
+          ) : (
+            <ExpandPrompt role={"button"} onClick={handleReveal}>
+              Click to expand
+            </ExpandPrompt>
+          )}
+        </Container>
+      ) : null}
+    </>
+  );
+};
 
 const getDescription = (status: ParsedFieldNode["cacheOutcome"]) => {
   switch (status) {
@@ -86,6 +121,14 @@ const getDescription = (status: ParsedFieldNode["cacheOutcome"]) => {
     }
   }
 };
+
+const ExpandPrompt = styled.div`
+  text-align: center;
+  padding: 15px;
+  background: ${(p) => p.theme.dark["+3"]};
+  color: ${(p) => p.theme.grey["+6"]};
+  cursor: pointer;
+`;
 
 const PaneBody = styled(Pane.Body)`
   padding: 20px;

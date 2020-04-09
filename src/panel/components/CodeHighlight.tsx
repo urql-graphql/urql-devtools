@@ -26,7 +26,6 @@ export const CodeHighlight: FC<any> = (props) => (
 
 export const InlineCodeHighlight: FC<any> = ({ code, ...props }) => {
   const trimmedCode = trimCode(code, props.language);
-  console.log(trimmedCode);
 
   return (
     <Highlight {...defaultProps} code={trimmedCode} {...props}>

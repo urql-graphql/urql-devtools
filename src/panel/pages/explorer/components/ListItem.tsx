@@ -7,7 +7,7 @@ import React, {
   useRef,
 } from "react";
 import { animated } from "react-spring";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { ExplorerContext } from "../../../context";
 import { useFlash } from "../hooks";
@@ -24,10 +24,12 @@ interface ListItemProps {
 export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   const previousNode = useRef(node);
   const [flashStyle, flash] = useFlash();
-  const { focusedNode, setFocusedNode } = useContext(ExplorerContext);
+  const { expandedNodes, setExpandedNodes, setFocusedNode } = useContext(
+    ExplorerContext
+  );
   const isExpanded = useMemo(
-    () => (focusedNode ? focusedNode._id === node._id : false),
-    [node, focusedNode]
+    () => expandedNodes.some((n) => n._id === node._id),
+    [node, expandedNodes]
   );
 
   useEffect(() => {
@@ -38,19 +40,21 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
     previousNode.current = node;
   }, [isExpanded, flash, node]);
 
-  // Update focused node on change
-  useEffect(() => {
-    if (!isExpanded || node === focusedNode) {
+  const handleFieldContainerClick = useCallback(() => {
+    if (isExpanded) {
+      setExpandedNodes((n) =>
+        n.slice(
+          0,
+          n.findIndex((n) => n._id === node._id)
+        )
+      );
+      setFocusedNode(undefined);
       return;
     }
 
+    setExpandedNodes((n) => [...n, node]);
     setFocusedNode(node);
-  }, [isExpanded, node, focusedNode]);
-
-  const handleFieldContainerClick = useCallback(
-    () => setFocusedNode((n) => (n && n._id === node._id ? undefined : node)),
-    [isExpanded, node]
-  );
+  }, [isExpanded, node, setExpandedNodes]);
 
   if (
     (Array.isArray(node.children) && node.children.length > 0) ||
@@ -58,13 +62,15 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   ) {
     return (
       <Item role="treeitem" withChildren>
-        <FieldContainer onClick={handleFieldContainerClick}>
-          <OutlineContainer style={flashStyle} isActive={isExpanded}>
-            <Arrow active={isExpanded} />
-            <ChildrenName>{node.name}</ChildrenName>
-            <Arguments args={node.args} />
-          </OutlineContainer>
-        </FieldContainer>
+        <OutlineContainer
+          onClick={handleFieldContainerClick}
+          style={flashStyle}
+          aria-expanded={isExpanded}
+        >
+          <Arrow active={isExpanded} />
+          <ChildrenName>{node.name}</ChildrenName>
+          <Arguments args={node.args} />
+        </OutlineContainer>
         {isExpanded && <Tree nodeMap={node.children} depth={depth + 1} />}
       </Item>
     );
@@ -84,11 +90,9 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   if (node.args) {
     return (
       <Item role="treeitem" withChildren={false}>
-        <FieldContainer onClick={handleFieldContainerClick}>
-          <OutlineContainer style={flashStyle} isActive={isExpanded}>
-            {contents}
-          </OutlineContainer>
-        </FieldContainer>
+        <OutlineContainer style={flashStyle} aria-expanded={isExpanded}>
+          {contents}
+        </OutlineContainer>
       </Item>
     );
   }
@@ -119,10 +123,6 @@ export const SystemListItem = ({
   </Item>
 );
 
-const ValueWrapper = styled.div`
-  display: inline-block;
-`;
-
 const Item = styled.li`
   padding-left: ${({ withChildren }: { withChildren: boolean }) =>
     withChildren ? "0" : "1rem"};
@@ -131,51 +131,20 @@ const Item = styled.li`
   color: ${(p) => p.theme.grey["-1"]};
 `;
 
-const FieldContainer = styled.button`
-  position: relative;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  padding-left: 1rem;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  position: relative;
-  min-height: 1.4rem;
-  line-height: 1.4rem;
-  cursor: pointer;
-
-  color: ${(p) => p.theme.grey["-1"]};
-  text-align: left;
-  font-size: 14px;
-
-  & > ${ValueWrapper} {
-    display: inline-flex;
-    width: min-content;
-    flex-wrap: wrap;
-  }
-`;
-
 const OutlineContainer = styled(animated.div)`
+  cursor: pointer;
   display: flex;
   white-space: nowrap;
   overflow: hidden;
   align-items: center;
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: -3px;
   width: 100%;
-
   padding-left: 3px;
 
-  ${({ isActive }: { isActive: boolean }) =>
-    isActive &&
-    css`
-      background-color: ${(p) => p.theme.dark["+2"]};
-      outline: 1px dashed ${(p) => `${p.theme.light["0"]}`};
-      transition: all 0.3s linear;
-    `};
+  &[aria-expanded: true] {
+    background-color: ${(p) => p.theme.dark["+2"]};
+    outline: 1px dashed ${(p) => `${p.theme.light["0"]}`};
+    transition: all 0.3s linear;
+  }
 `;
 
 const Name = styled.span`
