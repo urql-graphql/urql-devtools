@@ -23,11 +23,11 @@ export const NetworkDuration = styled.div`
 export const TimelineNetworkDuration: FC<
   { state: NetworkState } & ComponentProps<typeof NetworkDuration>
 > = ({ state, ...props }) => {
-  const { targetRef, tooltipProps, isVisible } = useTooltip();
+  const { ref, tooltipProps, isVisible } = useTooltip();
 
   return (
     <>
-      <NetworkDuration data-state={state} ref={targetRef} {...props} />
+      <NetworkDuration data-state={state} ref={ref} {...props} />
       {isVisible && (
         <TimelineTooltip {...tooltipProps}>
           {`Network state: ${state}`}

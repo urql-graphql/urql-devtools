@@ -205,7 +205,6 @@ const TimelineIcons = styled.div`
   align-items: center;
   width: 40px;
   padding-top: 78px;
-  z-index: 1;
 
   > * {
     margin-bottom: 16px;
