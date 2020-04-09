@@ -115,7 +115,6 @@
     "eslint-plugin-react": "^7.19.0",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
-    "graphql-tools": "^4.0.7",
     "html-webpack-plugin": "^4.0.2",
     "husky": "^4.2.3",
     "identity-obj-proxy": "^3.0.0",
