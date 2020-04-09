@@ -146,6 +146,9 @@ const PaneSection = styled.section`
   }
 
   @media (min-aspect-ratio: 1/1) {
+    &:only-child {
+      flex-grow: 1;
+    }
     &:first-child:not(:only-child) {
       max-height: 50%;
       height: min-content;
