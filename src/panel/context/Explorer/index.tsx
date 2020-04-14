@@ -13,6 +13,8 @@ import { handleResponse, ParsedNodeMap, ParsedFieldNode } from "./ast";
 
 export interface ExplorerContextValue {
   operations: ParsedNodeMap;
+  expandedNodes: ParsedFieldNode[];
+  setExpandedNodes: Dispatch<SetStateAction<ParsedFieldNode[]>>;
   focusedNode?: ParsedFieldNode;
   setFocusedNode: Dispatch<SetStateAction<ParsedFieldNode | undefined>>;
 }
@@ -24,6 +26,9 @@ export const ExplorerProvider: FC = ({ children }) => {
   const [operations, setOperations] = useState<
     ExplorerContextValue["operations"]
   >({});
+  const [expandedNodes, setExpandedNodes] = useState<
+    ExplorerContextValue["expandedNodes"]
+  >([]);
   const [focusedNode, setFocusedNode] = useState<
     ExplorerContextValue["focusedNode"]
   >(undefined);
@@ -56,11 +61,13 @@ export const ExplorerProvider: FC = ({ children }) => {
 
   const value = useMemo(
     () => ({
+      expandedNodes,
+      setExpandedNodes,
       focusedNode,
       setFocusedNode,
       operations,
     }),
-    [operations, focusedNode, setFocusedNode]
+    [operations, focusedNode, setFocusedNode, expandedNodes, setExpandedNodes]
   );
 
   return (

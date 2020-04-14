@@ -12,6 +12,7 @@ export const Timeline: FC = () => {
     setContainer,
     scale,
     events,
+    eventOrder,
     startTime,
     container,
     selectedEvent,
@@ -81,8 +82,8 @@ export const Timeline: FC = () => {
 
   const sources = useMemo<Operation[]>(
     () =>
-      Object.values(events).map((eventList) => {
-        const source = eventList.find(
+      eventOrder.map((key) => {
+        const source = events[key].find(
           (e) => e.operation.operationName !== "teardown"
         );
 
@@ -90,12 +91,12 @@ export const Timeline: FC = () => {
         // Unknown source type
         // TODO: infer type from operation.query
         if (source === undefined) {
-          return eventList[0].operation;
+          return events[key][0].operation;
         }
 
         return source.operation;
       }),
-    [events]
+    [events, eventOrder]
   );
 
   const paneProps = useMemo(() => {
@@ -110,7 +111,7 @@ export const Timeline: FC = () => {
         event: selectedEvent,
       };
     }
-    return undefined;
+    return {};
   }, [selectedSource, selectedEvent]);
 
   const content = useMemo(
@@ -122,10 +123,10 @@ export const Timeline: FC = () => {
           {ticks.map((t, i) => (
             <Tick key={`p-${i}`} label={t.label} style={{ left: t.position }} />
           ))}
-          {Object.entries(events).map(([key, eventList], i) => (
+          {eventOrder.map((key, i) => (
             <TimelineRow
               key={key}
-              events={eventList}
+              events={events[key]}
               style={{
                 display: filter.graphqlType.includes(sources[i].operationName)
                   ? undefined
@@ -135,7 +136,7 @@ export const Timeline: FC = () => {
           ))}
         </>
       ),
-    [container, events, ticks, sources]
+    [container, events, eventOrder, ticks, sources]
   );
 
   return (
@@ -169,7 +170,7 @@ export const Timeline: FC = () => {
               {content}
             </TimelineList>
           </TimelineContainer>
-          {paneProps && <TimelinePane {...paneProps} />}
+          {<TimelinePane {...paneProps} />}
         </PageContent>
       </Page>
     </>

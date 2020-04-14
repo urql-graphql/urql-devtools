@@ -21,6 +21,7 @@ interface TimelineContextValue {
   container: HTMLDivElement;
   setContainer: (e: HTMLDivElement) => void;
   events: Record<string, DebugEvent[]>;
+  eventOrder: number[];
   filterables: {
     source: string[];
     graphqlType: string[];
@@ -252,6 +253,9 @@ export const TimelineProvider: FC = ({ children }) => {
     graphqlType: ["query", "subscription", "mutation"],
   });
   const [events, setEvents] = useState<Record<string, DebugEvent[]>>({});
+  const [eventOrder, setEventOrder] = useState<
+    TimelineContextValue["eventOrder"]
+  >([]);
   const [selectedEvent, setSelectedEvent] = useState<DebugEvent | undefined>(
     undefined
   );
@@ -269,6 +273,7 @@ export const TimelineProvider: FC = ({ children }) => {
         ...e,
         [opKey]: [...(e[opKey] || []), message.data],
       }));
+      setEventOrder((o) => (o.includes(opKey) ? o : [...o, opKey]));
       setFilterables((f) => ({
         ...f,
         source: f.source.includes(debugEvent.source)
@@ -281,6 +286,7 @@ export const TimelineProvider: FC = ({ children }) => {
   const value = useMemo(
     () => ({
       events,
+      eventOrder,
       setFilter,
       filter,
       filterables,
@@ -288,7 +294,16 @@ export const TimelineProvider: FC = ({ children }) => {
       setSelectedEvent,
       ...domain,
     }),
-    [domain, events]
+    [
+      domain,
+      events,
+      eventOrder,
+      filter,
+      setFilter,
+      filterables,
+      selectedEvent,
+      setSelectedEvent,
+    ]
   );
 
   return (

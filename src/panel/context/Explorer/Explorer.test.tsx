@@ -45,8 +45,10 @@ describe("on mount", () => {
     it("matches snapshot", () => {
       expect(state).toMatchInlineSnapshot(`
         Object {
+          "expandedNodes": Array [],
           "focusedNode": undefined,
           "operations": Object {},
+          "setExpandedNodes": [Function],
           "setFocusedNode": [Function],
         }
       `);
