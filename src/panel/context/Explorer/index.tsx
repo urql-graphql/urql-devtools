@@ -26,7 +26,9 @@ export const ExplorerProvider: FC = ({ children }) => {
   const [operations, setOperations] = useState<
     ExplorerContextValue["operations"]
   >({});
-  const [expandedNodes, setExpandedNodes] = useState([""]);
+  const [expandedNodes, setExpandedNodes] = useState<
+    ExplorerContextValue["expandedNodes"]
+  >([]);
   const [focusedNode, setFocusedNode] = useState<
     ExplorerContextValue["focusedNode"]
   >(undefined);
