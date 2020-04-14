@@ -1,7 +1,7 @@
 import { lighten, darken } from "polished";
 import { createGlobalStyle } from "styled-components";
 
-const dark = "#000";
+const dark = "#141414";
 const light = "#fff";
 const grey = "#808080";
 const blue = "#0084FF";
