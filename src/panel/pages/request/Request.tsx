@@ -1,25 +1,35 @@
 import React, { ComponentProps, FC } from "react";
 import styled from "styled-components";
 import { Background } from "../../components/Background";
-import { Query, Response } from "./components";
+import { Query, Response, Settings } from "./components";
 
-export const Request: FC<ComponentProps<typeof Container>> = (props) => {
+export const Request: FC<ComponentProps<typeof Page>> = (props) => {
   return (
-    <Container {...props}>
-      <Query />
-      <Response />
-    </Container>
+    <Page {...props}>
+      <Settings />
+      <PageContent>
+        <Query />
+        <Response />
+      </PageContent>
+    </Page>
   );
 };
 
-const Container = styled(Background)`
-  & > * {
-    height: 50%;
+const Page = styled(Background)`
+  background-color: ${(p) => p.theme.dark["0"]};
+  @media (min-aspect-ratio: 1/1) {
+    flex-direction: column;
+  }
+`;
 
-    @media (min-aspect-ratio: 1/1) {
-      height: auto;
-      width: 50%;
-    }
+const PageContent = styled.div`
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  @media (min-aspect-ratio: 1/1) {
+    flex-direction: row;
   }
 
   .react-codemirror2 {

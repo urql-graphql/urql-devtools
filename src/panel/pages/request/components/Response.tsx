@@ -48,19 +48,26 @@ export const Response = () => {
     <Pane>
       <PaneBody>
         <PaneSection>
-          <h1>Response</h1>
+          <Title>State</Title>
           <Status>
             <Icon data-state={state.toLowerCase()} /> {state}
           </Status>
-          {code}
+          {code && (
+            <>
+              <Title>Response</Title>
+              {code}
+            </>
+          )}
         </PaneSection>
       </PaneBody>
     </Pane>
   );
 };
 
-const Status = styled.p`
-  font-size: 14px;
+const Status = styled.code`
+  color: ${(p) => p.theme.grey["+2"]};
+  margin-bottom: 15px;
+  font-size: 12px;
   display: flex;
   align-items: center;
 `;
@@ -70,20 +77,25 @@ const Icon = styled.span`
   margin-right: 7px;
   width: 10px;
   height: 10px;
+  box-sizing: border-box;
+  border: solid 1px;
+  border-radius: 50%;
 
   &[data-state="idle"] {
-    background-color: ${(p) => p.theme.grey["0"]};
+    border-color: ${(p) => p.theme.grey["0"]};
   }
 
   &[data-state="fetching"] {
-    background-color: ${(p) => p.theme.blue["0"]};
+    border-color: ${(p) => p.theme.blue["0"]};
   }
 
   &[data-state="success"] {
+    border-color: ${(p) => p.theme.green["0"]};
     background-color: ${(p) => p.theme.green["0"]};
   }
 
   &[data-state="error"] {
+    border-color: ${(p) => p.theme.red["0"]};
     background-color: ${(p) => p.theme.red["-1"]};
   }
 `;
@@ -116,4 +128,12 @@ const PaneSection = styled.section`
   h1 + * {
     margin-top: 40px;
   }
+`;
+
+const Title = styled.h3`
+  color: ${(p) => p.theme.light["0"]};
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 `;

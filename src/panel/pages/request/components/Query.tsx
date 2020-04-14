@@ -11,16 +11,16 @@ import "codemirror-graphql/lint";
 import "codemirror-graphql/hint";
 import "codemirror-graphql/mode";
 import CodeMirror, { ShowHintOptions } from "codemirror";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { RequestContext } from "../../../context";
+import { useRequest } from "../../../context";
 
 /** Query editor
  * Inspired by Graphiql's query editor - https://github.com/graphql/graphiql/blob/master/packages/graphiql/src/components/QueryEditor.js
  */
 export const Query = () => {
   const [codemirror, setCodeMirror] = useState<CodeMirror.Editor | undefined>();
-  const { query, setQuery, execute, schema } = useContext(RequestContext);
+  const { query, setQuery, execute, schema } = useRequest();
 
   useEffect(() => {
     if (codemirror === undefined) {
@@ -52,6 +52,17 @@ export const Query = () => {
         } as unknown) as ShowHintOptions),
     });
   }, [codemirror, schema]);
+
+  // Update on programmatic value change
+  useEffect(() => {
+    if (!codemirror) {
+      return;
+    }
+
+    if (query !== undefined && query !== codemirror.getValue()) {
+      codemirror.setValue(query);
+    }
+  }, [query, codemirror]);
 
   const handleRef = (ref: HTMLTextAreaElement) => {
     if (ref === null || codemirror !== undefined) {

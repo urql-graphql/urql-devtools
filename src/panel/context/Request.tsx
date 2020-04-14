@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
+  useContext,
 } from "react";
 import { visit, buildClientSchema, DocumentNode } from "graphql";
 import { GraphQLSchema, getIntrospectionQuery } from "graphql";
@@ -21,6 +22,8 @@ interface RequestContextValue {
 }
 
 export const RequestContext = createContext<RequestContextValue>(null as any);
+
+export const useRequest = () => useContext(RequestContext);
 
 export const RequestProvider: FC = ({ children }) => {
   const { sendMessage, addMessageHandler } = useDevtoolsContext();
