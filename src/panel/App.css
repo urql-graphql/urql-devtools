@@ -1,7 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,700&display=swap");
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700&display=swap");
 
 body {
   font-family: "Roboto", sans-serif;
@@ -14,7 +12,7 @@ body {
 
 code,
 pre {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "Roboto Mono", monospace;
 }
 
 ::-webkit-scrollbar {
