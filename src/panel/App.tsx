@@ -4,7 +4,7 @@ import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { Disconnected, Explorer, Request, Timeline } from "./pages";
 import { Navigation } from "./Navigation";
-import { theme } from "./theme";
+import { theme, GlobalStyle } from "./theme";
 import {
   DevtoolsProvider,
   RequestProvider,
@@ -19,6 +19,7 @@ export const App = () => {
       <DevtoolsProvider>
         <AppRoutes />
       </DevtoolsProvider>
+      <GlobalStyle />
     </ThemeProvider>
   );
 };

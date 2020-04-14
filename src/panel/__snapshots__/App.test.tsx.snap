@@ -181,6 +181,7 @@ exports[`App on mount matches snapshot 1`] = `
   <DevtoolsProvider>
     <AppRoutes />
   </DevtoolsProvider>
+  <Memo(GlobalStyleComponent) />
 </ThemeProvider>
 `;
 

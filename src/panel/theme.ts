@@ -1,4 +1,5 @@
 import { lighten, darken } from "polished";
+import { createGlobalStyle } from "styled-components";
 
 const dark = "#000";
 const light = "#fff";
@@ -183,3 +184,125 @@ export const theme = {
     "+9": lighten(0.45, pink),
   },
 };
+
+export const GlobalStyle = createGlobalStyle`
+  /** Global styles for prism-react-renderer and codemirror */
+
+  .CodeMirror {
+    font-size: 12px;
+  }
+
+  .CodeMirror-hints.material {
+    font-size: 12px;
+    background: #222;
+    border: none;
+  }
+
+  .CodeMirror-hints .CodeMirror-hint {
+    color: #eee;
+  }
+
+  /* Graphql */
+  .codemirror, .language-graphql {
+    .CodeMirror-cursor {
+      border-left: solid 1px ${(p) => p.theme.light["-2"]};
+    }
+
+    .token.attr-name, .token.class-name, .token.function, .token.plain, .token.keyword, .cm-property, .cm-keyword {
+      color: ${(p) => p.theme.purple["+5"]};
+    }
+
+    .cm-invalidchar {
+      color: ${(p) => p.theme.red["+2"]};
+    }
+
+    .token.comment, .cm-comment {
+      color: ${(p) => p.theme.grey["-5"]};
+    }
+
+    .token.variable, .cm-attribute, .cm-variable {
+      color: ${(p) => p.theme.grey["+5"]};
+    }
+
+    .token.punctuation, .token.operator, .CodeMirror-linenumber, .cm-punctuation {
+      color: ${(p) => p.theme.grey["0"]};
+    }
+
+    .token.boolean {
+      color: ${(p) => p.theme.green["+3"]};
+    }
+
+    .token.number {
+      color: ${(p) => p.theme.blue["+4"]};
+    }
+
+    .token.string {
+      color: ${(p) => p.theme.orange["+2"]};
+    }
+  }
+
+  /* JSON */
+  .language-json, .language-javascript {
+    .token.boolean {
+      color: ${(p) => p.theme.green["+3"]};
+    }
+
+    .token.string {
+      color: ${(p) => p.theme.purple["+4"]};
+    }
+
+    .token.number {
+      color: ${(p) => p.theme.blue["+4"]};
+    }
+
+    .token.null {
+      color: ${(p) => p.theme.grey["0"]};
+    }
+
+    .token.property, .token.plain {
+      color: ${(p) => p.theme.light["-8"]};
+    }
+
+    .token.punctuation {
+      color: ${(p) => p.theme.grey["0"]};
+    }
+
+    .token.operator {
+      color: ${(p) => p.theme.grey["-5"]};
+    }
+  }  
+
+  /* Modified version of - https://github.com/PrismJS/prism-themes/blob/master/themes/prism-material-dark.css */
+  code[class*="language-"], pre[class*="language-"] {
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    font-family: Roboto Mono, monospace;
+    font-size: 12px;
+    line-height: 1.5em;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  :not(pre) > code[class*="language-"] {
+    white-space: normal;
+    border-radius: 0.2em;
+    padding: 0.1em;
+  }
+
+  pre[class*="language-"] {
+    overflow: auto;
+    position: relative;
+    margin: 0.5em 0;
+    padding: 1.25em 1em;
+  }
+`;

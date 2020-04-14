@@ -68,7 +68,7 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
           <Heading>Metadata</Heading>
           <CodeHighlight
             language={"javascript"}
-            code={JSON.stringify(event.data, null, 2)}
+            code={JSONtoJavascriptString(event.data)}
           />
         </>
       )}
@@ -91,7 +91,7 @@ const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
     <Heading>Variables</Heading>
     <CodeHighlight
       language={"javascript"}
-      code={JSON.stringify(operation.variables || {}, null, 2)}
+      code={JSONtoJavascriptString(operation.variables || {})}
     />
   </PaneSection>
 );
@@ -175,3 +175,6 @@ const Icon = styled(FontAwesomeIcon)`
 
 const removeTrailingNewline = (s: string) =>
   s.substring(0, s.lastIndexOf("\n"));
+
+const JSONtoJavascriptString = (o: object) =>
+  JSON.stringify(o, null, 2).replace(/"([^"]+)":/g, "$1:");

@@ -44,25 +44,41 @@ export const Response = () => {
     };
   }, [fetching, response, error]);
 
+  const content = useMemo(() => {
+    if (state === "Idle") {
+      return <Prompt>Run a query to see what the client returns...</Prompt>;
+    }
+
+    return (
+      <>
+        <Title>State</Title>
+        <Status>
+          <Icon data-state={state.toLowerCase()} /> {state}
+        </Status>
+        {code && (
+          <>
+            <Title>Response</Title>
+            {code}
+          </>
+        )}
+      </>
+    );
+  }, [code, state]);
+
   return (
     <Pane>
       <PaneBody>
-        <PaneSection>
-          <Title>State</Title>
-          <Status>
-            <Icon data-state={state.toLowerCase()} /> {state}
-          </Status>
-          {code && (
-            <>
-              <Title>Response</Title>
-              {code}
-            </>
-          )}
-        </PaneSection>
+        <PaneSection>{content}</PaneSection>
       </PaneBody>
     </Pane>
   );
 };
+
+const Prompt = styled.div`
+  padding: 30px;
+  text-align: center;
+  color: ${(p) => p.theme.grey["0"]};
+`;
 
 const Status = styled.code`
   color: ${(p) => p.theme.grey["+2"]};

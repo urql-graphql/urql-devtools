@@ -6,10 +6,6 @@ body {
   font-weight: 300;
 }
 
-*::selection {
-  background-color: #7776d240;
-}
-
 code,
 pre {
   font-family: "Roboto Mono", monospace;
@@ -17,18 +13,4 @@ pre {
 
 ::-webkit-scrollbar {
   display: none;
-}
-
-.CodeMirror {
-  font-size: 12px;
-}
-
-.CodeMirror-hints.material {
-  font-size: 12px;
-  background: #222;
-  border: none;
-}
-
-.CodeMirror-hints .CodeMirror-hint {
-  color: #eee;
 }

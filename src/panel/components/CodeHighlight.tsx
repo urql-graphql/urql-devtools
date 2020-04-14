@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import Highlight, { defaultProps } from "prism-react-renderer";
-import "./prism-theme.css";
 import styled from "styled-components";
 
 export const CodeHighlight: FC<any> = (props) => (
@@ -8,13 +7,17 @@ export const CodeHighlight: FC<any> = (props) => (
     {({ className, style, tokens, getLineProps, getTokenProps }) => (
       <StyledCodeBlock
         className={className}
-        style={{ ...style, backgroundColor: undefined }}
+        style={{ ...style, backgroundColor: undefined, color: undefined }}
       >
         <code>
           {tokens.map((line, i) => (
-            <div key={i} {...getLineProps({ line, key: i })}>
+            <div key={i} {...getLineProps({ line, key: i })} style={undefined}>
               {line.map((token, key) => (
-                <span key={key} {...getTokenProps({ token, key })} />
+                <span
+                  key={key}
+                  {...getTokenProps({ token, key })}
+                  style={undefined}
+                />
               ))}
             </div>
           ))}
@@ -32,13 +35,21 @@ export const InlineCodeHighlight: FC<any> = ({ code, ...props }) => {
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <StyledInlineBlock
           className={className}
-          style={{ ...style, backgroundColor: undefined }}
+          style={{ ...style, backgroundColor: undefined, color: undefined }}
         >
           <code>
             {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line, key: i })}>
+              <div
+                key={i}
+                {...getLineProps({ line, key: i })}
+                style={undefined}
+              >
                 {line.map((token, key) => (
-                  <span key={key} {...getTokenProps({ token, key })} />
+                  <span
+                    key={key}
+                    {...getTokenProps({ token, key })}
+                    style={undefined}
+                  />
                 ))}
               </div>
             ))}
