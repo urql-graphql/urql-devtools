@@ -188,7 +188,7 @@ export const theme = {
 export const GlobalStyle = createGlobalStyle`
   /** Global styles for prism-react-renderer and codemirror */
 
-  .CodeMirror {
+  .CodeMirror, code {
     font-size: 12px;
   }
 
