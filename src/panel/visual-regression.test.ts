@@ -1,8 +1,6 @@
-import { detectCosmosConfig, getFixtures2 } from "react-cosmos";
+import { detectCosmosConfig, getFixtures2, FixtureApi } from "react-cosmos";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 expect.extend({ toMatchImageSnapshot });
-
-type FixtureApi = ReturnType<typeof getFixtures2>[number];
 
 const fixtures = getFixtures2({ cosmosConfig: detectCosmosConfig() }).reduce<
   [string, FixtureApi][]
