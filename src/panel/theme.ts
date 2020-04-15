@@ -7,6 +7,7 @@ const grey = "#808080";
 const blue = "#0084FF";
 const green = "#80DF68";
 const orange = "#FF7940";
+const yellow = "#FFE248";
 const red = "#FF4D58";
 const purple = "#813BF2";
 const pink = "#FA65BE";
@@ -98,6 +99,27 @@ export const theme = {
     "+7": lighten(0.35, green),
     "+8": lighten(0.4, green),
     "+9": lighten(0.45, green),
+  },
+  yellow: {
+    "0": yellow,
+    "-1": darken(0.05, yellow),
+    "-2": darken(0.1, yellow),
+    "-3": darken(0.15, yellow),
+    "-4": darken(0.2, yellow),
+    "-5": darken(0.25, yellow),
+    "-6": darken(0.3, yellow),
+    "-7": darken(0.35, yellow),
+    "-8": darken(0.4, yellow),
+    "-9": darken(0.45, yellow),
+    "+1": lighten(0.05, yellow),
+    "+2": lighten(0.1, yellow),
+    "+3": lighten(0.15, yellow),
+    "+4": lighten(0.2, yellow),
+    "+5": lighten(0.25, yellow),
+    "+6": lighten(0.3, yellow),
+    "+7": lighten(0.35, yellow),
+    "+8": lighten(0.4, yellow),
+    "+9": lighten(0.45, yellow),
   },
   orange: {
     "0": orange,
@@ -207,9 +229,17 @@ export const GlobalStyle = createGlobalStyle`
     .CodeMirror-cursor {
       border-left: solid 1px ${(p) => p.theme.light["-2"]};
     }
+    
+    .token.plain, .token.function, .token.class-name, .cm-property, .cm-def {
+      color: ${(p) => p.theme.blue["+5"]};
+    }
 
-    .token.attr-name, .token.class-name, .token.function, .token.plain, .token.keyword, .cm-property, .cm-keyword {
-      color: ${(p) => p.theme.purple["+5"]};
+    .token.attr-name, .cm-attribute {
+      color: ${(p) => p.theme.yellow["+4"]};
+    }
+
+    .token.keyword, .cm-keyword {
+      color: ${(p) => p.theme.purple["+4"]};
     }
 
     .cm-invalidchar {
@@ -220,12 +250,12 @@ export const GlobalStyle = createGlobalStyle`
       color: ${(p) => p.theme.grey["-5"]};
     }
 
-    .token.variable, .cm-attribute, .cm-variable {
-      color: ${(p) => p.theme.grey["+5"]};
+    .token.variable, .cm-variable {
+      color: ${(p) => p.theme.light["-8"]};
     }
 
     .token.punctuation, .token.operator, .CodeMirror-linenumber, .cm-punctuation {
-      color: ${(p) => p.theme.grey["0"]};
+      color: ${(p) => p.theme.light["-9"]};
     }
 
     .token.boolean {
@@ -233,11 +263,11 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .token.number {
-      color: ${(p) => p.theme.blue["+4"]};
+      color: ${(p) => p.theme.purple["+4"]};
     }
 
-    .token.string {
-      color: ${(p) => p.theme.orange["+2"]};
+    .token.string, .cm-string {
+      color: ${(p) => p.theme.orange["+4"]};
     }
   }
 
@@ -248,11 +278,11 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .token.string {
-      color: ${(p) => p.theme.purple["+4"]};
+      color: ${(p) => p.theme.blue["+4"]};
     }
 
     .token.number {
-      color: ${(p) => p.theme.blue["+4"]};
+      color: ${(p) => p.theme.orange["+4"]};
     }
 
     .token.null {
@@ -270,7 +300,11 @@ export const GlobalStyle = createGlobalStyle`
     .token.operator {
       color: ${(p) => p.theme.grey["-5"]};
     }
-  }  
+  }
+
+  .CodeMirror-hints li.CodeMirror-hint-active {
+    background: ${(p) => p.theme.blue["0"]};
+  }
 
   /* Modified version of - https://github.com/PrismJS/prism-themes/blob/master/themes/prism-material-dark.css */
   code[class*="language-"], pre[class*="language-"] {
