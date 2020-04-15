@@ -5,17 +5,20 @@
   <a href="https://circleci.com/gh/FormidableLabs/workflows/urql-devtools">
     <img alt="CircleCI Build Status" src="https://badgen.net/circleci/github/FormidableLabs/urql-devtools" />
   </a>
-  <a href="https://github.com/FormidableLabs/urql-devtools/blob/master/LICENSE">
-    <img alt="Licence MIT" src="https://badgen.net/github/license/FormidableLabs/urql-devtools" />
-  </a>
   <a href="https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm">
     <img alt="Chrome Web Store" src="https://badgen.net/chrome-web-store/v/mcfphkbpmkbeofnkjehahlmidmceblmm" />
   </a>
   <a href="https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools/">
     <img alt="Firefox Addon" src="https://badgen.net/amo/v/urql-devtools" />
   </a>
+  <a href="https://urql-devtools.netlify.com/">
+    <img alt="Fixtures" src="https://badgen.net/badge/fixtures/netlify/cyan" />
+  </a>
   <a href="https://spectrum.chat/urql">
     <img alt="Spectrum badge" src="https://badgen.net/badge/chat/spectrum/purple" />
+  </a>
+  <a href="https://github.com/FormidableLabs/urql-devtools/blob/master/LICENSE">
+    <img alt="Licence MIT" src="https://badgen.net/github/license/FormidableLabs/urql-devtools" />
   </a>
   
 
