@@ -48,6 +48,15 @@ export const TimelinePane: FC<
 /** Info about the event clicked by the user. */
 const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
   const { startTime } = useTimelineContext();
+
+  const timestamp = useMemo(() => `${event.timestamp - startTime}ms`, [
+    startTime,
+  ]);
+
+  const metadata = useMemo(() => JSONtoJavascriptString(event.data), [
+    event.data,
+  ]);
+
   return (
     <PaneSection>
       <Heading>Event</Heading>
@@ -60,16 +69,13 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
       <Heading>Timestamp</Heading>
       <p>
         <Icon icon={faStopwatch} />
-        {`${event.timestamp - startTime}ms`}
+        {timestamp}
       </p>
       {event.data && (
         <>
           <br />
           <Heading>Metadata</Heading>
-          <CodeHighlight
-            language={"javascript"}
-            code={JSONtoJavascriptString(event.data)}
-          />
+          <CodeHighlight language={"javascript"} code={metadata} />
         </>
       )}
     </PaneSection>

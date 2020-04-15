@@ -170,7 +170,7 @@ export const Timeline: FC = () => {
               {content}
             </TimelineList>
           </TimelineContainer>
-          {<TimelinePane {...paneProps} />}
+          <TimelinePane {...paneProps} />
         </PageContent>
       </Page>
     </>
