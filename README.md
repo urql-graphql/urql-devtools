@@ -3,7 +3,7 @@
   <h1>Urql Devtools</h1>
   <p>The official browser extension for Urql</p>
   <a href="https://circleci.com/gh/FormidableLabs/workflows/urql-devtools">
-    <img alt="CircleCI Build Status" src="https://badgen.net/circleci/github/FormidableLabs/urql-devtools" />
+    <img alt="CircleCI Build Status" src="https://badgen.net/circleci/github/FormidableLabs/urql-devtools?label=build" />
   </a>
   <a href="https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm">
     <img alt="Chrome Web Store" src="https://badgen.net/chrome-web-store/v/mcfphkbpmkbeofnkjehahlmidmceblmm" />
@@ -23,13 +23,24 @@
 </div>
 
 <br />
+<br />
 
 <div align="center">
   <img width="500" src="https://github.com/FormidableLabs/urql-devtools/raw/aef5570a698023ef01f355c2c802f93d7f2bf006/assets/preview.gif" />
 </div>
 
-## About
 
+## Features
+
+### 📬 Event timeline
+
+See all debugging and network events in real time.
+
+### 🗂 Cache explorer
+Explore your cache and see when cached data is being used.
+
+### 🚀 Request tool
+Explore your backend schema and trigger queries directly via your running Urql client.
 
 ## Requirements
 
