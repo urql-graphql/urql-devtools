@@ -20,17 +20,16 @@
   <a href="https://github.com/FormidableLabs/urql-devtools/blob/master/LICENSE">
     <img alt="Licence MIT" src="https://badgen.net/github/license/FormidableLabs/urql-devtools" />
   </a>
-  
-
-  
-  
 </div>
 
-## About
+<br />
 
 <div align="center">
   <img width="500" src="https://github.com/FormidableLabs/urql-devtools/raw/aef5570a698023ef01f355c2c802f93d7f2bf006/assets/preview.gif" />
 </div>
+
+## About
+
 
 ## Requirements
 
