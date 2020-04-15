@@ -41,11 +41,12 @@ export const TimelineContext = createContext<TimelineContextValue>(null as any);
 export const useTimelineContext = () => useContext(TimelineContext);
 
 const DEFAULT_WIDTH = 30000;
+export const START_PADDING = 500;
 
 const useTimelineDomain = () => {
   const startTime = useRef(Date.now());
   const domain = useRef({
-    start: startTime.current,
+    start: startTime.current - START_PADDING,
     zoom: 1,
   });
   const ref = useRef<HTMLDivElement>(undefined as any);
@@ -93,7 +94,7 @@ const useTimelineDomain = () => {
 
     domain.current = {
       ...domain.current,
-      start: Math.max(startTime.current, t),
+      start: Math.max(startTime.current - START_PADDING, t),
     };
     createScale();
   }, []);
@@ -122,7 +123,7 @@ const useTimelineDomain = () => {
       // Apply movement (limited left movement)
       domain.current = {
         ...domain.current,
-        start: Math.max(startTime.current, newStart),
+        start: Math.max(startTime.current - START_PADDING, newStart),
       };
     },
     [scale]
@@ -146,7 +147,7 @@ const useTimelineDomain = () => {
     const newStart = mouseTime - newDifferenceFromStart;
     domain.current = {
       ...domain.current,
-      start: Math.max(newStart, startTime.current),
+      start: Math.max(newStart, startTime.current - START_PADDING),
       zoom: newZoom,
     };
   }, []);

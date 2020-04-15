@@ -7,17 +7,17 @@ import {
   faFastForward,
 } from "@fortawesome/free-solid-svg-icons";
 import { Collapsible } from "../../../components";
-import { useTimelineContext } from "../../../context";
+import { useTimelineContext, START_PADDING } from "../../../context";
 
 export const Settings: FC<ComponentProps<typeof Container>> = (props) => {
   const [collapsed, setCollapsed] = useState(true);
   const handleExpandToggle = useCallback(() => setCollapsed((c) => !c), []);
   const { setPosition, startTime } = useTimelineContext();
 
-  const handleBackClick = useCallback(() => setPosition(startTime), [
-    setPosition,
-    startTime,
-  ]);
+  const handleBackClick = useCallback(
+    () => setPosition(startTime - START_PADDING),
+    [setPosition, startTime]
+  );
 
   const handleForwardClick = useCallback(() => setPosition(Date.now()), [
     setPosition,
