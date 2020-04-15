@@ -9,9 +9,11 @@
   </a>
 </div>
 
-## Features
+## About
 
-![Slideshow of features](https://github.com/FormidableLabs/urql-devtools/raw/aef5570a698023ef01f355c2c802f93d7f2bf006/assets/preview.gif)
+<div align="center">
+  <img width="500" src="https://github.com/FormidableLabs/urql-devtools/raw/aef5570a698023ef01f355c2c802f93d7f2bf006/assets/preview.gif" />
+</div>
 
 ## Requirements
 
