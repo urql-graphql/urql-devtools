@@ -1,39 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import styled from "styled-components";
 
-export const CodeHighlight: FC<any> = (props) => (
-  <Highlight {...defaultProps} {...props}>
-    {({ className, style, tokens, getLineProps, getTokenProps }) => (
-      <StyledCodeBlock
-        className={className}
-        style={{ ...style, backgroundColor: undefined, color: undefined }}
-      >
-        <code>
-          {tokens.map((line, i) => (
-            <div key={i} {...getLineProps({ line, key: i })} style={undefined}>
-              {line.map((token, key) => (
-                <span
-                  key={key}
-                  {...getTokenProps({ token, key })}
-                  style={undefined}
-                />
-              ))}
-            </div>
-          ))}
-        </code>
-      </StyledCodeBlock>
-    )}
-  </Highlight>
-);
-
-export const InlineCodeHighlight: FC<any> = ({ code, ...props }) => {
-  const trimmedCode = trimCode(code, props.language);
-
+export const CodeHighlight: FC<any> = memo(function CodeHighlightMemo(props) {
   return (
-    <Highlight {...defaultProps} code={trimmedCode} {...props}>
+    <Highlight {...defaultProps} {...props}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <StyledInlineBlock
+        <StyledCodeBlock
           className={className}
           style={{ ...style, backgroundColor: undefined, color: undefined }}
         >
@@ -54,11 +27,46 @@ export const InlineCodeHighlight: FC<any> = ({ code, ...props }) => {
               </div>
             ))}
           </code>
-        </StyledInlineBlock>
+        </StyledCodeBlock>
       )}
     </Highlight>
   );
-};
+});
+
+export const InlineCodeHighlight: FC<any> = memo(
+  function InlineCodeHighlightMemo({ code, ...props }) {
+    const trimmedCode = trimCode(code, props.language);
+
+    return (
+      <Highlight {...defaultProps} code={trimmedCode} {...props}>
+        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <StyledInlineBlock
+            className={className}
+            style={{ ...style, backgroundColor: undefined, color: undefined }}
+          >
+            <code>
+              {tokens.map((line, i) => (
+                <div
+                  key={i}
+                  {...getLineProps({ line, key: i })}
+                  style={undefined}
+                >
+                  {line.map((token, key) => (
+                    <span
+                      key={key}
+                      {...getTokenProps({ token, key })}
+                      style={undefined}
+                    />
+                  ))}
+                </div>
+              ))}
+            </code>
+          </StyledInlineBlock>
+        )}
+      </Highlight>
+    );
+  }
+);
 
 const trimCode = (code: string, language: string) => {
   if (language !== "json" || !code) {
