@@ -42,44 +42,34 @@ Explore your cache and see when cached data is being used.
 ### 🚀 Request tool
 Explore your backend schema and trigger queries directly via your running Urql client.
 
-## Requirements
+## Usage
 
-Install the [`urql-devtools-exchange`](https://github.com/FormidableLabs/urql-devtools-exchange)
+Install the extension for your browser of choice
+ - [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
+ - [Firefox addon](https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools)
+
+Install the [devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange)
 
 ```sh
-# yarn
-yarn add -D @urql/devtools
-
 # npm
 npm i -D @urql/devtools
+
+# yarn
+yarn add -D @urql/devtools
 ```
 
-- [urql](https://github.com/FormidableLabs/urql) _v1.2.0_ (or later)
-- [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
-- [Firefox extension](https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools/)
+Add the exchange to your Urql client
 
-### Usage
-
-Add the devtools exchange to your urql client
-
-```tsx
-// ...
-import {
-  cacheExchange,
-  createClient,
-  dedupExchange,
-  fetchExchange,
-} from "urql";
-
+```js
+import { createClient, defaultExchanges } from 'urql';
 import { devtoolsExchange } from "@urql/devtools";
 
-// ...
 const client = createClient({
   url: "http://localhost:3001/graphql",
-  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange],
+  exchanges: [devtoolsExchange, ...defaultExchanges],
 });
 ```
 
-### Contributing
+## Contributing
 
 Have experience working with devtools extensions or want to get involved? Check out our [contributing](./CONTRIBUTING.md) docs to get started.
