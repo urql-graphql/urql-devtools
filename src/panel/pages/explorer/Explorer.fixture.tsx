@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from "react";
 import gql from "graphql-tag";
-import { OperationResponseMessage } from "@urql/devtools";
+import { DebugMessage } from "@urql/devtools";
 import {
   DevtoolsContext,
   ExplorerProvider,
@@ -8,10 +8,14 @@ import {
 } from "../../context";
 import { Explorer } from "./Explorer";
 
-const defaultEvents: OperationResponseMessage[] = [
-  ({
-    type: "response",
+export const defaultEvents: DebugMessage[] = [
+  {
+    type: "debug",
     data: {
+      type: "update",
+      message: "Todo message",
+      source: "MyComponent",
+      timestamp: Date.now(),
       operation: {
         key: 12345,
         operationName: "query",
@@ -20,10 +24,22 @@ const defaultEvents: OperationResponseMessage[] = [
           address: {
             postcode: "E1",
           },
+          other: {
+            postcode: "E1",
+          },
+          other2: {
+            postcode: "E1",
+          },
         },
         query: gql`
           query getTodos($name: String!, $address: Address!) {
-            todos(id: 1234, name: $name, address: $address) {
+            todos(
+              id: 1234
+              name: $name
+              address: $address
+              otherArg: "really long string to cause overflow"
+              finalArg: "Other long arg to cause overflow"
+            ) {
               id
               content
               __typename
@@ -39,21 +55,23 @@ const defaultEvents: OperationResponseMessage[] = [
         },
       },
       data: {
-        todos: [
-          {
-            id: 1234,
-            content: "My todo",
-            __typename: "Todo",
-          },
-          {
-            id: 5678,
-            content: "My other todo",
-            __typename: "Todo",
-          },
-        ],
+        value: {
+          todos: [
+            {
+              id: 1234,
+              content: "My todo",
+              __typename: "Todo",
+            },
+            {
+              id: 5678,
+              content: "My other todo",
+              __typename: "Todo",
+            },
+          ],
+        },
       },
     },
-  } as unknown) as OperationResponseMessage,
+  },
 ];
 
 const DevtoolsContextMock: FC<
@@ -82,7 +100,7 @@ const DevtoolsContextMock: FC<
 export default {
   basic: (
     <DevtoolsContextMock>
-      <Explorer />
+      <Explorer data-snapshot />
     </DevtoolsContextMock>
   ),
   updating: (
@@ -90,22 +108,28 @@ export default {
       addMessageHandler={(h) => {
         const event = defaultEvents[0];
         let content = 1;
-        const update = () =>
-          h({
+        const update = () => {
+          const updatedDebugMessage = {
             ...event,
             data: {
               ...event.data,
               data: {
-                todos: [
-                  {
-                    id: 123,
-                    content: content.toString(),
-                    __typename: "Todo",
-                  },
-                ],
+                value: {
+                  todos: [
+                    {
+                      id: 123,
+                      content: content.toString(),
+                      __typename: "Todo",
+                    },
+                  ],
+                },
               },
             },
-          });
+          };
+
+          h(updatedDebugMessage);
+        };
+
         update();
         setInterval(() => {
           update();
@@ -115,7 +139,7 @@ export default {
         return () => false;
       }}
     >
-      <Explorer />
+      <Explorer data-snapshot />
     </DevtoolsContextMock>
   ),
 };

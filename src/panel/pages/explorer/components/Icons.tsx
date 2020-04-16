@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { useTheme } from "styled-components";
 
 export const ArrowIcon: FC<JSX.IntrinsicElements["svg"]> = (props) => (
   <svg height="10" width="10" viewBox="0 0 4 8" {...props}>
@@ -33,20 +34,25 @@ export const CacheOutcomeIcon: FC<
   JSX.IntrinsicElements["svg"] & {
     state?: "hit" | "miss" | "partial";
   }
-> = ({ state, ...props }) => (
-  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" {...props}>
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M0 5C0 6.36273 0.545159 7.59812 1.42928 8.5L5 5L8.57072 1.5C7.66326 0.574319 6.3987 0 5 0C2.23858 0 0 2.23858 0 5Z"
-      fill={state === "partial" ? "#ECF29F" : "transparent"}
-    />
-    <circle
-      cx="5"
-      cy="5"
-      r="4.5"
-      stroke="#ECF29F"
-      fill={state === "hit" ? "#ECF29F" : "transparent"}
-    />
-  </svg>
-);
+> = ({ state, ...props }) => {
+  const { yellow } = useTheme();
+  const fillColor = yellow["+4"];
+
+  return (
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" {...props}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 5C0 6.36273 0.545159 7.59812 1.42928 8.5L5 5L8.57072 1.5C7.66326 0.574319 6.3987 0 5 0C2.23858 0 0 2.23858 0 5Z"
+        fill={state === "partial" ? fillColor : "transparent"}
+      />
+      <circle
+        cx="5"
+        cy="5"
+        r="4.5"
+        stroke={fillColor}
+        fill={state === "hit" ? fillColor : "transparent"}
+      />
+    </svg>
+  );
+};

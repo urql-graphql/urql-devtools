@@ -11,16 +11,16 @@ import "codemirror-graphql/lint";
 import "codemirror-graphql/hint";
 import "codemirror-graphql/mode";
 import CodeMirror, { ShowHintOptions } from "codemirror";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { RequestContext } from "../../../context";
+import { useRequest } from "../../../context";
 
 /** Query editor
  * Inspired by Graphiql's query editor - https://github.com/graphql/graphiql/blob/master/packages/graphiql/src/components/QueryEditor.js
  */
 export const Query = () => {
   const [codemirror, setCodeMirror] = useState<CodeMirror.Editor | undefined>();
-  const { query, setQuery, execute, schema } = useContext(RequestContext);
+  const { query, setQuery, execute, schema } = useRequest();
 
   useEffect(() => {
     if (codemirror === undefined) {
@@ -53,6 +53,17 @@ export const Query = () => {
     });
   }, [codemirror, schema]);
 
+  // Update on programmatic value change
+  useEffect(() => {
+    if (!codemirror) {
+      return;
+    }
+
+    if (query !== undefined && query !== codemirror.getValue()) {
+      codemirror.setValue(query);
+    }
+  }, [query, codemirror]);
+
   const handleRef = (ref: HTMLTextAreaElement) => {
     if (ref === null || codemirror !== undefined) {
       return;
@@ -74,7 +85,6 @@ export const Query = () => {
 
   return (
     <Container>
-      <Heading>Query</Heading>
       <textarea
         ref={handleRef}
         value={
@@ -90,17 +100,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  padding-top: 10px;
 
   .cm-s-material,
   .CodeMirror-gutters {
     background: ${(props) => props.theme.dark["0"]} !important;
   }
-`;
-
-const Heading = styled.h2`
-  margin: 0;
-  padding: 10px;
-  font-size: 12px;
-  color: ${(p) => p.theme.grey["+2"]};
-  background: ${(props) => props.theme.dark["0"]} !important;
 `;

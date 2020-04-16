@@ -1,12 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, ComponentProps } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import image from "../../../assets/icon.svg";
+import Icon from "../../../assets/icon.svg";
 
-export const Disconnected: FC = () => (
+export const Disconnected: FC<ComponentProps<typeof Container>> = (props) => (
   <>
     <GlobalStyle />
-    <Container>
-      <Logo alt={"Urql Eagle"} src={image} />
+    <Container {...props}>
+      <Logo />
       <Header>Waiting for exchange</Header>
       <Hint>Make sure {"you're"} using the Urql Devtools exchange!</Hint>
     </Container>
@@ -30,15 +30,19 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
-  color: ${(p) => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.light["0"]};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
-  color: ${(p) => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.grey["+4"]};
 `;
 
-const Logo = styled.img`
+const Logo = styled(Icon)`
   width: 150px;
+
+  > * {
+    fill: ${(p) => p.theme.light["0"]};
+  }
 `;

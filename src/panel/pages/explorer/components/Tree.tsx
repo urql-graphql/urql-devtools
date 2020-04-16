@@ -67,7 +67,7 @@ const List = styled.ul`
   padding-top: 0.3rem;
   padding-left: 0.5rem;
   margin-left: 5px;
-  border-left: 3px solid ${(p) => p.theme.border};
+  border-left: 3px solid ${(p) => p.theme.dark["+3"]};
   list-style: none;
   font-size: 14px;
   color: ${(p) => p.theme.grey["+2"]};

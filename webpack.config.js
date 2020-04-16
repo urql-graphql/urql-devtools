@@ -57,7 +57,7 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        use: ["url-loader"],
+        use: ["svg-react-loader"],
       },
     ],
   },
@@ -66,7 +66,10 @@ module.exports = {
       /graphql-language-service-interface[\/\\]dist/,
       /\.js$/
     ),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ["**/*"],
+      cleanAfterEveryBuildPatterns: ["!*", "!*/**"],
+    }),
     new CopyWebpackPlugin(
       [
         { from: "src/assets/", to: "assets/" },

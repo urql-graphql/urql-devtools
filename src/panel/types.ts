@@ -1,3 +1,9 @@
+import {
+  DevtoolsExchangeOutgoingMessage,
+  DisconnectMessage,
+  InitMessage,
+} from "@urql/devtools";
+
 export type EventType =
   | "subscription"
   | "query"
@@ -70,3 +76,8 @@ export type ParsedEvent =
   | ParsedErrorEvent
   | ParsedSubscriptionEvent
   | ParsedTeardownEvent;
+
+export type PresentedEvent = Exclude<
+  DevtoolsExchangeOutgoingMessage,
+  InitMessage | DisconnectMessage
+>;

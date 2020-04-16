@@ -1,48 +1,71 @@
-import puppeteer from "puppeteer";
-import { detectCosmosConfig, getFixtureUrls } from "react-cosmos";
+import {
+  detectCosmosConfig,
+  getFixtureUrlsSync,
+  getFixturesSync,
+} from "react-cosmos";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 expect.extend({ toMatchImageSnapshot });
 
-let fixtures: { id: string; url: string }[];
-let browser: puppeteer.Browser;
+// Urls of fixtures
+const fixtureUrls = getFixtureUrlsSync({
+  cosmosConfig: detectCosmosConfig(),
+  fullScreen: true,
+});
+// ID and name for each fixture
+const fixtureElements = getFixturesSync({
+  cosmosConfig: detectCosmosConfig(),
+});
+const fixtures = fixtureUrls.reduce<[string, string][]>((p, url, i) => {
+  const f = fixtureElements[i].fixtureId;
 
-beforeAll(async () => {
-  try {
-    browser = await puppeteer.launch({ args: ["--no-sandbox"] });
-    fixtures = (
-      await getFixtureUrls({
-        cosmosConfig: detectCosmosConfig(),
-        fullScreen: true,
-      })
-    ).map((url) => ({
-      id: url.replace(/.*?fixtureId\=/, ""),
-      url: `http://${url.replace("localhost", "cosmos")}`,
-    }));
-  } catch (err) {
-    console.error(err);
+  if (f.name === null) {
+    return p;
   }
 
+  const fixtureRegex = /\/(\w+)\.fixture/.exec(f.path);
+
+  if (fixtureRegex === null) {
+    console.error("Error parsing fixture");
+    return p;
+  }
+
+  const targetUrl = process.env.TARGET_HOST
+    ? url.replace("localhost:5000", process.env.TARGET_HOST)
+    : url;
+  return [...p, [`${fixtureRegex[1]} - ${f.name}`, `http://${targetUrl}`]];
+}, []);
+
+beforeAll(async () => {
+  jest.retryTimes(5);
   jest.setTimeout(60000);
 });
 
-afterAll(async () => {
-  browser && (await browser.close());
-});
+describe.each(fixtures)("%s", (id, url) => {
+  it("matches snapshot", async () => {
+    await page.goto(url, { waitUntil: "load" });
+    await page.mouse.move(0, 0);
+    await delay(500);
+    const element = await page.$("[data-snapshot=true]");
 
-describe("Fixtures", () => {
-  it("matches image snapshot", async () => {
-    for (const { id, url } of fixtures) {
-      const page = await browser.newPage();
-      await page.goto(url, { waitUntil: "load" });
-      await delay(200);
-      const image = await page.screenshot();
-      expect(image).toMatchImageSnapshot({
-        customSnapshotIdentifier: id,
-        failureThreshold: 0.01,
-      });
-      await page.close();
+    if (element === null) {
+      console.warn(`No snapshot for fixture: ${id}`);
+      return;
     }
-  }, 120000);
+
+    const boundingBox = await element.boundingBox();
+    const image = await element.screenshot({
+      clip: {
+        x: boundingBox.x,
+        y: boundingBox.y,
+        width: Math.min(boundingBox.width, page.viewport().width),
+        height: Math.min(boundingBox.height, page.viewport().height),
+      },
+    });
+    expect(image).toMatchImageSnapshot({
+      customSnapshotIdentifier: id,
+      failureThreshold: 0.01,
+    });
+  });
 });
 
 const delay = (t: number) => new Promise((resolve) => setTimeout(resolve, t));

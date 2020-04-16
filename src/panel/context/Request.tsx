@@ -2,15 +2,14 @@ import React, {
   createContext,
   FC,
   useState,
-  useContext,
   useEffect,
   useCallback,
   useMemo,
+  useContext,
 } from "react";
-import { print } from "graphql";
-import { GraphQLSchema } from "graphql";
-import { introspectSchema } from "graphql-tools";
-import { DevtoolsContext } from ".";
+import { visit, buildClientSchema, DocumentNode } from "graphql";
+import { GraphQLSchema, getIntrospectionQuery } from "graphql";
+import { useDevtoolsContext } from "./Devtools";
 
 interface RequestContextValue {
   query?: string;
@@ -24,8 +23,10 @@ interface RequestContextValue {
 
 export const RequestContext = createContext<RequestContextValue>(null as any);
 
+export const useRequest = () => useContext(RequestContext);
+
 export const RequestProvider: FC = ({ children }) => {
-  const { sendMessage, addMessageHandler } = useContext(DevtoolsContext);
+  const { sendMessage, addMessageHandler } = useDevtoolsContext();
   const [state, setState] = useState<{
     fetching: boolean;
     response?: object;
@@ -46,44 +47,45 @@ export const RequestProvider: FC = ({ children }) => {
   // Listen for response for devtools
   useEffect(() => {
     return addMessageHandler((e) => {
-      setState((s) => {
-        if (
-          !s.fetching ||
-          (e.type !== "response" && e.type !== "error") ||
-          (e.data.operation.context.meta as any).source !== "Devtools"
-        ) {
-          return s;
-        }
+      if (e.type !== "debug") {
+        return;
+      }
 
-        return {
+      const debugEvent = e.data;
+
+      if (debugEvent.operation.context.meta?.source !== "Devtools") {
+        return;
+      }
+
+      if (
+        debugEvent.type === "update" &&
+        isIntrospectionQuery(debugEvent.operation.query)
+      ) {
+        setSchema(buildClientSchema(debugEvent.data.value));
+        return;
+      }
+
+      if (debugEvent.type === "update") {
+        setState({
           fetching: false,
-          error: e.data.error,
-          response: e.data.data,
-        };
-      });
+          response: debugEvent.data.value,
+        });
+        return;
+      }
+
+      if (debugEvent.type === "error") {
+        setState({
+          fetching: false,
+          error: debugEvent.data.value,
+        });
+        return;
+      }
     });
   }, [addMessageHandler]);
 
   // Get schema
   useEffect(() => {
-    chrome.devtools.inspectedWindow.eval(
-      "window.__urql__.url",
-      async (endpoint: string) => {
-        const schema = await introspectSchema(({ query, variables }) => {
-          return fetch(endpoint, {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({ query: print(query), variables }),
-          })
-            .then((data) => data.json())
-            .catch((error) => ({ data: null, error }));
-        });
-
-        setSchema(schema);
-      }
-    );
+    sendMessage({ type: "request", query: getIntrospectionQuery() });
   }, []);
 
   const value = useMemo(
@@ -98,4 +100,21 @@ export const RequestProvider: FC = ({ children }) => {
   );
 
   return <RequestContext.Provider value={value} children={children} />;
+};
+
+const isIntrospectionQuery = (query: DocumentNode) => {
+  let value = false;
+
+  visit(query, {
+    OperationDefinition: {
+      enter: (n) => {
+        if (n.name?.value === "IntrospectionQuery") {
+          value = true;
+        }
+        return false;
+      },
+    },
+  });
+
+  return value;
 };

@@ -2,18 +2,19 @@ import React, {
   createContext,
   useState,
   useEffect,
-  useContext,
   FC,
   useMemo,
   SetStateAction,
   Dispatch,
 } from "react";
 import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
-import { DevtoolsContext } from "../Devtools";
+import { useDevtoolsContext } from "../Devtools";
 import { handleResponse, ParsedNodeMap, ParsedFieldNode } from "./ast";
 
 export interface ExplorerContextValue {
   operations: ParsedNodeMap;
+  expandedNodes: ParsedFieldNode[];
+  setExpandedNodes: Dispatch<SetStateAction<ParsedFieldNode[]>>;
   focusedNode?: ParsedFieldNode;
   setFocusedNode: Dispatch<SetStateAction<ParsedFieldNode | undefined>>;
 }
@@ -21,26 +22,35 @@ export interface ExplorerContextValue {
 export const ExplorerContext = createContext<ExplorerContextValue>(null as any);
 
 export const ExplorerProvider: FC = ({ children }) => {
-  const { addMessageHandler } = useContext(DevtoolsContext);
+  const { addMessageHandler } = useDevtoolsContext();
   const [operations, setOperations] = useState<
     ExplorerContextValue["operations"]
   >({});
+  const [expandedNodes, setExpandedNodes] = useState<
+    ExplorerContextValue["expandedNodes"]
+  >([]);
   const [focusedNode, setFocusedNode] = useState<
     ExplorerContextValue["focusedNode"]
   >(undefined);
 
   useEffect(() => {
-    return addMessageHandler((o: DevtoolsExchangeOutgoingMessage) => {
-      if (o.type === "disconnect") {
+    return addMessageHandler((message: DevtoolsExchangeOutgoingMessage) => {
+      if (message.type === "disconnect") {
         setOperations({});
         return;
       }
 
-      if (o.type === "response" && o.data.data) {
+      if (message.type !== "debug" || message.data.type !== "update") {
+        return;
+      }
+
+      const debugEvent = message.data;
+
+      if (debugEvent.data) {
         setOperations((operations) =>
           handleResponse({
-            operation: o.data.operation,
-            data: o.data.data,
+            operation: debugEvent.operation,
+            data: debugEvent.data.value,
             parsedNodes: operations,
           })
         );
@@ -51,12 +61,15 @@ export const ExplorerProvider: FC = ({ children }) => {
 
   const value = useMemo(
     () => ({
+      expandedNodes,
+      setExpandedNodes,
       focusedNode,
       setFocusedNode,
       operations,
     }),
-    [operations, focusedNode, setFocusedNode]
+    [operations, focusedNode, setFocusedNode, expandedNodes, setExpandedNodes]
   );
+
   return (
     <ExplorerContext.Provider value={value}>
       {children}

@@ -4,6 +4,8 @@ import { NodeInfoPane } from "./NodeInfoPane";
 
 const explorerContextValue = {
   operations: {},
+  expandedNodes: [] as any,
+  setExpandedNodes: () => false,
   setFocusedNode: () => false,
   focusedNode: {
     _id: "1234",
@@ -18,7 +20,7 @@ export default {
     <ExplorerContext.Provider
       value={{ ...explorerContextValue, focusedNode: undefined }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "cache hit": (
@@ -31,7 +33,7 @@ export default {
         },
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "cache miss": (
@@ -44,7 +46,7 @@ export default {
         },
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "cache partial": (
@@ -57,7 +59,7 @@ export default {
         },
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "with args": (
@@ -73,7 +75,7 @@ export default {
         },
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "with value (object)": (
@@ -88,7 +90,7 @@ export default {
         },
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "with value (string)": (
@@ -101,7 +103,7 @@ export default {
         },
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
   "with children": (
@@ -119,7 +121,7 @@ export default {
         },
       }}
     >
-      <NodeInfoPane />
+      <NodeInfoPane data-snapshot />
     </ExplorerContext.Provider>
   ),
 };
