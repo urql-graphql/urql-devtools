@@ -108,7 +108,7 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
     );
   }
   return (
-    <Item role="treeitem" style={flashStyle} withChildren={false}>
+    <Item role="treeitem" withChildren={false}>
       {contents}
     </Item>
   );
