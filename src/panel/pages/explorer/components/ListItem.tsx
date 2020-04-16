@@ -33,7 +33,16 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   );
 
   useEffect(() => {
-    if (!isExpanded && previousNode.current !== node) {
+    // Child changed
+    if (!isExpanded && previousNode.current.children !== node.children) {
+      flash();
+    }
+
+    // Value changed
+    if (
+      !previousNode.current.children &&
+      previousNode.current.value !== node.value
+    ) {
       flash();
     }
 
@@ -80,10 +89,12 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
     <ListItemKeyVal>
       <Name>{node.name}</Name>
       {": "}
-      <InlineCodeHighlight
-        code={JSON.stringify(node.children || node.value) || "undefined"}
-        language="json"
-      />
+      <animated.span style={flashStyle}>
+        <InlineCodeHighlight
+          code={JSON.stringify(node.children || node.value) || "undefined"}
+          language="json"
+        />
+      </animated.span>
     </ListItemKeyVal>
   );
 
@@ -96,7 +107,6 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
       </Item>
     );
   }
-
   return (
     <Item role="treeitem" withChildren={false}>
       {contents}
