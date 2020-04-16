@@ -5,6 +5,7 @@
   "scripts": {
     "start": "webpack --watch",
     "cosmos": "cosmos",
+    "cosmos-build": "yarn cosmos-export && node scripts/cosmos-add-badge.js",
     "build": "NODE_ENV=\"production\" webpack",
     "bundle": "cd dist && bestzip ../extension.zip *",
     "lint": "eslint --ext .ts,.tsx src",
