@@ -134,7 +134,7 @@ const PaneSection = styled.section`
   box-sizing: border-box;
   background: ${(props) => props.theme.dark[0]};
   padding: 20px;
-  overflow: scroll;
+  overflow: auto;
 
   p {
     font-size: 12px;

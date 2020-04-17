@@ -339,4 +339,23 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0.5em 0;
     padding: 1.25em 1em;
   }
+
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:active {
+    background: rgba(255, 255, 255, 0.05);
+  }
 `;

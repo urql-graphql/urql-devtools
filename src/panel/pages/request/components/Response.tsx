@@ -125,7 +125,7 @@ const PaneSection = styled.section`
   color: #fff;
   background: ${(props) => props.theme.dark[0]};
   padding: 20px;
-  overflow: scroll;
+  overflow: auto;
   flex-grow: 1;
   flex-basis: 0;
 

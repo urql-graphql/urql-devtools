@@ -11,7 +11,3 @@ code,
 pre {
   font-family: "Roboto Mono", monospace;
 }
-
-::-webkit-scrollbar {
-  display: none;
-}
