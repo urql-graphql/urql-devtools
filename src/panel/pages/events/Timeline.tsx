@@ -1,7 +1,7 @@
 import React, { FC, useMemo, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { Operation } from "urql";
-import { useTimelineContext } from "../../context";
+import { useTimelineContext, START_PADDING } from "../../context";
 import { Background } from "../../components/Background";
 import { TimelineRow, TimelinePane, Tick } from "./components";
 import { TimelineSourceIcon } from "./components/TimelineSourceIcon";
@@ -41,7 +41,7 @@ export const Timeline: FC = () => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Back to beginning
       if (e.key === "Home") {
-        setPosition(startTime);
+        setPosition(startTime - START_PADDING);
       }
 
       // Skip to current time
