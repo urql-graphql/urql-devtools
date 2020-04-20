@@ -21,23 +21,22 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 5px 10px;
-  background: ${(props) => props.theme.dark["0"]};
+  padding: 3px 10px;
+  background: ${(props) => props.theme.dark["+3"]};
   border-bottom: solid 1px ${(p) => p.theme.dark["+4"]};
 `;
 
 const Icon = styled(FontAwesomeIcon)`
   cursor: pointer;
-  color: ${(p) => p.theme.light["-7"]};
-  width: 14px !important;
-  font-size: 14px;
+  font-size: 13px;
   margin: 3px 5px;
 
   &:hover {
-    color: ${(p) => p.theme.light["0"]};
+    color: ${(p) => p.theme.light["-9"]};
   }
 
+  &,
   &:active {
-    color: ${(p) => p.theme.light["-5"]};
+    color: ${(p) => p.theme.grey["0"]};
   }
 `;

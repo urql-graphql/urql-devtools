@@ -69,7 +69,7 @@ const List = styled.ul`
   margin-left: 5px;
   border-left: 3px solid ${(p) => p.theme.dark["+3"]};
   list-style: none;
-  font-size: 14px;
+  font-size: 13px;
   color: ${(p) => p.theme.grey["+2"]};
 
   &:last-of-type {

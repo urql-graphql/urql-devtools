@@ -22,15 +22,15 @@ const Container = styled.div`
   position: fixed;
   display: flex;
   align-items: center;
-  background-color: ${(props) => props.theme.dark["0"]};
+  background-color: ${(props) => props.theme.dark["+3"]};
   border-bottom: solid 1px ${(p) => p.theme.dark["+4"]};
-  height: 30px;
+  height: 27px;
   top: 0;
   left: 0;
   right: 0;
 
   a {
-    color: ${(p) => p.theme.light["-4"]};
+    color: ${(p) => p.theme.grey["+6"]};
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -41,11 +41,12 @@ const Container = styled.div`
 
     &.active {
       color: ${(p) => p.theme.light["0"]};
-      background-color: ${(props) => props.theme.dark["+4"]};
+      background-color: ${(props) => props.theme.dark["0"]};
     }
 
     &:hover:not(.active) {
-      background-color: ${(p) => p.theme.dark["+3"]};
+      color: ${(p) => p.theme.light["-2"]};
+      background-color: ${(p) => p.theme.dark["+1"]};
     }
   }
 `;

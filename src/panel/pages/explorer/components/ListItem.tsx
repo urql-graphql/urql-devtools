@@ -152,13 +152,13 @@ const OutlineContainer = styled(animated.div)`
 
   &[aria-expanded: true] {
     background-color: ${(p) => p.theme.dark["+2"]};
-    outline: 1px dashed ${(p) => `${p.theme.light["0"]}`};
+    outline: 1px dashed ${(p) => p.theme.light["0"]};
     transition: all 0.3s linear;
   }
 `;
 
 const Name = styled.span`
-  color: ${(p) => p.theme.light["-4"]};
+  color: ${(p) => p.theme.light["-9"]};
 `;
 
 const ChildrenName = styled.span`
@@ -166,7 +166,7 @@ const ChildrenName = styled.span`
   margin-right: 3px;
   color: ${(p) => p.theme.light["0"]};
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
 `;
 
 const Arrow = styled(ArrowIcon)`
