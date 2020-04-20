@@ -237,3 +237,5 @@ exports[`App routes on mount on connected matches snapshot 1`] = `
 `;
 
 exports[`App routes on mount on disconnected matches snapshot 1`] = `<Disconnected />`;
+
+exports[`App routes on mount on version mismatch matches snapshot 1`] = `<Mismatch />`;
