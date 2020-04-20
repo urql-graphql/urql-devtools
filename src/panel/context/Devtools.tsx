@@ -76,7 +76,7 @@ export const DevtoolsProvider: FC = ({ children }) => {
 
   // Listen for client init connection
   useEffect(() => {
-    return addMessageHandler(async (message) => {
+    return addMessageHandler((message) => {
       if (message.type === "init") {
         setClientConnected(true);
       }
