@@ -83,6 +83,10 @@ const DevtoolsContextMock: FC<
         events.forEach(h);
         return () => false;
       },
+      version: {
+        mismatch: false,
+        required: "",
+      },
       clientConnected: true,
       sendMessage: () => false,
       ...val,
