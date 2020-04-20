@@ -2,22 +2,44 @@ import React, { FC, ComponentProps } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb } from "@fortawesome/free-solid-svg-icons";
+import { CodeHighlight } from "../../components";
 import { useDevtoolsContext } from "../../context";
 
 export const Mismatch: FC<ComponentProps<typeof Container>> = (props) => {
   const { version } = useDevtoolsContext();
   return (
     <Container {...props}>
-      <Icon icon={faBomb} />
-      <Header>Version Mismatch</Header>
-      <Hint>
-        Expected devtools exchange (@urql/devtools) version{" "}
-        <em>{`>=${version.required}`}</em> but got{" "}
-        <em>{`${version.actual}.`}</em>
-      </Hint>
+      <Content>
+        <Icon icon={faBomb} />
+        <Header>Version Mismatch</Header>
+        <Hint>
+          Expected devtools exchange (@urql/devtools) version{" "}
+          <em>{`>=${version.required}`}</em> but got{" "}
+          <em>{`${version.actual}.`}</em>
+        </Hint>
+      </Content>
+      <Content>
+        <Code code={code} language="shell" />
+      </Content>
     </Container>
   );
 };
+
+const code = `
+# Yarn
+yarn add -D @urql/devtools
+ 
+# Npm
+npm update @urql/devtools
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -27,6 +49,15 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: auto;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+
+    & > ${Content} {
+      margin: 20px;
+    }
+  }
 `;
 
 const Header = styled.h1`
@@ -44,4 +75,9 @@ const Icon = styled(FontAwesomeIcon)`
   font-size: 80px;
   margin-bottom: 40px;
   color: ${(p) => p.theme.red["0"]};
+`;
+
+const Code = styled(CodeHighlight)`
+  width: 100%;
+  box-sizing: border-box;
 `;
