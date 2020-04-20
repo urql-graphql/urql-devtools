@@ -78,7 +78,7 @@ export const DevtoolsProvider: FC = ({ children }) => {
   useEffect(() => {
     return addMessageHandler((message) => {
       if (message.type === "init") {
-        setClientConnected(true);
+        return setClientConnected(true);
       }
 
       if (message.type === "disconnect") {
@@ -94,6 +94,7 @@ export const DevtoolsProvider: FC = ({ children }) => {
         required,
         mismatch: false,
       }));
+      return;
     }
 
     getExchangeVersion().then((v) => {
