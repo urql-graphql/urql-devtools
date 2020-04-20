@@ -101,7 +101,7 @@ describe("on message", () => {
 
       expect(chrome.devtools.inspectedWindow.eval).toBeCalledTimes(1);
       expect(chrome.devtools.inspectedWindow.eval).toBeCalledWith(
-        "window.__urql__",
+        "window.__urql_devtools__",
         expect.any(Function)
       );
     });

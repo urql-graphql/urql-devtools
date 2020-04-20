@@ -120,7 +120,7 @@ let index = 0;
 const getExchangeVersion = () =>
   new Promise<string | undefined>((resolve) =>
     chrome.devtools.inspectedWindow.eval(
-      "window.__urql__",
+      "window.__urql_devtools__",
       (response: undefined | { version?: string }) => resolve(response?.version)
     )
   );
