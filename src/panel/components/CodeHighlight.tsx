@@ -7,7 +7,7 @@ export const CodeHighlight: FC<any> = memo(function CodeHighlightMemo(props) {
     <Highlight {...defaultProps} {...props}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <StyledCodeBlock
-          className={className}
+          className={`${className} ${props.className}`}
           style={{ ...style, backgroundColor: undefined, color: undefined }}
         >
           <code>
@@ -41,7 +41,7 @@ export const InlineCodeHighlight: FC<any> = memo(
       <Highlight {...defaultProps} code={trimmedCode} {...props}>
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <StyledInlineBlock
-            className={className}
+            className={`${className} ${props.className}`}
             style={{ ...style, backgroundColor: undefined, color: undefined }}
           >
             <code>

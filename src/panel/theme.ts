@@ -272,7 +272,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   /* JSON */
-  .language-json, .language-javascript {
+  .language-json, .language-javascript, .language-shell {
     .token.boolean {
       color: ${(p) => p.theme.green["+3"]};
     }
@@ -289,6 +289,14 @@ export const GlobalStyle = createGlobalStyle`
       color: ${(p) => p.theme.grey["0"]};
     }
 
+    .token.function {
+      color: ${(p) => p.theme.blue["+5"]};
+    }
+
+    .token.comment {
+      color: ${(p) => p.theme.grey["+3"]};
+    }
+    
     .token.property, .token.plain {
       color: ${(p) => p.theme.light["-8"]};
     }
@@ -338,5 +346,24 @@ export const GlobalStyle = createGlobalStyle`
     position: relative;
     margin: 0.5em 0;
     padding: 1.25em 1em;
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:active {
+    background: rgba(255, 255, 255, 0.05);
   }
 `;

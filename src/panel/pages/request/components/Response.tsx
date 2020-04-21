@@ -91,8 +91,8 @@ const Status = styled.code`
 const Icon = styled.span`
   display: block;
   margin-right: 7px;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   box-sizing: border-box;
   border: solid 1px;
   border-radius: 50%;
@@ -125,7 +125,7 @@ const PaneSection = styled.section`
   color: #fff;
   background: ${(props) => props.theme.dark[0]};
   padding: 20px;
-  overflow: scroll;
+  overflow: auto;
   flex-grow: 1;
   flex-basis: 0;
 
@@ -135,7 +135,7 @@ const PaneSection = styled.section`
     top: -20px;
     margin: -20px;
     padding: 2px 10px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 400;
     border-bottom: solid 1px ${(p) => p.theme.dark["+5"]};
     z-index: 1;
@@ -148,7 +148,7 @@ const PaneSection = styled.section`
 
 const Title = styled.h3`
   color: ${(p) => p.theme.light["0"]};
-  font-size: 14px;
+  font-size: 13px;
   font-weight: normal;
   margin-top: 0;
   margin-bottom: 0.5rem;

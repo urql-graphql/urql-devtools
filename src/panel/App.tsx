@@ -2,7 +2,7 @@ import "./App.css";
 import React, { FC } from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { Disconnected, Explorer, Request, Timeline } from "./pages";
+import { Disconnected, Explorer, Request, Timeline, Mismatch } from "./pages";
 import { Navigation } from "./Navigation";
 import { theme, GlobalStyle } from "./theme";
 import {
@@ -25,10 +25,14 @@ export const App = () => {
 };
 
 export const AppRoutes: FC = () => {
-  const { clientConnected } = useDevtoolsContext();
+  const { clientConnected, version } = useDevtoolsContext();
 
   if (!clientConnected) {
     return <Disconnected />;
+  }
+
+  if (version.mismatch) {
+    return <Mismatch />;
   }
 
   return (

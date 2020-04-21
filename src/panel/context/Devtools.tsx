@@ -1,4 +1,5 @@
 import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
+import semver from "semver";
 import React, {
   createContext,
   useEffect,
@@ -16,6 +17,11 @@ export interface DevtoolsContextType {
     cb: (message: DevtoolsExchangeOutgoingMessage) => void
   ) => () => void;
   clientConnected: boolean;
+  version: {
+    required: string;
+    actual?: string;
+    mismatch: boolean;
+  };
 }
 
 export const DevtoolsContext = createContext<DevtoolsContextType>(null as any);
@@ -24,6 +30,10 @@ export const useDevtoolsContext = () => useContext(DevtoolsContext);
 
 export const DevtoolsProvider: FC = ({ children }) => {
   const [clientConnected, setClientConnected] = useState(false);
+  const [version, setVersion] = useState<DevtoolsContextType["version"]>({
+    required: "1.0.0",
+    mismatch: false,
+  });
   const connection = useRef(
     chrome.runtime.connect({ name: DevtoolsPanelConnectionName })
   );
@@ -66,18 +76,40 @@ export const DevtoolsProvider: FC = ({ children }) => {
 
   // Listen for client init connection
   useEffect(() => {
-    addMessageHandler((message) => {
+    return addMessageHandler((message) => {
       if (message.type === "init") {
-        setClientConnected(true);
-      } else if (message.type === "disconnect") {
+        return setClientConnected(true);
+      }
+
+      if (message.type === "disconnect") {
         setClientConnected(false);
       }
     });
   }, [addMessageHandler, setClientConnected]);
 
+  // Check version on client connected
+  useEffect(() => {
+    if (!clientConnected) {
+      setVersion(({ required }) => ({
+        required,
+        mismatch: false,
+      }));
+      return;
+    }
+
+    getExchangeVersion().then((v) => {
+      setVersion(({ required }) => ({
+        required,
+        mismatch:
+          !semver.valid(v) || !semver.satisfies(v as string, `>=${required}`),
+        actual: v,
+      }));
+    });
+  }, [clientConnected]);
+
   return (
     <DevtoolsContext.Provider
-      value={{ sendMessage, addMessageHandler, clientConnected }}
+      value={{ sendMessage, addMessageHandler, clientConnected, version }}
     >
       {children}
     </DevtoolsContext.Provider>
@@ -85,3 +117,11 @@ export const DevtoolsProvider: FC = ({ children }) => {
 };
 
 let index = 0;
+
+const getExchangeVersion = () =>
+  new Promise<string | undefined>((resolve) =>
+    chrome.devtools.inspectedWindow.eval(
+      "window.__urql_devtools__",
+      (response: undefined | { version?: string }) => resolve(response?.version)
+    )
+  );

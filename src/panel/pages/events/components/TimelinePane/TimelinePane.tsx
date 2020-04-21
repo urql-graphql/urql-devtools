@@ -53,9 +53,10 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
     startTime,
   ]);
 
-  const metadata = useMemo(() => JSONtoJavascriptString(event.data), [
-    event.data,
-  ]);
+  const metadata = useMemo(
+    () => event.data && JSONtoJavascriptString(event.data),
+    [event.data]
+  );
 
   return (
     <PaneSection>
@@ -118,7 +119,7 @@ const Body = styled(Pane.Body)`
 
 const Heading = styled.h3`
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: normal;
   margin-top: 14px;
   margin-bottom: 5px;
@@ -133,7 +134,7 @@ const PaneSection = styled.section`
   box-sizing: border-box;
   background: ${(props) => props.theme.dark[0]};
   padding: 20px;
-  overflow: scroll;
+  overflow: auto;
 
   p {
     font-size: 12px;
