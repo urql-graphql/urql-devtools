@@ -29,7 +29,6 @@
   <img width="500" src="https://github.com/FormidableLabs/urql-devtools/raw/aef5570a698023ef01f355c2c802f93d7f2bf006/assets/preview.gif" />
 </div>
 
-
 ## Features
 
 ### 📬 Event timeline
@@ -37,16 +36,19 @@
 See all debugging and network events in real time.
 
 ### 🗂 Cache explorer
+
 Explore your cache and see when cached data is being used.
 
 ### 🚀 Request tool
+
 Explore your backend schema and trigger queries directly via your running Urql client.
 
 ## Usage
 
 Install the extension for your browser of choice
- - [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
- - [Firefox addon](https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools)
+
+- [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
+- [Firefox addon](https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools)
 
 Install the [devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange)
 
@@ -61,7 +63,7 @@ yarn add -D @urql/devtools
 Add the exchange to your Urql client
 
 ```js
-import { createClient, defaultExchanges } from 'urql';
+import { createClient, defaultExchanges } from "urql";
 import { devtoolsExchange } from "@urql/devtools";
 
 const client = createClient({
