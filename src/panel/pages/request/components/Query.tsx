@@ -87,7 +87,7 @@ export const Query = () => {
     <Container>
       <textarea
         ref={handleRef}
-        value={
+        defaultValue={
           query ||
           "# Type your query here then hit 'Ctrl+Enter' to execute it.\n"
         }
