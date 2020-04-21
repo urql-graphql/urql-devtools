@@ -1706,16 +1706,16 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
-"@urql/core@^1.11.0", "@urql/core@^1.9.7":
+"@urql/core@^1.11.0":
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/@urql/core/-/core-1.11.0.tgz#d92ec4191f0f2d0da6137405f7b7ec5a5ce8e8cf"
   integrity sha512-7BOZDptq2p4ExnWp3/buG937wJCywRzVXSIgYQrBiFsQO7UI7EBY7BVD26aMOTEy8uZ/MT68ZUN+OIirZWQ5Wg==
   dependencies:
     wonka "^4.0.9"
 
-"@urql/devtools@https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/3b482d5b/@urql/devtools":
-  version "1.0.0-dev.1"
-  resolved "https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/3b482d5b/@urql/devtools#abbc643e55a359f2ba50f9f414244c42ed815001"
+"@urql/devtools@https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/115ee537/@urql/devtools":
+  version "1.0.0"
+  resolved "https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/115ee537/@urql/devtools#31f3dca1bbbc9a58c259b53b72bce80556193d4b"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -3356,9 +3356,9 @@ codemirror-graphql@^0.11.6:
     graphql-language-service-parser "^1.5.2"
 
 codemirror@^5.52.2:
-  version "5.53.0"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.53.0.tgz#7d5c373388e26bb902082da749a0e8cedbfe2b95"
-  integrity sha512-gpnlCCcfp/k9U38X5edaTNRAuNW3vNyAFiG4ZeytlHBl0PsCRYFTomLnAsTfJf/B1eQ7kyzB4k3XXolebpYhtA==
+  version "5.53.2"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.53.2.tgz#9799121cf8c50809cca487304e9de3a74d33f428"
+  integrity sha512-wvSQKS4E+P8Fxn/AQ+tQtJnF1qH5UOlxtugFLpubEZ5jcdH2iXTVinb+Xc/4QjshuOxRm4fUsU2QPF1JJKiyXA==
 
 collect-v8-coverage@^1.0.0:
   version "1.0.1"

@@ -96,8 +96,8 @@
     "@types/styled-components": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
-    "@urql/core": "^1.9.7",
-    "@urql/devtools": "https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/3b482d5b/@urql/devtools",
+    "@urql/core": "^1.11.0",
+    "@urql/devtools": "https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/115ee537/@urql/devtools",
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^25.2.1",
     "babel-loader": "^8.1.0",
@@ -147,9 +147,5 @@
     "web-ext": "^4.1.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
-  },
-  "peerDependencies": {
-    "react": ">= 16.8.0",
-    "urql": ">= 1.2.0"
   }
 }
