@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, Fragment } from "react";
 import styled from "styled-components";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { InlineCodeHighlight } from "../../../components";
@@ -16,11 +16,11 @@ export const Arguments: FC<{
     <ArgumentText>
       (
       {entries.map(([key, value], index) => (
-        <>
+        <Fragment key={key}>
           {`${key}: `}
           <InlineCodeHighlight code={JSON.stringify(value)} language="json" />
           {index !== entries.length - 1 && ", "}
-        </>
+        </Fragment>
       ))}
       )
     </ArgumentText>

@@ -76,7 +76,7 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
           style={flashStyle}
           aria-expanded={isExpanded}
         >
-          <Arrow active={isExpanded} />
+          <Arrow data-active={isExpanded} />
           <ChildrenName>{node.name}</ChildrenName>
           <Arguments args={node.args} />
         </OutlineContainer>
@@ -149,12 +149,6 @@ const OutlineContainer = styled(animated.div)`
   align-items: center;
   width: 100%;
   padding-left: 3px;
-
-  &[aria-expanded: true] {
-    background-color: ${(p) => p.theme.dark["+2"]};
-    outline: 1px dashed ${(p) => p.theme.light["0"]};
-    transition: all 0.3s linear;
-  }
 `;
 
 const Name = styled.span`
@@ -173,14 +167,16 @@ const Arrow = styled(ArrowIcon)`
   flex-shrink: 0;
   height: 10px;
   width: 10px;
-
   margin-left: 2px;
   margin-right: 5px;
+  color: ${(p) => p.theme.light["-5"]};
+  transform: rotate(0deg);
+  transition: transform 100ms ease;
 
-  transform: ${({ active }: { active: boolean }) =>
-    active ? "rotate(90deg)" : "rotate(0deg)"};
-  color: ${(p) => (p.active ? p.theme.light["0"] : p.theme.light["-5"])};
-  transition: all 0.1s;
+  &[data-active="true"] {
+    color: ${(p) => p.theme.light["0"]};
+    transform: rotate(90deg);
+  }
 `;
 
 const Typename = styled.div`
