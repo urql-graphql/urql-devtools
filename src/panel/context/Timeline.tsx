@@ -213,7 +213,7 @@ const useTimelineDomain = () => {
 
     ref.current.addEventListener("wheel", wheelListener, { passive: false });
 
-    return () => ref.current.removeEventListener("wheel", wheelListener);
+    return () => ref.current?.removeEventListener("wheel", wheelListener);
   }, [handleZoom, handlePan]);
 
   // Check scale each animation frame

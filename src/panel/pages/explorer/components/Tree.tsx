@@ -38,7 +38,7 @@ export const Tree: FC<TreeProps> = ({ nodeMap, depth = 0, index }) => {
   const role = depth === 0 ? "tree" : "group";
 
   return (
-    <List role={role}>
+    <List key={index} role={role}>
       {typenameField && <SystemListItem node={typenameField} index={index} />}
       {[...scalarFields, ...childrenFields].map((node) => (
         <ListItem key={node._id} node={node} depth={depth} />
