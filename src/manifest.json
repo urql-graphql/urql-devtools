@@ -15,21 +15,6 @@
     "scripts": ["background.js"],
     "persistent": false
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content_script.js"],
-      "run_at": "document_start"
-    }
-  ],
-  "page_action": {
-    "default_title": "Urql Devtools",
-    "default_icon": {
-      "32": "/assets/icon-disabled-32.png",
-      "64": "/assets/icon-disabled-64.png",
-      "128": "/assets/icon-disabled-128.png"
-    }
-  },
   "devtools_page": "devtools.html",
   "permissions": ["activeTab"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",

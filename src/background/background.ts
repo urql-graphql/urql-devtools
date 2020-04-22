@@ -27,19 +27,7 @@ const addToTarget = (tabId: number, port: chrome.runtime.Port) => {
 /** Handles initial connection from content script. */
 const handleContentScriptConnection = (port: chrome.runtime.Port) => {
   if (port?.sender?.tab?.id) {
-    const tabId = port.sender.tab.id;
-
-    addToTarget(tabId, port);
-    chrome.pageAction.setIcon({ tabId, path: "/assets/icon-32.png" });
-    port.onDisconnect.addListener(() => {
-      chrome.pageAction.setIcon(
-        {
-          tabId,
-          path: "/assets/icon-disabled-32.png",
-        },
-        () => true
-      );
-    });
+    addToTarget(port.sender.tab.id, port);
   }
 };
 

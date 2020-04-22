@@ -5,33 +5,44 @@ import {
 } from "@urql/devtools";
 import { ContentScriptConnectionName } from "../types";
 
-/** Connection to background.js */
-let connection: chrome.runtime.Port | undefined;
-
-// Listen for init message from exchange
-window.addEventListener(DevtoolsExchangeOutgoingEventType, (e) => {
-  const data = (e as CustomEvent<DevtoolsExchangeOutgoingMessage>).detail;
-
-  if (data.type === "init") {
-    connection = chrome.runtime.connect({ name: ContentScriptConnectionName });
-    connection.onMessage.addListener(handleMessage);
-    connection.onDisconnect.addListener(handleDisconnect);
-  }
-
-  if (connection === undefined) {
-    return console.warn("Unable to send message to Urql Devtools extension");
-  }
-
-  connection.postMessage(data);
-});
-
 /** Handle message from background script. */
 const handleMessage = (message: DevtoolsExchangeOutgoingMessage) =>
   window.dispatchEvent(
     new CustomEvent(DevtoolsExchangeIncomingEventType, { detail: message })
   );
 
+/** Callback to handle messages from the devtools exchange. */
+const exchangeEventListener = (e: any) => {
+  const data = (e as CustomEvent<DevtoolsExchangeOutgoingMessage>).detail;
+  connection.postMessage(data);
+};
+
+/** Handle connect to background script. */
+const handleConnect = () => {
+  window.__urql_devtools_content_script_live__ = true;
+  window.addEventListener(
+    DevtoolsExchangeOutgoingEventType,
+    exchangeEventListener
+  );
+};
+
 /** Handle disconnect from background script. */
 const handleDisconnect = () => {
-  connection = undefined;
+  window.__urql_devtools_content_script_live__ = false;
+  window.removeEventListener(
+    DevtoolsExchangeOutgoingEventType,
+    exchangeEventListener
+  );
 };
+
+/** Connection to background.js */
+const connection = chrome.runtime.connect({
+  name: ContentScriptConnectionName,
+});
+handleConnect();
+connection.onMessage.addListener(handleMessage);
+connection.onDisconnect.addListener(handleDisconnect);
+
+if (window.__urql_devtools__) {
+  connection.postMessage({ type: "init" });
+}
