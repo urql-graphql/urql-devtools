@@ -19,19 +19,27 @@ const addToTarget = (tabId: number, port: chrome.runtime.Port) => {
   target.addEventListener(portName, (a) => port.postMessage(a));
   port.onMessage.addListener((e) => target.dispatchEvent(portName, e));
   port.onDisconnect.addListener(() => {
+    target.removeEventListener(portName);
     target.dispatchEvent(portName, { type: "disconnect" });
-    chrome.pageAction.setIcon({ tabId, path: "/assets/icon-disabled-32.png" });
   });
 };
 
 /** Handles initial connection from content script. */
 const handleContentScriptConnection = (port: chrome.runtime.Port) => {
-  if (port && port.sender && port.sender.tab && port.sender.tab.id) {
-    const tabId = port.sender.tab.id as number;
+  if (port?.sender?.tab?.id) {
+    const tabId = port.sender.tab.id;
 
     addToTarget(tabId, port);
-
     chrome.pageAction.setIcon({ tabId, path: "/assets/icon-32.png" });
+    port.onDisconnect.addListener(() => {
+      chrome.pageAction.setIcon(
+        {
+          tabId,
+          path: "/assets/icon-disabled-32.png",
+        },
+        () => true
+      );
+    });
   }
 };
 
