@@ -6,6 +6,7 @@
 
 **Fixed bugs:**
 
+- Fix performance issues with Cache Explorer [\#84](https://github.com/FormidableLabs/urql-devtools/issues/84)
 - Fix overlapping text in cache inspector [\#76](https://github.com/FormidableLabs/urql-devtools/issues/76)
 
 **Closed issues:**
@@ -17,6 +18,8 @@
 - Change source map path on published extensions [\#100](https://github.com/FormidableLabs/urql-devtools/issues/100)
 - Event timeline [\#99](https://github.com/FormidableLabs/urql-devtools/issues/99)
 - Update syntax theme of request panel [\#94](https://github.com/FormidableLabs/urql-devtools/issues/94)
+- Improve icon visibility in dark mode [\#75](https://github.com/FormidableLabs/urql-devtools/issues/75)
+- Component scoped events list [\#73](https://github.com/FormidableLabs/urql-devtools/issues/73)
 
 **Merged pull requests:**
 
@@ -100,6 +103,7 @@
 **Merged pull requests:**
 
 - Add Firefox publishing [\#95](https://github.com/FormidableLabs/urql-devtools/pull/95) ([andyrichardson](https://github.com/andyrichardson))
+- Migrate to Prism, fix firefox scrollbars and font sizes [\#93](https://github.com/FormidableLabs/urql-devtools/pull/93) ([andyrichardson](https://github.com/andyrichardson))
 - Fix webpack rebuilds [\#91](https://github.com/FormidableLabs/urql-devtools/pull/91) ([andyrichardson](https://github.com/andyrichardson))
 - Add script and info info for changelog generation [\#86](https://github.com/FormidableLabs/urql-devtools/pull/86) ([andyrichardson](https://github.com/andyrichardson))
 - Keep pane hover state active on drag [\#85](https://github.com/FormidableLabs/urql-devtools/pull/85) ([andyrichardson](https://github.com/andyrichardson))
@@ -122,7 +126,6 @@
 
 **Merged pull requests:**
 
-- Migrate to Prism, fix firefox scrollbars and font sizes [\#93](https://github.com/FormidableLabs/urql-devtools/pull/93) ([andyrichardson](https://github.com/andyrichardson))
 - Add boundary for connection [\#83](https://github.com/FormidableLabs/urql-devtools/pull/83) ([andyrichardson](https://github.com/andyrichardson))
 - Fix animation order [\#82](https://github.com/FormidableLabs/urql-devtools/pull/82) ([andyrichardson](https://github.com/andyrichardson))
 - Pane component [\#79](https://github.com/FormidableLabs/urql-devtools/pull/79) ([andyrichardson](https://github.com/andyrichardson))
@@ -184,6 +187,7 @@
 - \(feat\) - headers for devtools [\#42](https://github.com/FormidableLabs/urql-devtools/pull/42) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - Update and rename docs/Development.md to CONTRIBUTING.md [\#40](https://github.com/FormidableLabs/urql-devtools/pull/40) ([kitten](https://github.com/kitten))
 - Add page action when content script connects [\#39](https://github.com/FormidableLabs/urql-devtools/pull/39) ([andyrichardson](https://github.com/andyrichardson))
+- Simplify client event model [\#26](https://github.com/FormidableLabs/urql-devtools/pull/26) ([andyrichardson](https://github.com/andyrichardson))
 
 ## [v0.0.2](https://github.com/FormidableLabs/urql-devtools/tree/v0.0.2) (2019-07-26)
 
@@ -225,7 +229,6 @@
 - Add ignores for npm publish [\#37](https://github.com/FormidableLabs/urql-devtools/pull/37) ([andyrichardson](https://github.com/andyrichardson))
 - Adds auto-publishing for tags [\#33](https://github.com/FormidableLabs/urql-devtools/pull/33) ([andyrichardson](https://github.com/andyrichardson))
 - update dependency and remove type overrides [\#31](https://github.com/FormidableLabs/urql-devtools/pull/31) ([andyrichardson](https://github.com/andyrichardson))
-- Simplify client event model [\#26](https://github.com/FormidableLabs/urql-devtools/pull/26) ([andyrichardson](https://github.com/andyrichardson))
 - Move filters to context and update styles [\#25](https://github.com/FormidableLabs/urql-devtools/pull/25) ([sofiapoh](https://github.com/sofiapoh))
 - Filter event list [\#24](https://github.com/FormidableLabs/urql-devtools/pull/24) ([sofiapoh](https://github.com/sofiapoh))
 - fix refetching and fix mutation detection [\#22](https://github.com/FormidableLabs/urql-devtools/pull/22) ([andyrichardson](https://github.com/andyrichardson))
