@@ -10,8 +10,8 @@ import { debug } from "../util";
 let connection: chrome.runtime.Port | undefined;
 
 // Listen for init message from exchange
-window.addEventListener("message", ({ data }) => {
-  if (data?.type !== DevtoolsExchangeOutgoingEventType) {
+window.addEventListener("message", ({ data, isTrusted }) => {
+  if (!isTrusted || data?.type !== DevtoolsExchangeOutgoingEventType) {
     return;
   }
 
@@ -39,7 +39,7 @@ const handleMessage = (message: DevtoolsExchangeOutgoingMessage) => {
       type: DevtoolsExchangeIncomingEventType,
       message,
     },
-    "*"
+    window.location.origin
   );
 };
 
