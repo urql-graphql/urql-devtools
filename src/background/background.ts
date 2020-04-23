@@ -3,6 +3,7 @@ import {
   DevtoolsPanelConnectionName,
   PanelOutgoingMessage,
 } from "../types";
+import { debug } from "../util";
 import { BackgroundEventTarget } from "./EventTarget";
 
 /** Collection of targets grouped by tabId. */
@@ -16,9 +17,16 @@ const addToTarget = (tabId: number, port: chrome.runtime.Port) => {
 
   const target = targets[tabId];
   const portName = port.name;
+
+  debug("Connect: ", { tabId, portName });
   target.addEventListener(portName, (a) => port.postMessage(a));
-  port.onMessage.addListener((e) => target.dispatchEvent(portName, e));
+
+  port.onMessage.addListener((e) => {
+    debug("Message: ", { tabId, portName, message: e });
+    target.dispatchEvent(portName, e);
+  });
   port.onDisconnect.addListener(() => {
+    debug("Disconnect: ", { tabId, portName });
     target.removeEventListener(portName);
     target.dispatchEvent(portName, { type: "disconnect" });
   });
