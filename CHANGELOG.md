@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.0.2](https://github.com/FormidableLabs/urql-devtools/tree/v1.0.2) (2020-04-23)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v1.0.1...v1.0.2)
+
+**Fixed bugs:**
+
+- Fix permission errors on firefox [\#169](https://github.com/FormidableLabs/urql-devtools/issues/169)
+
+**Merged pull requests:**
+
+- Fix cross-origin issues [\#170](https://github.com/FormidableLabs/urql-devtools/pull/170) ([andyrichardson](https://github.com/andyrichardson))
+
 ## [v1.0.1](https://github.com/FormidableLabs/urql-devtools/tree/v1.0.1) (2020-04-22)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v1.0.0...v1.0.1)
@@ -199,7 +211,6 @@
 - \(feat\) - headers for devtools [\#42](https://github.com/FormidableLabs/urql-devtools/pull/42) ([JoviDeCroock](https://github.com/JoviDeCroock))
 - Update and rename docs/Development.md to CONTRIBUTING.md [\#40](https://github.com/FormidableLabs/urql-devtools/pull/40) ([kitten](https://github.com/kitten))
 - Add page action when content script connects [\#39](https://github.com/FormidableLabs/urql-devtools/pull/39) ([andyrichardson](https://github.com/andyrichardson))
-- Simplify client event model [\#26](https://github.com/FormidableLabs/urql-devtools/pull/26) ([andyrichardson](https://github.com/andyrichardson))
 
 ## [v0.0.2](https://github.com/FormidableLabs/urql-devtools/tree/v0.0.2) (2019-07-26)
 
@@ -241,6 +252,7 @@
 - Add ignores for npm publish [\#37](https://github.com/FormidableLabs/urql-devtools/pull/37) ([andyrichardson](https://github.com/andyrichardson))
 - Adds auto-publishing for tags [\#33](https://github.com/FormidableLabs/urql-devtools/pull/33) ([andyrichardson](https://github.com/andyrichardson))
 - update dependency and remove type overrides [\#31](https://github.com/FormidableLabs/urql-devtools/pull/31) ([andyrichardson](https://github.com/andyrichardson))
+- Simplify client event model [\#26](https://github.com/FormidableLabs/urql-devtools/pull/26) ([andyrichardson](https://github.com/andyrichardson))
 - Move filters to context and update styles [\#25](https://github.com/FormidableLabs/urql-devtools/pull/25) ([sofiapoh](https://github.com/sofiapoh))
 - Filter event list [\#24](https://github.com/FormidableLabs/urql-devtools/pull/24) ([sofiapoh](https://github.com/sofiapoh))
 - fix refetching and fix mutation detection [\#22](https://github.com/FormidableLabs/urql-devtools/pull/22) ([andyrichardson](https://github.com/andyrichardson))
