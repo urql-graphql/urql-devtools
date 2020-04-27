@@ -9,7 +9,7 @@ module.exports = {
     main: `${root}/src/electron/main.ts`,
   },
   output: {
-    path: `${root}/dist`,
+    path: `${root}/dist/electron`,
     filename: "main.js",
   },
   // Everything other than relative/absolute imports are externals

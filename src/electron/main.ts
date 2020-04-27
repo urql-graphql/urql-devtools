@@ -23,7 +23,7 @@ function createWindow() {
   });
 
   // and load the index.html of the app.
-  win.loadFile(`./extension/panel.html`);
+  win.loadFile(`./shell/panel.html`);
   win.webContents.openDevTools();
 }
 

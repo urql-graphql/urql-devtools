@@ -9,7 +9,8 @@ import React, {
   useState,
   useContext,
 } from "react";
-import { DevtoolsPanelConnectionName, PanelOutgoingMessage } from "../../types";
+import { Connection } from "../util";
+import { PanelOutgoingMessage } from "../../types";
 
 export interface DevtoolsContextType {
   sendMessage: (message: PanelOutgoingMessage) => void;
@@ -34,9 +35,7 @@ export const DevtoolsProvider: FC = ({ children }) => {
     required: "1.0.0",
     mismatch: false,
   });
-  const connection = useRef(
-    chrome.runtime.connect({ name: DevtoolsPanelConnectionName })
-  );
+  const connection = useRef(new Connection());
 
   /** Collection of operation events */
   const messageHandlers = useRef<
