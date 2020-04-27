@@ -1,14 +1,15 @@
 import React, { FC } from "react";
 import { MemoryRouter } from "react-router";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { theme } from "./theme";
+import { theme, GlobalStyle } from "./theme";
 import "./App.css";
 import { DevtoolsContext } from "./context";
 
-const GlobalStyle = createGlobalStyle`
+const FixtureStyle = createGlobalStyle`
   body, html, #root {
     height: 100%;
     margin: 0;
+    font-size: 12px;
   }
 
   #root {
@@ -20,8 +21,11 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const ThemeDecorator: FC = (props) => (
-  <ThemeProvider {...props} theme={theme} />
+export const ThemeDecorator: FC = ({ children, ...props }) => (
+  <ThemeProvider {...props} theme={theme}>
+    <GlobalStyle />
+    {children}
+  </ThemeProvider>
 );
 
 export const DevtoolsDecorator: FC = (props) => (
@@ -30,6 +34,10 @@ export const DevtoolsDecorator: FC = (props) => (
     value={{
       addMessageHandler: () => () => false,
       clientConnected: true,
+      version: {
+        required: "8.8.8",
+        mismatch: false,
+      },
       sendMessage: () => false,
     }}
   />
@@ -40,7 +48,7 @@ const Decorator: FC = ({ children }) => (
     <MemoryRouter>
       <DevtoolsDecorator>{children}</DevtoolsDecorator>
     </MemoryRouter>
-    <GlobalStyle />
+    <FixtureStyle />
   </ThemeDecorator>
 );
 

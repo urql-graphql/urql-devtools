@@ -1,10 +1,16 @@
-import React, { FC, useContext, useMemo, ComponentProps } from "react";
+import React, {
+  FC,
+  useContext,
+  useMemo,
+  ComponentProps,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import styled from "styled-components";
-import { Operation } from "urql";
-import { ParsedFieldNode, ParsedNodeMap } from "../../../context/Explorer/ast";
-import { Pane } from "../../../components";
+import { ParsedFieldNode } from "../../../context/Explorer/ast";
+import { Pane, CodeHighlight } from "../../../components";
 import { ExplorerContext } from "../../../context";
-import { Value } from "./Value";
 import { CacheOutcomeIcon } from "./Icons";
 
 export const NodeInfoPane: FC<ComponentProps<typeof Pane>> = (props) => {
@@ -29,70 +35,68 @@ export const NodeInfoPane: FC<ComponentProps<typeof Pane>> = (props) => {
   );
 };
 
-const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => (
-  <>
-    <Container>
-      <Title>Name</Title>
-      <Name>{node.name}</Name>
-    </Container>
-    {node.cacheOutcome ? (
+const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => {
+  const previousNode = useRef(node);
+  const [expanded, setExpanded] = useState(false);
+
+  const value = useMemo(
+    () =>
+      node.value || node.children
+        ? JSON.stringify(node.value || node.children, null, 2)
+        : false,
+    [node.value, node.children]
+  );
+
+  const isExpanded = useMemo(
+    () =>
+      (value && value.length < 10000) ||
+      (expanded && previousNode.current._id == node._id),
+    [node._id, expanded, value]
+  );
+
+  const handleReveal = useCallback(() => setExpanded(true), []);
+
+  previousNode.current = node;
+
+  return (
+    <>
       <Container>
-        <Title>Cache Outcome</Title>
-        <div>
-          <CacheIcon state={node.cacheOutcome} />
-          <Name>{node.cacheOutcome}</Name>
-          {getDescription(node.cacheOutcome)}
-        </div>
+        <Title>Name</Title>
+        <Name>{node.name}</Name>
       </Container>
-    ) : null}
-    {node.args ? (
-      <Container>
-        <Title>Arguments</Title>
-        <Code>
-          <Value value={node.args} expand={true} />
-        </Code>
-      </Container>
-    ) : null}
-    {node.value || node.children ? (
-      <Container>
-        <Title>Value</Title>
-        {node.value !== undefined ? (
-          <Value
-            value={node.children !== undefined ? node.children : node.value}
-            expand={false}
+      {node.cacheOutcome ? (
+        <Container>
+          <Title>Cache Outcome</Title>
+          <div>
+            <CacheIcon state={node.cacheOutcome} />
+            <Name>{node.cacheOutcome}</Name>
+            {getDescription(node.cacheOutcome)}
+          </div>
+        </Container>
+      ) : null}
+      {node.args ? (
+        <Container>
+          <Title>Arguments</Title>
+          <CodeHighlight
+            code={JSON.stringify(node.args, null, 2)}
+            language="json"
           />
-        ) : (
-          renderChildren(node)
-        )}
-      </Container>
-    ) : null}
-  </>
-);
-
-const gatherChildValues = (
-  values?: ParsedNodeMap | ParsedNodeMap[] | Operation["variables"]
-) => {
-  if (!values) {
-    return null;
-  }
-
-  if (!Array.isArray(values) && typeof values !== "object" && values) {
-    return values;
-  } else {
-    return Object.entries(values).reduce((acc, [key, value]) => {
-      const childValue =
-        value.value !== undefined ? value.value : value.children;
-
-      if (Array.isArray(childValue)) {
-        acc[key] = childValue.map(gatherChildValues);
-      } else if (childValue && typeof childValue === "object") {
-        acc[key] = gatherChildValues(childValue);
-      } else {
-        acc[key] = childValue;
-      }
-      return acc;
-    }, Object.create(null));
-  }
+        </Container>
+      ) : null}
+      {value ? (
+        <Container>
+          <Title>Value</Title>
+          {isExpanded ? (
+            <CodeHighlight code={value} language="json" />
+          ) : (
+            <ExpandPrompt role={"button"} onClick={handleReveal}>
+              Click to expand
+            </ExpandPrompt>
+          )}
+        </Container>
+      ) : null}
+    </>
+  );
 };
 
 const getDescription = (status: ParsedFieldNode["cacheOutcome"]) => {
@@ -118,17 +122,13 @@ const getDescription = (status: ParsedFieldNode["cacheOutcome"]) => {
   }
 };
 
-const renderChildren = (node: ParsedFieldNode) => {
-  return (
-    <Code key={node._id}>
-      {Array.isArray(node.children) ? (
-        <Value value={node.children} />
-      ) : (
-        <Value value={gatherChildValues(node.children)} expand />
-      )}
-    </Code>
-  );
-};
+const ExpandPrompt = styled.div`
+  text-align: center;
+  padding: 15px;
+  background: ${(p) => p.theme.dark["+3"]};
+  color: ${(p) => p.theme.grey["+6"]};
+  cursor: pointer;
+`;
 
 const PaneBody = styled(Pane.Body)`
   padding: 20px;
@@ -139,9 +139,8 @@ const Container = styled.div`
 `;
 
 const Title = styled.h3`
-  text-transform: uppercase;
   color: ${(p) => p.theme.light["0"]};
-  font-size: 12px;
+  font-size: 13px;
   font-weight: normal;
   margin-top: 0;
   margin-bottom: 0.5rem;
@@ -155,19 +154,6 @@ const Description = styled.p`
   color: ${(p) => p.theme.grey["+2"]}d4;
   margin-bottom: 0;
   margin-top: 5px;
-`;
-
-const Code = styled.code`
-  display: block;
-  color: ${(p) => p.theme.grey["-1"]};
-  white-space: pre;
-
-  & > code {
-    padding-left: 1rem;
-  }
-  & > * {
-    display: block;
-  }
 `;
 
 const TextContainer = styled.div`

@@ -26,16 +26,16 @@ exports[`App on mount matches snapshot 1`] = `
         "0": "#0084FF",
       },
       "dark": Object {
-        "+1": "#050505",
-        "+2": "#0a0a0a",
-        "+3": "#0f0f0f",
-        "+4": "#141414",
-        "+5": "#1a1a1a",
-        "+6": "#1f1f1f",
-        "+7": "#242424",
-        "+8": "#292929",
-        "+9": "#2e2e2e",
-        "0": "#000",
+        "+1": "#191919",
+        "+2": "#1e1e1e",
+        "+3": "#232323",
+        "+4": "#282828",
+        "+5": "#2e2e2e",
+        "+6": "#333",
+        "+7": "#383838",
+        "+8": "#3d3d3d",
+        "+9": "#424242",
+        "0": "#141414",
       },
       "green": Object {
         "+1": "#92e37d",
@@ -175,12 +175,34 @@ exports[`App on mount matches snapshot 1`] = `
         "-9": "#670006",
         "0": "#FF4D58",
       },
+      "yellow": Object {
+        "+1": "#ffe662",
+        "+2": "#ffea7b",
+        "+3": "#ffee94",
+        "+4": "#fff2ae",
+        "+5": "#fff6c7",
+        "+6": "#fffae1",
+        "+7": "#fffefa",
+        "+8": "#fff",
+        "+9": "#fff",
+        "-1": "#ffde2e",
+        "-2": "#ffda15",
+        "-3": "#fad300",
+        "-4": "#e1bd00",
+        "-5": "#c7a800",
+        "-6": "#ae9200",
+        "-7": "#947d00",
+        "-8": "#7b6800",
+        "-9": "#615200",
+        "0": "#FFE248",
+      },
     }
   }
 >
   <DevtoolsProvider>
     <AppRoutes />
   </DevtoolsProvider>
+  <Memo(GlobalStyleComponent) />
 </ThemeProvider>
 `;
 
@@ -215,3 +237,5 @@ exports[`App routes on mount on connected matches snapshot 1`] = `
 `;
 
 exports[`App routes on mount on disconnected matches snapshot 1`] = `<Disconnected />`;
+
+exports[`App routes on mount on version mismatch matches snapshot 1`] = `<Mismatch />`;

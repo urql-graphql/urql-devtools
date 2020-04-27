@@ -3,6 +3,12 @@ import React, { useContext } from "react";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 import { mocked } from "ts-jest/utils";
+import {
+  getIntrospectionQuery,
+  parse,
+  buildSchema,
+  introspectionFromSchema,
+} from "graphql";
 import { useDevtoolsContext } from "./Devtools";
 import { RequestProvider, RequestContext } from "./Request";
 
@@ -12,6 +18,10 @@ const addMessageHandler = jest.fn();
 beforeEach(() => {
   mocked(useDevtoolsContext).mockReturnValue({
     clientConnected: true,
+    version: {
+      required: "9.9.9",
+      mismatch: false,
+    },
     sendMessage,
     addMessageHandler,
   });
@@ -37,6 +47,14 @@ describe("on mount", () => {
 
   it("listens for events", () => {
     expect(addMessageHandler).toBeCalledTimes(1);
+  });
+
+  it("triggers schema request", () => {
+    expect(sendMessage).toBeCalledTimes(1);
+    expect(sendMessage).toBeCalledWith({
+      type: "request",
+      query: getIntrospectionQuery(),
+    });
   });
 
   describe("state", () => {
@@ -86,6 +104,7 @@ describe("on execute", () => {
         <Fixture />
       </RequestProvider>
     );
+    sendMessage.mockClear();
     act(() => {
       state.setQuery(query);
     });
@@ -117,6 +136,86 @@ describe("on debug message", () => {
     );
     act(() => {
       state.execute();
+    });
+  });
+
+  describe("on schema update", () => {
+    const schema = `
+      schema {
+        query: Simple
+      }
+      
+      type Simple {
+        string: String
+      }
+    `;
+    beforeEach(() => {
+      const handler = addMessageHandler.mock.calls[0][0];
+
+      act(() => {
+        handler({
+          type: "debug",
+          data: {
+            type: "update",
+            operation: {
+              query: parse(getIntrospectionQuery()),
+              context: {
+                meta: {
+                  source: "Devtools",
+                },
+              },
+            },
+            data: {
+              value: introspectionFromSchema(buildSchema(schema)),
+            },
+          },
+        });
+      });
+    });
+
+    describe("state", () => {
+      it("matches snapshot", () => {
+        expect(state).toMatchInlineSnapshot(`
+          Object {
+            "error": undefined,
+            "execute": [Function],
+            "fetching": true,
+            "query": undefined,
+            "response": undefined,
+            "schema": GraphQLSchema {
+              "__allowedLegacyNames": Array [],
+              "__validationErrors": undefined,
+              "_directives": Array [
+                "@skip",
+                "@include",
+                "@deprecated",
+              ],
+              "_implementations": Object {},
+              "_mutationType": null,
+              "_possibleTypeMap": Object {},
+              "_queryType": "Simple",
+              "_subscriptionType": null,
+              "_typeMap": Object {
+                "Boolean": "Boolean",
+                "Simple": "Simple",
+                "String": "String",
+                "__Directive": "__Directive",
+                "__DirectiveLocation": "__DirectiveLocation",
+                "__EnumValue": "__EnumValue",
+                "__Field": "__Field",
+                "__InputValue": "__InputValue",
+                "__Schema": "__Schema",
+                "__Type": "__Type",
+                "__TypeKind": "__TypeKind",
+              },
+              "astNode": undefined,
+              "extensionASTNodes": undefined,
+              "extensions": undefined,
+            },
+            "setQuery": [Function],
+          }
+        `);
+      });
     });
   });
 

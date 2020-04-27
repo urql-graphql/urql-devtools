@@ -4,6 +4,8 @@ import { NodeInfoPane } from "./NodeInfoPane";
 
 const explorerContextValue = {
   operations: {},
+  expandedNodes: [] as any,
+  setExpandedNodes: () => false,
   setFocusedNode: () => false,
   focusedNode: {
     _id: "1234",

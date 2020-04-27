@@ -38,7 +38,7 @@ export const Tree: FC<TreeProps> = ({ nodeMap, depth = 0, index }) => {
   const role = depth === 0 ? "tree" : "group";
 
   return (
-    <List role={role}>
+    <List key={index} role={role}>
       {typenameField && <SystemListItem node={typenameField} index={index} />}
       {[...scalarFields, ...childrenFields].map((node) => (
         <ListItem key={node._id} node={node} depth={depth} />
@@ -69,7 +69,7 @@ const List = styled.ul`
   margin-left: 5px;
   border-left: 3px solid ${(p) => p.theme.dark["+3"]};
   list-style: none;
-  font-size: 14px;
+  font-size: 13px;
   color: ${(p) => p.theme.grey["+2"]};
 
   &:last-of-type {

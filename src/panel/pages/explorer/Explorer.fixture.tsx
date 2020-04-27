@@ -24,10 +24,22 @@ export const defaultEvents: DebugMessage[] = [
           address: {
             postcode: "E1",
           },
+          other: {
+            postcode: "E1",
+          },
+          other2: {
+            postcode: "E1",
+          },
         },
         query: gql`
           query getTodos($name: String!, $address: Address!) {
-            todos(id: 1234, name: $name, address: $address) {
+            todos(
+              id: 1234
+              name: $name
+              address: $address
+              otherArg: "really long string to cause overflow"
+              finalArg: "Other long arg to cause overflow"
+            ) {
               id
               content
               __typename
@@ -70,6 +82,10 @@ const DevtoolsContextMock: FC<
       addMessageHandler: (h) => {
         events.forEach(h);
         return () => false;
+      },
+      version: {
+        mismatch: false,
+        required: "",
       },
       clientConnected: true,
       sendMessage: () => false,

@@ -21,6 +21,7 @@ interface TimelineContextValue {
   container: HTMLDivElement;
   setContainer: (e: HTMLDivElement) => void;
   events: Record<string, DebugEvent[]>;
+  eventOrder: number[];
   filterables: {
     source: string[];
     graphqlType: string[];
@@ -40,11 +41,12 @@ export const TimelineContext = createContext<TimelineContextValue>(null as any);
 export const useTimelineContext = () => useContext(TimelineContext);
 
 const DEFAULT_WIDTH = 30000;
+export const START_PADDING = 500;
 
 const useTimelineDomain = () => {
   const startTime = useRef(Date.now());
   const domain = useRef({
-    start: startTime.current,
+    start: startTime.current - START_PADDING,
     zoom: 1,
   });
   const ref = useRef<HTMLDivElement>(undefined as any);
@@ -92,7 +94,7 @@ const useTimelineDomain = () => {
 
     domain.current = {
       ...domain.current,
-      start: Math.max(startTime.current, t),
+      start: Math.max(startTime.current - START_PADDING, t),
     };
     createScale();
   }, []);
@@ -121,7 +123,7 @@ const useTimelineDomain = () => {
       // Apply movement (limited left movement)
       domain.current = {
         ...domain.current,
-        start: Math.max(startTime.current, newStart),
+        start: Math.max(startTime.current - START_PADDING, newStart),
       };
     },
     [scale]
@@ -145,7 +147,7 @@ const useTimelineDomain = () => {
     const newStart = mouseTime - newDifferenceFromStart;
     domain.current = {
       ...domain.current,
-      start: Math.max(newStart, startTime.current),
+      start: Math.max(newStart, startTime.current - START_PADDING),
       zoom: newZoom,
     };
   }, []);
@@ -211,7 +213,7 @@ const useTimelineDomain = () => {
 
     ref.current.addEventListener("wheel", wheelListener, { passive: false });
 
-    return () => ref.current.removeEventListener("wheel", wheelListener);
+    return () => ref.current?.removeEventListener("wheel", wheelListener);
   }, [handleZoom, handlePan]);
 
   // Check scale each animation frame
@@ -252,6 +254,9 @@ export const TimelineProvider: FC = ({ children }) => {
     graphqlType: ["query", "subscription", "mutation"],
   });
   const [events, setEvents] = useState<Record<string, DebugEvent[]>>({});
+  const [eventOrder, setEventOrder] = useState<
+    TimelineContextValue["eventOrder"]
+  >([]);
   const [selectedEvent, setSelectedEvent] = useState<DebugEvent | undefined>(
     undefined
   );
@@ -269,6 +274,7 @@ export const TimelineProvider: FC = ({ children }) => {
         ...e,
         [opKey]: [...(e[opKey] || []), message.data],
       }));
+      setEventOrder((o) => (o.includes(opKey) ? o : [...o, opKey]));
       setFilterables((f) => ({
         ...f,
         source: f.source.includes(debugEvent.source)
@@ -281,6 +287,7 @@ export const TimelineProvider: FC = ({ children }) => {
   const value = useMemo(
     () => ({
       events,
+      eventOrder,
       setFilter,
       filter,
       filterables,
@@ -288,7 +295,16 @@ export const TimelineProvider: FC = ({ children }) => {
       setSelectedEvent,
       ...domain,
     }),
-    [domain, events]
+    [
+      domain,
+      events,
+      eventOrder,
+      filter,
+      setFilter,
+      filterables,
+      selectedEvent,
+      setSelectedEvent,
+    ]
   );
 
   return (

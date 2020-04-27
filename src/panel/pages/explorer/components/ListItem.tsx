@@ -7,13 +7,13 @@ import React, {
   useRef,
 } from "react";
 import { animated } from "react-spring";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { ExplorerContext } from "../../../context";
 import { useFlash } from "../hooks";
+import { InlineCodeHighlight } from "../../../components";
 import { ArrowIcon } from "./Icons";
 import { Arguments } from "./Arguments";
-import { Value } from "./Value";
 import { Tree } from "./Tree";
 
 interface ListItemProps {
@@ -24,47 +24,46 @@ interface ListItemProps {
 export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   const previousNode = useRef(node);
   const [flashStyle, flash] = useFlash();
-  const { focusedNode, setFocusedNode } = useContext(ExplorerContext);
+  const { expandedNodes, setExpandedNodes, setFocusedNode } = useContext(
+    ExplorerContext
+  );
   const isExpanded = useMemo(
-    () => (focusedNode ? focusedNode._id === node._id : false),
-    [node, focusedNode]
+    () => expandedNodes.some((n) => n._id === node._id),
+    [node, expandedNodes]
   );
 
   useEffect(() => {
-    if (!isExpanded && previousNode.current !== node) {
+    // Child changed
+    if (!isExpanded && previousNode.current.children !== node.children) {
+      flash();
+    }
+
+    // Value changed
+    if (
+      !previousNode.current.children &&
+      previousNode.current.value !== node.value
+    ) {
       flash();
     }
 
     previousNode.current = node;
   }, [isExpanded, flash, node]);
 
-  // Update focused node on change
-  useEffect(() => {
-    if (!isExpanded || node === focusedNode) {
+  const handleFieldContainerClick = useCallback(() => {
+    if (isExpanded) {
+      setExpandedNodes((n) =>
+        n.slice(
+          0,
+          n.findIndex((n) => n._id === node._id)
+        )
+      );
+      setFocusedNode(undefined);
       return;
     }
 
+    setExpandedNodes((n) => [...n, node]);
     setFocusedNode(node);
-  }, [isExpanded, node, focusedNode]);
-
-  const handleFieldContainerClick = useCallback(
-    () => setFocusedNode((n) => (n && n._id === node._id ? undefined : node)),
-    [isExpanded, node]
-  );
-
-  const contents = (
-    <>
-      <Name>{node.name}</Name>
-      <Arguments args={node.args} displayAll={isExpanded} />
-      <Symbol>{`:`}</Symbol>
-      <ValueWrapper>
-        <Value
-          value={node.children !== undefined ? node.children : node.value}
-          expand={true}
-        />
-      </ValueWrapper>
-    </>
-  );
+  }, [isExpanded, node, setExpandedNodes]);
 
   if (
     (Array.isArray(node.children) && node.children.length > 0) ||
@@ -72,32 +71,52 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
   ) {
     return (
       <Item role="treeitem" withChildren>
-        <FieldContainer onClick={handleFieldContainerClick}>
-          <OutlineContainer style={flashStyle} isActive={isExpanded}>
-            <Arrow active={isExpanded} />
-            <ChildrenName>{node.name}</ChildrenName>
-            <Arguments args={node.args} displayAll={isExpanded} />
-          </OutlineContainer>
-        </FieldContainer>
+        <OutlineContainer
+          onClick={handleFieldContainerClick}
+          style={flashStyle}
+          aria-expanded={isExpanded}
+        >
+          <Arrow data-active={isExpanded} />
+          <ChildrenName>{node.name}</ChildrenName>
+          <Arguments args={node.args} />
+        </OutlineContainer>
         {isExpanded && <Tree nodeMap={node.children} depth={depth + 1} />}
       </Item>
     );
   }
 
+  const contents = (
+    <ListItemKeyVal>
+      <Name>{node.name}</Name>
+      {": "}
+      <animated.span style={flashStyle}>
+        <InlineCodeHighlight
+          code={JSON.stringify(node.children || node.value) || "undefined"}
+          language="json"
+        />
+      </animated.span>
+    </ListItemKeyVal>
+  );
+
+  if (node.args) {
+    return (
+      <Item role="treeitem" withChildren={false}>
+        <OutlineContainer style={flashStyle} aria-expanded={isExpanded}>
+          {contents}
+        </OutlineContainer>
+      </Item>
+    );
+  }
   return (
     <Item role="treeitem" withChildren={false}>
-      {node.args ? (
-        <FieldContainer onClick={handleFieldContainerClick}>
-          <OutlineContainer style={flashStyle} isActive={isExpanded}>
-            {contents}
-          </OutlineContainer>
-        </FieldContainer>
-      ) : (
-        <>{contents}</>
-      )}
+      {contents}
     </Item>
   );
 };
+
+const ListItemKeyVal = styled.div`
+  margin: 0;
+`;
 
 export const SystemListItem = ({
   node,
@@ -114,10 +133,6 @@ export const SystemListItem = ({
   </Item>
 );
 
-const ValueWrapper = styled.div`
-  display: inline-block;
-`;
-
 const Item = styled.li`
   padding-left: ${({ withChildren }: { withChildren: boolean }) =>
     withChildren ? "0" : "1rem"};
@@ -126,75 +141,42 @@ const Item = styled.li`
   color: ${(p) => p.theme.grey["-1"]};
 `;
 
-const FieldContainer = styled.button`
-  position: relative;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  padding-left: 1rem;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  position: relative;
-  min-height: 1.4rem;
-  line-height: 1.4rem;
-  cursor: pointer;
-
-  color: ${(p) => p.theme.grey["-1"]};
-  text-align: left;
-  font-size: 14px;
-
-  & > ${ValueWrapper} {
-    display: inline-flex;
-    width: min-content;
-    flex-wrap: wrap;
-  }
-`;
-
 const OutlineContainer = styled(animated.div)`
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: -3px;
+  cursor: pointer;
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  align-items: center;
   width: 100%;
-
   padding-left: 3px;
-
-  ${({ isActive }: { isActive: boolean }) =>
-    isActive &&
-    css`
-      background-color: ${(p) => p.theme.dark["+2"]};
-      outline: 1px dashed ${(p) => `${p.theme.light["0"]}`};
-      transition: all 0.3s linear;
-    `};
 `;
 
 const Name = styled.span`
-  color: ${(p) => p.theme.light["0"]};
+  color: ${(p) => p.theme.light["-9"]};
 `;
 
 const ChildrenName = styled.span`
-  position: relative;
+  flex-shrink: 0;
   margin-right: 3px;
-  display: inline-block;
   color: ${(p) => p.theme.light["0"]};
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
 `;
 
 const Arrow = styled(ArrowIcon)`
-  display: inline-block;
+  flex-shrink: 0;
   height: 10px;
   width: 10px;
-
-  margin-top: -4px;
   margin-left: 2px;
   margin-right: 5px;
+  color: ${(p) => p.theme.light["-5"]};
+  transform: rotate(0deg);
+  transition: transform 100ms ease;
 
-  transform: ${({ active }: { active: boolean }) =>
-    active ? "rotate(90deg)" : "rotate(0deg)"};
-  color: ${(p) => (p.active ? p.theme.light["0"] : p.theme.light["-5"])};
-  transition: all 0.1s;
+  &[data-active="true"] {
+    color: ${(p) => p.theme.light["0"]};
+    transform: rotate(90deg);
+  }
 `;
 
 const Typename = styled.div`
@@ -209,9 +191,4 @@ const Typename = styled.div`
   color: ${(p) => p.theme.grey["+2"]};
   font-size: 11px;
   line-height: 1rem;
-`;
-
-const Symbol = styled.span`
-  color: ${(p) => p.theme.grey["-1"]};
-  margin-right: 3px;
 `;
