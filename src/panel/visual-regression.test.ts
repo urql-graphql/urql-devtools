@@ -3,7 +3,8 @@ import { toMatchImageSnapshot } from "jest-image-snapshot";
 expect.extend({ toMatchImageSnapshot });
 
 const fixtures = getFixtures2({
-  cosmosConfig: { ...detectCosmosConfig(), hostname: "cosmos" },
+  ...detectCosmosConfig(),
+  hostname: "cosmos",
 }).reduce<[string, FixtureApi][]>(
   (p, c) => [...p, [`${c.fileName} - ${c.name}`, c]],
   []
