@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "The official Urql Devtools chrome extension",
   "scripts": {
-    "start": "electron dist/standalone/electron/main.js",
+    "start": "electron dist/main.js",
     "dev": "concurrently \"npm:dev:extension\" \"npm:dev:standalone\"",
     "dev:extension": "webpack --config webpack/webpack.extension.config.js --watch",
     "dev:electron": "webpack --config webpack/webpack.electron.config.js --watch",
