@@ -3,8 +3,7 @@ import {
   DevtoolsPanelConnectionName,
   PanelOutgoingMessage,
 } from "../types";
-import { debug } from "../util";
-import { BackgroundEventTarget } from "./EventTarget";
+import { debug, BackgroundEventTarget } from "../util";
 
 /** Collection of targets grouped by tabId. */
 const targets: Record<number, BackgroundEventTarget> = {};
