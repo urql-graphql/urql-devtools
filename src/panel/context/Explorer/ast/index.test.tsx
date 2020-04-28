@@ -1,5 +1,5 @@
 import { DocumentNode } from "graphql";
-import { Operation } from "urql";
+import { Operation } from "@urql/core";
 import gql from "graphql-tag";
 import { handleResponse } from "./index";
 
