@@ -9,7 +9,7 @@ import React, {
   useState,
   useContext,
 } from "react";
-import { Connection } from "../util";
+import { createConnection } from "../util";
 import { PanelOutgoingMessage } from "../../types";
 
 export interface DevtoolsContextType {
@@ -17,25 +17,31 @@ export interface DevtoolsContextType {
   addMessageHandler: (
     cb: (message: DevtoolsExchangeOutgoingMessage) => void
   ) => () => void;
-  clientConnected: boolean;
-  version: {
-    required: string;
-    actual?: string;
-    mismatch: boolean;
-  };
+  client:
+    | {
+        connected: false;
+      }
+    | {
+        connected: true;
+        version: {
+          required: string;
+          actual: string;
+          mismatch: boolean;
+        };
+      };
 }
+
+const REQUIRED_VERSION = "1.0.0";
 
 export const DevtoolsContext = createContext<DevtoolsContextType>(null as any);
 
 export const useDevtoolsContext = () => useContext(DevtoolsContext);
 
 export const DevtoolsProvider: FC = ({ children }) => {
-  const [clientConnected, setClientConnected] = useState(false);
-  const [version, setVersion] = useState<DevtoolsContextType["version"]>({
-    required: "1.0.0",
-    mismatch: false,
+  const [client, setClient] = useState<DevtoolsContextType["client"]>({
+    connected: false,
   });
-  const connection = useRef(new Connection());
+  const connection = useRef(createConnection());
 
   /** Collection of operation events */
   const messageHandlers = useRef<
@@ -62,7 +68,10 @@ export const DevtoolsProvider: FC = ({ children }) => {
     // Relay the tab ID to the background page
     connection.current.postMessage({
       type: "init",
-      tabId: chrome.devtools.inspectedWindow.tabId,
+      tabId:
+        process.env.BUILD_ENV === "extension"
+          ? chrome?.devtools?.inspectedWindow?.tabId
+          : NaN,
     });
 
     const handleMessage = (msg: DevtoolsExchangeOutgoingMessage) => {
@@ -73,42 +82,53 @@ export const DevtoolsProvider: FC = ({ children }) => {
     return () => connection.current.onMessage.removeListener(handleMessage);
   }, []);
 
-  // Listen for client init connection
+  // Listen for client disconnect
   useEffect(() => {
-    return addMessageHandler((message) => {
-      if (message.type === "init") {
-        return setClientConnected(true);
-      }
-
-      if (message.type === "disconnect") {
-        setClientConnected(false);
-      }
-    });
-  }, [addMessageHandler, setClientConnected]);
-
-  // Check version on client connected
-  useEffect(() => {
-    if (!clientConnected) {
-      setVersion(({ required }) => ({
-        required,
-        mismatch: false,
-      }));
+    if (!client.connected) {
       return;
     }
 
-    getExchangeVersion().then((v) => {
-      setVersion(({ required }) => ({
-        required,
-        mismatch:
-          !semver.valid(v) || !semver.satisfies(v as string, `>=${required}`),
-        actual: v,
-      }));
+    return addMessageHandler((message) => {
+      if (message.type !== "disconnect") {
+        return;
+      }
+
+      setClient({ connected: false });
     });
-  }, [clientConnected]);
+  }, [addMessageHandler, client.connected]);
+
+  // Poll for client to declare version
+  useEffect(() => {
+    if (client.connected) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      connection.current.postMessage({ type: "get-version" });
+    }, 300);
+
+    return addMessageHandler((message) => {
+      if (message.type !== "declare-version") {
+        return;
+      }
+
+      clearInterval(interval);
+      return setClient({
+        connected: true,
+        version: {
+          required: REQUIRED_VERSION,
+          actual: message.version,
+          mismatch:
+            !semver.valid(message.version) ||
+            !semver.satisfies(message.version, `>=${REQUIRED_VERSION}`),
+        },
+      });
+    });
+  }, []);
 
   return (
     <DevtoolsContext.Provider
-      value={{ sendMessage, addMessageHandler, clientConnected, version }}
+      value={{ sendMessage, addMessageHandler, client }}
     >
       {children}
     </DevtoolsContext.Provider>
@@ -116,11 +136,3 @@ export const DevtoolsProvider: FC = ({ children }) => {
 };
 
 let index = 0;
-
-const getExchangeVersion = () =>
-  new Promise<string | undefined>((resolve) =>
-    chrome.devtools.inspectedWindow.eval(
-      "window.__urql_devtools__",
-      (response: undefined | { version?: string }) => resolve(response?.version)
-    )
-  );

@@ -6,7 +6,6 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 const root = `${__dirname}/..`;
 
-console.log(process.env.BUILD_ENV);
 const isExtension = process.env.BUILD_ENV !== "electron";
 
 const inOutConfig = isExtension
@@ -54,7 +53,11 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx"],
   },
-  externals: ["electron"],
+  externals: isExtension
+    ? undefined
+    : {
+        electron: "commonjs2 electron",
+      },
   node: {
     fs: "empty",
   },

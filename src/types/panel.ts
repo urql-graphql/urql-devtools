@@ -5,6 +5,10 @@ export interface InitPanelMessage {
   tabId: number;
 }
 
+export interface RequestVersionMessage {
+  type: "request-version";
+}
+
 export type PanelOutgoingMessage =
   | InitPanelMessage
   | DevtoolsExchangeIncomingMessage;

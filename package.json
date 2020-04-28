@@ -6,7 +6,7 @@
     "start": "electron dist/electron/main.js",
     "dev": "concurrently \"npm:dev:extension\" \"npm:dev:standalone\"",
     "dev:extension": "export BUILD_ENV=extension; yarn webpack:extension --watch",
-    "dev:electron": "export BUILD_ENV=electron; concurrently \"npm:webpack:extension --watch\" \"npm:webpack:electron --watch\"",
+    "dev:electron": "export BUILD_ENV=electron; concurrently \"yarn webpack:extension --watch\" \"yarn webpack:electron --watch\"",
     "build": "yarn build:extension && yarn build:electron",
     "build:extension": "export NODE_ENV=production; export BUILD_ENV=extension; yarn webpack:extension",
     "build:electron": "export NODE_ENV=production; export BUILD_ENV=electron; yarn webpack:extension && yarn webpack:electron",

@@ -1,18 +1,39 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import Websocket from "ws";
 import { debug } from "../util/debug";
 
-const port = Number(process.env.port || 7700);
-const socket = new Websocket.Server({ port });
+let windows: BrowserWindow[] = [];
 
-socket.on("connection", (ws) => {
-  debug("WebSocket connection established");
-  ws.on("message", (data) => {
-    debug("WebSocket message:", data);
+const createWebsocketServer = () => {
+  debug("Creating websocket server");
+  const port = Number(process.env.port || 7700);
+  const socket = new Websocket.Server({ port });
+
+  socket.on("connection", (ws) => {
+    debug("WebSocket connection established");
+
+    // Forward messages from the extension to the exchange
+    ipcMain.on("message", (event, message) => {
+      debug("Extension message:", message);
+      ws.send(JSON.stringify(message));
+    });
+
+    // Forward messages from the exchange to the extension
+    ws.on("message", (data) => {
+      if (typeof data !== "string") {
+        console.warn("Unsupported webSocket message:", data);
+        return;
+      }
+
+      debug("WebSocket message:", data);
+      try {
+        windows.forEach((w) => w.webContents.send("message", JSON.parse(data)));
+      } catch (err) {}
+    });
   });
-});
+};
 
-function createWindow() {
+const createWindow = () => {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 800,
@@ -21,10 +42,14 @@ function createWindow() {
       nodeIntegration: true,
     },
   });
+  windows = [...windows, win];
 
   // and load the index.html of the app.
   win.loadFile(`./shell/panel.html`);
   win.webContents.openDevTools();
-}
+};
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWebsocketServer();
+  createWindow();
+});

@@ -1,9 +1,10 @@
+jest.mock("../util/Connection");
 import React from "react";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
+import { mocked } from "ts-jest/utils";
+import { createConnection } from "../util";
 import { DevtoolsProvider, useDevtoolsContext } from "./Devtools";
-
-let state: ReturnType<typeof useDevtoolsContext>;
 
 const connection = {
   onMessage: {
@@ -12,15 +13,15 @@ const connection = {
   },
   postMessage: jest.fn(),
 };
+mocked(createConnection).mockReturnValue(connection);
+
+let state: ReturnType<typeof useDevtoolsContext>;
+
 const chrome = {
   devtools: {
     inspectedWindow: {
       tabId: 1234,
-      eval: jest.fn(),
     },
-  },
-  runtime: {
-    connect: jest.fn(() => connection),
   },
 };
 
@@ -35,6 +36,10 @@ const Fixture = () => (
     <Child />
   </DevtoolsProvider>
 );
+
+beforeAll(() => {
+  jest.useFakeTimers();
+});
 
 beforeEach(jest.clearAllMocks);
 
@@ -51,13 +56,14 @@ describe("on mount", () => {
     });
   });
 
+  it("polls for an extension version", () => {
+    jest.runTimersToTime(1000);
+    expect(connection.postMessage).toBeCalledTimes(7);
+  });
+
   describe("state", () => {
     it("client is not connected", () => {
-      expect(state).toHaveProperty("clientConnected", false);
-    });
-
-    it("version is not mismatched", () => {
-      expect(state.version).toHaveProperty("mismatch", false);
+      expect(state).toHaveProperty("client", { connected: false });
     });
   });
 });
@@ -85,25 +91,21 @@ describe("on message", () => {
     expect(handler).toBeCalledWith(message);
   });
 
-  describe("on init", () => {
+  describe("on version info", () => {
     it("sets clientConnected to true", () => {
       act(() => {
-        sendMessage({ type: "init" });
+        sendMessage({ type: "declare-version", version: "0.0.0" });
       });
 
-      expect(state).toHaveProperty("clientConnected", true);
+      expect(state.client).toHaveProperty("connected", true);
     });
 
-    it("checks for devtools version", () => {
+    it("stops polling for devtools exchange", () => {
+      const clearInterval = jest.spyOn(global, "clearInterval");
       act(() => {
-        sendMessage({ type: "init" });
+        sendMessage({ type: "declare-version", version: "0.0.0" });
       });
-
-      expect(chrome.devtools.inspectedWindow.eval).toBeCalledTimes(1);
-      expect(chrome.devtools.inspectedWindow.eval).toBeCalledWith(
-        "window.__urql_devtools__",
-        expect.any(Function)
-      );
+      expect(clearInterval).toBeCalledTimes(1);
     });
 
     describe("on exchange version is newer", () => {
@@ -111,21 +113,17 @@ describe("on message", () => {
 
       it("updates version state", async () => {
         act(() => {
-          sendMessage({ type: "init" });
+          sendMessage({ type: "declare-version", version });
         });
 
-        await act(async () => {
-          chrome.devtools.inspectedWindow.eval.mock.calls[0][1]({
-            version,
-          });
-        });
-
-        expect(state.version).toEqual(
-          expect.objectContaining({
-            mismatch: false,
+        expect(state.client).toEqual({
+          connected: true,
+          version: {
             actual: version,
-          })
-        );
+            mismatch: false,
+            required: expect.any(String),
+          },
+        });
       });
     });
 
@@ -134,40 +132,17 @@ describe("on message", () => {
 
       it("updates version state", async () => {
         act(() => {
-          sendMessage({ type: "init" });
+          sendMessage({ type: "declare-version", version });
         });
 
-        await act(async () => {
-          chrome.devtools.inspectedWindow.eval.mock.calls[0][1]({
-            version,
-          });
-        });
-
-        expect(state.version).toEqual(
-          expect.objectContaining({
-            mismatch: true,
+        expect(state.client).toEqual({
+          connected: true,
+          version: {
             actual: version,
-          })
-        );
-      });
-    });
-
-    describe("on exchange version is undefined", () => {
-      it("updates version state", async () => {
-        act(() => {
-          sendMessage({ type: "init" });
-        });
-
-        await act(async () => {
-          chrome.devtools.inspectedWindow.eval.mock.calls[0][1](undefined);
-        });
-
-        expect(state.version).toEqual(
-          expect.objectContaining({
             mismatch: true,
-            actual: undefined,
-          })
-        );
+            required: expect.any(String),
+          },
+        });
       });
     });
   });
@@ -177,23 +152,19 @@ describe("on message", () => {
       act(() => {
         sendMessage({ type: "init" });
       });
-      await act(async () => {
-        chrome.devtools.inspectedWindow.eval.mock.calls[0][1]({
-          version: "0.0.1",
-        });
-      });
       act(() => {
         sendMessage({ type: "disconnect" });
       });
     });
 
-    it("sets clientConnected to false", () => {
-      expect(state).toHaveProperty("clientConnected", false);
+    it("sets client to disconnected", () => {
+      expect(state.client).toEqual({ connected: false });
     });
 
-    it("resets version state", () => {
-      expect(state.version).toHaveProperty("mismatch", false);
-      expect(state.version).toHaveProperty("actual", undefined);
+    it("polls for a devtools exchange", () => {
+      connection.postMessage.mockClear();
+      jest.runTimersToTime(1000);
+      expect(connection.postMessage.mock.calls.length > 2).toBe(true);
     });
   });
 });

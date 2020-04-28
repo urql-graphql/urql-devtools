@@ -3,6 +3,8 @@ import { configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import puppeteer from "puppeteer";
 
+process.env.BUILD_ENV = "extension";
+
 declare const global: {
   chrome: {
     devtools: {
