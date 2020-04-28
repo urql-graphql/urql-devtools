@@ -14,7 +14,7 @@
     "webpack:extension": "webpack --config webpack/webpack.extension.config.js",
     "webpack:electron": "webpack --config webpack/webpack.electron.config.js",
     "cosmos": "export BUILD_ENV=electron; cosmos",
-    "cosmos:build": "yarn cosmos-export && node scripts/cosmos-add-badge.js",
+    "cosmos:build": "export BUILD_ENV=electron; yarn cosmos-export && node scripts/cosmos-add-badge.js",
     "lint": "eslint --ext .ts,.tsx src",
     "lint:prettier": "prettier -c .",
     "lint:firefox": "cd dist/extension && web-ext lint",
