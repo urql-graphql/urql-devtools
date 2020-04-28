@@ -1,5 +1,5 @@
 {
-  "name": "@urql/devtools-chrome-extension",
+  "name": "urql-devtools",
   "version": "1.0.2",
   "description": "The official Urql Devtools chrome extension",
   "scripts": {
@@ -14,7 +14,7 @@
     "webpack:electron": "webpack --config webpack/webpack.electron.config.js",
     "cosmos": "cosmos",
     "cosmos-build": "yarn cosmos-export && node scripts/cosmos-add-badge.js",
-    "bundle": "cd dist && bestzip ../extension.zip *",
+    "bundle": "cd dist/extension && bestzip ../../extension.zip *",
     "lint": "eslint --ext .ts,.tsx src",
     "firefox:lint": "cd dist && web-ext lint",
     "test": "jest --testPathIgnorePatterns visual-regression",

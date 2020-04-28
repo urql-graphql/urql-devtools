@@ -74,6 +74,7 @@ jobs:
             - "extension.zip"
       - store_artifacts:
           path: extension.zip
+      - store_artifacts:
           path: dist/electron
 
   lint firefox:
