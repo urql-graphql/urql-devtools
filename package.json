@@ -13,7 +13,7 @@
     "bundle": "cd dist/extension && bestzip ../../extension.zip *",
     "webpack:extension": "webpack --config webpack/webpack.extension.config.js",
     "webpack:electron": "webpack --config webpack/webpack.electron.config.js",
-    "cosmos": "cosmos",
+    "cosmos": "export BUILD_ENV=electron; cosmos",
     "cosmos:build": "yarn cosmos-export && node scripts/cosmos-add-badge.js",
     "lint": "eslint --ext .ts,.tsx src",
     "lint:prettier": "prettier -c .",
