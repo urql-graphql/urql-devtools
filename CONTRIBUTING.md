@@ -1,6 +1,6 @@
-# Contributing to `urql-devtools`
+# Contributing to Urql Devtools
 
-Thanks for contributing! We want to ensure that `urql-devtools` evolves by seeing continuous improvements and enhancements, no matter how small or big they might be.
+Thanks for contributing! We want to ensure that Urql Devtools evolves by seeing continuous improvements and enhancements, no matter how small or big they might be.
 
 ## How to contribute?
 
@@ -8,7 +8,9 @@ If you want to contribute, find an issue you think you can help with and get inv
 
 We use issues to track changes to the project over time so make an issue if you want to contribute to something that hasn't yet been proposed/reported!
 
-## Working on the devtools extension (quick)
+---
+
+## Working on devtools (quick)
 
 The quickest way to get started on devtools is to spin up the devtools extension fixtures.
 
@@ -24,47 +26,36 @@ yarn visual-regression
 
 > Note: This script takes standard jest args (e.g. --watch, -u)
 
-## Working on the devtools extension (long)
+## Working on devtools (browser extension)
 
-For a fully integrated experience, you can build and run the full devtools extension.
+For a fully integrated experience in the browser, you can build and run the full devtools extension.
 
-Run `yarn start` to initiate the build of the extension.
+### Start a build
+
+Run the following script to initiate a watched build of the extension.
 
 ```sh
-yarn start
+yarn dev:extension
 ```
 
+### Load the extension
+
+#### Chrome
+
 Navigate to [chrome://extensions](chrome://extensions), toggle `Developer mode` on,
-choose _Load unpacked_ and select the _dist/extension_ folder in the root of the repo.
+choose _Load unpacked_ and select the _dist/extension_ folder..
+
+#### Firefox
+
+Navigate to [about:debugging#/runtime/this-firefox](about:debugging#/runtime/this-firefox), choose _Load temporary addon_ and select the _dist/extension/manifest.json_ file.
 
 ### Start an urql example repo
 
 Devtools will only be accessible if a development instance of `urql` is running and it includes the [devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange).
 
-Clone the [Urql repo](https://github.com/FormidableLabs/urql).
+Check out the example repo which can be [found here](https://github.com/FormidableLabs/urql/tree/master/packages/react-urql/examples/1-getting-started) for developing against a real app.
 
-Change the client configuration in the example to look like this:
-
-```tsx
-// ...
-import {
-  cacheExchange,
-  createClient,
-  dedupExchange,
-  fetchExchange,
-} from "urql";
-import { devtoolsExchange } from "<path-to-devtools-dist>/exchange";
-
-// ...
-const client = createClient({
-  url: "http://localhost:3001/graphql",
-  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange],
-});
-```
-
-Start the example repo with `yarn start`.
-
-## Extension tips and tricks
+### Extension tips and tricks
 
 Some basic suggestions if you're new to building a chrome extension.
 
@@ -73,7 +64,33 @@ Some basic suggestions if you're new to building a chrome extension.
 - When reloading an extension, any tabs using that extension will need to be closed and reopened to be updated.
 - Right click the devtools panel and hit _Reload Frame_ in order to update the _panel_ (no need to reload the extension).
 
-## How do I publish a new version?
+## Working on devtools (electron)
+
+For use with react native, the electron build is used.
+
+### Start a build
+
+Run the following script to initiate a watched build of the electron app.
+
+```sh
+yarn dev:electron
+```
+
+### Load the app
+
+Following your first build, start the app by running the following command.
+
+```sh
+yarn start
+```
+
+### Start a React Native project
+
+TBD
+
+---
+
+## Publishing a new release
 
 ### 1. Update the version
 
