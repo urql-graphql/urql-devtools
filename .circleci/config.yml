@@ -41,7 +41,7 @@ jobs:
     steps:
       - checkout
       - *node_modules_cache
-      - run: yarn run prettier-check
+      - run: yarn run lint:prettier
 
   test:
     <<: *node_env
@@ -83,7 +83,7 @@ jobs:
       - checkout
       - *node_modules_cache
       - *build_cache
-      - run: yarn run firefox:lint
+      - run: yarn run lint:firefox
 
   verify version:
     <<: *node_env
