@@ -1,7 +1,7 @@
 import { GraphQLSchema, extendSchema, parse } from "graphql";
 
 const populateSchema = parse(`
-  directive @populate on FIELD_DEFINITION
+  directive @populate on FIELD
 `);
 
 export const appendPopulateDirective = (
