@@ -60,7 +60,8 @@ npm i -D @urql/devtools
 yarn add -D @urql/devtools
 ```
 
-Add the exchange to your Urql client
+Add the `devtoolsExchange` to your `urql` Client's list of exchanges.
+Typically you'd want to add it as either the first exchange or at least in front of the `dedupExchange`:
 
 ```js
 import { createClient, defaultExchanges } from "urql";
