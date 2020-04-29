@@ -2,7 +2,7 @@ version: 2
 
 .node_env: &node_env
   docker:
-    - image: node:13
+    - image: node:14
 
 .node_modules_cache: &node_modules_cache
   restore_cache:
