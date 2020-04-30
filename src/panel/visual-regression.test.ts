@@ -39,6 +39,7 @@ describe.each(fixtures)("%s", (id, { rendererUrl }) => {
     expect(image).toMatchImageSnapshot({
       customSnapshotIdentifier: id,
       failureThreshold: 0.01,
+      failureThresholdType: "percent",
     });
   });
 });
