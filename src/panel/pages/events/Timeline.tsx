@@ -233,6 +233,10 @@ const TimelineList = styled.div`
   padding: 70px 0;
   overflow-y: visible;
   width: 100%;
+  box-sizing: border-box;
+  min-height: 100%;
+  height: max-content;
+
   &:active {
     cursor: grabbing;
   }
