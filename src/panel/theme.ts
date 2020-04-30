@@ -349,6 +349,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 
+  html {
+    scrollbar-color: rgba(255, 255, 255, 0.05) transparent;
+    scrollbar-width: thin;
+  }
+
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
