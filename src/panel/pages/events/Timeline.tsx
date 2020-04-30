@@ -198,6 +198,8 @@ const PageContent = styled.div`
 const TimelineContainer = styled.div`
   display: flex;
   flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 const TimelineIcons = styled.div`
@@ -205,7 +207,13 @@ const TimelineIcons = styled.div`
   flex-direction: column;
   align-items: center;
   width: 40px;
-  padding-top: 78px;
+
+  /* Margin prevents ticks from being hidden. */
+  margin-top: 60px;
+  padding-top: 18px;
+  height: max-content;
+  background: ${(p) => p.theme.dark["0"]};
+  z-index: 1;
 
   > * {
     margin-bottom: 16px;
@@ -220,12 +228,15 @@ const TimelineIcons = styled.div`
 
 const TimelineList = styled.div`
   cursor: grab;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  display: block;
   position: relative;
   padding: 70px 0;
-  overflow: hidden;
+  overflow-y: visible;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100%;
+  height: max-content;
+
   &:active {
     cursor: grabbing;
   }
