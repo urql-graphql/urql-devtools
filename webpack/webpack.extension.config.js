@@ -81,6 +81,9 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.BUILD_ENV": JSON.stringify(process.env.BUILD_ENV),
+      "process.env.PKG_VERSION": JSON.stringify(
+        require("../package.json").version
+      ),
     }),
     new webpack.ContextReplacementPlugin(
       /graphql-language-service-interface[\/\\]dist/,

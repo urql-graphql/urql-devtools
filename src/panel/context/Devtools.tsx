@@ -1,4 +1,4 @@
-import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
+import { DevtoolsMessage, ExchangeMessage } from "@urql/devtools";
 import semver from "semver";
 import React, {
   createContext,
@@ -10,13 +10,10 @@ import React, {
   useContext,
 } from "react";
 import { createConnection } from "../util";
-import { PanelOutgoingMessage } from "../../types";
 
 export interface DevtoolsContextType {
-  sendMessage: (message: PanelOutgoingMessage) => void;
-  addMessageHandler: (
-    cb: (message: DevtoolsExchangeOutgoingMessage) => void
-  ) => () => void;
+  sendMessage: (message: DevtoolsMessage) => void;
+  addMessageHandler: (cb: (message: ExchangeMessage) => void) => () => void;
   client:
     | {
         connected: false;
@@ -45,7 +42,7 @@ export const DevtoolsProvider: FC = ({ children }) => {
 
   /** Collection of operation events */
   const messageHandlers = useRef<
-    Record<string, (msg: DevtoolsExchangeOutgoingMessage) => void>
+    Record<string, (msg: ExchangeMessage) => void>
   >({});
 
   const sendMessage = useCallback<DevtoolsContextType["sendMessage"]>(
@@ -64,17 +61,26 @@ export const DevtoolsProvider: FC = ({ children }) => {
     };
   }, []);
 
+  // Send init message on mount
   useEffect(() => {
-    // Relay the tab ID to the background page
     connection.current.postMessage({
-      type: "init",
+      type: "connection-init",
+      source: "devtools",
       tabId:
         process.env.BUILD_ENV === "extension"
           ? chrome?.devtools?.inspectedWindow?.tabId
           : NaN,
+      version: process.env.PKG_VERSION,
     });
+  }, []);
 
-    const handleMessage = (msg: DevtoolsExchangeOutgoingMessage) => {
+  // Forward exchange messages to subscribers
+  useEffect(() => {
+    const handleMessage = (msg: ExchangeMessage | DevtoolsMessage) => {
+      if (msg?.source !== "exchange") {
+        return;
+      }
+
       return Object.values(messageHandlers.current).forEach((h) => h(msg));
     };
 
@@ -82,37 +88,28 @@ export const DevtoolsProvider: FC = ({ children }) => {
     return () => connection.current.onMessage.removeListener(handleMessage);
   }, []);
 
-  // Listen for client disconnect
-  useEffect(() => {
-    if (!client.connected) {
-      return;
-    }
-
-    return addMessageHandler((message) => {
-      if (message.type !== "disconnect") {
-        return;
-      }
-
-      setClient({ connected: false });
-    });
-  }, [addMessageHandler, client.connected]);
-
-  // Poll for client to declare version
+  // Listen for client connect
   useEffect(() => {
     if (client.connected) {
       return;
     }
 
-    const interval = setInterval(() => {
-      connection.current.postMessage({ type: "get-version" });
-    }, 300);
-
     return addMessageHandler((message) => {
-      if (message.type !== "declare-version") {
+      if (
+        message.type !== "connection-acknowledge" &&
+        message.type !== "connection-init"
+      ) {
         return;
       }
 
-      clearInterval(interval);
+      if (message.type === "connection-init") {
+        connection.current.postMessage({
+          type: "connection-acknowledge",
+          source: "devtools",
+          version: process.env.PKG_VERSION,
+        });
+      }
+
       return setClient({
         connected: true,
         version: {
@@ -124,7 +121,22 @@ export const DevtoolsProvider: FC = ({ children }) => {
         },
       });
     });
-  }, []);
+  }, [addMessageHandler, client.connected]);
+
+  // Listen for client disconnect
+  useEffect(() => {
+    if (!client.connected) {
+      return;
+    }
+
+    return addMessageHandler((message) => {
+      if (message.type !== "connection-disconnect") {
+        return;
+      }
+
+      setClient({ connected: false });
+    });
+  }, [addMessageHandler, client.connected]);
 
   return (
     <DevtoolsContext.Provider

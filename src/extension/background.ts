@@ -1,15 +1,21 @@
+import { DevtoolsMessage } from "@urql/devtools";
 import {
   ContentScriptConnectionName,
   DevtoolsPanelConnectionName,
-  PanelOutgoingMessage,
 } from "../types";
 import { debug, BackgroundEventTarget } from "../util";
 
 /** Collection of targets grouped by tabId. */
 const targets: Record<number, BackgroundEventTarget> = {};
 
+type AddToTargetArgs = {
+  tabId: number;
+  source: "exchange" | "devtools";
+  port: chrome.runtime.Port;
+};
+
 /** Ensures all messages are forwarded to and from tab connections. */
-const addToTarget = (tabId: number, port: chrome.runtime.Port) => {
+const addToTarget = ({ tabId, port, source }: AddToTargetArgs) => {
   if (targets[tabId] === undefined) {
     targets[tabId] = new BackgroundEventTarget();
   }
@@ -27,16 +33,16 @@ const addToTarget = (tabId: number, port: chrome.runtime.Port) => {
   port.onDisconnect.addListener(() => {
     debug("Disconnect: ", { tabId, portName });
     target.removeEventListener(portName);
-    target.dispatchEvent(portName, { type: "disconnect" });
+    target.dispatchEvent(portName, { type: "connection-disconnect", source });
   });
 };
 
-/** Handles initial connection from content script. */
+/** Handle initial connection from content script. */
 const handleContentScriptConnection = (port: chrome.runtime.Port) => {
   if (port?.sender?.tab?.id) {
     const tabId = port.sender.tab.id;
 
-    addToTarget(tabId, port);
+    addToTarget({ tabId, port, source: "exchange" });
     chrome.pageAction.setIcon({ tabId, path: "/assets/icon-32.png" });
     port.onDisconnect.addListener(() => {
       chrome.pageAction.setIcon(
@@ -50,24 +56,23 @@ const handleContentScriptConnection = (port: chrome.runtime.Port) => {
   }
 };
 
-/** Handles initial connection from devtools panel */
+/** Handle initial connection from devtools panel. */
 const handleDevtoolsPanelConnection = (port: chrome.runtime.Port) => {
-  const initialListener = (msg: PanelOutgoingMessage) => {
-    if (msg.type !== "init") {
+  const initialListener = (msg: DevtoolsMessage) => {
+    if (msg.type !== "connection-init") {
       return;
     }
 
-    addToTarget(msg.tabId, port);
-    port.onMessage.removeListener(initialListener);
-
-    // Simulate contentscript connection if CS is already connected
-    if (
-      targets[msg.tabId]
-        .connectedSources()
-        .includes(ContentScriptConnectionName)
-    ) {
-      port.postMessage({ type: "init" });
+    // tabId is required when working with chrome extension
+    if (msg.tabId === undefined) {
+      console.error(
+        "Recieved devtools panel connection but no tabId was specified."
+      );
+      return;
     }
+
+    addToTarget({ tabId: msg.tabId, port, source: "devtools" });
+    port.onMessage.removeListener(initialListener);
   };
 
   port.onMessage.addListener(initialListener);

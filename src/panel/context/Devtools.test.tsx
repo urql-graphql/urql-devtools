@@ -51,14 +51,11 @@ describe("on mount", () => {
   it("sends an init message w/ tabId", () => {
     expect(connection.postMessage).toBeCalledTimes(1);
     expect(connection.postMessage).toBeCalledWith({
-      type: "init",
+      type: "connection-init",
       tabId: chrome.devtools.inspectedWindow.tabId,
+      source: "devtools",
+      version: process.env.PKG_VERSION,
     });
-  });
-
-  it("polls for an extension version", () => {
-    jest.runTimersToTime(1000);
-    expect(connection.postMessage).toBeCalledTimes(7);
   });
 
   describe("state", () => {
@@ -77,7 +74,7 @@ describe("on message", () => {
   });
 
   it("sends to message handlers", () => {
-    const message = { type: "init" };
+    const message = { type: "connection-init", source: "exchange" };
     const handler = jest.fn();
 
     act(() => {
@@ -91,21 +88,17 @@ describe("on message", () => {
     expect(handler).toBeCalledWith(message);
   });
 
-  describe("on version info", () => {
+  describe("on exchange init", () => {
     it("sets clientConnected to true", () => {
       act(() => {
-        sendMessage({ type: "declare-version", version: "0.0.0" });
+        sendMessage({
+          type: "connection-init",
+          source: "exchange",
+          version: "0.0.0",
+        });
       });
 
       expect(state.client).toHaveProperty("connected", true);
-    });
-
-    it("stops polling for devtools exchange", () => {
-      const clearInterval = jest.spyOn(global, "clearInterval");
-      act(() => {
-        sendMessage({ type: "declare-version", version: "0.0.0" });
-      });
-      expect(clearInterval).toBeCalledTimes(1);
     });
 
     describe("on exchange version is newer", () => {
@@ -113,7 +106,7 @@ describe("on message", () => {
 
       it("updates version state", async () => {
         act(() => {
-          sendMessage({ type: "declare-version", version });
+          sendMessage({ type: "connection-init", source: "exchange", version });
         });
 
         expect(state.client).toEqual({
@@ -132,7 +125,67 @@ describe("on message", () => {
 
       it("updates version state", async () => {
         act(() => {
-          sendMessage({ type: "declare-version", version });
+          sendMessage({ type: "connection-init", source: "exchange", version });
+        });
+
+        expect(state.client).toEqual({
+          connected: true,
+          version: {
+            actual: version,
+            mismatch: true,
+            required: expect.any(String),
+          },
+        });
+      });
+    });
+  });
+
+  describe("on exchange acknowledge", () => {
+    it("sets clientConnected to true", () => {
+      act(() => {
+        sendMessage({
+          type: "connection-acknowledge",
+          source: "exchange",
+          version: "0.0.0",
+        });
+      });
+
+      expect(state.client).toHaveProperty("connected", true);
+    });
+
+    describe("on exchange version is newer", () => {
+      const version = "100.0.1";
+
+      it("updates version state", async () => {
+        act(() => {
+          sendMessage({
+            type: "connection-acknowledge",
+            source: "exchange",
+            version,
+          });
+        });
+
+        expect(state.client).toEqual({
+          connected: true,
+          version: {
+            actual: version,
+            mismatch: false,
+            required: expect.any(String),
+          },
+        });
+      });
+    });
+
+    describe("on exchange version is older", () => {
+      const version = "0.0.1";
+
+      it("updates version state", async () => {
+        act(() => {
+          sendMessage({
+            type: "connection-acknowledge",
+            source: "exchange",
+            version,
+          });
         });
 
         expect(state.client).toEqual({
@@ -150,21 +203,19 @@ describe("on message", () => {
   describe("on disconnect", () => {
     beforeEach(async () => {
       act(() => {
-        sendMessage({ type: "init" });
+        sendMessage({
+          type: "connection-init",
+          source: "exchange",
+          version: "200.0.0",
+        });
       });
       act(() => {
-        sendMessage({ type: "disconnect" });
+        sendMessage({ type: "connection-disconnect", source: "exchange" });
       });
     });
 
     it("sets client to disconnected", () => {
       expect(state.client).toEqual({ connected: false });
-    });
-
-    it("polls for a devtools exchange", () => {
-      connection.postMessage.mockClear();
-      jest.runTimersToTime(1000);
-      expect(connection.postMessage.mock.calls.length > 2).toBe(true);
     });
   });
 });

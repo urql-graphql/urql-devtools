@@ -33,10 +33,13 @@ export const DevtoolsDecorator: FC = (props) => (
     {...props}
     value={{
       addMessageHandler: () => () => false,
-      clientConnected: true,
-      version: {
-        required: "8.8.8",
-        mismatch: false,
+      client: {
+        connected: true,
+        version: {
+          required: "8.8.8",
+          mismatch: false,
+          actual: "9.9.9",
+        },
       },
       sendMessage: () => false,
     }}

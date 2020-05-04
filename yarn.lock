@@ -1544,11 +1544,6 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.37.tgz#cb4782d847f801fa58316da5b4801ca3a59ae790"
   integrity sha512-4mXKoDptrXAwZErQHrLzpe0FN/0Wmf5JRniSVIdwUrtDf9wnmEV1teCNLBo/TwuXhkK/bVegoEn/wmb+x0AuPg==
 
-"@types/node@^13.13.4":
-  version "13.13.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.4.tgz#1581d6c16e3d4803eb079c87d4ac893ee7501c2c"
-  integrity sha512-x26ur3dSXgv5AwKS0lNfbjpCakGIduWU1DU91Zz58ONRWrIKGunmZBNv4P7N+e27sJkiGDsw/3fT4AtsqQBrBA==
-
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
@@ -1770,10 +1765,17 @@
   dependencies:
     wonka "^4.0.9"
 
-"@urql/devtools@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@urql/devtools/-/devtools-1.0.0.tgz#156565d04550c1f676c2ef418ec1104b2bb43abb"
-  integrity sha512-WFzDf7xl/RgoJzKDbkB3+sF3ynNyERloCKNzZNXCyyv7SxFokAPYxDCWD7rRdPzgpfYgQ0Mz805bQRGfSYx74g==
+"@urql/devtools@https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/89b2a7aa/@urql/devtools":
+  version "1.0.2"
+  resolved "https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/89b2a7aa/@urql/devtools#2f80d959d7bc664286968b54345f06a047c56758"
+  dependencies:
+    wonka ">= 4.0.9"
+
+"@urql/devtools@https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/dd856a8d/@urql/devtools":
+  version "1.0.2"
+  resolved "https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/dd856a8d/@urql/devtools#ca426045f0865aa069063d21023e751acdc8f75a"
+  dependencies:
+    wonka ">= 4.0.9"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -4384,10 +4386,10 @@ electron-to-chromium@^1.3.413:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.414.tgz#9d0a92defefda7cc1cf8895058b892795ddd6b41"
   integrity sha512-UfxhIvED++qLwWrAq9uYVcqF8FdeV9sU2S7qhiHYFODxzXRrd1GZRl/PjITHsTEejgibcWDraD8TQqoHb1aCBQ==
 
-electron@^8.2.3:
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-8.2.3.tgz#b7d6a43bd9f3a2428c660dcd055a20034520e1ea"
-  integrity sha512-FJUp103c8yJBoAaj/QM/OBde57iJh95u1yGJBytMUXmLFSsx78LmNE03QN4XCODyzi76IEcasvUcK6scogRLbQ==
+electron@^8.2.5:
+  version "8.2.5"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-8.2.5.tgz#ae3cb23d5517b2189fd35298e487198d65d1a291"
+  integrity sha512-LxSCUwmlfJtRwthd3ofpYaZ+1C2hQSW8Ep1DD9K3VbnDItO+kb3t1z35daJgAab78j54aOwo9gMxJtvU0Ftj6w==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
@@ -12405,6 +12407,11 @@ winreg@0.0.12:
   version "0.0.12"
   resolved "https://registry.yarnpkg.com/winreg/-/winreg-0.0.12.tgz#07105554ba1a9d08979251d129475bffae3006b7"
   integrity sha1-BxBVVLoanQiXklHRKUdb/64wBrc=
+
+"wonka@>= 4.0.9":
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/wonka/-/wonka-4.0.13.tgz#8d188160bd5742870c78ede7a4eba686d089a33f"
+  integrity sha512-aWg92IVvbP/kp+q9rw+k/Uw3C/S2J0dTDNhEhivGVH3GXJZgpFk2nuyVtiS7Y1d0UG3m4jvOrR7bPXim6D/TBg==
 
 wonka@^4.0.9:
   version "4.0.9"

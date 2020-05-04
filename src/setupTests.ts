@@ -4,6 +4,7 @@ import Adapter from "enzyme-adapter-react-16";
 import puppeteer from "puppeteer";
 
 process.env.BUILD_ENV = "extension";
+process.env.PKG_VERSION = "200.0.0";
 
 declare const global: {
   chrome: {

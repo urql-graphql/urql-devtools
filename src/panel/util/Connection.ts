@@ -1,12 +1,12 @@
-import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
-import { PanelOutgoingMessage, DevtoolsPanelConnectionName } from "../../types";
+import { ExchangeMessage, DevtoolsMessage } from "@urql/devtools";
+import { DevtoolsPanelConnectionName } from "../../types";
 
 export interface ConnectionType {
-  postMessage: (msg: PanelOutgoingMessage) => void;
+  postMessage: (msg: DevtoolsMessage) => void;
   onMessage: {
-    addListener: (cb: (msg: DevtoolsExchangeOutgoingMessage) => void) => void;
+    addListener: (cb: (msg: ExchangeMessage | DevtoolsMessage) => void) => void;
     removeListener: (
-      cb: (msg: DevtoolsExchangeOutgoingMessage) => void
+      cb: (msg: ExchangeMessage | DevtoolsMessage) => void
     ) => void;
   };
 }
