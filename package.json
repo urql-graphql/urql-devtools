@@ -2,53 +2,38 @@
   "name": "urql-devtools",
   "version": "2.0.0",
   "description": "The official Urql Devtools chrome extension",
-  "scripts": {
-    "start": "electron dist/electron/main.js",
-    "dev": "concurrently \"npm:dev:extension\" \"npm:dev:standalone\"",
-    "dev:extension": "export BUILD_ENV=extension; yarn webpack:extension --watch",
-    "dev:electron": "export BUILD_ENV=electron; concurrently \"yarn webpack:extension --watch\" \"yarn webpack:electron --watch\"",
-    "build": "yarn build:extension && yarn build:electron",
-    "build:extension": "export NODE_ENV=production; export BUILD_ENV=extension; yarn webpack:extension",
-    "build:electron": "export NODE_ENV=production; export BUILD_ENV=electron; yarn webpack:extension && yarn webpack:electron",
-    "bundle": "cd dist/extension && bestzip ../../extension.zip *",
-    "webpack:extension": "webpack --config webpack/webpack.extension.config.js",
-    "webpack:electron": "webpack --config webpack/webpack.electron.config.js",
-    "cosmos": "export BUILD_ENV=electron; cosmos",
-    "cosmos:build": "export BUILD_ENV=electron; yarn cosmos-export && node scripts/cosmos-add-badge.js",
-    "lint": "eslint --ext .ts,.tsx src",
-    "lint:prettier": "prettier -c .",
-    "lint:firefox": "cd dist/extension && web-ext lint",
-    "test": "jest --testPathIgnorePatterns visual-regression",
-    "visual-regression": "./regression.sh",
-    "visual-regression-exec": "jest --no-cache visual-regression --runInBand",
-    "changelog": "docker run -it --rm -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator -u FormidableLabs -p urql-devtools"
-  },
-  "author": "Formidable",
-  "license": "MIT",
-  "repository": "https://www.github.com/FormidableLabs/urql-devtools",
+  "homepage": "https://www.github.com/FormidableLabs/urql-devtools",
   "bugs": {
     "url": "https://github.com/FormidableLabs/urql-devtools/issues"
   },
-  "homepage": "https://www.github.com/FormidableLabs/urql-devtools",
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "testRegex": "(src/.*(\\.|/)(test|spec))\\.tsx?$",
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "ts",
-      "tsx",
-      "json",
-      "node"
-    ],
-    "collectCoverageFrom": [
-      "<rootDir>/src/**/*.{ts,tsx}"
-    ]
+  "repository": "https://www.github.com/FormidableLabs/urql-devtools",
+  "license": "MIT",
+  "author": "Formidable",
+  "scripts": {
+    "build": "yarn build:extension && yarn build:electron",
+    "build:electron": "export NODE_ENV=production; export BUILD_ENV=electron; yarn webpack:extension && yarn webpack:electron",
+    "build:extension": "export NODE_ENV=production; export BUILD_ENV=extension; yarn webpack:extension",
+    "bundle": "cd dist/extension && bestzip ../../extension.zip *",
+    "changelog": "docker run -it --rm -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator -u FormidableLabs -p urql-devtools",
+    "cosmos": "export BUILD_ENV=electron; cosmos",
+    "cosmos:build": "export BUILD_ENV=electron; yarn cosmos-export && node scripts/cosmos-add-badge.js",
+    "dev": "concurrently \"npm:dev:extension\" \"npm:dev:standalone\"",
+    "dev:electron": "export BUILD_ENV=electron; concurrently \"yarn webpack:extension --watch\" \"yarn webpack:electron --watch\"",
+    "dev:extension": "export BUILD_ENV=extension; yarn webpack:extension --watch",
+    "lint": "eslint --ext .ts,.tsx src",
+    "lint:firefox": "cd dist/extension && web-ext lint",
+    "lint:prettier": "prettier -c .",
+    "start": "electron dist/electron/main.js",
+    "test": "jest --testPathIgnorePatterns visual-regression",
+    "visual-regression": "./regression.sh",
+    "visual-regression:exec": "jest --no-cache visual-regression --runInBand",
+    "webpack:electron": "webpack --config webpack/webpack.electron.config.js",
+    "webpack:extension": "webpack --config webpack/webpack.extension.config.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.{json,js,md}": [
@@ -59,36 +44,8 @@
       "prettier --write"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.27",
-    "@fortawesome/free-solid-svg-icons": "^5.12.1",
-    "@fortawesome/react-fontawesome": "^0.1.9",
-    "bestzip": "^2.1.5",
-    "codemirror": "^5.53.2",
-    "codemirror-graphql": "^0.11.6",
-    "d3-scale": "^3.2.1",
     "electron": "^8.2.5",
-    "fast-json-stable-stringify": "^2.1.0",
-    "graphql": "^14.6.0",
-    "graphql-tag": "^2.10.3",
-    "nanoid": "^2.1.11",
-    "prism-react-renderer": "^1.0.2",
-    "prismjs": "^1.19.0",
-    "react": "^16.13.1",
-    "react-codemirror2": "^7.1.0",
-    "react-cosmos": "^5.1.0",
-    "react-dom": "^16.13.1",
-    "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2",
-    "react-spring": "^8.0.27",
-    "semver": "^7.3.2",
-    "styled-components": "^5.0.1",
-    "wonka": "^4.0.9",
     "ws": "^7.2.5"
   },
   "devDependencies": {
@@ -98,6 +55,9 @@
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "@types/chrome": "0.0.102",
     "@types/codemirror": "0.0.91",
     "@types/d3-scale": "^2.2.0",
@@ -126,11 +86,15 @@
     "babel-jest": "^25.2.1",
     "babel-loader": "^8.1.0",
     "babel-plugin-styled-components": "^1.10.7",
+    "bestzip": "^2.1.5",
     "clean-webpack-plugin": "^3.0.0",
+    "codemirror": "^5.53.2",
+    "codemirror-graphql": "^0.11.6",
     "concurrently": "^5.2.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
     "csstype": "^2.6.9",
+    "d3-scale": "^3.2.1",
     "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
@@ -139,6 +103,9 @@
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-react": "^7.19.0",
+    "fast-json-stable-stringify": "^2.1.0",
+    "graphql": "^14.6.0",
+    "graphql-tag": "^2.10.3",
     "html-webpack-plugin": "^4.0.2",
     "husky": "^4.2.3",
     "identity-obj-proxy": "^3.0.0",
@@ -146,11 +113,23 @@
     "jest-image-snapshot": "^3.0.1",
     "jest-styled-components": "^7.0.0",
     "lint-staged": "^10.0.9",
+    "nanoid": "^2.1.11",
     "npm-run-all": "^4.1.5",
     "polished": "^3.5.1",
     "prettier": "^2.0.2",
+    "prism-react-renderer": "^1.0.2",
+    "prismjs": "^1.19.0",
     "puppeteer": "^2.1.1",
+    "react": "^16.13.1",
+    "react-codemirror2": "^7.1.0",
+    "react-cosmos": "^5.1.0",
+    "react-dom": "^16.13.1",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-spring": "^8.0.27",
+    "semver": "^7.3.2",
     "style-loader": "^1.1.3",
+    "styled-components": "^5.0.1",
     "svg-react-loader": "nowells/svg-react-loader#2e8d88e8b16a9ffe4646cab8692b4660f894c043",
     "terser-webpack-plugin": "^2.3.5",
     "ts-jest": "^25.2.1",
@@ -159,6 +138,7 @@
     "web-ext": "^4.1.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "wonka": "^4.0.9"
   }
 }
