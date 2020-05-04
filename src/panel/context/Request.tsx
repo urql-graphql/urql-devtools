@@ -10,6 +10,7 @@ import React, {
 import { visit, buildClientSchema, DocumentNode } from "graphql";
 import { GraphQLSchema, getIntrospectionQuery } from "graphql";
 import { useDevtoolsContext } from "./Devtools";
+import { appendPopulateDirective } from "./schema-transforms";
 
 interface RequestContextValue {
   query?: string;
@@ -65,7 +66,9 @@ export const RequestProvider: FC = ({ children }) => {
         debugEvent.type === "update" &&
         isIntrospectionQuery(debugEvent.operation.query)
       ) {
-        setSchema(buildClientSchema(debugEvent.data.value));
+        setSchema(
+          appendPopulateDirective(buildClientSchema(debugEvent.data.value))
+        );
         return;
       }
 
