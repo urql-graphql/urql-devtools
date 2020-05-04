@@ -45,32 +45,20 @@ Explore your backend schema and trigger queries directly via your running Urql c
 
 ## Usage
 
+### Add the browser extension
+
 Install the extension for your browser of choice
 
 - [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
 - [Firefox addon](https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools)
 
-Install the [devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange)
+### Add the urql exchange
 
-```sh
-# npm
-npm i -D @urql/devtools
+Follow the instructions to [install and setup the devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange#usage)
 
-# yarn
-yarn add -D @urql/devtools
-```
+### Open devtools
 
-Add the exchange to your Urql client
-
-```js
-import { createClient, defaultExchanges } from "urql";
-import { devtoolsExchange } from "@urql/devtools";
-
-const client = createClient({
-  url: "http://localhost:3001/graphql",
-  exchanges: [devtoolsExchange, ...defaultExchanges],
-});
-```
+Open the [devtools panel](https://developers.google.com/web/tools/chrome-devtools/open) in your browser and click on the _Urql_ tab
 
 ## Contributing
 
