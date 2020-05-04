@@ -6,10 +6,10 @@
     <img alt="CircleCI Build Status" src="https://badgen.net/circleci/github/FormidableLabs/urql-devtools?label=build" />
   </a>
   <a href="https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm">
-    <img alt="Chrome Web Store" src="https://badgen.net/chrome-web-store/v/mcfphkbpmkbeofnkjehahlmidmceblmm" />
+    <img alt="Chrome Web Store" src="https://badgen.net/chrome-web-store/v/mcfphkbpmkbeofnkjehahlmidmceblmm?color=fbbc07" />
   </a>
   <a href="https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools/">
-    <img alt="Firefox Addon" src="https://badgen.net/amo/v/urql-devtools" />
+    <img alt="Firefox Addon" src="https://badgen.net/amo/v/urql-devtools?color=ff7821" />
   </a>
   <a href="https://urql-devtools.netlify.com/">
     <img alt="Fixtures" src="https://badgen.net/badge/fixtures/netlify/cyan" />
