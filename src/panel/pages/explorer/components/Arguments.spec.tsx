@@ -1,13 +1,13 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { Arguments } from "./Arguments"
+import { Arguments } from "./Arguments";
 
 const props = {
   args: {
     string: "abc",
     number: 7,
     object: {
-      string: "def"
+      string: "def",
     },
     //JSON.stringify type definition is somewhat problematic.
     // JSON.stringify(null) //"null"
@@ -17,12 +17,12 @@ const props = {
     // THe Highlight component will crash if it ever gets a null|undefined code string.
     // Both cases have to be explicitly tested.
     nullable: null,
-    undefinable: undefined
-  }
-}
+    undefinable: undefined,
+  },
+};
 describe("on mount", () => {
   it("matches snapshot", () => {
-    const wrapper = shallow(<Arguments {...props}/>);
+    const wrapper = shallow(<Arguments {...props} />);
     expect(wrapper).toMatchSnapshot();
-  })
-})
+  });
+});
