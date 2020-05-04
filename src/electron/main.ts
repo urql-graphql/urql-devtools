@@ -49,6 +49,7 @@ const createWindow = () => {
   win.webContents.openDevTools();
 };
 
+app.allowRendererProcessReuse = true;
 app.whenReady().then(() => {
   createWebsocketServer();
   createWindow();
