@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CspHtmlWebpackPlugin = require("csp-html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const webpack = require("webpack");
@@ -124,6 +125,13 @@ module.exports = {
       template: `${root}/src/panel/panel.html`,
       filename: "panel.html",
       chunks: ["panel"],
+    }),
+    new CspHtmlWebpackPlugin({
+      "default-src": "'self'",
+      "script-src": "'self'",
+      "style-src": "'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src": "'self' https://fonts.gstatic.com",
+      "img-src": "'self' data:",
     }),
   ].filter(Boolean),
 };

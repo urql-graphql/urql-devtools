@@ -1,6 +1,6 @@
 {
   "name": "urql-devtools",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0",
   "description": "The official Urql Devtools chrome extension",
   "homepage": "https://www.github.com/FormidableLabs/urql-devtools",
   "bugs": {
@@ -17,7 +17,7 @@
     "changelog": "docker run -it --rm -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator -u FormidableLabs -p urql-devtools",
     "cosmos": "export BUILD_ENV=electron; cosmos",
     "cosmos:build": "export BUILD_ENV=electron; yarn cosmos-export && node scripts/cosmos-add-badge.js",
-    "dev": "concurrently \"npm:dev:extension\" \"npm:dev:standalone\"",
+    "dev": "concurrently \"npm:dev:extension\" \"npm:dev:electron\"",
     "dev:electron": "export BUILD_ENV=electron; concurrently \"yarn webpack:extension --watch\" \"yarn webpack:electron --watch\"",
     "dev:extension": "export BUILD_ENV=extension; yarn webpack:extension --watch",
     "lint": "eslint --ext .ts,.tsx src",
@@ -94,6 +94,7 @@
     "codemirror-graphql": "^0.11.6",
     "concurrently": "^5.2.0",
     "copy-webpack-plugin": "^5.1.1",
+    "csp-html-webpack-plugin": "^4.0.0",
     "css-loader": "^3.4.2",
     "csstype": "^2.6.9",
     "d3-scale": "^3.2.1",
