@@ -1,6 +1,6 @@
 {
   "name": "urql-devtools",
-  "version": "2.0.0",
+  "version": "2.0.0-alpha.0",
   "description": "The official Urql Devtools chrome extension",
   "homepage": "https://www.github.com/FormidableLabs/urql-devtools",
   "bugs": {
