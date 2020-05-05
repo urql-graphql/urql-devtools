@@ -62,6 +62,7 @@ module.exports = {
         electron: "commonjs2 electron",
       },
   node: {
+    global: false,
     fs: "empty",
   },
   module: {
