@@ -46,7 +46,6 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   win.loadFile(`./shell/panel.html`);
-  win.webContents.openDevTools();
 };
 
 app.allowRendererProcessReuse = true;
