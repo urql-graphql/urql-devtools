@@ -5,6 +5,7 @@ module.exports = {
     "@babel/preset-typescript",
   ],
   plugins: [
+    "inline-react-svg",
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-optional-chaining",
     [

@@ -29,6 +29,8 @@ const inOutConfig = isExtension
       },
       output: {
         path: `${root}/dist/electron/shell`,
+        devtoolModuleFilenameTemplate: (info) =>
+          `urql-devtools:///${info.resourcePath}`,
       },
     };
 
@@ -71,10 +73,6 @@ module.exports = {
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
-      },
-      {
-        test: /\.svg$/,
-        use: ["svg-react-loader"],
       },
     ],
   },
