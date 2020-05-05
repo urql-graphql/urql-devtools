@@ -58,7 +58,9 @@ const handleContentScriptConnection = (port: chrome.runtime.Port) => {
 
 /** Handle initial connection from devtools panel. */
 const handleDevtoolsPanelConnection = (port: chrome.runtime.Port) => {
+  const source = "devtools";
   const initialListener = (msg: DevtoolsMessage) => {
+    debug("Devtools Initial Message: ", { msg });
     if (msg.type !== "connection-init") {
       return;
     }
@@ -71,7 +73,9 @@ const handleDevtoolsPanelConnection = (port: chrome.runtime.Port) => {
       return;
     }
 
-    addToTarget({ tabId: msg.tabId, port, source: "devtools" });
+    addToTarget({ tabId: msg.tabId, port, source });
+    targets[msg.tabId].dispatchEvent(source, msg);
+
     port.onMessage.removeListener(initialListener);
   };
 

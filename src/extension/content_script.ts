@@ -14,7 +14,7 @@ window.addEventListener("message", ({ data, isTrusted }) => {
     return;
   }
 
-  const message = data.message as ExchangeMessage;
+  const message = data as ExchangeMessage;
   debug("Exchange Message: ", data);
 
   // Setup connection on init message
