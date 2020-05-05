@@ -9,6 +9,13 @@
   "repository": "https://www.github.com/FormidableLabs/urql-devtools",
   "license": "MIT",
   "author": "Formidable",
+  "keywords": [
+    "urql",
+    "devtools",
+    "extension",
+    "electron",
+    "react native"
+  ],
   "scripts": {
     "build": "yarn build:extension && yarn build:electron",
     "build:electron": "export NODE_ENV=production; export BUILD_ENV=electron; yarn webpack:extension && yarn webpack:electron",
