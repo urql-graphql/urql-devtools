@@ -220,10 +220,9 @@ workflows:
             - test
             - build
             - visual regression
-            - lint firefox
-            - verify version
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
+            # - verify version
+          # filters:
+          #   tags:
+          #     only: /.*/
+          #   branches:
+          #     ignore: /.*/
