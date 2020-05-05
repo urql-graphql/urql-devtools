@@ -18,7 +18,10 @@ export const Arguments: FC<{
       {entries.map(([key, value], index) => (
         <Fragment key={key}>
           {`${key}: `}
-          <InlineCodeHighlight code={JSON.stringify(value)} language="json" />
+          <InlineCodeHighlight
+            code={JSON.stringify(value) || "undefined"}
+            language="json"
+          />
           {index !== entries.length - 1 && ", "}
         </Fragment>
       ))}
