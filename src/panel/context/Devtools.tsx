@@ -28,7 +28,7 @@ export interface DevtoolsContextType {
       };
 }
 
-const REQUIRED_VERSION = "1.0.0";
+const REQUIRED_VERSION = "2.0.0";
 
 export const DevtoolsContext = createContext<DevtoolsContextType>(null as any);
 
