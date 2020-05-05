@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from "react";
 import gql from "graphql-tag";
-import { DebugMessage } from "@urql/devtools";
+import { ExchangeDebugEventMessage } from "@urql/devtools";
 import {
   DevtoolsContext,
   ExplorerProvider,
@@ -8,9 +8,10 @@ import {
 } from "../../context";
 import { Explorer } from "./Explorer";
 
-export const defaultEvents: DebugMessage[] = [
+export const defaultEvents: ExchangeDebugEventMessage[] = [
   {
-    type: "debug",
+    type: "debug-event",
+    source: "exchange",
     data: {
       type: "update",
       message: "Todo message",
@@ -83,11 +84,14 @@ const DevtoolsContextMock: FC<
         events.forEach(h);
         return () => false;
       },
-      version: {
-        mismatch: false,
-        required: "",
+      client: {
+        connected: true,
+        version: {
+          mismatch: false,
+          required: "",
+          actual: "",
+        },
       },
-      clientConnected: true,
       sendMessage: () => false,
       ...val,
     }),

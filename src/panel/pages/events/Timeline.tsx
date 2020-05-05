@@ -1,6 +1,6 @@
 import React, { FC, useMemo, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { Operation } from "urql";
+import { Operation } from "@urql/core";
 import { useTimelineContext, START_PADDING } from "../../context";
 import { Background } from "../../components/Background";
 import { TimelineRow, TimelinePane, Tick } from "./components";

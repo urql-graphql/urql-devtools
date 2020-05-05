@@ -1,5 +1,5 @@
 import "styled-components";
-import { theme } from "./panel/theme";
+import { theme } from "./theme";
 
 type Theme = typeof theme;
 

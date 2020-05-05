@@ -25,13 +25,13 @@ export const App = () => {
 };
 
 export const AppRoutes: FC = () => {
-  const { clientConnected, version } = useDevtoolsContext();
+  const { client } = useDevtoolsContext();
 
-  if (!clientConnected) {
+  if (!client.connected) {
     return <Disconnected />;
   }
 
-  if (version.mismatch) {
+  if (client.version.mismatch) {
     return <Mismatch />;
   }
 

@@ -1,10 +1,8 @@
 /.*
-.DS_STORE
-/webpack.config.js
-/src/assets
-/src/background
-/src/content_script*
-/src/devtools
-/src/manifest.json
-/src/panel
-/dist/extension
+/*
+/src/**
+!/dist/electron
+!/src/{electron,panel,types,util}/**/!(*.fixture|*.test).{ts,tsx}
+!/CHANGELOG.md
+!/README.md
+!/LICENSE

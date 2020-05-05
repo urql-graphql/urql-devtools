@@ -3,7 +3,7 @@ import {
   OperationDefinitionNode,
   valueFromASTUntyped,
 } from "graphql";
-import { Operation } from "urql";
+import { Operation } from "@urql/core";
 import Maybe from "graphql/tsutils/Maybe";
 
 /** Evaluates a fields arguments taking vars into account */

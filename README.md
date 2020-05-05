@@ -45,20 +45,26 @@ Explore your backend schema and trigger queries directly via your running Urql c
 
 ## Usage
 
-### Add the browser extension
+### Add the urql exchange
+
+Follow the instructions to [install and setup the devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange#usage)
+
+### Browser
 
 Install the extension for your browser of choice
 
 - [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
 - [Firefox addon](https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools)
 
-### Add the urql exchange
-
-Follow the instructions to [install and setup the devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange#usage)
-
-### Open devtools
-
 Open the [devtools panel](https://developers.google.com/web/tools/chrome-devtools/open) in your browser and click on the _Urql_ tab
+
+### React Native
+
+Start the electron app from a dedicated shell
+
+```sh
+npx urql-devtools
+```
 
 ## Contributing
 

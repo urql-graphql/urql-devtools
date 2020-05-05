@@ -7,7 +7,6 @@ import React, {
   SetStateAction,
   Dispatch,
 } from "react";
-import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
 import { useDevtoolsContext } from "../Devtools";
 import { handleResponse, ParsedNodeMap, ParsedFieldNode } from "./ast";
 
@@ -34,13 +33,13 @@ export const ExplorerProvider: FC = ({ children }) => {
   >(undefined);
 
   useEffect(() => {
-    return addMessageHandler((message: DevtoolsExchangeOutgoingMessage) => {
-      if (message.type === "disconnect") {
+    return addMessageHandler((message) => {
+      if (message.type === "connection-disconnect") {
         setOperations({});
         return;
       }
 
-      if (message.type !== "debug" || message.data.type !== "update") {
+      if (message.type !== "debug-event" || message.data.type !== "update") {
         return;
       }
 
