@@ -126,7 +126,6 @@ jobs:
       - *build_cache
       - run:
           command: |
-            node -e "process.env.CIRCLE_TAG === \`v\${require('./package.json').version}\` ? process.exit(0) : (console.error(`Tag version (${process.env.CIRCLE_TAG}) does not line up with version in package.json (v${require('./package.json').version})`) || process.exit(1))"
             npm config set "//registry.npmjs.org/:_authToken" "$npm_TOKEN"
             npm publish --access public --tag $([[ "$CIRCLE_TAG" == *"-"* ]] && echo "next" || echo "latest")
 
@@ -220,9 +219,9 @@ workflows:
             - test
             - build
             - visual regression
-            # - verify version
-          # filters:
-          #   tags:
-          #     only: /.*/
-          #   branches:
-          #     ignore: /.*/
+            - verify version
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
