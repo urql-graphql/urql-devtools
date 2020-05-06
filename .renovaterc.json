@@ -4,23 +4,23 @@
   "labels": ["Maintenance"],
   "packageRules": [
     {
-      "packagePatterns": ["@fortawesome*"],
+      "packagePatterns": ["^@fortawesome"],
       "groupName": "fontawesome"
     },
     {
-      "packagePatterns": ["*babel*"],
+      "packagePatterns": ["babel"],
       "groupName": "babel"
     },
     {
-      "packagePatterns": ["*jest*"],
+      "packagePatterns": ["jest"],
       "groupName": "jest"
     },
     {
-      "packagePatterns": ["*eslint*"],
+      "packagePatterns": ["eslint"],
       "groupName": "eslint"
     },
     {
-      "packagePatterns": ["react", "react-dom"],
+      "packagePatterns": ["^react$", "^react-dom$"],
       "groupName": "react"
     }
   ]
