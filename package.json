@@ -1,6 +1,6 @@
 {
   "name": "urql-devtools",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "The official devtools utility for urql",
   "homepage": "https://www.github.com/FormidableLabs/urql-devtools",
   "bugs": {
@@ -70,7 +70,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/react-fontawesome": "^0.1.9",
-    "@types/chrome": "0.0.102",
+    "@types/chrome": "0.0.107",
     "@types/codemirror": "0.0.91",
     "@types/d3-scale": "^2.2.0",
     "@types/enzyme": "^3.10.5",
