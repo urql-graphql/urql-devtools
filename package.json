@@ -1,6 +1,6 @@
 {
   "name": "urql-devtools",
-  "version": "2.0.1",
+  "version": "2.0.0",
   "description": "The official devtools utility for urql",
   "homepage": "https://www.github.com/FormidableLabs/urql-devtools",
   "bugs": {
@@ -21,7 +21,7 @@
     "build:electron": "export NODE_ENV=production; export BUILD_ENV=electron; yarn webpack:extension && yarn webpack:electron",
     "build:extension": "export NODE_ENV=production; export BUILD_ENV=extension; yarn webpack:extension",
     "bundle": "cd dist/extension && bestzip ../../extension.zip *",
-    "changelog": "docker run -it --rm -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator -u FormidableLabs -p urql-devtools",
+    "changelog": "docker run -it --rm -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator",
     "cosmos": "export BUILD_ENV=electron; cosmos",
     "cosmos:build": "export BUILD_ENV=electron; yarn cosmos-export && node scripts/cosmos-add-badge.js",
     "dev": "concurrently \"npm:dev:extension\" \"npm:dev:electron\"",
