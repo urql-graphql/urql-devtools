@@ -107,7 +107,7 @@
     "copy-webpack-plugin": "^5.1.1",
     "csp-html-webpack-plugin": "^4.0.0",
     "css-loader": "^3.5.3",
-    "csstype": "^2.6.9",
+    "csstype": "^2.6.10",
     "d3-scale": "^3.2.1",
     "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
