@@ -120,7 +120,7 @@
     "fast-json-stable-stringify": "^2.1.0",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
-    "html-webpack-plugin": "^4.0.2",
+    "html-webpack-plugin": "^4.3.0",
     "husky": "^4.2.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.0.1",
