@@ -39,7 +39,7 @@
   },
   "bin": "./scripts/cli.js",
   "engines": {
-    "node": "14.2.0"
+    "node": ">= 10"
   },
   "husky": {
     "hooks": {
