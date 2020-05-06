@@ -1394,12 +1394,13 @@
   dependencies:
     "@types/node" "*"
 
-"@types/chrome@0.0.102":
-  version "0.0.102"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.102.tgz#ea427dbe0211f239ca6c90473c1ac1aaf8c3fbba"
-  integrity sha512-nk0nB64umULB3mMbRGA1vCgi90aVtYenXqstFsm8NPJMDrFA2PSZZHMUUOrVobTXwKx6+8B1MSNyKiXfa/qmwg==
+"@types/chrome@0.0.107":
+  version "0.0.107"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.107.tgz#0719eff4fa4424e034621a2b772545a966364526"
+  integrity sha512-7z/4YkJu4B8ROxZhbzIx5olbRJqzoDdAoMhSzcJlElsZzv2eTxsvxNkN/QFq0ClbAFNkFf07XVoTrWFHD12QyA==
   dependencies:
     "@types/filesystem" "*"
+    "@types/har-format" "*"
 
 "@types/codemirror@0.0.91":
   version "0.0.91"
@@ -1494,6 +1495,11 @@
   integrity sha512-MOkzsEp1Jk5bXuAsHsUi6BVv0zCO+7/2PTiZMXWDSsMXvNU6w/PLMQT2vHn8hy2i0JqojPz1Sz6rsFjHtsU0lA==
   dependencies:
     graphql "*"
+
+"@types/har-format@*":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@types/har-format/-/har-format-1.2.4.tgz#3275842095abb60d14b47fa798cc9ff708dab6d4"
+  integrity sha512-iUxzm1meBm3stxUMzRqgOVHjj4Kgpgu5w9fm4X7kPRfSgVRzythsucEN7/jtOo8SQzm+HfcxWWzJS0mJDH/3DQ==
 
 "@types/history@*":
   version "4.7.5"
