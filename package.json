@@ -81,7 +81,7 @@
     "@types/jest-environment-puppeteer": "^4.3.1",
     "@types/jest-image-snapshot": "^2.12.0",
     "@types/puppeteer": "^2.0.1",
-    "@types/react": "^16.9.25",
+    "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.5",
     "@types/react-json-tree": "^0.6.11",
     "@types/react-router": "^5.1.4",
