@@ -24,5 +24,4 @@
       "groupName": "react"
     }
   ],
-  "schedule": ["hourly"]
-}
+  "schedule": ["every weekday"]
