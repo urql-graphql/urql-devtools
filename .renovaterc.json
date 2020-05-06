@@ -23,5 +23,6 @@
       "packagePatterns": ["react", "react-dom"],
       "groupName": "react"
     }
-  ]
+  ],
+  "schedule": ["weekly"]
 }
