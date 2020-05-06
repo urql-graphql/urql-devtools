@@ -42,13 +42,17 @@ export const RequestProvider: FC = ({ children }) => {
       response: undefined,
       error: undefined,
     });
-    sendMessage({ type: "request", query: query || "" });
+    sendMessage({
+      type: "execute-query",
+      source: "devtools",
+      query: query || "",
+    });
   }, [query, sendMessage]);
 
   // Listen for response for devtools
   useEffect(() => {
     return addMessageHandler((e) => {
-      if (e.type !== "debug") {
+      if (e.type !== "debug-event") {
         return;
       }
 
@@ -88,7 +92,11 @@ export const RequestProvider: FC = ({ children }) => {
 
   // Get schema
   useEffect(() => {
-    sendMessage({ type: "request", query: getIntrospectionQuery() });
+    sendMessage({
+      type: "execute-query",
+      source: "devtools",
+      query: getIntrospectionQuery(),
+    });
   }, []);
 
   const value = useMemo(

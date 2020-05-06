@@ -1,8 +1,4 @@
-import {
-  DevtoolsExchangeOutgoingMessage,
-  DevtoolsExchangeOutgoingEventType,
-  DevtoolsExchangeIncomingEventType,
-} from "@urql/devtools";
+import { ExchangeMessage, ExchangeSource } from "@urql/devtools";
 import { ContentScriptConnectionName } from "../types";
 import { debug } from "../util";
 
@@ -11,14 +7,18 @@ let connection: chrome.runtime.Port | undefined;
 
 // Listen for init message from exchange
 window.addEventListener("message", ({ data, isTrusted }) => {
-  if (!isTrusted || data?.type !== DevtoolsExchangeOutgoingEventType) {
+  const exchangeSource: ExchangeSource = "exchange";
+
+  // Filter messages not from the exchange
+  if (!isTrusted || data?.source !== exchangeSource) {
     return;
   }
 
-  const message = data.message as DevtoolsExchangeOutgoingMessage;
-
+  const message = data as ExchangeMessage;
   debug("Exchange Message: ", data);
-  if (message.type === "init") {
+
+  // Setup connection on init message
+  if (message.type === "connection-init") {
     connection = chrome.runtime.connect({ name: ContentScriptConnectionName });
     connection.onMessage.addListener(handleMessage);
     connection.onDisconnect.addListener(handleDisconnect);
@@ -28,19 +28,14 @@ window.addEventListener("message", ({ data, isTrusted }) => {
     return console.warn("Unable to send message to Urql Devtools extension");
   }
 
+  // Forward message to devtools
   connection.postMessage(message);
 });
 
 /** Handle message from background script. */
-const handleMessage = (message: DevtoolsExchangeOutgoingMessage) => {
+const handleMessage = (message: ExchangeMessage) => {
   debug("Background Message: ", message);
-  window.postMessage(
-    {
-      type: DevtoolsExchangeIncomingEventType,
-      message,
-    },
-    window.location.origin
-  );
+  window.postMessage(message, window.location.origin);
 };
 
 /** Handle disconnect from background script. */

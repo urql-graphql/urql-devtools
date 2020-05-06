@@ -6,10 +6,10 @@
     <img alt="CircleCI Build Status" src="https://badgen.net/circleci/github/FormidableLabs/urql-devtools?label=build" />
   </a>
   <a href="https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm">
-    <img alt="Chrome Web Store" src="https://badgen.net/chrome-web-store/v/mcfphkbpmkbeofnkjehahlmidmceblmm" />
+    <img alt="Chrome Web Store" src="https://badgen.net/chrome-web-store/v/mcfphkbpmkbeofnkjehahlmidmceblmm?color=fbbc07" />
   </a>
   <a href="https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools/">
-    <img alt="Firefox Addon" src="https://badgen.net/amo/v/urql-devtools" />
+    <img alt="Firefox Addon" src="https://badgen.net/amo/v/urql-devtools?color=ff7821" />
   </a>
   <a href="https://urql-devtools.netlify.com/">
     <img alt="Fixtures" src="https://badgen.net/badge/fixtures/netlify/cyan" />
@@ -45,31 +45,25 @@ Explore your backend schema and trigger queries directly via your running Urql c
 
 ## Usage
 
+### Add the urql exchange
+
+Follow the instructions to [install and setup the devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange#usage)
+
+### Browser
+
 Install the extension for your browser of choice
 
 - [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
 - [Firefox addon](https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools)
 
-Install the [devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange)
+Open the [devtools panel](https://developers.google.com/web/tools/chrome-devtools/open) in your browser and click on the _Urql_ tab
+
+### React Native
+
+Start the electron app from a dedicated shell
 
 ```sh
-# npm
-npm i -D @urql/devtools
-
-# yarn
-yarn add -D @urql/devtools
-```
-
-Add the exchange to your Urql client
-
-```js
-import { createClient, defaultExchanges } from "urql";
-import { devtoolsExchange } from "@urql/devtools";
-
-const client = createClient({
-  url: "http://localhost:3001/graphql",
-  exchanges: [devtoolsExchange, ...defaultExchanges],
-});
+npx urql-devtools
 ```
 
 ## Contributing

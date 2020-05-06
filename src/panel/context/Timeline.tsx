@@ -263,7 +263,7 @@ export const TimelineProvider: FC = ({ children }) => {
 
   useEffect(() => {
     return addMessageHandler((message) => {
-      if (message.type !== "debug") {
+      if (message.type !== "debug-event") {
         return;
       }
 

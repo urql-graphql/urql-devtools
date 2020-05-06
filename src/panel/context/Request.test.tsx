@@ -17,10 +17,13 @@ const addMessageHandler = jest.fn();
 
 beforeEach(() => {
   mocked(useDevtoolsContext).mockReturnValue({
-    clientConnected: true,
-    version: {
-      required: "9.9.9",
-      mismatch: false,
+    client: {
+      connected: true,
+      version: {
+        actual: "9.9.9",
+        required: "9.9.9",
+        mismatch: false,
+      },
     },
     sendMessage,
     addMessageHandler,
@@ -52,7 +55,8 @@ describe("on mount", () => {
   it("triggers schema request", () => {
     expect(sendMessage).toBeCalledTimes(1);
     expect(sendMessage).toBeCalledWith({
-      type: "request",
+      type: "execute-query",
+      source: "devtools",
       query: getIntrospectionQuery(),
     });
   });
@@ -122,7 +126,11 @@ describe("on execute", () => {
   describe("send message", () => {
     it("is called", () => {
       expect(sendMessage).toBeCalledTimes(1);
-      expect(sendMessage).toBeCalledWith({ type: "request", query });
+      expect(sendMessage).toBeCalledWith({
+        type: "execute-query",
+        source: "devtools",
+        query,
+      });
     });
   });
 });
@@ -154,7 +162,8 @@ describe("on debug message", () => {
 
       act(() => {
         handler({
-          type: "debug",
+          type: "debug-event",
+          source: "exchange",
           data: {
             type: "update",
             operation: {
@@ -228,7 +237,8 @@ describe("on debug message", () => {
 
       act(() => {
         handler({
-          type: "debug",
+          type: "debug-event",
+          source: "exchange",
           data: {
             type: "update",
             operation: {
@@ -272,7 +282,8 @@ describe("on debug message", () => {
 
       act(() => {
         handler({
-          type: "debug",
+          type: "debug-event",
+          source: "exchange",
           data: {
             type: "error",
             operation: {

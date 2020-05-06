@@ -41,7 +41,7 @@ jobs:
     steps:
       - checkout
       - *node_modules_cache
-      - run: yarn run prettier-check
+      - run: yarn run lint:prettier
 
   test:
     <<: *node_env
@@ -55,7 +55,7 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: ./regression.sh --ci
+      - run: ./scripts/regression.sh --ci
       - store_artifacts:
           path: src/panel/__image_snapshots__/__diff_output__/
 
@@ -74,6 +74,8 @@ jobs:
             - "extension.zip"
       - store_artifacts:
           path: extension.zip
+      - store_artifacts:
+          path: dist/electron
 
   lint firefox:
     <<: *node_env
@@ -81,7 +83,7 @@ jobs:
       - checkout
       - *node_modules_cache
       - *build_cache
-      - run: yarn run firefox:lint
+      - run: yarn run lint:firefox
 
   verify version:
     <<: *node_env
@@ -115,6 +117,17 @@ jobs:
             cd dist
             ERR=$($(npm bin)/web-ext sign --channel listed --api-key $FIREFOX_API_KEY --api-secret $FIREFOX_API_SECRET --id {c11f3a69-f159-4708-b044-853066c2d2fe} || true)
             (grep -qi "Your add-on has been submitted for review" <<< $ERR) && echo "Addon submitted for review." || (echo "Addon not submitted for review" && echo $ERR && exit 1)
+
+  deploy npm:
+    <<: *node_env
+    steps:
+      - checkout
+      - *node_modules_cache
+      - *build_cache
+      - run:
+          command: |
+            npm config set "//registry.npmjs.org/:_authToken" "$npm_TOKEN"
+            npm publish --access public --tag $([[ "$CIRCLE_TAG" == *"-"* ]] && echo "next" || echo "latest")
 
 workflows:
   version: 2
@@ -192,6 +205,20 @@ workflows:
             - build
             - visual regression
             - lint firefox
+            - verify version
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+      - deploy npm:
+          requires:
+            - install
+            - lint
+            - prettier
+            - test
+            - build
+            - visual regression
             - verify version
           filters:
             tags:

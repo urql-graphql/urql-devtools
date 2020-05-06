@@ -13,10 +13,13 @@ const addMessageHandler = jest.fn();
 
 beforeEach(() => {
   mocked(useDevtoolsContext).mockReturnValue({
-    clientConnected: true,
-    version: {
-      required: "9.9.9",
-      mismatch: false,
+    client: {
+      connected: true,
+      version: {
+        required: "9.9.9",
+        mismatch: false,
+        actual: "9.9.9",
+      },
     },
     sendMessage,
     addMessageHandler,

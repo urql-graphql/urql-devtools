@@ -6,7 +6,12 @@ import { CodeHighlight } from "../../components";
 import { useDevtoolsContext } from "../../context";
 
 export const Mismatch: FC<ComponentProps<typeof Container>> = (props) => {
-  const { version } = useDevtoolsContext();
+  const { client } = useDevtoolsContext();
+
+  if (!client.connected) {
+    return null;
+  }
+
   return (
     <Container {...props}>
       <Content>
@@ -14,8 +19,8 @@ export const Mismatch: FC<ComponentProps<typeof Container>> = (props) => {
         <Header>Version Mismatch</Header>
         <Hint>
           Expected devtools exchange (@urql/devtools) version{" "}
-          <em>{`>=${version.required}`}</em> but got{" "}
-          <em>{`${version.actual}.`}</em>
+          <em>{`>=${client.version.required}`}</em> but got{" "}
+          <em>{`${client.version.actual}.`}</em>
         </Hint>
       </Content>
       <Content>
