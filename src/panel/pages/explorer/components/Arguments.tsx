@@ -15,7 +15,6 @@ export const Arguments: FC<
 
   const entries = useMemo(() => Object.entries(args), [args]);
 
-  console.log(entries);
   return (
     <ArgumentText {...props}>
       (
