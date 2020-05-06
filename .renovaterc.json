@@ -1,0 +1,27 @@
+{
+  "rangeStrategy": "pin",
+  "extends": "config:base",
+  "labels": ["Maintenance"],
+  "packageRules": [
+    {
+      "packagePatterns": ["@fortawesome*"],
+      "groupName": "fontawesome"
+    },
+    {
+      "packagePatterns": ["*babel*"],
+      "groupName": "babel"
+    },
+    {
+      "packagePatterns": ["*jest*"],
+      "groupName": "jest"
+    },
+    {
+      "packagePatterns": ["*eslint*"],
+      "groupName": "eslint"
+    },
+    {
+      "packagePatterns": ["react", "react-dom"],
+      "groupName": "react"
+    }
+  ]
+}
