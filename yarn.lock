@@ -1811,7 +1811,7 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
-"@urql/core@^1.11.0":
+"@urql/core@^1.11.7":
   version "1.11.7"
   resolved "https://registry.yarnpkg.com/@urql/core/-/core-1.11.7.tgz#ff0c7b613c2a4b2a76c462e1d65b2472142fe8ef"
   integrity sha512-0LGOfohIoCmBf66QEV8pdwehJUZkViGZLmwPoHwcZUx1ONgKsGTzjdNBdNnvCzfuaRLlsXj8r7GmO5M6oVKjsg==
