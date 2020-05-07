@@ -66,6 +66,10 @@ Start the electron app from a dedicated shell
 npx urql-devtools
 ```
 
+## Integrations
+
+Visit the [debugging docs](https://formidable.com/open-source/urql/docs/advanced/debugging/#adding-your-own-debug-events) to find out how to integrate your self-made exchanges with our devtools.
+
 ## Contributing
 
 Have experience working with devtools extensions or want to get involved? Check out our [contributing](./CONTRIBUTING.md) docs to get started.
