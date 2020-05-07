@@ -22,6 +22,11 @@
     {
       "packagePatterns": ["^react$", "^react-dom$"],
       "groupName": "react"
+    },
+    {
+      "depTypeList": ["devDependencies"],
+      "updateTypes": ["patch", "minor"],
+      "groupName": "devDependencies (non-major)"
     }
   ],
   "schedule": ["every weekday"]
