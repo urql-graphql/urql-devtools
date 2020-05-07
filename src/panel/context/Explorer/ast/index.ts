@@ -1,5 +1,5 @@
 import stringify from "fast-json-stable-stringify";
-import nanoid from "nanoid";
+import { nanoid } from "nanoid";
 import { Operation, OperationDebugMeta, OperationResult } from "@urql/core";
 import {
   SelectionNode,
