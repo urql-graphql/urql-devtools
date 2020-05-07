@@ -2,6 +2,7 @@
   "rangeStrategy": "bump",
   "extends": "config:base",
   "labels": ["Maintenance"],
+  "lockFileMaintenance": { "enabled": true },
   "packageRules": [
     {
       "packagePatterns": ["^@fortawesome"],
