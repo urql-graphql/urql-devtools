@@ -219,6 +219,7 @@ workflows:
             - test
             - build
             - visual regression
+            - lint firefox
             - verify version
           filters:
             tags:
