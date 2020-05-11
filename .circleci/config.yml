@@ -71,7 +71,8 @@ jobs:
       - checkout
       - *restore_node_modules_cache
       - run: yarn run cosmos:build
-      - persist_to_workspace:
+      - save_cache:
+          key: *cosmos_cache_key
           paths:
             - cosmos-export
 
@@ -85,8 +86,7 @@ jobs:
     parallelism: 4
     steps:
       - checkout
-      - attach_workspace:
-          at: ./cosmos-export
+      - *restore_cosmos_cache
       - run:
           command: npx serve cosmos-export -l $COSMOS_PORT
           background: true
