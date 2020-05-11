@@ -38,7 +38,6 @@ jobs:
           name: Check for dependencies
           command: "([[ -d node_modules ]] && circleci-agent step halt) || exit 0"
       - run: yarn install --frozen-lockfile
-      - run: chmod -R 777 node_modules
       - save_cache:
           key: *node_modules_cache_key
           paths:
@@ -179,12 +178,6 @@ workflows:
       #     filters:
       #       tags:
       #         only: /.*/
-      - cosmos export:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
       - visual regression:
           requires:
             - install
