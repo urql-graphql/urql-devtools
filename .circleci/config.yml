@@ -22,7 +22,7 @@ version: 2
   - &node_env
     docker:
       - image: *node_image
-        user: node
+        user: root
 
 jobs:
   install:
@@ -68,7 +68,7 @@ jobs:
     <<: *ramdisk
     docker:
       - image: alekzonder/puppeteer:latest
-        user: node
+        user: root
         environment:
           COSMOS_HOST: localhost
           COSMOS_PORT: 5000
@@ -84,9 +84,7 @@ jobs:
           path: src/panel/__image_snapshots__/__diff_output__/
 
   build:
-    docker:
-      - image: *node_image
-        user: root
+    <<: *node_env
     <<: *ramdisk
     steps:
       - checkout
