@@ -68,6 +68,7 @@ jobs:
       - checkout
       - *restore_node_modules_cache
       - run: yarn run cosmos:build
+      - run: chmod -R 777 cosmos-export
       - save_cache:
           key: *cosmos_cache_key
           paths:
