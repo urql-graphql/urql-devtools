@@ -16,11 +16,12 @@ version: 2
         - *build_cache_key
 
   # Environments
+  - &node_image node:13
   - &ramdisk
     working_directory: /mnt/ramdisk
   - &node_env
     docker:
-      - image: node:13
+      - image: *node_image
         user: node
 
 jobs:
@@ -83,7 +84,9 @@ jobs:
           path: src/panel/__image_snapshots__/__diff_output__/
 
   build:
-    <<: *node_env
+    docker:
+      - image: *node_image
+        user: root
     <<: *ramdisk
     steps:
       - checkout
