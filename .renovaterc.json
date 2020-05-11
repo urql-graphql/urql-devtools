@@ -2,7 +2,6 @@
   "rangeStrategy": "bump",
   "extends": "config:base",
   "labels": ["Maintenance"],
-  "lockFileMaintenance": { "enabled": true },
   "packageRules": [
     {
       "packagePatterns": ["^@fortawesome"],
@@ -30,5 +29,6 @@
       "groupName": "devDependencies (non-major)"
     }
   ],
-  "schedule": ["every weekday"]
+  "lockFileMaintenance": { "enabled": true },
+  "schedule": ["every friday"]
 }
