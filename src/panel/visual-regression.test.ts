@@ -4,7 +4,8 @@ expect.extend({ toMatchImageSnapshot });
 
 const fixtures = getFixtures2({
   ...detectCosmosConfig(),
-  hostname: "cosmos",
+  hostname: process.env.COSMOS_HOST,
+  port: Number(process.env.COSMOS_PORT),
 }).reduce<[string, FixtureApi][]>(
   (p, c) => [...p, [`${c.fileName} - ${c.name}`, c]],
   []
@@ -15,7 +16,27 @@ beforeAll(async () => {
   jest.setTimeout(60000);
 });
 
-describe.each(fixtures)("%s", (id, { rendererUrl }) => {
+/** Parallelize for CircleCI */
+const parallelize = (arr: any[]) => {
+  try {
+    if (!process.env.CIRCLE_NODE_TOTAL) {
+      throw Error();
+    }
+
+    const total = parseInt(process.env.CIRCLE_NODE_TOTAL);
+    const index = parseInt(process.env.CIRCLE_NODE_INDEX);
+    const interval = Math.round((arr.length * 1) / total);
+
+    const start = index * interval;
+    const end = index === total - 1 ? arr.length + 1 : interval * (index + 1);
+
+    return arr.slice(start, end);
+  } catch (err) {
+    return arr;
+  }
+};
+
+describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
   it("matches snapshot", async () => {
     await page.goto(rendererUrl, { waitUntil: "load" });
     await page.mouse.move(0, 0);

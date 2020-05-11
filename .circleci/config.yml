@@ -1,77 +1,101 @@
 version: 2
 
-.node_env: &node_env
-  docker:
-    - image: node:13
+.variables:
+  # Cache keys
+  - &node_modules_cache_key node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
+  - &build_cache_key build-cache-{{ .Revision }}
 
-.node_modules_cache: &node_modules_cache
-  restore_cache:
-    keys:
-      - node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
+  # Restore cache
+  - &restore_node_modules_cache
+    restore_cache:
+      keys:
+        - *node_modules_cache_key
+  - &restore_build_cache
+    restore_cache:
+      keys:
+        - *build_cache_key
 
-.build_cache: &build_cache
-  restore_cache:
-    keys:
-      - build-cache-{{ .Revision }}
+  # Environments
+  - &node_image node:13
+  - &ramdisk
+    working_directory: /mnt/ramdisk
+  - &node_env
+    docker:
+      - image: node:13-alpine
+        user: node
 
 jobs:
   install:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
-      - *node_modules_cache
+      - *restore_node_modules_cache
       - run:
           name: Check for dependencies
           command: "([[ -d node_modules ]] && circleci-agent step halt) || exit 0"
       - run: yarn install --frozen-lockfile
       - save_cache:
-          key: node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
+          key: *node_modules_cache_key
           paths:
-            - "node_modules"
+            - node_modules
 
   lint:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
-      - *node_modules_cache
+      - *restore_node_modules_cache
       - run: yarn run lint
 
   prettier:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
-      - *node_modules_cache
+      - *restore_node_modules_cache
       - run: yarn run lint:prettier
 
   test:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
-      - *node_modules_cache
+      - *restore_node_modules_cache
       - run: TZ=Europe/London yarn run test --coverage
 
   visual regression:
-    machine:
-      image: ubuntu-1604:201903-01
+    <<: *ramdisk
+    docker:
+      - image: alekzonder/puppeteer:latest
+        user: node
+        environment:
+          COSMOS_HOST: localhost
+          COSMOS_PORT: 5000
+    parallelism: 4
     steps:
       - checkout
-      - run: ./scripts/regression.sh --ci
+      - *restore_node_modules_cache
+      - run:
+          command: yarn cosmos
+          background: true
+      - run: sleep 5 && yarn run visual-regression:exec
       - store_artifacts:
           path: src/panel/__image_snapshots__/__diff_output__/
 
   build:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
-      - *node_modules_cache
-      - run: apt-get update && apt-get -y install zip
+      - *restore_node_modules_cache
       - run: yarn run build
       - run: yarn run bundle
       - save_cache:
-          key: build-cache-{{ .Revision }}
+          key: *build_cache_key
           paths:
-            - "dist"
-            - "extension.zip"
+            - dist
+            - extension.zip
       - store_artifacts:
           path: extension.zip
       - store_artifacts:
@@ -79,14 +103,16 @@ jobs:
 
   lint firefox:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
-      - *node_modules_cache
-      - *build_cache
+      - *restore_node_modules_cache
+      - *restore_build_cache
       - run: yarn run lint:firefox
 
   verify version:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
       - run:
@@ -95,11 +121,12 @@ jobs:
             (sed -n '3p' CHANGELOG.md | grep -i $CIRCLE_TAG) && echo "Version documented in changelog" || (echo "Version not documented in changelog" && exit 1)
 
   deploy chrome:
+    <<: *ramdisk
     docker:
       - image: cibuilds/chrome-extension
     steps:
       - checkout
-      - *build_cache
+      - *restore_build_cache
       - run:
           command: |
             ACCESS_TOKEN=$(curl --fail "https://www.googleapis.com/oauth2/v4/token" -d "client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&refresh_token=${REFRESH_TOKEN}&grant_type=refresh_token" | jq -r .access_token)
@@ -108,10 +135,11 @@ jobs:
 
   deploy firefox:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
-      - *node_modules_cache
-      - *build_cache
+      - *restore_node_modules_cache
+      - *restore_build_cache
       - run:
           command: |
             cd dist/extension
@@ -120,10 +148,11 @@ jobs:
 
   deploy npm:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
-      - *node_modules_cache
-      - *build_cache
+      - *restore_node_modules_cache
+      - *restore_build_cache
       - run:
           command: |
             npm config set "//registry.npmjs.org/:_authToken" "$npm_TOKEN"
