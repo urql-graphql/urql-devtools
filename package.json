@@ -134,7 +134,6 @@
     "prismjs": "^1.20.0",
     "puppeteer": "^3.0.4",
     "react": "^16.13.1",
-    "react-codemirror2": "^7.1.0",
     "react-cosmos": "5.2.1",
     "react-dom": "^16.13.1",
     "react-router": "^5.1.2",

@@ -32,11 +32,6 @@ const PageContent = styled.div`
     flex-direction: row;
   }
 
-  .react-codemirror2 {
-    display: flex;
-    flex-grow: 1;
-  }
-
   .CodeMirror {
     font-size: 12px;
     height: auto;
