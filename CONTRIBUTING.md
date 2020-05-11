@@ -1,114 +1,13 @@
-# Contributing to `urql-devtools`
+# Contributing
 
-Thanks for contributing! We want to ensure that `urql-devtools` evolves by seeing continuous improvements and enhancements, no matter how small or big they might be.
+Thanks for your interest in contributing to `urql` Devtools! We want to ensure that the community has opportunities to contribute to `urql` devtools in as many ways as possible, no matter how big or small those contributions may be.
 
 ## How to contribute?
 
-If you want to contribute, find an issue you think you can help with and get involved!
+Before getting started, make sure you are aware of our [Code of Conduct](./CODE_OF_CONDUCT.md) and comply within those guidelines.
 
-We use issues to track changes to the project over time so make an issue if you want to contribute to something that hasn't yet been proposed/reported!
+If you have an idea for a feature or want to fix a bug, consider opening an issue first. We're also happy to discuss and help you open a PR to get your changes in!
 
-## Working on the devtools extension (quick)
+## How do I set up the project?
 
-The quickest way to get started on devtools is to spin up the devtools extension fixtures.
-
-```
-yarn cosmos
-```
-
-Fixtures will be put through visual regression so make sure to snapshot any changes to your changes or additions
-
-```
-yarn visual-regression
-```
-
-> Note: This script takes standard jest args (e.g. --watch, -u)
-
-## Working on the devtools extension (long)
-
-For a fully integrated experience, you can build and run the full devtools extension.
-
-Run `yarn start` to initiate the build of the extension.
-
-```sh
-yarn start
-```
-
-Navigate to [chrome://extensions](chrome://extensions), toggle `Developer mode` on,
-choose _Load unpacked_ and select the _dist/extension_ folder in the root of the repo.
-
-### Start an urql example repo
-
-Devtools will only be accessible if a development instance of `urql` is running and it includes the [devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange).
-
-Clone the [Urql repo](https://github.com/FormidableLabs/urql).
-
-Change the client configuration in the example to look like this:
-
-```tsx
-// ...
-import {
-  cacheExchange,
-  createClient,
-  dedupExchange,
-  fetchExchange,
-} from "urql";
-import { devtoolsExchange } from "<path-to-devtools-dist>/exchange";
-
-// ...
-const client = createClient({
-  url: "http://localhost:3001/graphql",
-  exchanges: [dedupExchange, devtoolsExchange, cacheExchange, fetchExchange],
-});
-```
-
-Start the example repo with `yarn start`.
-
-## Extension tips and tricks
-
-Some basic suggestions if you're new to building a chrome extension.
-
-- Reloading the extension is required when changing the _content_ or _background_ scripts.
-- [Extensions Reloader](https://chrome.google.com/webstore/detail/extensions-reloader/fimgfedafeadlieiabdeeaodndnlbhid?hl=en) is a quick way to reload the extension.
-- When reloading an extension, any tabs using that extension will need to be closed and reopened to be updated.
-- Right click the devtools panel and hit _Reload Frame_ in order to update the _panel_ (no need to reload the extension).
-
-## How do I publish a new version?
-
-### 1. Update the version
-
-Set the version attribute in the _package.json_
-
-### 2. Build the new changelog
-
-> Note: This step requires docker
-
-```
-yarn changelog --future-release [release version] --token [your github oauth token]
-```
-
-### 3. Push/merge new version to master
-
-```
-git add package.json CHANGELOG.md
-git commit -m "Version v0.0.0"
-git push origin master
-```
-
-### 4. Publish new release
-
-**Warning:** This will publish a new release to the chrome app store.
-
-_(replace v0.0.0 with your new version)_
-
-```
-git fetch origin master
-git tag v0.0.0 origin/master
-git push origin v0.0.0
-```
-
-### 5. Create a new release on Github
-
-Finally, navigate to [releases](https://github.com/FormidableLabs/urql-devtools/releases) and choose _draft a new release_.
-
-> Note: You can copy and paste release info from the changelog you just generated
+Check out the [development guide](./DEVELOPMENT.md) for the technical details and how to build the project.

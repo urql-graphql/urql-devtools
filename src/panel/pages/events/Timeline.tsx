@@ -1,7 +1,7 @@
 import React, { FC, useMemo, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { Operation } from "urql";
-import { useTimelineContext } from "../../context";
+import { Operation } from "@urql/core";
+import { useTimelineContext, START_PADDING } from "../../context";
 import { Background } from "../../components/Background";
 import { TimelineRow, TimelinePane, Tick } from "./components";
 import { TimelineSourceIcon } from "./components/TimelineSourceIcon";
@@ -12,10 +12,12 @@ export const Timeline: FC = () => {
     setContainer,
     scale,
     events,
+    eventOrder,
     startTime,
     container,
     selectedEvent,
     setSelectedEvent,
+    setPosition,
     filter,
   } = useTimelineContext();
   const [selectedSource, setSelectedSource] = useState<Operation | undefined>();
@@ -33,6 +35,24 @@ export const Timeline: FC = () => {
       setSelectedEvent(undefined);
     }
   }, [selectedSource]);
+
+  // Add keyboard shortcut listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Back to beginning
+      if (e.key === "Home") {
+        setPosition(startTime - START_PADDING);
+      }
+
+      // Skip to current time
+      if (e.key === "End") {
+        setPosition(Date.now());
+      }
+    };
+
+    addEventListener("keydown", handleKeyDown, { passive: true });
+    return () => removeEventListener("keydown", handleKeyDown);
+  }, [setPosition, startTime]);
 
   const ticks = useMemo(
     () =>
@@ -62,8 +82,8 @@ export const Timeline: FC = () => {
 
   const sources = useMemo<Operation[]>(
     () =>
-      Object.values(events).map((eventList) => {
-        const source = eventList.find(
+      eventOrder.map((key) => {
+        const source = events[key].find(
           (e) => e.operation.operationName !== "teardown"
         );
 
@@ -71,12 +91,12 @@ export const Timeline: FC = () => {
         // Unknown source type
         // TODO: infer type from operation.query
         if (source === undefined) {
-          return eventList[0].operation;
+          return events[key][0].operation;
         }
 
         return source.operation;
       }),
-    [events]
+    [events, eventOrder]
   );
 
   const paneProps = useMemo(() => {
@@ -91,7 +111,7 @@ export const Timeline: FC = () => {
         event: selectedEvent,
       };
     }
-    return undefined;
+    return {};
   }, [selectedSource, selectedEvent]);
 
   const content = useMemo(
@@ -103,10 +123,10 @@ export const Timeline: FC = () => {
           {ticks.map((t, i) => (
             <Tick key={`p-${i}`} label={t.label} style={{ left: t.position }} />
           ))}
-          {Object.entries(events).map(([key, eventList], i) => (
+          {eventOrder.map((key, i) => (
             <TimelineRow
               key={key}
-              events={eventList}
+              events={events[key]}
               style={{
                 display: filter.graphqlType.includes(sources[i].operationName)
                   ? undefined
@@ -116,7 +136,7 @@ export const Timeline: FC = () => {
           ))}
         </>
       ),
-    [container, events, ticks, sources]
+    [container, events, eventOrder, ticks, sources]
   );
 
   return (
@@ -129,6 +149,7 @@ export const Timeline: FC = () => {
               {sources.map((s) => (
                 <TimelineSourceIcon
                   key={s.key}
+                  title="Source operation"
                   kind={
                     s.operationName === "teardown" ? "query" : s.operationName
                   }
@@ -149,7 +170,7 @@ export const Timeline: FC = () => {
               {content}
             </TimelineList>
           </TimelineContainer>
-          {paneProps && <TimelinePane {...paneProps} />}
+          <TimelinePane {...paneProps} />
         </PageContent>
       </Page>
     </>
@@ -177,6 +198,8 @@ const PageContent = styled.div`
 const TimelineContainer = styled.div`
   display: flex;
   flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 const TimelineIcons = styled.div`
@@ -184,7 +207,12 @@ const TimelineIcons = styled.div`
   flex-direction: column;
   align-items: center;
   width: 40px;
-  padding-top: 78px;
+
+  /* Margin prevents ticks from being hidden. */
+  margin-top: 60px;
+  padding-top: 18px;
+  height: max-content;
+  background: ${(p) => p.theme.dark["0"]};
   z-index: 1;
 
   > * {
@@ -200,12 +228,15 @@ const TimelineIcons = styled.div`
 
 const TimelineList = styled.div`
   cursor: grab;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  display: block;
   position: relative;
   padding: 70px 0;
-  overflow: hidden;
+  overflow-y: visible;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100%;
+  height: max-content;
+
   &:active {
     cursor: grabbing;
   }

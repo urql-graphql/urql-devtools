@@ -13,7 +13,14 @@ const addMessageHandler = jest.fn();
 
 beforeEach(() => {
   mocked(useDevtoolsContext).mockReturnValue({
-    clientConnected: true,
+    client: {
+      connected: true,
+      version: {
+        required: "9.9.9",
+        mismatch: false,
+        actual: "9.9.9",
+      },
+    },
     sendMessage,
     addMessageHandler,
   });
@@ -45,8 +52,10 @@ describe("on mount", () => {
     it("matches snapshot", () => {
       expect(state).toMatchInlineSnapshot(`
         Object {
+          "expandedNodes": Array [],
           "focusedNode": undefined,
           "operations": Object {},
+          "setExpandedNodes": [Function],
           "setFocusedNode": [Function],
         }
       `);

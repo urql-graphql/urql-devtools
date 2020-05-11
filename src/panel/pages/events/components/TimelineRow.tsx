@@ -1,8 +1,8 @@
-import React, { FC, useMemo, ComponentProps } from "react";
+import React, { FC, useMemo, ComponentProps, cloneElement } from "react";
 import styled from "styled-components";
 import { DebugEvent } from "@urql/core";
 import { useTimelineContext } from "../../../context";
-import { TimelineEvent } from "./TimelineEvent";
+import { TimelineEvent, TimelineEventGroup } from "./TimelineEvent";
 import {
   TimelineAliveDuration,
   TimelineNetworkDuration,
@@ -15,25 +15,74 @@ export const TimelineRow: FC<
 
   const eventElements = useMemo(
     () =>
-      events.reduce<JSX.Element[]>((p, e) => {
-        const handleClick = () =>
-          setSelectedEvent((current) => (current === e ? undefined : e));
+      events
+        .reduce<{ key: number; event: DebugEvent }[][]>((groups, event, i) => {
+          if (!filter.source.includes(event.source)) {
+            return groups;
+          }
 
-        return [
-          ...p,
-          <TimelineEvent
-            key={`e-${p.length}`}
-            event={e}
-            onClick={handleClick}
-            style={{
-              position: "absolute",
-              left: scale(e.timestamp),
-              transform: "translateX(-50%) translateY(-50%)",
-              visibility: filter.source.includes(e.source) || "hidden",
-            }}
-          />,
-        ];
-      }, []),
+          const entry = { key: i, event };
+
+          if (groups.length === 0) {
+            return [[entry]];
+          }
+
+          const previousIndex = groups.length - 1;
+          if (
+            scale(event.timestamp) -
+              scale(groups[previousIndex][0].event.timestamp) <
+            5
+          ) {
+            return [
+              ...groups.slice(0, previousIndex),
+              [...groups[previousIndex], entry],
+            ];
+          }
+
+          return [...groups, [entry]];
+        }, [])
+        .map((group) => {
+          if (group.length === 1) {
+            const { event, key } = group[0];
+            return (
+              <TimelineEvent
+                key={`e-${key}`}
+                event={event}
+                onClick={() =>
+                  setSelectedEvent((s) => (s === event ? undefined : event))
+                }
+                style={{
+                  position: "absolute",
+                  left: scale(event.timestamp),
+                  transform: "translateX(-50%) translateY(-50%)",
+                }}
+              />
+            );
+          }
+
+          const groupKey = group.reduce((p, c) => `${p} ${c.key}`, "");
+
+          return (
+            <TimelineEventGroup
+              key={`group-${groupKey}`}
+              style={{
+                position: "absolute",
+                left: scale(group[0].event.timestamp),
+                transform: "translateX(-50%) translateY(-50%)",
+              }}
+            >
+              {group.map(({ event, key }) => (
+                <TimelineEvent
+                  key={`e-${key}`}
+                  event={event}
+                  onClick={() =>
+                    setSelectedEvent((s) => (s === event ? undefined : event))
+                  }
+                />
+              ))}
+            </TimelineEventGroup>
+          );
+        }),
     [events, scale]
   );
 
@@ -219,8 +268,31 @@ export const TimelineRow: FC<
 
   return (
     <Container {...props}>
-      <>{durationElements}</>
-      <>{eventElements}</>
+      <>
+        {durationElements
+          .filter(
+            (e) =>
+              e.props.style.right < container.clientWidth &&
+              e.props.style.left < container.clientWidth
+          )
+          .map((e) =>
+            cloneElement(e, {
+              ...e.props,
+              style: {
+                ...e.props.style,
+                left: Math.max(0, e.props.style.left),
+                right: Math.max(0, e.props.style.right),
+              },
+            })
+          )}
+      </>
+      <>
+        {eventElements.filter(
+          (e) =>
+            e.props.style.left > -20 &&
+            e.props.style.left < container.clientWidth + 20
+        )}
+      </>
     </Container>
   );
 };

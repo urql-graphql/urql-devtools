@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { DebugEvent } from "@urql/core";
-import { TimelineEvent } from "./TimelineEvent";
+import { TimelineEvent, TimelineEventGroup } from "./TimelineEvent";
 
 const Wrapper = styled.div`
   display: flex;
@@ -64,6 +64,19 @@ export default {
   other: (
     <Wrapper>
       <TimelineEvent data-snapshot {...props} event={otherEvent} />
+    </Wrapper>
+  ),
+  group: (
+    <Wrapper>
+      <TimelineEventGroup
+        data-snapshot
+        {...props}
+        style={{ height: "min-content" }}
+        event={otherEvent}
+      >
+        <TimelineEvent data-snapshot {...props} event={executionEvent} />
+        <TimelineEvent data-snapshot {...props} event={updateEvent} />
+      </TimelineEventGroup>
     </Wrapper>
   ),
 };

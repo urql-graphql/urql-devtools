@@ -44,23 +44,46 @@ export const Response = () => {
     };
   }, [fetching, response, error]);
 
+  const content = useMemo(() => {
+    if (state === "Idle") {
+      return <Prompt>Run a query to see what the client returns...</Prompt>;
+    }
+
+    return (
+      <>
+        <Title>State</Title>
+        <Status>
+          <Icon data-state={state.toLowerCase()} /> {state}
+        </Status>
+        {code && (
+          <>
+            <Title>Response</Title>
+            {code}
+          </>
+        )}
+      </>
+    );
+  }, [code, state]);
+
   return (
     <Pane>
       <PaneBody>
-        <PaneSection>
-          <h1>Response</h1>
-          <Status>
-            <Icon data-state={state.toLowerCase()} /> {state}
-          </Status>
-          {code}
-        </PaneSection>
+        <PaneSection>{content}</PaneSection>
       </PaneBody>
     </Pane>
   );
 };
 
-const Status = styled.p`
-  font-size: 14px;
+const Prompt = styled.div`
+  padding: 30px;
+  text-align: center;
+  color: ${(p) => p.theme.grey["0"]};
+`;
+
+const Status = styled.code`
+  color: ${(p) => p.theme.grey["+2"]};
+  margin-bottom: 15px;
+  font-size: 12px;
   display: flex;
   align-items: center;
 `;
@@ -68,22 +91,27 @@ const Status = styled.p`
 const Icon = styled.span`
   display: block;
   margin-right: 7px;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
+  box-sizing: border-box;
+  border: solid 1px;
+  border-radius: 50%;
 
   &[data-state="idle"] {
-    background-color: ${(p) => p.theme.grey["0"]};
+    border-color: ${(p) => p.theme.grey["0"]};
   }
 
   &[data-state="fetching"] {
-    background-color: ${(p) => p.theme.blue["0"]};
+    border-color: ${(p) => p.theme.blue["0"]};
   }
 
   &[data-state="success"] {
+    border-color: ${(p) => p.theme.green["0"]};
     background-color: ${(p) => p.theme.green["0"]};
   }
 
   &[data-state="error"] {
+    border-color: ${(p) => p.theme.red["0"]};
     background-color: ${(p) => p.theme.red["-1"]};
   }
 `;
@@ -97,7 +125,7 @@ const PaneSection = styled.section`
   color: #fff;
   background: ${(props) => props.theme.dark[0]};
   padding: 20px;
-  overflow: scroll;
+  overflow: auto;
   flex-grow: 1;
   flex-basis: 0;
 
@@ -107,7 +135,7 @@ const PaneSection = styled.section`
     top: -20px;
     margin: -20px;
     padding: 2px 10px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 400;
     border-bottom: solid 1px ${(p) => p.theme.dark["+5"]};
     z-index: 1;
@@ -116,4 +144,12 @@ const PaneSection = styled.section`
   h1 + * {
     margin-top: 40px;
   }
+`;
+
+const Title = styled.h3`
+  color: ${(p) => p.theme.light["0"]};
+  font-size: 13px;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 `;

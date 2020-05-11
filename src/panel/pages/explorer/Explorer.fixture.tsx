@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from "react";
 import gql from "graphql-tag";
-import { DebugMessage } from "@urql/devtools";
+import { ExchangeDebugEventMessage } from "@urql/devtools";
 import {
   DevtoolsContext,
   ExplorerProvider,
@@ -8,9 +8,10 @@ import {
 } from "../../context";
 import { Explorer } from "./Explorer";
 
-export const defaultEvents: DebugMessage[] = [
+export const defaultEvents: ExchangeDebugEventMessage[] = [
   {
-    type: "debug",
+    type: "debug-event",
+    source: "exchange",
     data: {
       type: "update",
       message: "Todo message",
@@ -24,10 +25,22 @@ export const defaultEvents: DebugMessage[] = [
           address: {
             postcode: "E1",
           },
+          other: {
+            postcode: "E1",
+          },
+          other2: {
+            postcode: "E1",
+          },
         },
         query: gql`
           query getTodos($name: String!, $address: Address!) {
-            todos(id: 1234, name: $name, address: $address) {
+            todos(
+              id: 1234
+              name: $name
+              address: $address
+              otherArg: "really long string to cause overflow"
+              finalArg: "Other long arg to cause overflow"
+            ) {
               id
               content
               __typename
@@ -71,7 +84,14 @@ const DevtoolsContextMock: FC<
         events.forEach(h);
         return () => false;
       },
-      clientConnected: true,
+      client: {
+        connected: true,
+        version: {
+          mismatch: false,
+          required: "",
+          actual: "",
+        },
+      },
       sendMessage: () => false,
       ...val,
     }),

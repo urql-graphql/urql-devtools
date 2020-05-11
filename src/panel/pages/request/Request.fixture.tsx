@@ -1,6 +1,7 @@
 import React, { FC, ContextType, useState, useMemo } from "react";
 import { buildSchema } from "graphql";
 import { RequestContext } from "../../context";
+import { appendPopulateDirective } from "../../context/schema-transforms";
 import { Request } from "./Request";
 
 export const schema = buildSchema(`
@@ -31,7 +32,7 @@ const RequestProviderMock: FC<Partial<ContextType<typeof RequestContext>>> = ({
       execute: () => null as any,
       fetching: false,
       response: undefined,
-      schema,
+      schema: appendPopulateDirective(schema),
       ...value,
     }),
     [value]

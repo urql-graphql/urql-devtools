@@ -1,0 +1,34 @@
+{
+  "rangeStrategy": "bump",
+  "extends": "config:base",
+  "labels": ["Maintenance"],
+  "lockFileMaintenance": { "enabled": true },
+  "packageRules": [
+    {
+      "packagePatterns": ["^@fortawesome"],
+      "groupName": "fontawesome"
+    },
+    {
+      "packagePatterns": ["babel"],
+      "groupName": "babel"
+    },
+    {
+      "packagePatterns": ["jest"],
+      "groupName": "jest"
+    },
+    {
+      "packagePatterns": ["eslint"],
+      "groupName": "eslint"
+    },
+    {
+      "packagePatterns": ["^react$", "^react-dom$"],
+      "groupName": "react"
+    },
+    {
+      "depTypeList": ["devDependencies"],
+      "updateTypes": ["patch", "minor"],
+      "groupName": "devDependencies (non-major)"
+    }
+  ],
+  "schedule": ["every weekday"]
+}

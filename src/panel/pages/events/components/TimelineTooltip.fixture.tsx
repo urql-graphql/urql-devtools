@@ -10,11 +10,12 @@ const Wrapper = styled.div`
 `;
 
 const HoverableItem = () => {
-  const { targetRef, tooltipProps, isVisible } = useTooltip();
+  const { ref, tooltipProps, isVisible } = useTooltip();
 
   return (
     <>
       <button
+        ref={ref}
         style={{
           position: "absolute",
           left: 200,
@@ -22,7 +23,6 @@ const HoverableItem = () => {
           width: 100,
           height: 30,
         }}
-        ref={targetRef}
       >
         Hover me!
       </button>
@@ -33,7 +33,7 @@ const HoverableItem = () => {
 
 export default {
   basic: (
-    <Wrapper>
+    <Wrapper id="portal">
       <TimelineTooltip data-snapshot>
         A network response or cache update
       </TimelineTooltip>

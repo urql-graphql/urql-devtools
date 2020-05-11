@@ -7,7 +7,7 @@ import { TimelineRow } from "./TimelineRow";
 const Wrapper = styled.div`
   display: flex;
   flex-grow: 1;
-  padding: 20px;
+  padding: 70px;
   flex-direction: column;
   background: ${(props) => props.theme.dark["0"]};
 `;
@@ -104,7 +104,7 @@ export default {
                   type: "fetchRequest",
                   message: "An update occured",
                   timestamp: Date.now(),
-                  source: "devtoolsExchange",
+                  source: "fetchExchange",
                   operation: {
                     operationName: "query",
                   },
@@ -155,7 +155,7 @@ export default {
                   type: "fetchRequest",
                   message: "An update occured",
                   timestamp: Date.now(),
-                  source: "devtoolsExchange",
+                  source: "fetchExchange",
                   operation: {
                     operationName: "query",
                   },
@@ -205,7 +205,7 @@ export default {
                   type: "fetchRequest",
                   message: "An update occured",
                   timestamp: Date.now(),
-                  source: "devtoolsExchange",
+                  source: "fetchExchange",
                   operation: {
                     operationName: "query",
                   },
@@ -349,6 +349,48 @@ export default {
                   },
                 },
               ] as any
+            }
+          />
+        </TimelineContext.Provider>
+      </Viewport>
+    </Wrapper>
+  ),
+  "mutation (with group)": (
+    <Wrapper>
+      <Viewport>
+        <TimelineContext.Provider value={context}>
+          <TimelineRow
+            data-snapshot
+            events={
+              [
+                {
+                  type: "execution",
+                  message: "A listener was added to the stream",
+                  timestamp: Date.now() + 1000,
+                  source: "devtoolsExchange",
+                  operation: {
+                    operationName: "mutation",
+                  },
+                },
+                {
+                  type: "execution",
+                  message: "A listener was added to the stream",
+                  timestamp: Date.now() + 1001,
+                  source: "devtoolsExchange",
+                  operation: {
+                    operationName: "mutation",
+                  },
+                },
+                {
+                  type: "update",
+                  message: "An update occured",
+                  timestamp: Date.now() + 8000,
+                  source: "devtoolsExchange",
+                  operation: {
+                    operationName: "mutation",
+                  },
+                },
+              ] as any[]
             }
           />
         </TimelineContext.Provider>

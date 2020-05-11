@@ -23,7 +23,31 @@ describe("App routes", () => {
     describe("on connected", () => {
       beforeEach(() => {
         mocked(useDevtoolsContext).mockReturnValue({
-          clientConnected: true,
+          client: {
+            connected: true,
+            version: {
+              mismatch: false,
+            },
+          },
+        } as any);
+      });
+
+      it("matches snapshot", () => {
+        expect(shallow(<AppRoutes />)).toMatchSnapshot();
+      });
+    });
+
+    describe("on version mismatch", () => {
+      beforeEach(() => {
+        mocked(useDevtoolsContext).mockReturnValue({
+          client: {
+            connected: true,
+            version: {
+              required: "9.9.9",
+              actual: "0.0.1",
+              mismatch: true,
+            },
+          },
         } as any);
       });
 
@@ -35,7 +59,9 @@ describe("App routes", () => {
     describe("on disconnected", () => {
       beforeEach(() => {
         mocked(useDevtoolsContext).mockReturnValue({
-          clientConnected: false,
+          client: {
+            connected: false,
+          },
         } as any);
       });
 

@@ -7,12 +7,13 @@ import React, {
   SetStateAction,
   Dispatch,
 } from "react";
-import { DevtoolsExchangeOutgoingMessage } from "@urql/devtools";
 import { useDevtoolsContext } from "../Devtools";
 import { handleResponse, ParsedNodeMap, ParsedFieldNode } from "./ast";
 
 export interface ExplorerContextValue {
   operations: ParsedNodeMap;
+  expandedNodes: ParsedFieldNode[];
+  setExpandedNodes: Dispatch<SetStateAction<ParsedFieldNode[]>>;
   focusedNode?: ParsedFieldNode;
   setFocusedNode: Dispatch<SetStateAction<ParsedFieldNode | undefined>>;
 }
@@ -24,18 +25,21 @@ export const ExplorerProvider: FC = ({ children }) => {
   const [operations, setOperations] = useState<
     ExplorerContextValue["operations"]
   >({});
+  const [expandedNodes, setExpandedNodes] = useState<
+    ExplorerContextValue["expandedNodes"]
+  >([]);
   const [focusedNode, setFocusedNode] = useState<
     ExplorerContextValue["focusedNode"]
   >(undefined);
 
   useEffect(() => {
-    return addMessageHandler((message: DevtoolsExchangeOutgoingMessage) => {
-      if (message.type === "disconnect") {
+    return addMessageHandler((message) => {
+      if (message.type === "connection-disconnect") {
         setOperations({});
         return;
       }
 
-      if (message.type !== "debug" || message.data.type !== "update") {
+      if (message.type !== "debug-event" || message.data.type !== "update") {
         return;
       }
 
@@ -56,11 +60,13 @@ export const ExplorerProvider: FC = ({ children }) => {
 
   const value = useMemo(
     () => ({
+      expandedNodes,
+      setExpandedNodes,
       focusedNode,
       setFocusedNode,
       operations,
     }),
-    [operations, focusedNode, setFocusedNode]
+    [operations, focusedNode, setFocusedNode, expandedNodes, setExpandedNodes]
   );
 
   return (

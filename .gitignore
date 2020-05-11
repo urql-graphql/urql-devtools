@@ -1,6 +1,8 @@
 node_modules
 dist
+cosmos-export
 yarn-error.log
 .DS_Store
 web-ext-artifacts
 __diff_output__
+.idea

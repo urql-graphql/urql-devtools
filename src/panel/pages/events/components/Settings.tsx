@@ -7,17 +7,17 @@ import {
   faFastForward,
 } from "@fortawesome/free-solid-svg-icons";
 import { Collapsible } from "../../../components";
-import { useTimelineContext } from "../../../context";
+import { useTimelineContext, START_PADDING } from "../../../context";
 
 export const Settings: FC<ComponentProps<typeof Container>> = (props) => {
   const [collapsed, setCollapsed] = useState(true);
   const handleExpandToggle = useCallback(() => setCollapsed((c) => !c), []);
   const { setPosition, startTime } = useTimelineContext();
 
-  const handleBackClick = useCallback(() => setPosition(startTime), [
-    setPosition,
-    startTime,
-  ]);
+  const handleBackClick = useCallback(
+    () => setPosition(startTime - START_PADDING),
+    [setPosition, startTime]
+  );
 
   const handleForwardClick = useCallback(() => setPosition(Date.now()), [
     setPosition,
@@ -27,9 +27,22 @@ export const Settings: FC<ComponentProps<typeof Container>> = (props) => {
   return (
     <Container {...props}>
       <TopRow>
-        <Icon icon={faCog} onClick={handleExpandToggle} />
-        <Icon icon={faFastBackward} onClick={handleBackClick} />
-        <Icon icon={faFastForward} onClick={handleForwardClick} />
+        <Icon
+          data-active={!collapsed}
+          title="Show filters"
+          icon={faCog}
+          onClick={handleExpandToggle}
+        />
+        <Icon
+          title="Back to start [Home]"
+          icon={faFastBackward}
+          onClick={handleBackClick}
+        />
+        <Icon
+          title="Forward to current time [End]"
+          icon={faFastForward}
+          onClick={handleForwardClick}
+        />
       </TopRow>
       <Content collapsed={collapsed}>
         <Filter />
@@ -69,6 +82,7 @@ export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
         {filterables.graphqlType.map((e) => (
           <FilterButton
             key={e}
+            title="Toggle Graphql operation type"
             role="checkbox"
             aria-selected={filter.graphqlType.includes(e)}
             onClick={handleTypeToggle(e)}
@@ -81,6 +95,7 @@ export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
         {filterables.source.map((e) => (
           <FilterButton
             key={e}
+            title="Toggle debug event source"
             role="checkbox"
             aria-selected={filter.source.includes(e)}
             onClick={handleSourceToggle(e)}
@@ -111,35 +126,45 @@ const FilterGroup = styled.div`
 `;
 
 const FilterButton = styled.button`
-  background: ${(props) => props.theme.dark["+6"]};
-  color: ${(p) => p.theme.grey["0"]};
-  padding: 5px 10px;
+  padding: 3px 10px;
   border: none;
   font-size: 12px;
+  font-weight: 500;
   margin: 0 5px;
   border-radius: 2px;
-  font-weight: bold;
   cursor: pointer;
   outline: none;
 
+  background: ${(props) => props.theme.dark["+6"]};
+  color: ${(p) => p.theme.grey["0"]};
+
+  &:hover:not(:active) {
+    filter: brightness(130%);
+  }
+
   &[aria-selected="true"] {
-    background: ${(p) => p.theme.light["0"]};
-    color: ${(p) => p.theme.dark["0"]};
+    background: ${(p) => p.theme.light["-2"]};
+    color: ${(p) => p.theme.dark["+2"]};
+  }
+
+  &[aria-selected="true"]:hover:not(:active) {
+    filter: brightness(90%);
   }
 `;
 
 const Icon = styled(FontAwesomeIcon)`
   cursor: pointer;
-  color: ${(p) => p.theme.light["-7"]};
-  font-size: 14px;
+  font-size: 13px;
   margin: 3px 5px;
+  transition: color 100ms ease;
+  color: ${(p) => p.theme.grey["0"]};
 
-  &:hover {
-    color: ${(p) => p.theme.light["0"]};
+  &:hover:not(:active) {
+    filter: brightness(140%);
   }
 
-  &:active {
-    color: ${(p) => p.theme.light["-5"]};
+  &[data-active="true"] {
+    color: ${(p) => p.theme.light["-4"]};
   }
 `;
 
@@ -159,7 +184,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 5px 10px;
-  background: ${(props) => props.theme.dark["0"]};
+  padding: 3px 10px;
+  background: ${(props) => props.theme.dark["+3"]};
   border-bottom: solid 1px ${(p) => p.theme.dark["+4"]};
 `;
