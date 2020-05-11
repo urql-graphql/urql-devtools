@@ -71,9 +71,7 @@ jobs:
       - checkout
       - *restore_node_modules_cache
       - run: yarn run cosmos:build
-      - run: chmod -R 777 cosmos-export
-      - save_cache:
-          key: *cosmos_cache_key
+      - persist_to_workspace:
           paths:
             - cosmos-export
 
@@ -81,14 +79,17 @@ jobs:
     docker:
       - image: alekzonder/puppeteer:latest
         user: node
+        environment:
+          COSMOS_HOST: localhost
+          COSMOS_PORT: 5000
     parallelism: 4
-    environment:
-      COSMOS_HOST: localhost
-      COSMOS_PORT: 5000
     steps:
       - checkout
-      - *restore_cosmos_cache
-      - run: npx serve cosmos-export -l $COSMOS_PORT &
+      - attach_workspace:
+          at: ./cosmos-export
+      - run:
+          command: npx serve cosmos-export -l $COSMOS_PORT
+          background: true
       - *restore_node_modules_cache
       - run: yarn run visual-regression:exec
       - store_artifacts:
