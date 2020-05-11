@@ -9900,15 +9900,15 @@ react-codemirror2@^7.1.0:
   resolved "https://registry.yarnpkg.com/react-codemirror2/-/react-codemirror2-7.1.0.tgz#b874a275ad4f6f2ee5adb23b550c0f4b8b82776d"
   integrity sha512-Rel0QbPnCTjHxgZYt6TkGw4icSZXNyONHb72a+1wWA+PlYJIvzFAv4pZlDPG0rpKpKmy4kSUlkoWgneH7w3A0g==
 
-react-cosmos-playground2@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/react-cosmos-playground2/-/react-cosmos-playground2-5.2.0.tgz#9f9a1c56dab91e680e0144b1d0bd9d4a80a62165"
-  integrity sha512-1IGqHDAHMMo9FGEsZ61h8hXWCn6rwjnH7aVEm75OLC2zPeScQvVA/p6KVUXBZVe6G0gh1FruQcDx1nSXlqwU2A==
+react-cosmos-playground2@^5.3.0-alpha.5:
+  version "5.3.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/react-cosmos-playground2/-/react-cosmos-playground2-5.3.0-alpha.5.tgz#035a7e923eb2f05ab434989ef6ee0ac3a5dae9b4"
+  integrity sha512-wwe1kxf0NqxOBa+DEO8AQahEP+th03mPvM8ncq2wBoCMgOYd3Lw+tUMX8N5/S6mbO6chxqHaJHTePRFh/AYTKw==
 
-react-cosmos-shared2@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/react-cosmos-shared2/-/react-cosmos-shared2-5.2.0.tgz#f1821e315730154b297796810815af326537767c"
-  integrity sha512-Mxwamfvxu9MyWWDXKr/uJ4ddIhkdaRST7sdHuvv2J0CcKGdp7hYFNA29heflmvgfVnHPbNdkQQgs2N1ZDIWDrA==
+react-cosmos-shared2@^5.3.0-alpha.5:
+  version "5.3.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/react-cosmos-shared2/-/react-cosmos-shared2-5.3.0-alpha.5.tgz#bb3d830c0f593f14a622850532663ce2fa87b002"
+  integrity sha512-js113ae0fWfHUHU4EiqGMeE+VC0fqQM3k00yZbM/PJUwCH3CNPJaCqvuP4w5rkDKo1uauWIwLSYuFN7rHBpvNA==
   dependencies:
     lodash "^4.17.15"
     query-string "5.1.1"
@@ -9916,10 +9916,10 @@ react-cosmos-shared2@^5.2.0:
     react-is "^16.13.1"
     socket.io-client "2.2.0"
 
-react-cosmos@^5.1.0:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/react-cosmos/-/react-cosmos-5.2.1.tgz#f5d42da7d0cda0e97402ff68b8f371b9768ea7de"
-  integrity sha512-oeiImn7nVDJrawMnXnczB2/CgYSvqDOJIuMlJUDnukcrPoGbmIyHaDwxcz6kpr8ieRrdVAS65tGYKLkLt0P4FQ==
+react-cosmos@5.3.0-alpha.5:
+  version "5.3.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/react-cosmos/-/react-cosmos-5.3.0-alpha.5.tgz#20b1de5b8334033512980811191f7d678c1adc12"
+  integrity sha512-CqKseBOO5NbF9HU+tRnlHEnVSEytKRe9J2g9M771fMIsydU5dEvWrDLn2tar/WeM06N/0YM/WKX/goe6yL2kVg==
   dependencies:
     "@skidding/launch-editor" "^2.2.3"
     "@skidding/webpack-hot-middleware" "^2.25.0"
@@ -9934,8 +9934,8 @@ react-cosmos@^5.1.0:
     micromatch "^4.0.2"
     open "^7.0.3"
     pkg-up "^3.1.0"
-    react-cosmos-playground2 "^5.2.0"
-    react-cosmos-shared2 "^5.2.0"
+    react-cosmos-playground2 "^5.3.0-alpha.5"
+    react-cosmos-shared2 "^5.3.0-alpha.5"
     react-error-overlay "^6.0.7"
     regenerator-runtime "^0.13.5"
     resolve-from "^5.0.0"
