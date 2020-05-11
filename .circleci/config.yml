@@ -41,6 +41,7 @@ jobs:
 
   lint:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
       - *restore_node_modules_cache
@@ -48,6 +49,7 @@ jobs:
 
   prettier:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
       - *restore_node_modules_cache
@@ -55,6 +57,7 @@ jobs:
 
   test:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
       - *restore_node_modules_cache
@@ -81,6 +84,7 @@ jobs:
 
   build:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
       - *restore_node_modules_cache
@@ -99,6 +103,7 @@ jobs:
 
   lint firefox:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
       - *restore_node_modules_cache
@@ -107,6 +112,7 @@ jobs:
 
   verify version:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
       - run:
@@ -115,6 +121,7 @@ jobs:
             (sed -n '3p' CHANGELOG.md | grep -i $CIRCLE_TAG) && echo "Version documented in changelog" || (echo "Version not documented in changelog" && exit 1)
 
   deploy chrome:
+    <<: *ramdisk
     docker:
       - image: cibuilds/chrome-extension
     steps:
@@ -128,6 +135,7 @@ jobs:
 
   deploy firefox:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
       - *restore_node_modules_cache
@@ -140,6 +148,7 @@ jobs:
 
   deploy npm:
     <<: *node_env
+    <<: *ramdisk
     steps:
       - checkout
       - *restore_node_modules_cache
@@ -157,92 +166,92 @@ workflows:
           filters:
             tags:
               only: /.*/
-      # - lint:
-      #     requires:
-      #       - install
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      # - prettier:
-      #     requires:
-      #       - install
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      # - test:
-      #     requires:
-      #       - install
-      #     filters:
-      #       tags:
-      #         only: /.*/
+      - lint:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
+      - prettier:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
+      - test:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
       - visual regression:
           requires:
             - install
           filters:
             tags:
               only: /.*/
-      # - build:
-      #     requires:
-      #       - install
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      # - verify version:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      #       branches:
-      #         ignore: /.*/
-      # - lint firefox:
-      #     requires:
-      #       - build
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      # - deploy chrome:
-      #     requires:
-      #       - install
-      #       - lint
-      #       - prettier
-      #       - test
-      #       - build
-      #       - visual regression
-      #       - lint firefox
-      #       - verify version
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      #       branches:
-      #         ignore: /.*/
-      # - deploy firefox:
-      #     requires:
-      #       - install
-      #       - lint
-      #       - prettier
-      #       - test
-      #       - build
-      #       - visual regression
-      #       - lint firefox
-      #       - verify version
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      #       branches:
-      #         ignore: /.*/
-      # - deploy npm:
-      #     requires:
-      #       - install
-      #       - lint
-      #       - prettier
-      #       - test
-      #       - build
-      #       - visual regression
-      #       - lint firefox
-      #       - verify version
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      #       branches:
-      #         ignore: /.*/
+      - build:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
+      - verify version:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+      - lint firefox:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /.*/
+      - deploy chrome:
+          requires:
+            - install
+            - lint
+            - prettier
+            - test
+            - build
+            - visual regression
+            - lint firefox
+            - verify version
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+      - deploy firefox:
+          requires:
+            - install
+            - lint
+            - prettier
+            - test
+            - build
+            - visual regression
+            - lint firefox
+            - verify version
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+      - deploy npm:
+          requires:
+            - install
+            - lint
+            - prettier
+            - test
+            - build
+            - visual regression
+            - lint firefox
+            - verify version
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
