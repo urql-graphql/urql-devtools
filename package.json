@@ -150,7 +150,6 @@
     "web-ext": "^4.2.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-node-externals": "^1.7.2",
-    "wonka": "^4.0.13"
+    "webpack-node-externals": "^1.7.2"
   }
 }
