@@ -1,62 +1,86 @@
 version: 2
 
-.node_env: &node_env
-  docker:
-    - image: node:13
+.variables:
+  # Cache keys
+  - &node_modules_cache_key node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
+  - &build_cache_key build-cache-{{ .Revision }}
+  - &cosmos_cache_key cosmos-cache-{{ .Revision }}
 
-.node_modules_cache: &node_modules_cache
-  restore_cache:
-    keys:
-      - node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
+  # Restore cache
+  - &restore_node_modules_cache
+    restore_cache:
+      keys:
+        - *node_modules_cache_key
+  - &restore_build_cache
+    restore_cache:
+      keys:
+        - *build_cache_key
+  - &restore_cosmos_cache
+    restore_cache:
+      keys:
+        - *cosmos_cache_key
 
-.build_cache: &build_cache
-  restore_cache:
-    keys:
-      - build-cache-{{ .Revision }}
+  # Environments
+  - &node_env
+    docker:
+      - image: node:13
 
 jobs:
   install:
     <<: *node_env
     steps:
       - checkout
-      - *node_modules_cache
+      - *restore_node_modules_cache
       - run:
           name: Check for dependencies
           command: "([[ -d node_modules ]] && circleci-agent step halt) || exit 0"
       - run: yarn install --frozen-lockfile
       - save_cache:
-          key: node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
+          key: *node_modules_cache_key
           paths:
-            - "node_modules"
+            - node_modules
 
   lint:
     <<: *node_env
     steps:
       - checkout
-      - *node_modules_cache
+      - *restore_node_modules_cache
       - run: yarn run lint
 
   prettier:
     <<: *node_env
     steps:
       - checkout
-      - *node_modules_cache
+      - *restore_node_modules_cache
       - run: yarn run lint:prettier
 
   test:
     <<: *node_env
     steps:
       - checkout
-      - *node_modules_cache
+      - *restore_node_modules_cache
       - run: TZ=Europe/London yarn run test --coverage
+
+  cosmos export:
+    <<: *node_env
+    steps:
+      - checkout
+      - *restore_node_modules_cache
+      - run: yarn run cosmos:build
+      - save_cache:
+          key: *cosmos_cache_key
+          paths:
+            - cosmos-export
 
   visual regression:
     parallelism: 4
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+      - image: alekzonder/puppeteer:latest
     steps:
       - checkout
-      - run: ./scripts/regression.sh --ci
+      - *restore_node_modules_cache
+      - *restore_cosmos_cache
+      - run: yarn run visual-regression:exec
       - store_artifacts:
           path: src/panel/__image_snapshots__/__diff_output__/
 
@@ -64,15 +88,15 @@ jobs:
     <<: *node_env
     steps:
       - checkout
-      - *node_modules_cache
+      - *restore_node_modules_cache
       - run: apt-get update && apt-get -y install zip
       - run: yarn run build
       - run: yarn run bundle
       - save_cache:
-          key: build-cache-{{ .Revision }}
+          key: *build_cache_key
           paths:
-            - "dist"
-            - "extension.zip"
+            - dist
+            - extension.zip
       - store_artifacts:
           path: extension.zip
       - store_artifacts:
@@ -82,8 +106,8 @@ jobs:
     <<: *node_env
     steps:
       - checkout
-      - *node_modules_cache
-      - *build_cache
+      - *restore_node_modules_cache
+      - *restore_build_cache
       - run: yarn run lint:firefox
 
   verify version:
@@ -100,7 +124,7 @@ jobs:
       - image: cibuilds/chrome-extension
     steps:
       - checkout
-      - *build_cache
+      - *restore_build_cache
       - run:
           command: |
             ACCESS_TOKEN=$(curl --fail "https://www.googleapis.com/oauth2/v4/token" -d "client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&refresh_token=${REFRESH_TOKEN}&grant_type=refresh_token" | jq -r .access_token)
@@ -111,8 +135,8 @@ jobs:
     <<: *node_env
     steps:
       - checkout
-      - *node_modules_cache
-      - *build_cache
+      - *restore_node_modules_cache
+      - *restore_build_cache
       - run:
           command: |
             cd dist/extension
@@ -123,8 +147,8 @@ jobs:
     <<: *node_env
     steps:
       - checkout
-      - *node_modules_cache
-      - *build_cache
+      - *restore_node_modules_cache
+      - *restore_build_cache
       - run:
           command: |
             npm config set "//registry.npmjs.org/:_authToken" "$npm_TOKEN"
@@ -156,9 +180,16 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - cosmos export:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
       - visual regression:
           requires:
             - install
+            - cosmos export
           filters:
             tags:
               only: /.*/
