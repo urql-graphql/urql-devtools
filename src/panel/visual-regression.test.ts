@@ -4,7 +4,8 @@ expect.extend({ toMatchImageSnapshot });
 
 const fixtures = getFixtures2({
   ...detectCosmosConfig(),
-  hostname: "cosmos",
+  hostname: process.env.COSMOS_HOST,
+  port: Number(process.env.COSMOS_PORT),
 }).reduce<[string, FixtureApi][]>(
   (p, c) => [...p, [`${c.fileName} - ${c.name}`, c]],
   []

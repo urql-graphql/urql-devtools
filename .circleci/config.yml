@@ -76,10 +76,14 @@ jobs:
     parallelism: 4
     docker:
       - image: alekzonder/puppeteer:latest
+    environment:
+      COSMOS_HOST: localhost
+      COSMOS_PORT: 5000
     steps:
       - checkout
-      - *restore_node_modules_cache
       - *restore_cosmos_cache
+      - run: npx serve cosmos-export -l $COSMOS_PORT &
+      - *restore_node_modules_cache
       - run: yarn run visual-regression:exec
       - store_artifacts:
           path: src/panel/__image_snapshots__/__diff_output__/
@@ -162,24 +166,24 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - lint:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
-      - prettier:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
-      - test:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
+      # - lint:
+      #     requires:
+      #       - install
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      # - prettier:
+      #     requires:
+      #       - install
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      # - test:
+      #     requires:
+      #       - install
+      #     filters:
+      #       tags:
+      #         only: /.*/
       - cosmos export:
           requires:
             - install
@@ -193,68 +197,68 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - build:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
-      - verify version:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-      - lint firefox:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /.*/
-      - deploy chrome:
-          requires:
-            - install
-            - lint
-            - prettier
-            - test
-            - build
-            - visual regression
-            - lint firefox
-            - verify version
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-      - deploy firefox:
-          requires:
-            - install
-            - lint
-            - prettier
-            - test
-            - build
-            - visual regression
-            - lint firefox
-            - verify version
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-      - deploy npm:
-          requires:
-            - install
-            - lint
-            - prettier
-            - test
-            - build
-            - visual regression
-            - lint firefox
-            - verify version
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
+      # - build:
+      #     requires:
+      #       - install
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      # - verify version:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #       branches:
+      #         ignore: /.*/
+      # - lint firefox:
+      #     requires:
+      #       - build
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      # - deploy chrome:
+      #     requires:
+      #       - install
+      #       - lint
+      #       - prettier
+      #       - test
+      #       - build
+      #       - visual regression
+      #       - lint firefox
+      #       - verify version
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #       branches:
+      #         ignore: /.*/
+      # - deploy firefox:
+      #     requires:
+      #       - install
+      #       - lint
+      #       - prettier
+      #       - test
+      #       - build
+      #       - visual regression
+      #       - lint firefox
+      #       - verify version
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #       branches:
+      #         ignore: /.*/
+      # - deploy npm:
+      #     requires:
+      #       - install
+      #       - lint
+      #       - prettier
+      #       - test
+      #       - build
+      #       - visual regression
+      #       - lint firefox
+      #       - verify version
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #       branches:
+      #         ignore: /.*/

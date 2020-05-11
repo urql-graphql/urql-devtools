@@ -18,7 +18,6 @@ services:
       - .:/app
       - node_modules:/app/node_modules
     environment:
-      - TARGET_HOST=cosmos:5000
       - USER=root
       - CIRCLE_NODE_TOTAL
       - CIRCLE_NODE_INDEX
