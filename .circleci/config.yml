@@ -4,7 +4,6 @@ version: 2
   # Cache keys
   - &node_modules_cache_key node-cache-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
   - &build_cache_key build-cache-{{ .Revision }}
-  - &cosmos_cache_key cosmos-cache-{{ .Revision }}
 
   # Restore cache
   - &restore_node_modules_cache
@@ -15,10 +14,6 @@ version: 2
     restore_cache:
       keys:
         - *build_cache_key
-  - &restore_cosmos_cache
-    restore_cache:
-      keys:
-        - *cosmos_cache_key
 
   # Environments
   # - &working_dir
