@@ -109,6 +109,6 @@ export const StyledInlineBlock = styled.pre`
 `;
 
 const StyledCodeBlock = styled.pre`
-  background: ${(props) => props.theme.dark["+3"]} !important;
+  background: ${(props) => props.theme.dark["+2"]} !important;
   font-size: 12px !important;
 `;
