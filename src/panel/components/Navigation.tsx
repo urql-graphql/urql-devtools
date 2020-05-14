@@ -2,15 +2,13 @@ import React, { ComponentProps, FC } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
-const navItems = [
-  { link: "/explorer", label: "Explorer" },
-  { link: "/events", label: "Events" },
-  { link: "/request", label: "Request" },
-];
+type NavItem = { link: string; label: string };
 
-export const Navigation: FC<ComponentProps<typeof Container>> = (props) => (
+export const Navigation: FC<
+  { items: NavItem[] } & ComponentProps<typeof Container>
+> = ({ items, ...props }) => (
   <Container {...props}>
-    {navItems.map((item, index) => (
+    {items.map((item, index) => (
       <NavLink key={index} to={item.link}>
         {item.label}
       </NavLink>
