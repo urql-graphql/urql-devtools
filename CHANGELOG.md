@@ -1,5 +1,21 @@
 # Changelog
 
+## [v2.0.1](https://github.com/FormidableLabs/urql-devtools/tree/v2.0.1) (2020-05-15)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.0.0...v2.0.1)
+
+**Fixed bugs:**
+
+- Event tooltips don't show on hover [\#231](https://github.com/FormidableLabs/urql-devtools/issues/231)
+- Improve visual separation between timeline pane sections [\#223](https://github.com/FormidableLabs/urql-devtools/issues/223)
+
+**Merged pull requests:**
+
+- Improve code contrast with border [\#224](https://github.com/FormidableLabs/urql-devtools/pull/224) ([andyrichardson](https://github.com/andyrichardson))
+- Remove unused deps [\#222](https://github.com/FormidableLabs/urql-devtools/pull/222) ([andyrichardson](https://github.com/andyrichardson))
+- Update lockfile and reduce update spam [\#221](https://github.com/FormidableLabs/urql-devtools/pull/221) ([andyrichardson](https://github.com/andyrichardson))
+- Parallel visual regression [\#142](https://github.com/FormidableLabs/urql-devtools/pull/142) ([andyrichardson](https://github.com/andyrichardson))
+
 ## [v2.0.0](https://github.com/FormidableLabs/urql-devtools/tree/v2.0.0) (2020-05-07)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v1.0.3...v2.0.0)
