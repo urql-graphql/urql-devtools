@@ -3,10 +3,7 @@ import styled from "styled-components";
 import { TimelineTooltip, useTooltip } from "./TimelineTooltip";
 
 const Wrapper = styled.div`
-  display: flex;
-  padding: 10px;
-  background: ${(props) => props.theme.dark["0"]};
-  flex-grow: 1;
+  padding: 50px;
 `;
 
 const HoverableItem = () => {

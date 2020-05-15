@@ -3,10 +3,9 @@ import styled from "styled-components";
 import { Tick } from "./Tick";
 
 const Wrapper = styled.div`
-  display: flex;
-  background: ${(props) => props.theme.dark["+2"]};
-  flex-grow: 1;
-  padding: 40px;
+  margin-left: 20px;
+  min-width: 100px;
+  position: relative;
 `;
 
 export default {

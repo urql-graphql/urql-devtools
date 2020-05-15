@@ -9,7 +9,6 @@ const Wrapper = styled.div`
   flex-grow: 1;
   padding: 70px;
   flex-direction: column;
-  background: ${(props) => props.theme.dark["0"]};
 `;
 
 const Viewport = styled.div`

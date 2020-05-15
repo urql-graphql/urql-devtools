@@ -4,11 +4,7 @@ import { TimelineContext } from "../../../context/Timeline";
 import { Settings, Filter } from "./Settings";
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
   padding: 20px;
-  background: ${(props) => props.theme.dark["0"]};
 `;
 
 const MockTimelineProvider: FC = ({ children }) => {

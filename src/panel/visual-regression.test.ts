@@ -37,10 +37,11 @@ const parallelize = (arr: any[]) => {
 };
 
 describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
-  it("matches snapshot", async () => {
-    await page.goto(rendererUrl, { waitUntil: "load" });
-    await page.mouse.move(0, 0);
-    await delay(500);
+  const matchSnapshot = async ({
+    viewport,
+  }: {
+    viewport: "landscape" | "portrait";
+  }) => {
     const element = await page.$("[data-snapshot=true]");
 
     if (element === null) {
@@ -58,10 +59,32 @@ describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
       },
     });
     expect(image).toMatchImageSnapshot({
-      customSnapshotIdentifier: id,
+      customSnapshotIdentifier: `${id}-${viewport}`,
       failureThreshold: 0.0001,
       failureThresholdType: "percent",
     });
+  };
+
+  beforeEach(async () => {
+    await page.goto(rendererUrl, { waitUntil: "load" });
+    await page.mouse.move(0, 0);
+    await delay(500);
+  });
+
+  describe("landscape viewport", () => {
+    beforeEach(async () => {
+      await page.setViewport({ width: 1200, height: 600 });
+    });
+
+    it("matches snapshot", () => matchSnapshot({ viewport: "landscape" }));
+  });
+
+  describe("portrait viewport", () => {
+    beforeEach(async () => {
+      await page.setViewport({ width: 600, height: 1200 });
+    });
+
+    it("matches snapshot", () => matchSnapshot({ viewport: "portrait" }));
   });
 });
 
