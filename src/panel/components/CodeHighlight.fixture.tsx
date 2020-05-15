@@ -15,10 +15,7 @@ const query = gql`
 `;
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-grow: 1;
   padding: 20px;
-  background: ${(p) => p.theme.dark["0"]};
 
   p {
     color: ${(p) => p.theme.light["0"]};

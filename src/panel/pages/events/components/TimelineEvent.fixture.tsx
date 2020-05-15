@@ -4,11 +4,7 @@ import { DebugEvent } from "@urql/core";
 import { TimelineEvent, TimelineEventGroup } from "./TimelineEvent";
 
 const Wrapper = styled.div`
-  display: flex;
-  padding: 10px;
-  background: ${(props) => props.theme.dark["0"]};
-  flex-grow: 1;
-  padding: 100px 30px;
+  padding: 100px;
 `;
 
 const props = {

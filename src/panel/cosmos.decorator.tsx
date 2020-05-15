@@ -10,6 +10,7 @@ const FixtureStyle = createGlobalStyle`
     height: 100%;
     margin: 0;
     font-size: 12px;
+    background: ${(p) => p.theme.dark["0"]};
   }
 
   #root {
