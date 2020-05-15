@@ -7,7 +7,10 @@ const MockProvider: FC = (props) => (
     {...props}
     value={
       {
-        version: { required: "1.0.0", mismatch: true, actual: "0.1.0" },
+        client: {
+          connected: true,
+          version: { required: "1.0.0", mismatch: true, actual: "0.1.0" },
+        },
       } as any
     }
   />
