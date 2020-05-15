@@ -1,0 +1,864 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`after all events have been dispatched matches snapshot 1`] = `
+.c15 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background: #141414;
+  border-top: solid 1px #282828;
+  width: 100%;
+  height: 400px;
+}
+
+.c19 {
+  position: absolute;
+  z-index: 3;
+  opacity: 0;
+  cursor: ns-resize;
+  width: 100%;
+  height: 4px;
+  top: -2px;
+}
+
+.c13 {
+  position: absolute;
+  width: 2px;
+  top: 20px;
+  bottom: 0;
+}
+
+.c13:before {
+  content: "14000ms";
+  font-family: "Roboto";
+  font-size: 12px;
+  color: #fff;
+  opacity: 0.9;
+  display: block;
+  text-align: center;
+  width: 100px;
+  margin-left: -50px;
+}
+
+.c13:after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  top: 25px;
+  bottom: 0;
+  background: #2e2e2e;
+  opacity: 0.3;
+}
+
+.c14 {
+  background-color: #232323;
+}
+
+.c16 {
+  overflow: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c18 {
+  color: #9a9a9a;
+  box-sizing: border-box;
+  background: #141414;
+  padding: 20px;
+  overflow: auto;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 50px 30px;
+  text-align: center;
+  color: #808080;
+}
+
+.c18 p {
+  font-size: 12px;
+  margin: 10px 0;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.c7 {
+  margin: 5px 0;
+  padding: 0 5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c7 + .c6 {
+  border-left: solid 2px #3d3d3d;
+}
+
+.c8 {
+  padding: 3px 10px;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0 5px;
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+  background: #333;
+  color: #808080;
+}
+
+.c8:hover:not(:active) {
+  -webkit-filter: brightness(130%);
+  filter: brightness(130%);
+}
+
+.c8[aria-selected="true"] {
+  background: #f5f5f5;
+  color: #1e1e1e;
+}
+
+.c8[aria-selected="true"]:hover:not(:active) {
+  -webkit-filter: brightness(90%);
+  filter: brightness(90%);
+}
+
+.c3 {
+  cursor: pointer;
+  font-size: 13px;
+  margin: 3px 5px;
+  -webkit-transition: color 100ms ease;
+  transition: color 100ms ease;
+  color: #808080;
+}
+
+.c3:hover:not(:active) {
+  -webkit-filter: brightness(140%);
+  filter: brightness(140%);
+}
+
+.c3[data-active="true"] {
+  color: #ebebeb;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-transition: max-height 300ms ease;
+  transition: max-height 300ms ease;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  padding: 3px 10px;
+  background: #232323;
+  border-bottom: solid 1px #282828;
+}
+
+.c0 {
+  overflow: hidden;
+  position: fixed;
+  background-color: #141414;
+  top: 28px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: #141414;
+}
+
+.c9 {
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.c11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 40px;
+  margin-top: 60px;
+  padding-top: 18px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  background: #141414;
+  z-index: 1;
+}
+
+.c11 > * {
+  margin-bottom: 16px;
+}
+
+.c11 > *:after {
+  content: "";
+  width: 200px;
+  height: 200px;
+}
+
+.c12 {
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab;
+  display: block;
+  position: relative;
+  padding: 70px 0;
+  overflow-y: visible;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100%;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+.c12:active {
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: grabbing;
+}
+
+@media (min-aspect-ratio:1/1) {
+  .c15 {
+    width: 400px;
+    height: 100%;
+    border-top: none;
+    border-left: solid 1px #282828;
+  }
+}
+
+@media (min-aspect-ratio:1/1) {
+  .c19 {
+    width: 4px;
+    height: 100%;
+    margin-top: 0;
+    top: 0;
+    left: -2px;
+    cursor: ew-resize;
+  }
+}
+
+@media (min-aspect-ratio:1/1) {
+  .c16 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-aspect-ratio:1/1) {
+  .c18 {
+    -webkit-flex-basis: 50%;
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+
+  .c18 + .c17 {
+    max-height: 100%;
+    min-width: 50%;
+    border-left: solid 1px #232323;
+  }
+}
+
+@media (min-aspect-ratio:1/1) {
+  .c18:only-child {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+
+  .c18:first-child:not(:only-child) {
+    max-height: 50%;
+    height: -webkit-min-content;
+    height: -moz-min-content;
+    height: min-content;
+  }
+
+  .c18 + .c17 {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -webkit-flex-basis: 0;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    border-top: solid 1px #232323;
+  }
+}
+
+@media (min-aspect-ratio:1/1) {
+  .c0 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media (min-aspect-ratio:1/1) {
+  .c0 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (min-aspect-ratio:1/1) {
+  .c9 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+<TimelineProvider>
+  <Timeline>
+    <Page>
+      <div
+        className="Background-glsw1i-0 c0"
+      >
+        <Settings>
+          <Container>
+            <div
+              className="c1"
+            >
+              <TopRow>
+                <div
+                  className="c2"
+                >
+                  <Icon
+                    data-active={false}
+                    icon={
+                      Object {
+                        "icon": Array [
+                          512,
+                          512,
+                          Array [],
+                          "f013",
+                          "M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z",
+                        ],
+                        "iconName": "cog",
+                        "prefix": "fas",
+                      }
+                    }
+                    onClick={[Function]}
+                    title="Show filters"
+                  >
+                    <FontAwesomeIcon
+                      border={false}
+                      className="c3"
+                      data-active={false}
+                      fixedWidth={false}
+                      flip={null}
+                      icon={
+                        Object {
+                          "icon": Array [
+                            512,
+                            512,
+                            Array [],
+                            "f013",
+                            "M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z",
+                          ],
+                          "iconName": "cog",
+                          "prefix": "fas",
+                        }
+                      }
+                      inverse={false}
+                      listItem={false}
+                      mask={null}
+                      onClick={[Function]}
+                      pull={null}
+                      pulse={false}
+                      rotation={null}
+                      size={null}
+                      spin={false}
+                      swapOpacity={false}
+                      symbol={false}
+                      title="Show filters"
+                      transform={null}
+                    >
+                      <svg
+                        aria-labelledby="svg-inline--fa-title-SIc2vMuJj8Ke"
+                        className="svg-inline--fa fa-cog fa-w-16 c3"
+                        data-active={false}
+                        data-icon="cog"
+                        data-prefix="fas"
+                        onClick={[Function]}
+                        role="img"
+                        style={Object {}}
+                        viewBox="0 0 512 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <title
+                          id="svg-inline--fa-title-SIc2vMuJj8Ke"
+                          style={Object {}}
+                        >
+                          Show filters
+                        </title>
+                        <path
+                          d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+                          fill="currentColor"
+                          style={Object {}}
+                        />
+                      </svg>
+                    </FontAwesomeIcon>
+                  </Icon>
+                  <Icon
+                    icon={
+                      Object {
+                        "icon": Array [
+                          512,
+                          512,
+                          Array [],
+                          "f049",
+                          "M0 436V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v151.9L235.5 71.4C256.1 54.3 288 68.6 288 96v131.9L459.5 71.4C480.1 54.3 512 68.6 512 96v320c0 27.4-31.9 41.7-52.5 24.6L288 285.3V416c0 27.4-31.9 41.7-52.5 24.6L64 285.3V436c0 6.6-5.4 12-12 12H12c-6.6 0-12-5.4-12-12z",
+                        ],
+                        "iconName": "fast-backward",
+                        "prefix": "fas",
+                      }
+                    }
+                    onClick={[Function]}
+                    title="Back to start [Home]"
+                  >
+                    <FontAwesomeIcon
+                      border={false}
+                      className="c3"
+                      fixedWidth={false}
+                      flip={null}
+                      icon={
+                        Object {
+                          "icon": Array [
+                            512,
+                            512,
+                            Array [],
+                            "f049",
+                            "M0 436V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v151.9L235.5 71.4C256.1 54.3 288 68.6 288 96v131.9L459.5 71.4C480.1 54.3 512 68.6 512 96v320c0 27.4-31.9 41.7-52.5 24.6L288 285.3V416c0 27.4-31.9 41.7-52.5 24.6L64 285.3V436c0 6.6-5.4 12-12 12H12c-6.6 0-12-5.4-12-12z",
+                          ],
+                          "iconName": "fast-backward",
+                          "prefix": "fas",
+                        }
+                      }
+                      inverse={false}
+                      listItem={false}
+                      mask={null}
+                      onClick={[Function]}
+                      pull={null}
+                      pulse={false}
+                      rotation={null}
+                      size={null}
+                      spin={false}
+                      swapOpacity={false}
+                      symbol={false}
+                      title="Back to start [Home]"
+                      transform={null}
+                    >
+                      <svg
+                        aria-labelledby="svg-inline--fa-title-3rofjzmLa8u1"
+                        className="svg-inline--fa fa-fast-backward fa-w-16 c3"
+                        data-icon="fast-backward"
+                        data-prefix="fas"
+                        onClick={[Function]}
+                        role="img"
+                        style={Object {}}
+                        viewBox="0 0 512 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <title
+                          id="svg-inline--fa-title-3rofjzmLa8u1"
+                          style={Object {}}
+                        >
+                          Back to start [Home]
+                        </title>
+                        <path
+                          d="M0 436V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v151.9L235.5 71.4C256.1 54.3 288 68.6 288 96v131.9L459.5 71.4C480.1 54.3 512 68.6 512 96v320c0 27.4-31.9 41.7-52.5 24.6L288 285.3V416c0 27.4-31.9 41.7-52.5 24.6L64 285.3V436c0 6.6-5.4 12-12 12H12c-6.6 0-12-5.4-12-12z"
+                          fill="currentColor"
+                          style={Object {}}
+                        />
+                      </svg>
+                    </FontAwesomeIcon>
+                  </Icon>
+                  <Icon
+                    icon={
+                      Object {
+                        "icon": Array [
+                          512,
+                          512,
+                          Array [],
+                          "f050",
+                          "M512 76v360c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V284.1L276.5 440.6c-20.6 17.2-52.5 2.8-52.5-24.6V284.1L52.5 440.6C31.9 457.8 0 443.4 0 416V96c0-27.4 31.9-41.7 52.5-24.6L224 226.8V96c0-27.4 31.9-41.7 52.5-24.6L448 226.8V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12z",
+                        ],
+                        "iconName": "fast-forward",
+                        "prefix": "fas",
+                      }
+                    }
+                    onClick={[Function]}
+                    title="Forward to current time [End]"
+                  >
+                    <FontAwesomeIcon
+                      border={false}
+                      className="c3"
+                      fixedWidth={false}
+                      flip={null}
+                      icon={
+                        Object {
+                          "icon": Array [
+                            512,
+                            512,
+                            Array [],
+                            "f050",
+                            "M512 76v360c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V284.1L276.5 440.6c-20.6 17.2-52.5 2.8-52.5-24.6V284.1L52.5 440.6C31.9 457.8 0 443.4 0 416V96c0-27.4 31.9-41.7 52.5-24.6L224 226.8V96c0-27.4 31.9-41.7 52.5-24.6L448 226.8V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12z",
+                          ],
+                          "iconName": "fast-forward",
+                          "prefix": "fas",
+                        }
+                      }
+                      inverse={false}
+                      listItem={false}
+                      mask={null}
+                      onClick={[Function]}
+                      pull={null}
+                      pulse={false}
+                      rotation={null}
+                      size={null}
+                      spin={false}
+                      swapOpacity={false}
+                      symbol={false}
+                      title="Forward to current time [End]"
+                      transform={null}
+                    >
+                      <svg
+                        aria-labelledby="svg-inline--fa-title-JWaWeR4NmT2F"
+                        className="svg-inline--fa fa-fast-forward fa-w-16 c3"
+                        data-icon="fast-forward"
+                        data-prefix="fas"
+                        onClick={[Function]}
+                        role="img"
+                        style={Object {}}
+                        viewBox="0 0 512 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <title
+                          id="svg-inline--fa-title-JWaWeR4NmT2F"
+                          style={Object {}}
+                        >
+                          Forward to current time [End]
+                        </title>
+                        <path
+                          d="M512 76v360c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V284.1L276.5 440.6c-20.6 17.2-52.5 2.8-52.5-24.6V284.1L52.5 440.6C31.9 457.8 0 443.4 0 416V96c0-27.4 31.9-41.7 52.5-24.6L224 226.8V96c0-27.4 31.9-41.7 52.5-24.6L448 226.8V76c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12z"
+                          fill="currentColor"
+                          style={Object {}}
+                        />
+                      </svg>
+                    </FontAwesomeIcon>
+                  </Icon>
+                </div>
+              </TopRow>
+              <Content
+                collapsed={true}
+              >
+                <ForwardRef(Collapsible)
+                  className="c4"
+                  collapsed={true}
+                >
+                  <div
+                    aria-expanded={false}
+                    className="c4"
+                    style={
+                      Object {
+                        "maxHeight": 0,
+                        "overflow": "hidden",
+                      }
+                    }
+                  >
+                    <Filter>
+                      <FilterList>
+                        <div
+                          className="c5"
+                        >
+                          <FilterGroup>
+                            <div
+                              className="c6 c7"
+                            >
+                              <FilterButton
+                                aria-selected={true}
+                                key="query"
+                                onClick={[Function]}
+                                role="checkbox"
+                                title="Toggle Graphql operation type"
+                              >
+                                <button
+                                  aria-selected={true}
+                                  className="c8"
+                                  onClick={[Function]}
+                                  role="checkbox"
+                                  title="Toggle Graphql operation type"
+                                >
+                                  query
+                                </button>
+                              </FilterButton>
+                              <FilterButton
+                                aria-selected={true}
+                                key="subscription"
+                                onClick={[Function]}
+                                role="checkbox"
+                                title="Toggle Graphql operation type"
+                              >
+                                <button
+                                  aria-selected={true}
+                                  className="c8"
+                                  onClick={[Function]}
+                                  role="checkbox"
+                                  title="Toggle Graphql operation type"
+                                >
+                                  subscription
+                                </button>
+                              </FilterButton>
+                              <FilterButton
+                                aria-selected={true}
+                                key="mutation"
+                                onClick={[Function]}
+                                role="checkbox"
+                                title="Toggle Graphql operation type"
+                              >
+                                <button
+                                  aria-selected={true}
+                                  className="c8"
+                                  onClick={[Function]}
+                                  role="checkbox"
+                                  title="Toggle Graphql operation type"
+                                >
+                                  mutation
+                                </button>
+                              </FilterButton>
+                            </div>
+                          </FilterGroup>
+                          <FilterGroup>
+                            <div
+                              className="c6 c7"
+                            >
+                              <FilterButton
+                                aria-selected={true}
+                                key="devtoolsExchange"
+                                onClick={[Function]}
+                                role="checkbox"
+                                title="Toggle debug event source"
+                              >
+                                <button
+                                  aria-selected={true}
+                                  className="c8"
+                                  onClick={[Function]}
+                                  role="checkbox"
+                                  title="Toggle debug event source"
+                                >
+                                  devtools
+                                </button>
+                              </FilterButton>
+                            </div>
+                          </FilterGroup>
+                        </div>
+                      </FilterList>
+                    </Filter>
+                  </div>
+                </ForwardRef(Collapsible)>
+              </Content>
+            </div>
+          </Container>
+        </Settings>
+        <PageContent>
+          <div
+            className="c9"
+          >
+            <TimelineContainer>
+              <div
+                className="c10"
+              >
+                <TimelineIcons>
+                  <div
+                    className="c11"
+                  />
+                </TimelineIcons>
+                <TimelineList
+                  draggable="true"
+                  key="TimelineList"
+                >
+                  <div
+                    className="c12"
+                    draggable="true"
+                  >
+                    <Tick
+                      key="p-0"
+                      label="14000ms"
+                      style={
+                        Object {
+                          "left": 0,
+                        }
+                      }
+                    >
+                      <div
+                        className="c13"
+                        label="14000ms"
+                        style={
+                          Object {
+                            "left": 0,
+                          }
+                        }
+                      />
+                    </Tick>
+                  </div>
+                </TimelineList>
+              </div>
+            </TimelineContainer>
+            <TimelinePane>
+              <Container>
+                <PaneRoot
+                  className="c14"
+                >
+                  <PaneContainer
+                    className="c14"
+                    style={
+                      Object {
+                        "height": 400,
+                        "minHeight": 400,
+                        "width": "auto",
+                      }
+                    }
+                  >
+                    <div
+                      className="c15 c14"
+                      style={
+                        Object {
+                          "height": 400,
+                          "minHeight": 400,
+                          "width": "auto",
+                        }
+                      }
+                    >
+                      <Body>
+                        <div
+                          className="Body-wifqap-2 c16"
+                        >
+                          <GetStartedSection>
+                            <section
+                              className="PaneSection-htl8i2-3 c17 c18"
+                            >
+                              Click around on the timeline to get started...
+                            </section>
+                          </GetStartedSection>
+                        </div>
+                      </Body>
+                      <DraggingEdge
+                        aria-grabbed={false}
+                        aria-orientation="horizontal"
+                        onMouseDown={[Function]}
+                        role="seperator"
+                      >
+                        <div
+                          aria-grabbed={false}
+                          aria-orientation="horizontal"
+                          className="c19"
+                          onMouseDown={[Function]}
+                          role="seperator"
+                        />
+                      </DraggingEdge>
+                    </div>
+                  </PaneContainer>
+                </PaneRoot>
+              </Container>
+            </TimelinePane>
+          </div>
+        </PageContent>
+      </div>
+    </Page>
+  </Timeline>
+</TimelineProvider>
+`;

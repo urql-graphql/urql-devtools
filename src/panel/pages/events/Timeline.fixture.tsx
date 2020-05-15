@@ -194,7 +194,7 @@ export default {
       value={{ addMessageHandler: () => () => false } as any}
     >
       <TimelineProvider>
-        <Timeline data-snapshot />
+        <Timeline />
       </TimelineProvider>
     </DevtoolsContext.Provider>
   ),

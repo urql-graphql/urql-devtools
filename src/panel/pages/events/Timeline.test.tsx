@@ -15,9 +15,9 @@ describe("after all events have been dispatched", () => {
   it("matches snapshot", () => {
     const wrapper = mount(<Decorator>{fixtures.dynamic}</Decorator>);
     act(() => {
-      jest.runAllTimers();
+      jest.runTimersToTime(500);
     });
 
-    console.log(wrapper.debug());
+    expect(wrapper.find("TimelineProvider")).toMatchSnapshot();
   });
 });
