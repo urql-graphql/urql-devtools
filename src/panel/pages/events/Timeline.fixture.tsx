@@ -43,7 +43,7 @@ const operation2 = {
 
 const defaultEvents: DebugEvent[] = [
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "execution",
       message: "A listener was added to the stream",
@@ -52,7 +52,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "fetchRequest",
       message: "An update occured",
@@ -61,7 +61,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "update",
       message: "This is an update to the operation response / data",
@@ -70,7 +70,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "fetchSuccess",
       message: "The fetch request succeeded",
@@ -79,7 +79,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "other",
       message: "This is an update to the operation response / data",
@@ -88,7 +88,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "other",
       message: "This is an update to the operation response / data",
@@ -97,7 +97,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "error",
       message: "This is an update to the operation response / data",
@@ -106,7 +106,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "update",
       message: "A listener was added to the stream",
@@ -115,7 +115,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "fetchRequest",
       message: "An request was triggered",
@@ -124,7 +124,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "fetchError",
       message: "An request errored",
@@ -133,7 +133,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "teardown",
       message: "A teardown was triggered on the stream",
@@ -142,7 +142,7 @@ const defaultEvents: DebugEvent[] = [
     },
   },
   {
-    type: "debug",
+    type: "debug-event",
     data: {
       type: "update",
       message: "An update was triggered on the stream",
@@ -175,7 +175,7 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
                   },
                 });
                 i === events.length ? clearInterval(interval) : null;
-              }, 2000);
+              }, 400);
 
               return () => clearInterval(interval);
             },
@@ -183,15 +183,26 @@ const DevtoolsContextMock: FC<{ events?: typeof defaultEvents }> = ({
         []
       )}
     >
-      <TimelineProvider>{children}</TimelineProvider>
+      {children}
     </DevtoolsContext.Provider>
   );
 };
 
 export default {
-  basic: (
+  empty: (
+    <DevtoolsContext.Provider
+      value={{ addMessageHandler: () => () => false } as any}
+    >
+      <TimelineProvider>
+        <Timeline data-snapshot />
+      </TimelineProvider>
+    </DevtoolsContext.Provider>
+  ),
+  dynamic: (
     <DevtoolsContextMock>
-      <Timeline />
+      <TimelineProvider>
+        <Timeline />
+      </TimelineProvider>
     </DevtoolsContextMock>
   ),
 };
