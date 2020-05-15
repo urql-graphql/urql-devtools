@@ -1541,10 +1541,10 @@
     "@types/puppeteer" "*"
     jest-mock "^24"
 
-"@types/jest-image-snapshot@^2.12.0":
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/@types/jest-image-snapshot/-/jest-image-snapshot-2.12.0.tgz#183bafbac47b8e7fb4fdf5deb613c3d5dcbb53f7"
-  integrity sha512-bjwLkSH/JmSjpzyUIV7lH62vEsGLGPzgf8aX+Rb11pFH52iFbnkVd0+6bygzgOhf9J+JL+XBnbWkRVt4lCvt6g==
+"@types/jest-image-snapshot@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/jest-image-snapshot/-/jest-image-snapshot-3.1.0.tgz#36cc5da4893c9e213053caa04784812d8bc1e84d"
+  integrity sha512-Sggiz7SOsXrGY6QoD/2XthyFu0erpqD39KZ82JCK4m6KN6WqKVB8W7ZvR0+0VbVsTLLhX1wRkqgOwG2Gnbyeww==
   dependencies:
     "@types/jest" "*"
 
@@ -7285,10 +7285,10 @@ jest-haste-map@^26.0.1:
   optionalDependencies:
     fsevents "^2.1.2"
 
-jest-image-snapshot@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/jest-image-snapshot/-/jest-image-snapshot-3.1.0.tgz#eefc91f1570c426c368ae8a8890fef82d678fd5a"
-  integrity sha512-mzGCCyZlEyQIr6AnKi3KvbFvgOI7445qGPIoyhGm7Qmxw0YLTJMN+rH1WdGcs56ATx0CVM8aMjQMx4dDovlwtQ==
+jest-image-snapshot@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/jest-image-snapshot/-/jest-image-snapshot-4.0.0.tgz#e0c46b953d04420682d9f5636d186a0e98dd96be"
+  integrity sha512-kIbc/NcG0D51PS/5fGJrhg0hj6t2zasOIZzTxN6QjBkRLAevdYkm/DqrLgWSX6wU0YZV4hNtayRWCReCjnE44w==
   dependencies:
     chalk "^1.1.3"
     get-stdin "^5.0.1"
