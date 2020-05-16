@@ -103,7 +103,7 @@
     "codemirror": "^5.53.2",
     "codemirror-graphql": "^0.11.6",
     "concurrently": "^5.2.0",
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "^6.0.1",
     "csp-html-webpack-plugin": "^4.0.0",
     "css-loader": "^3.5.3",
     "d3-scale": "^3.2.1",
