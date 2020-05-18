@@ -7,10 +7,10 @@ import React, {
   useMemo,
   useContext,
 } from "react";
-import { visit, buildClientSchema, DocumentNode } from "graphql";
+import { visit, buildClientSchema, DocumentNode, extendSchema } from "graphql";
 import { GraphQLSchema, getIntrospectionQuery } from "graphql";
+import gql from "graphql-tag";
 import { useDevtoolsContext } from "./Devtools";
-import { appendPopulateDirective } from "./schema-transforms";
 
 interface RequestContextValue {
   query?: string;
@@ -128,4 +128,23 @@ const isIntrospectionQuery = (query: DocumentNode) => {
   });
 
   return value;
+};
+
+const appendPopulateDirective = (schema: GraphQLSchema): GraphQLSchema => {
+  try {
+    return extendSchema(
+      schema,
+      gql`
+        directive @populate on FIELD
+      `
+    );
+  } catch (err) {
+    if (
+      err.message.startsWith(
+        'Directive "populate" already exists in the schema'
+      )
+    )
+      return schema;
+    throw err;
+  }
 };
