@@ -2,7 +2,9 @@ import React from "react";
 import { ErrorBoundary } from "./ErrorBoundary";
 
 const ErrorChild = () => {
-  throw Error("Something went wrong");
+  const err = Error("Something went wrong");
+  err.stack = err.stack?.replace(/localhost/g, "cosmos");
+  throw err;
 };
 
 export default {
