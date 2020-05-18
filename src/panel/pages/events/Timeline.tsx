@@ -10,9 +10,13 @@ import styled from "styled-components";
 import { Operation } from "@urql/core";
 import { useTimelineContext, START_PADDING } from "../../context";
 import { Background } from "../../components/Background";
-import { TimelineRow, TimelinePane, Tick } from "./components";
-import { TimelineSourceIcon } from "./components/TimelineSourceIcon";
-import { Settings } from "./components/Settings";
+import {
+  TimelineRow,
+  TimelinePane,
+  Tick,
+  TimelineSourceIcon,
+  Settings,
+} from "./components";
 
 export const Timeline: FC<ComponentProps<typeof Page>> = (props) => {
   const {
@@ -80,11 +84,17 @@ export const Timeline: FC<ComponentProps<typeof Page>> = (props) => {
   );
 
   const handleSourceClick = useCallback(
-    (o: Operation) => () =>
+    (o: Operation) => () => {
       setSelectedSource((current) =>
         current && current.key === o.key ? undefined : o
-      ),
-    []
+      );
+
+      const latest = [...events[o.key]]
+        .reverse()
+        .find((e) => e.type === "execution");
+      latest && setPosition(latest.timestamp - START_PADDING);
+    },
+    [events, setPosition, setSelectedSource]
   );
 
   const sources = useMemo<Operation[]>(
