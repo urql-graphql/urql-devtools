@@ -1,11 +1,14 @@
-import React, { FC, useMemo, Fragment } from "react";
+import React, { FC, useMemo, Fragment, ComponentProps } from "react";
 import styled from "styled-components";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { InlineCodeHighlight } from "../../../components";
 
-export const Arguments: FC<{
-  args: ParsedFieldNode["args"];
-}> = ({ args }) => {
+export const Arguments: FC<
+  {
+    args?: ParsedFieldNode["args"];
+  } & ComponentProps<typeof ArgumentText>
+> = ({ args, ...props }) => {
+  console.log(args);
   if (!args) {
     return null;
   }
@@ -13,7 +16,7 @@ export const Arguments: FC<{
   const entries = useMemo(() => Object.entries(args), [args]);
 
   return (
-    <ArgumentText>
+    <ArgumentText {...props}>
       (
       {entries.map(([key, value], index) => (
         <Fragment key={key}>
