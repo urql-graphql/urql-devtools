@@ -25,10 +25,19 @@ const createWebsocketServer = () => {
         return;
       }
 
-      debug("WebSocket message:", data);
+      debug("WebSocket message:", JSON.parse(data));
       try {
         windows.forEach((w) => w.webContents.send("message", JSON.parse(data)));
       } catch (err) {}
+    });
+
+    ws.on("close", () => {
+      windows.forEach((w) =>
+        w.webContents.send("message", {
+          type: "connection-disconnect",
+          source: "exchange",
+        })
+      );
     });
   });
 };
@@ -46,6 +55,7 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   win.loadFile(`./shell/panel.html`);
+  process.env.NODE_ENV !== "production" && win.webContents.openDevTools();
 };
 
 app.allowRendererProcessReuse = true;

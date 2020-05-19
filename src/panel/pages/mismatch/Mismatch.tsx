@@ -32,7 +32,7 @@ export const Mismatch: FC<ComponentProps<typeof Container>> = (props) => {
 
 const code = `
 # Yarn
-yarn add -D @urql/devtools
+yarn add @urql/devtools
  
 # Npm
 npm update @urql/devtools

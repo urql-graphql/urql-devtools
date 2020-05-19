@@ -1,13 +1,24 @@
-import React, { FC, useMemo, useState, useCallback, useEffect } from "react";
+import React, {
+  FC,
+  useMemo,
+  useState,
+  useCallback,
+  useEffect,
+  ComponentProps,
+} from "react";
 import styled from "styled-components";
 import { Operation } from "@urql/core";
 import { useTimelineContext, START_PADDING } from "../../context";
 import { Background } from "../../components/Background";
-import { TimelineRow, TimelinePane, Tick } from "./components";
-import { TimelineSourceIcon } from "./components/TimelineSourceIcon";
-import { Settings } from "./components/Settings";
+import {
+  TimelineRow,
+  TimelinePane,
+  Tick,
+  TimelineSourceIcon,
+  Settings,
+} from "./components";
 
-export const Timeline: FC = () => {
+export const Timeline: FC<ComponentProps<typeof Page>> = (props) => {
   const {
     setContainer,
     scale,
@@ -73,11 +84,17 @@ export const Timeline: FC = () => {
   );
 
   const handleSourceClick = useCallback(
-    (o: Operation) => () =>
+    (o: Operation) => () => {
       setSelectedSource((current) =>
         current && current.key === o.key ? undefined : o
-      ),
-    []
+      );
+
+      const latest = [...events[o.key]]
+        .reverse()
+        .find((e) => e.type === "execution");
+      latest && setPosition(latest.timestamp - START_PADDING);
+    },
+    [events, setPosition, setSelectedSource]
   );
 
   const sources = useMemo<Operation[]>(
@@ -140,40 +157,34 @@ export const Timeline: FC = () => {
   );
 
   return (
-    <>
-      <Page>
-        <Settings />
-        <PageContent>
-          <TimelineContainer>
-            <TimelineIcons>
-              {sources.map((s) => (
-                <TimelineSourceIcon
-                  key={s.key}
-                  title="Source operation"
-                  kind={
-                    s.operationName === "teardown" ? "query" : s.operationName
-                  }
-                  onClick={handleSourceClick(s)}
-                  style={{
-                    display: filter.graphqlType.includes(s.operationName)
-                      ? undefined
-                      : "none",
-                  }}
-                />
-              ))}
-            </TimelineIcons>
-            <TimelineList
-              ref={setContainer}
-              draggable="true"
-              key="TimelineList"
-            >
-              {content}
-            </TimelineList>
-          </TimelineContainer>
-          <TimelinePane {...paneProps} />
-        </PageContent>
-      </Page>
-    </>
+    <Page {...props}>
+      <Settings />
+      <PageContent>
+        <TimelineContainer>
+          <TimelineIcons>
+            {sources.map((s) => (
+              <TimelineSourceIcon
+                key={s.key}
+                title="Source operation"
+                kind={
+                  s.operationName === "teardown" ? "query" : s.operationName
+                }
+                onClick={handleSourceClick(s)}
+                style={{
+                  display: filter.graphqlType.includes(s.operationName)
+                    ? undefined
+                    : "none",
+                }}
+              />
+            ))}
+          </TimelineIcons>
+          <TimelineList ref={setContainer} draggable="true" key="TimelineList">
+            {content}
+          </TimelineList>
+        </TimelineContainer>
+        <TimelinePane {...paneProps} />
+      </PageContent>
+    </Page>
   );
 };
 

@@ -4,8 +4,7 @@ import gql from "graphql-tag";
 import { handleResponse } from "./index";
 
 jest.mock("nanoid", () => ({
-  __esModule: true,
-  default: () => "[nanoid]",
+  nanoid: () => "[nanoid]",
 }));
 
 interface TestCase {

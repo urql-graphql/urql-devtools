@@ -3,10 +3,6 @@ import styled from "styled-components";
 import { TimelineSourceIcon } from "./TimelineSourceIcon";
 
 const Wrapper = styled.div`
-  display: flex;
-  padding: 10px;
-  background: ${(props) => props.theme.dark["0"]};
-  flex-grow: 1;
   padding: 100px;
 `;
 

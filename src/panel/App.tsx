@@ -2,8 +2,15 @@ import "./App.css";
 import React, { FC } from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { Disconnected, Explorer, Request, Timeline, Mismatch } from "./pages";
-import { Navigation } from "./Navigation";
+import {
+  Disconnected,
+  Explorer,
+  Request,
+  Timeline,
+  Mismatch,
+  ErrorBoundary,
+} from "./pages";
+import { Navigation } from "./components/Navigation";
 import { theme, GlobalStyle } from "./theme";
 import {
   DevtoolsProvider,
@@ -16,9 +23,11 @@ import {
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <DevtoolsProvider>
-        <AppRoutes />
-      </DevtoolsProvider>
+      <ErrorBoundary>
+        <DevtoolsProvider>
+          <AppRoutes />
+        </DevtoolsProvider>
+      </ErrorBoundary>
       <GlobalStyle />
     </ThemeProvider>
   );
@@ -37,6 +46,13 @@ export const AppRoutes: FC = () => {
 
   return (
     <HashRouter>
+      <Navigation
+        items={[
+          { link: "/explorer", label: "Explorer" },
+          { link: "/events", label: "Events" },
+          { link: "/request", label: "Request" },
+        ]}
+      />
       <TimelineProvider>
         <Route path="/events" component={Timeline} />
       </TimelineProvider>
@@ -47,7 +63,6 @@ export const AppRoutes: FC = () => {
         <Route path="/explorer" exact component={Explorer} />
       </ExplorerProvider>
       <Route path="/" exact component={() => <Redirect to="/explorer" />} />
-      <Navigation />
     </HashRouter>
   );
 };

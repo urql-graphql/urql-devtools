@@ -6,10 +6,7 @@ import {
 } from "./TimelineDuration";
 
 const Wrapper = styled.div`
-  display: flex;
   padding: 100px;
-  background: ${(props) => props.theme.dark["0"]};
-  flex-grow: 1;
 
   > :first-child {
     width: 100px;

@@ -1,50 +1,47 @@
-import {
-  detectCosmosConfig,
-  getFixtureUrlsSync,
-  getFixturesSync,
-} from "react-cosmos";
+import { detectCosmosConfig, getFixtures2, FixtureApi } from "react-cosmos";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 expect.extend({ toMatchImageSnapshot });
 
-// Urls of fixtures
-const fixtureUrls = getFixtureUrlsSync({
-  cosmosConfig: detectCosmosConfig(),
-  fullScreen: true,
-});
-// ID and name for each fixture
-const fixtureElements = getFixturesSync({
-  cosmosConfig: detectCosmosConfig(),
-});
-const fixtures = fixtureUrls.reduce<[string, string][]>((p, url, i) => {
-  const f = fixtureElements[i].fixtureId;
-
-  if (f.name === null) {
-    return p;
-  }
-
-  const fixtureRegex = /\/(\w+)\.fixture/.exec(f.path);
-
-  if (fixtureRegex === null) {
-    console.error("Error parsing fixture");
-    return p;
-  }
-
-  const targetUrl = process.env.TARGET_HOST
-    ? url.replace("localhost:5000", process.env.TARGET_HOST)
-    : url;
-  return [...p, [`${fixtureRegex[1]} - ${f.name}`, `http://${targetUrl}`]];
-}, []);
+const fixtures = getFixtures2({
+  ...detectCosmosConfig(),
+  hostname: process.env.COSMOS_HOST,
+  port: Number(process.env.COSMOS_PORT),
+}).reduce<[string, FixtureApi][]>(
+  (p, c) => [...p, [`${c.fileName} - ${c.name}`, c]],
+  []
+);
 
 beforeAll(async () => {
   jest.retryTimes(5);
   jest.setTimeout(60000);
 });
 
-describe.each(fixtures)("%s", (id, url) => {
-  it("matches snapshot", async () => {
-    await page.goto(url, { waitUntil: "load" });
-    await page.mouse.move(0, 0);
-    await delay(500);
+/** Parallelize for CircleCI */
+const parallelize = (arr: any[]) => {
+  try {
+    if (!process.env.CIRCLE_NODE_TOTAL) {
+      throw Error();
+    }
+
+    const total = parseInt(process.env.CIRCLE_NODE_TOTAL);
+    const index = parseInt(process.env.CIRCLE_NODE_INDEX);
+    const interval = Math.round((arr.length * 1) / total);
+
+    const start = index * interval;
+    const end = index === total - 1 ? arr.length + 1 : interval * (index + 1);
+
+    return arr.slice(start, end);
+  } catch (err) {
+    return arr;
+  }
+};
+
+describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
+  const matchSnapshot = async ({
+    viewport,
+  }: {
+    viewport: "landscape" | "portrait";
+  }) => {
     const element = await page.$("[data-snapshot=true]");
 
     if (element === null) {
@@ -62,9 +59,32 @@ describe.each(fixtures)("%s", (id, url) => {
       },
     });
     expect(image).toMatchImageSnapshot({
-      customSnapshotIdentifier: id,
-      failureThreshold: 0.01,
+      customSnapshotIdentifier: `${id}-${viewport}`,
+      failureThreshold: 0.0001,
+      failureThresholdType: "percent",
     });
+  };
+
+  beforeEach(async () => {
+    await page.goto(rendererUrl, { waitUntil: "load" });
+    await page.mouse.move(0, 0);
+    await delay(500);
+  });
+
+  describe("landscape viewport", () => {
+    beforeEach(async () => {
+      await page.setViewport({ width: 1200, height: 600 });
+    });
+
+    it("matches snapshot", () => matchSnapshot({ viewport: "landscape" }));
+  });
+
+  describe("portrait viewport", () => {
+    beforeEach(async () => {
+      await page.setViewport({ width: 600, height: 1200 });
+    });
+
+    it("matches snapshot", () => matchSnapshot({ viewport: "portrait" }));
   });
 });
 

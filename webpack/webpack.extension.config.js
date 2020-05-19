@@ -93,8 +93,8 @@ module.exports = {
       cleanOnceBeforeBuildPatterns: ["**/*"],
       cleanAfterEveryBuildPatterns: ["!*", "!*/**"],
     }),
-    new CopyWebpackPlugin(
-      [
+    new CopyWebpackPlugin({
+      patterns: [
         { from: "src/assets/", to: "assets/" },
         isExtension && {
           from: "src/extension/manifest.json",
@@ -112,8 +112,7 @@ module.exports = {
           },
         },
       ].filter(Boolean),
-      { copyUnmodified: true }
-    ),
+    }),
     isExtension &&
       new HtmlWebpackPlugin({
         template: `${root}/src/extension/devtools.html`,

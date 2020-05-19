@@ -199,15 +199,35 @@ exports[`App on mount matches snapshot 1`] = `
     }
   }
 >
-  <DevtoolsProvider>
-    <AppRoutes />
-  </DevtoolsProvider>
+  <ErrorBoundary>
+    <DevtoolsProvider>
+      <AppRoutes />
+    </DevtoolsProvider>
+  </ErrorBoundary>
   <Memo(GlobalStyleComponent) />
 </ThemeProvider>
 `;
 
 exports[`App routes on mount on connected matches snapshot 1`] = `
 <HashRouter>
+  <Navigation
+    items={
+      Array [
+        Object {
+          "label": "Explorer",
+          "link": "/explorer",
+        },
+        Object {
+          "label": "Events",
+          "link": "/events",
+        },
+        Object {
+          "label": "Request",
+          "link": "/request",
+        },
+      ]
+    }
+  />
   <TimelineProvider>
     <Route
       component={[Function]}
@@ -232,7 +252,6 @@ exports[`App routes on mount on connected matches snapshot 1`] = `
     exact={true}
     path="/"
   />
-  <Navigation />
 </HashRouter>
 `;
 
