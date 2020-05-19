@@ -61,10 +61,7 @@ module.exports = {
     : {
         electron: "commonjs2 electron",
       },
-  node: {
-    global: false,
-    fs: "empty",
-  },
+  node: false,
   module: {
     rules: [
       {
@@ -113,6 +110,7 @@ module.exports = {
         },
       ].filter(Boolean),
     }),
+    isExtension && new webpack.IgnorePlugin(/electron/),
     isExtension &&
       new HtmlWebpackPlugin({
         template: `${root}/src/extension/devtools.html`,
