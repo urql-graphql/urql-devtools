@@ -3,7 +3,12 @@ import { ErrorBoundary } from "./ErrorBoundary";
 
 const ErrorChild = () => {
   const err = Error("Something went wrong");
-  err.stack = err.stack?.replace(/localhost/g, "cosmos");
+
+  if (!err.stack) {
+    throw err;
+  }
+
+  err.stack = err.stack.replace(/localhost/g, "cosmos").replace(/:\d+/g, ":1");
   throw err;
 };
 
