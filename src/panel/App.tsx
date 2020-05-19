@@ -2,7 +2,14 @@ import "./App.css";
 import React, { FC } from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { Disconnected, Explorer, Request, Timeline, Mismatch } from "./pages";
+import {
+  Disconnected,
+  Explorer,
+  Request,
+  Timeline,
+  Mismatch,
+  ErrorBoundary,
+} from "./pages";
 import { Navigation } from "./components/Navigation";
 import { theme, GlobalStyle } from "./theme";
 import {
@@ -16,9 +23,11 @@ import {
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <DevtoolsProvider>
-        <AppRoutes />
-      </DevtoolsProvider>
+      <ErrorBoundary>
+        <DevtoolsProvider>
+          <AppRoutes />
+        </DevtoolsProvider>
+      </ErrorBoundary>
       <GlobalStyle />
     </ThemeProvider>
   );

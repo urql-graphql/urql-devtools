@@ -15,6 +15,9 @@ module.exports = (c) => ({
   resolve: {
     ...c.resolve,
     extensions: [".mjs", ...c.resolve.extensions],
+    alias: {
+      "react-error-overlay": `${__dirname}/src/panel/util/ErrorOverlay.ts`,
+    },
   },
   node: {
     fs: "empty",
