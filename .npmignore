@@ -1,8 +1,14 @@
 /.*
 /*
-/src/**
-!/dist/electron
-!/src/{electron,panel,types,util}/**/!(*.fixture|*.test).{ts,tsx}
 !/CHANGELOG.md
 !/README.md
 !/LICENSE
+
+/dist/extension
+!/dist/electron
+
+/src/**
+!/src/{electron,panel,types,util}/**/!(*.fixture|*.test).{ts,tsx}
+
+/scripts/**
+!/scripts/cli.js
