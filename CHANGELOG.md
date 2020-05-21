@@ -1,5 +1,29 @@
 # Changelog
 
+## [v2.1.0](https://github.com/FormidableLabs/urql-devtools/tree/v2.1.0) (2020-05-21)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.0.1...v2.1.0)
+
+**Added enhancements:**
+
+- Add top-level error handling [\#236](https://github.com/FormidableLabs/urql-devtools/issues/236)
+- Automatically visit latest event when clicking on the respective source icon [\#229](https://github.com/FormidableLabs/urql-devtools/issues/229)
+
+**Fixed bugs:**
+
+- Remove use of eval in webpack prod build output [\#241](https://github.com/FormidableLabs/urql-devtools/issues/241)
+- Remove unused assets for npm release [\#240](https://github.com/FormidableLabs/urql-devtools/issues/240)
+
+**Closed issues:**
+
+- Set browser window icon [\#225](https://github.com/FormidableLabs/urql-devtools/issues/225)
+
+**Merged pull requests:**
+
+- Remove unused NPM assets [\#244](https://github.com/FormidableLabs/urql-devtools/pull/244) ([andyrichardson](https://github.com/andyrichardson))
+- Add error handler [\#237](https://github.com/FormidableLabs/urql-devtools/pull/237) ([andyrichardson](https://github.com/andyrichardson))
+- Jump to event when selecting a timeline source [\#235](https://github.com/FormidableLabs/urql-devtools/pull/235) ([andyrichardson](https://github.com/andyrichardson))
+
 ## [v2.0.1](https://github.com/FormidableLabs/urql-devtools/tree/v2.0.1) (2020-05-15)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.0.0...v2.0.1)
