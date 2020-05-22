@@ -9,6 +9,7 @@ import React, {
   useEffect,
   useRef,
 } from "react";
+import { nanoid } from "nanoid";
 import * as storage from "../util/storage";
 
 type Page =
@@ -58,25 +59,33 @@ export const TelemetryProvider: FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (state === "enabled") {
-      startAnalytics();
-      active.current = true;
+    if (state !== "enabled") {
+      return;
     }
+
+    (async () => {
+      startAnalytics({ clientId: await storage.get("userId") });
+      active.current = true;
+    })();
   }, [state]);
 
-  const ga = useCallback<typeof window.ga>(
-    active.current ? window.ga : ((() => false) as any),
-    []
-  );
+  const ga = useCallback((...args: Parameters<typeof window.ga>) => {
+    if (!active.current) {
+      return;
+    }
 
-  const enableTelemetry = useCallback(() => {
-    setState("enabled");
-    storage.set("allowTelemetry", true);
+    window.ga(...args);
   }, []);
 
-  const disableTelemetry = useCallback(() => {
+  const enableTelemetry = useCallback(async () => {
+    await storage.set("allowTelemetry", true);
+    await storage.set("userId", nanoid());
+    setState("enabled");
+  }, []);
+
+  const disableTelemetry = useCallback(async () => {
+    await storage.set("allowTelemetry", false);
     setState("disabled");
-    storage.set("allowTelemetry", false);
   }, []);
 
   const setPage = useCallback<TelemetryContextValue["setPage"]>(
@@ -98,10 +107,6 @@ export const TelemetryProvider: FC = ({ children }) => {
     [state, enableTelemetry, disableTelemetry, setPage]
   );
 
-  useEffect(() => {
-    enableTelemetry();
-  }, []);
-
   if (state === undefined) {
     return null;
   }
@@ -114,22 +119,20 @@ export const TelemetryProvider: FC = ({ children }) => {
 };
 
 /** Global script to enable google analytics. */
-const startAnalytics = () => {
+const startAnalytics = ({ clientId }: { clientId: string }) => {
   window.ga =
     window.ga || ((...args) => (window.ga.q = window.ga.q || []).push(args));
   window.ga.l = +new Date();
-  ga("create", "UA-98443810-2", "auto");
-  ga("set", "checkProtocolTask", null); // Disable file protocol checking.
-  ga("set", "checkStorageTask", null); // Disable cookie storage checking.
-  ga("set", "historyImportTask", null); // Disable history checking (requires reading from cookies).
-  ga("send", "pageview");
-  console.log(window.ga.q);
 
-  // window._gaq = window._gaq || [];
-  // window._gaq.push(["_setAccount", "UA-98443810-2"]);
-  // window._gaq.push(["_trackPageview", "/"]);
-
-  // console.log(window.ga);
+  ga("create", "UA-98443810-2", {
+    storage: "none",
+    clientId,
+  });
+  /*
+   * See here for explanation - https://stackoverflow.com/questions/3591847/google-analytics-from-a-file-url
+   */
+  ga("set", "checkProtocolTask", null);
+  ga("set", "checkStorageTask", null);
+  ga("set", "historyImportTask", null);
+  ga("set", "dataSource", "devtools");
 };
-
-startAnalytics();

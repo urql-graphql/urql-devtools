@@ -12,9 +12,11 @@ export const get: <T extends keyof StorageSchema>(
   }
 
   const filePath = getFilePath();
-  return JSON.parse(await fs.readFile(filePath, "utf-8").catch(() => "{}"))[
-    key
-  ];
+  try {
+    return JSON.parse(await fs.readFile(filePath, "utf-8"))[key];
+  } catch (err) {
+    return undefined;
+  }
 };
 
 export const set: <T extends keyof StorageSchema>(
@@ -47,4 +49,5 @@ const getFilePath = () => {
 
 type StorageSchema = {
   allowTelemetry: boolean;
+  userId: string;
 };
