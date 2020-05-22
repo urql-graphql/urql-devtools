@@ -1,3 +1,3 @@
 export * from "./Query";
-export * from "./Response";
+export * from "./PaneContent";
 export * from "./Settings";
