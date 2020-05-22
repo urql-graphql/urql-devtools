@@ -67,6 +67,9 @@ module.exports = {
       {
         test: /\.*tsx?$/,
         loader: "babel-loader",
+        options: {
+          envName: process.env.BUILD_ENV,
+        },
       },
       {
         test: /\.css$/,
@@ -110,7 +113,6 @@ module.exports = {
         },
       ].filter(Boolean),
     }),
-    isExtension && new webpack.IgnorePlugin(/electron/),
     isExtension &&
       new HtmlWebpackPlugin({
         template: `${root}/src/extension/devtools.html`,
@@ -122,12 +124,16 @@ module.exports = {
       filename: "panel.html",
       chunks: ["panel"],
     }),
-    new CspHtmlWebpackPlugin({
-      "default-src": "'self'",
-      "script-src": "'self'",
-      "style-src": "'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "font-src": "'self' https://fonts.gstatic.com",
-      "img-src": "'self' data:",
-    }),
+    // new CspHtmlWebpackPlugin(
+    //   {
+    //     "default-src": "'self'",
+    //     "script-src":
+    //       "'self' 'unsafe-inline' https://www.googletagmanager.com/",
+    //     "style-src": "'self' 'unsafe-inline' https://fonts.googleapis.com",
+    //     "font-src": "'self' https://fonts.gstatic.com",
+    //     "img-src": "'self' data:",
+    //   },
+    //   { nonceEnabled: true }
+    // ),
   ].filter(Boolean),
 };
