@@ -2,6 +2,7 @@ import "./App.css";
 import React, { FC } from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
+import { startAnalytics } from "./util";
 import {
   Disconnected,
   Explorer,
@@ -19,6 +20,8 @@ import {
   useDevtoolsContext,
   TimelineProvider,
 } from "./context";
+
+startAnalytics();
 
 export const App = () => {
   return (
