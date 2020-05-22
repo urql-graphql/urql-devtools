@@ -11,6 +11,7 @@ const isExtension = process.env.BUILD_ENV !== "electron";
 
 const inOutConfig = isExtension
   ? {
+      target: "web",
       entry: {
         background: `${root}/src/extension/background.ts`,
         devtools: `${root}/src/extension/devtools.ts`,
@@ -24,6 +25,7 @@ const inOutConfig = isExtension
       },
     }
   : {
+      target: "electron-renderer",
       entry: {
         panel: `${root}/src/panel/panel.tsx`,
       },
@@ -56,12 +58,6 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".mjs", ".js", ".jsx"],
   },
-  externals: isExtension
-    ? undefined
-    : {
-        electron: "commonjs2 electron",
-      },
-  node: false,
   module: {
     rules: [
       {

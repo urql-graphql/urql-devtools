@@ -3,7 +3,7 @@ const nodeExternals = require("webpack-node-externals");
 const root = `${__dirname}/..`;
 
 module.exports = {
-  target: "node",
+  target: "electron-main",
   devtool: "source-map",
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   entry: {
