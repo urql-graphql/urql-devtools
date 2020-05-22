@@ -2,7 +2,6 @@ import "./App.css";
 import React, { FC } from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { startAnalytics } from "./util";
 import {
   Disconnected,
   Explorer,
@@ -19,18 +18,19 @@ import {
   ExplorerProvider,
   useDevtoolsContext,
   TimelineProvider,
+  TelemetryProvider,
 } from "./context";
-
-startAnalytics();
 
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <ErrorBoundary>
-        <DevtoolsProvider>
-          <AppRoutes />
-        </DevtoolsProvider>
-      </ErrorBoundary>
+      <TelemetryProvider>
+        <ErrorBoundary>
+          <DevtoolsProvider>
+            <AppRoutes />
+          </DevtoolsProvider>
+        </ErrorBoundary>
+      </TelemetryProvider>
       <GlobalStyle />
     </ThemeProvider>
   );

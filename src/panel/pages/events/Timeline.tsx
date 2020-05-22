@@ -8,7 +8,11 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import { Operation } from "@urql/core";
-import { useTimelineContext, START_PADDING } from "../../context";
+import {
+  useTimelineContext,
+  START_PADDING,
+  usePageTelemetry,
+} from "../../context";
 import { Background } from "../../components/Background";
 import {
   TimelineRow,
@@ -32,6 +36,7 @@ export const Timeline: FC<ComponentProps<typeof Page>> = (props) => {
     filter,
   } = useTimelineContext();
   const [selectedSource, setSelectedSource] = useState<Operation | undefined>();
+  usePageTelemetry("events");
 
   // Unmount source pane on event select
   useEffect(() => {

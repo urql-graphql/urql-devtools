@@ -1,17 +1,22 @@
 import React, { FC, ComponentProps } from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import { usePageTelemetry } from "../../context";
 import Icon from "../../../assets/icon.svg";
 
-export const Disconnected: FC<ComponentProps<typeof Container>> = (props) => (
-  <>
-    <GlobalStyle />
-    <Container {...props}>
-      <Logo />
-      <Header>Waiting for exchange</Header>
-      <Hint>Make sure {"you're"} using the Urql Devtools exchange!</Hint>
-    </Container>
-  </>
-);
+export const Disconnected: FC<ComponentProps<typeof Container>> = (props) => {
+  usePageTelemetry("disconnected");
+
+  return (
+    <>
+      <GlobalStyle />
+      <Container {...props}>
+        <Logo />
+        <Header>Waiting for exchange</Header>
+        <Hint>Make sure {"you're"} using the Urql Devtools exchange!</Hint>
+      </Container>
+    </>
+  );
+};
 
 const GlobalStyle = createGlobalStyle`
   body {

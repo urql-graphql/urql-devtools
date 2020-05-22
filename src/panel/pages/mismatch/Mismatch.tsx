@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb } from "@fortawesome/free-solid-svg-icons";
 import { CodeHighlight } from "../../components";
-import { useDevtoolsContext } from "../../context";
+import { useDevtoolsContext, usePageTelemetry } from "../../context";
 
 export const Mismatch: FC<ComponentProps<typeof Container>> = (props) => {
   const { client } = useDevtoolsContext();
+  usePageTelemetry("mismatch");
 
   if (!client.connected) {
     return null;

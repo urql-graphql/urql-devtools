@@ -42,3 +42,5 @@ const handleMessage = (message: ExchangeMessage) => {
 const handleDisconnect = () => {
   connection = undefined;
 };
+
+window.addEventListener("keypress", console.log);

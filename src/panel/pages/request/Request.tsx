@@ -1,9 +1,12 @@
 import React, { ComponentProps, FC } from "react";
 import styled from "styled-components";
 import { Background } from "../../components/Background";
+import { usePageTelemetry } from "../../context";
 import { Query, Response, Settings } from "./components";
 
 export const Request: FC<ComponentProps<typeof Page>> = (props) => {
+  usePageTelemetry("request");
+
   return (
     <Page {...props}>
       <Settings />

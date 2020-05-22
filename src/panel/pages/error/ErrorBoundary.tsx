@@ -1,9 +1,10 @@
-import React, { Component, ComponentProps } from "react";
+import React, { Component, ComponentProps, useCallback, FC } from "react";
 import { faBug, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import { CodeHighlight } from "../../components";
 import { openExternalUrl } from "../../util";
+import { usePageTelemetry } from "../../context";
 
 export class ErrorBoundary extends Component<
   ComponentProps<typeof Container>,
@@ -17,46 +18,45 @@ export class ErrorBoundary extends Component<
     });
   }
 
-  private handleReloadClick = () => {
-    window.location.reload();
-  };
-
-  private handleReportClick = () => {
-    if (!this.state.error) {
-      return;
-    }
-
-    const url = createIssueUrl(this.state.error);
-    openExternalUrl(url);
-  };
-
   render() {
     if (!this.state.error) {
       return this.props.children;
     }
 
-    return (
-      <Container {...this.props}>
-        <Content>
-          <BugIcon icon={faBug} />
-          <Header>Unexpected Error</Header>
-          <Hint>
-            Something went wrong and {"we're"} not totally sure why...
-          </Hint>
-          <ButtonArray>
-            <Button data-type="icon" onClick={this.handleReloadClick}>
-              <FontAwesomeIcon icon={faRedoAlt} />
-            </Button>
-            <Button onClick={this.handleReportClick}>Report issue</Button>
-          </ButtonArray>
-        </Content>
-        <Content>
-          <Code code={this.state.error.stack} />
-        </Content>
-      </Container>
-    );
+    return <ErrorPage {...this.props} error={this.state.error} />;
   }
 }
+
+const ErrorPage: FC<{ error: Error } & ComponentProps<typeof Container>> = ({
+  error,
+  props,
+}) => {
+  usePageTelemetry("error");
+
+  const handleReportClick = useCallback(() => {
+    const url = createIssueUrl(error);
+    openExternalUrl(url);
+  }, []);
+
+  return (
+    <Container {...props}>
+      <Content>
+        <BugIcon icon={faBug} />
+        <Header>Unexpected Error</Header>
+        <Hint>Something went wrong and {"we're"} not totally sure why...</Hint>
+        <ButtonArray>
+          <Button data-type="icon" onClick={window.location.reload}>
+            <FontAwesomeIcon icon={faRedoAlt} />
+          </Button>
+          <Button onClick={handleReportClick}>Report issue</Button>
+        </ButtonArray>
+      </Content>
+      <Content>
+        <Code code={error.stack} />
+      </Content>
+    </Container>
+  );
+};
 
 const createIssueUrl = (err: Error) => {
   const uri = `https://github.com/FormidableLabs/urql-devtools/issues/new`;

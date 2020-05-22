@@ -1,11 +1,12 @@
 import React, { useContext, FC, ComponentProps } from "react";
 import styled from "styled-components";
 import { Background } from "../../components";
-import { ExplorerContext } from "../../context";
+import { ExplorerContext, usePageTelemetry } from "../../context";
 import { Tree, NodeInfoPane } from "./components";
 
 export const Explorer: FC<ComponentProps<typeof Container>> = (props) => {
   const { operations } = useContext(ExplorerContext);
+  usePageTelemetry("explorer");
 
   return (
     <Container {...props}>
