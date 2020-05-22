@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import styled from "styled-components";
 import { RequestContext } from "../../../context";
-import { Pane, CodeHighlight } from "../../../components";
+import { CodeHighlight } from "../../../components";
 
 export const Response = () => {
   const { fetching, response, error } = useContext(RequestContext);
@@ -44,7 +44,7 @@ export const Response = () => {
     };
   }, [fetching, response, error]);
 
-  const content = useMemo(() => {
+  return useMemo(() => {
     if (state === "Idle") {
       return <Prompt>Run a query to see what the client returns...</Prompt>;
     }
@@ -64,14 +64,6 @@ export const Response = () => {
       </>
     );
   }, [code, state]);
-
-  return (
-    <Pane>
-      <PaneBody>
-        <PaneSection>{content}</PaneSection>
-      </PaneBody>
-    </Pane>
-  );
 };
 
 const Prompt = styled.div`
@@ -113,36 +105,6 @@ const Icon = styled.span`
   &[data-state="error"] {
     border-color: ${(p) => p.theme.red["0"]};
     background-color: ${(p) => p.theme.red["-1"]};
-  }
-`;
-
-const PaneBody = styled(Pane.Body)`
-  display: flex;
-  flex-grow: 1;
-`;
-
-const PaneSection = styled.section`
-  color: #fff;
-  background: ${(props) => props.theme.dark[0]};
-  padding: 20px;
-  overflow: auto;
-  flex-grow: 1;
-  flex-basis: 0;
-
-  h1 {
-    background-color: ${(p) => p.theme.dark["+3"]};
-    position: sticky;
-    top: -20px;
-    margin: -20px;
-    padding: 2px 10px;
-    font-size: 13px;
-    font-weight: 400;
-    border-bottom: solid 1px ${(p) => p.theme.dark["+5"]};
-    z-index: 1;
-  }
-
-  h1 + * {
-    margin-top: 40px;
   }
 `;
 

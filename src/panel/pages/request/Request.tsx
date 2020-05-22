@@ -1,7 +1,7 @@
 import React, { ComponentProps, FC } from "react";
 import styled from "styled-components";
 import { Background } from "../../components/Background";
-import { Query, Response, Settings } from "./components";
+import { Query, PaneContent, Settings } from "./components";
 
 export const Request: FC<ComponentProps<typeof Page>> = (props) => {
   return (
@@ -9,7 +9,7 @@ export const Request: FC<ComponentProps<typeof Page>> = (props) => {
       <Settings />
       <PageContent>
         <Query />
-        <Response />
+        <PaneContent />
       </PageContent>
     </Page>
   );
