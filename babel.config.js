@@ -2,7 +2,7 @@ module.exports = {
   presets: [
     [
       "@babel/preset-env",
-      { targets: { firefox: "70", chrome: "78", electron: "8" } },
+      { targets: { firefox: "70", chrome: "78", electron: "9" } },
     ],
     "@babel/preset-react",
     "@babel/preset-typescript",
