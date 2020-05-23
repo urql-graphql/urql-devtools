@@ -65,30 +65,26 @@ export const Stack: FC<StackProps> = ({ stack, setStack, setType }) => {
         </div>
       </StackHeading>
       {currentType.description ? (
-        <BorderBox>
+        <>
           <StackHeading>
             <Title>Description</Title>
           </StackHeading>
           <Description>{currentType.description}</Description>
-        </BorderBox>
+        </>
       ) : null}
       {hasFields ? (
-        <BorderBox>
+        <>
           <StackHeading>
             <Title>Fields</Title>
           </StackHeading>
-          <Fields node={currentType} setType={setType} />
-        </BorderBox>
+          <Box>
+            <Fields node={currentType} setType={setType} />
+          </Box>
+        </>
       ) : null}
     </StackWrapper>
   );
 };
-
-const Title = styled.span`
-  color: ${(p) => p.theme.light["-9"]};
-  display: inline-block;
-  margin-left: 4px;
-`;
 
 const StackHeading = styled.div`
   display: flex;
@@ -100,6 +96,11 @@ const StackHeading = styled.div`
   border-bottom: 1px solid ${(p) => p.theme.dark["+7"]};
   font-size: 13px;
   padding: 6px 12px;
+
+  &:first-of-type {
+    background-color: ${(p) => p.theme.dark["+5"]};
+    border-bottom: none;
+  }
 `;
 
 const StackWrapper = styled.div`
@@ -114,16 +115,10 @@ const StackWrapper = styled.div`
   background-color: ${(p) => p.theme.dark["+1"]};
 `;
 
-export const BorderBox = styled.div`
+export const Box = styled.div`
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid ${(p) => p.theme.dark["+3"]};
-  margin-bottom: 12px;
   padding: 12px 0;
-
-  &:last-child {
-    border-bottom: none;
-  }
 `;
 
 const TypeKind = styled.code`
@@ -180,6 +175,12 @@ const BackButton = styled(TextButton)`
     background-color: ${(p) => p.theme.grey["-9"]};
     text-decoration: none;
   }
+`;
+
+const Title = styled.span`
+  color: ${(p) => p.theme.light["-9"]};
+  display: inline-block;
+  padding: 4px 6px;
 `;
 
 const Description = styled.p`

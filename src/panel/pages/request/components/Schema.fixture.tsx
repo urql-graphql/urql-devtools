@@ -48,6 +48,7 @@ type Query {
   me: User
 }
 
+"Reply to a post, this is a little longer description"
 type Reply {
   id: ID!
   text: String!
