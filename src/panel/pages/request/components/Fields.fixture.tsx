@@ -1,42 +1,42 @@
 import React from "react";
 import { schema } from "./Schema.fixture";
 import { Fields } from "./Fields";
-import { BorderBox } from "./Stack";
+import { Box } from "./Stack";
 
 const typeMap = schema.getTypeMap();
 const setTypeMock = (type: any) => console.log(type);
 
 const Objects = () => (
-  <BorderBox>
+  <Box>
     <h3 style={{ color: "white" }}>Basic</h3>
     <Fields setType={setTypeMock} node={typeMap["User"]} key="1" />
     <h3 style={{ color: "white" }}>Arg and Field Descriptions</h3>
     <Fields setType={setTypeMock} node={typeMap["Mutation"]} key="2" />
     <h3 style={{ color: "white" }}>Default args</h3>
     <Fields setType={setTypeMock} node={typeMap["Query"]} key="3" />
-  </BorderBox>
+  </Box>
 );
 
 export default {
   object: <Objects />,
   interface: (
-    <BorderBox>
+    <Box>
       <Fields setType={setTypeMock} node={typeMap["Test"]} />
-    </BorderBox>
+    </Box>
   ),
   enum: (
-    <BorderBox>
+    <Box>
       <Fields setType={setTypeMock} node={typeMap["SortBy"]} />
-    </BorderBox>
+    </Box>
   ),
   union: (
-    <BorderBox>
+    <Box>
       <Fields setType={setTypeMock} node={typeMap["Action"]} />
-    </BorderBox>
+    </Box>
   ),
   input: (
-    <BorderBox>
+    <Box>
       <Fields setType={setTypeMock} node={typeMap["ThreadInput"]} />
-    </BorderBox>
+    </Box>
   ),
 };
