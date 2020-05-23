@@ -1,11 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import { GraphQLNamedType } from "graphql";
 import styled from "styled-components";
 import { RequestContext } from "../../../context";
+import { Arrow } from "../../../components";
 import { Stack } from "./Stack";
 import { Fields } from "./Fields";
 
+type ActiveIds = 1 | 2 | 3;
+
 export const Schema = () => {
+  const [activeIds, setActiveIds] = useState<ActiveIds[]>([1]);
   const [stack, setStack] = useState<GraphQLNamedType[]>([]);
   const { schema } = useContext(RequestContext);
 
@@ -28,6 +32,19 @@ export const Schema = () => {
     );
   }
 
+  const isActiveId = useCallback((id) => activeIds.includes(id), [activeIds]);
+
+  const handleHeaderClick = useCallback(
+    (id) => {
+      if (isActiveId(id)) {
+        setActiveIds((current) => current.filter((cur) => cur !== id));
+      } else {
+        setActiveIds((current) => [id, ...current]);
+      }
+    },
+    [setActiveIds, activeIds, isActiveId]
+  );
+
   const schemaTypes = schema.getTypeMap();
 
   const setType = (type: GraphQLNamedType) => {
@@ -35,35 +52,70 @@ export const Schema = () => {
   };
 
   return (
-    <Wrapper>
-      {schemaTypes.Query ? (
-        <>
-          <Title>Query</Title>
-          <FieldsContainer>
-            <Fields node={schemaTypes?.Query} setType={setType} />
-          </FieldsContainer>
-        </>
-      ) : null}
-      {schemaTypes.Mutation ? (
-        <>
-          <Title>Mutation</Title>
-          <FieldsContainer>
-            <Fields node={schemaTypes?.Mutation} setType={setType} />
-          </FieldsContainer>
-        </>
-      ) : null}
-      {schemaTypes.Subscription ? (
-        <>
-          <Title>Subscription</Title>
-          <FieldsContainer>
-            <Fields node={schemaTypes?.Subscription} setType={setType} />
-          </FieldsContainer>
-        </>
-      ) : null}
-      <Stack stack={stack} setType={setType} setStack={setStack} />
-    </Wrapper>
+    <>
+      {stack.length > 0 ? (
+        <Stack stack={stack} setType={setType} setStack={setStack} />
+      ) : (
+        <Wrapper>
+          {schemaTypes.Query ? (
+            <>
+              <CollapsibleHeader onClick={() => handleHeaderClick(1)}>
+                <Arrow data-active={`${isActiveId(1)}`} />
+                <span>Query</span>
+              </CollapsibleHeader>
+              {isActiveId(1) && (
+                <FieldsContainer>
+                  <Fields node={schemaTypes?.Query} setType={setType} />
+                </FieldsContainer>
+              )}
+            </>
+          ) : null}
+          {schemaTypes.Mutation ? (
+            <>
+              <CollapsibleHeader onClick={() => handleHeaderClick(2)}>
+                <Arrow data-active={`${isActiveId(2)}`} />
+                <span>Mutation</span>
+              </CollapsibleHeader>
+              {isActiveId(2) && (
+                <FieldsContainer>
+                  <Fields node={schemaTypes?.Mutation} setType={setType} />
+                </FieldsContainer>
+              )}
+            </>
+          ) : null}
+          {schemaTypes.Subscription ? (
+            <>
+              <CollapsibleHeader onClick={() => handleHeaderClick(3)}>
+                <Arrow data-active={`${isActiveId(3)}`} />
+                <span>Subscription</span>
+              </CollapsibleHeader>
+              {isActiveId(3) && (
+                <FieldsContainer>
+                  <Fields node={schemaTypes?.Subscription} setType={setType} />
+                </FieldsContainer>
+              )}
+            </>
+          ) : null}
+        </Wrapper>
+      )}
+    </>
   );
 };
+
+const CollapsibleHeader = styled.button`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: ${(p) => p.theme.light["-5"]};
+  background-color: ${(p) => p.theme.dark["+3"]};
+  border: 1px solid ${(p) => p.theme.dark["+7"]};
+  font-size: 13px;
+  padding: 6px;
+
+  &:hover {
+    background-color: ${(p) => p.theme.dark["+5"]};
+  }
+`;
 
 const Title = styled.h3`
   color: ${(p) => p.theme.light["0"]};
@@ -78,9 +130,8 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   color: ${(p) => p.theme.light["-3"]};
-  padding: 30px;
 `;
 
 const FieldsContainer = styled.div`
-  padding: 8px;
+  background-color: ${(p) => p.theme.dark["+1"]};
 `;

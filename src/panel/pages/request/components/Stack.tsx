@@ -1,31 +1,23 @@
-import React, { FC } from "react";
-import { Kind, TypeDefinitionNode, GraphQLNamedType } from "graphql";
+import React, { FC, useMemo } from "react";
+import {
+  GraphQLNamedType,
+  GraphQLScalarType,
+  GraphQLInputObjectType,
+  GraphQLUnionType,
+  GraphQLEnumType,
+  GraphQLInterfaceType,
+} from "graphql";
 import styled from "styled-components";
 import { Fields } from "./Fields";
 
-const getKind = (node: TypeDefinitionNode | null | undefined) => {
-  if (!node) {
-    return null;
-  }
+const getKind = (node: GraphQLNamedType) => {
+  if (node instanceof GraphQLScalarType) return "scalar";
+  if (node instanceof GraphQLInputObjectType) return "input";
+  if (node instanceof GraphQLUnionType) return "union";
+  if (node instanceof GraphQLEnumType) return "enum";
+  if (node instanceof GraphQLInterfaceType) return "interface";
 
-  switch (node.kind) {
-    case Kind.INPUT_OBJECT_TYPE_DEFINITION: {
-      return "input";
-    }
-    case Kind.INTERFACE_TYPE_DEFINITION: {
-      return "interface";
-    }
-    case Kind.UNION_TYPE_DEFINITION: {
-      return "union";
-    }
-    case Kind.ENUM_TYPE_DEFINITION: {
-      return "enum";
-    }
-
-    default: {
-      return "type";
-    }
-  }
+  return "type";
 };
 
 interface StackProps {
@@ -46,44 +38,68 @@ export const Stack: FC<StackProps> = ({ stack, setStack, setType }) => {
     return null;
   }
 
-  const kind = getKind(currentType.astNode);
+  const kind = useMemo(() => getKind(currentType), [currentType]);
+
+  const hasFields = useMemo(() => {
+    return Boolean(
+      "getFields" in currentType ||
+        "getTypes" in currentType ||
+        "getValues" in currentType
+    );
+  }, [currentType]);
 
   return (
     <StackWrapper>
-      <StackButtons>
-        {stack.length > 1 ? (
-          <BackButton onClick={() => setStack([])}>Root</BackButton>
-        ) : null}
+      <StackHeading>
         <BackButton onClick={() => setStack([...stack].slice(0, -1))}>
           {(prevType && prevType.name) || "Root"}
         </BackButton>
-      </StackButtons>
-      <BorderBox>
-        <Title>
+        <span>
           <TypeKind data-kind={kind}>{kind}</TypeKind>
           <span>{currentType.name}</span>
-        </Title>
-      </BorderBox>
+        </span>
+        <div>
+          {stack.length > 1 ? (
+            <BackButton onClick={() => setStack([])}>Root</BackButton>
+          ) : null}
+        </div>
+      </StackHeading>
       {currentType.description ? (
         <BorderBox>
-          <h4>Description</h4>
-          <p>{currentType.description}</p>
-          <hr />
+          <StackHeading>
+            <Title>Description</Title>
+          </StackHeading>
+          <Description>{currentType.description}</Description>
         </BorderBox>
       ) : null}
-      <BorderBox>
-        <Fields node={currentType} setType={setType} />
-      </BorderBox>
+      {hasFields ? (
+        <BorderBox>
+          <StackHeading>
+            <Title>Fields</Title>
+          </StackHeading>
+          <Fields node={currentType} setType={setType} />
+        </BorderBox>
+      ) : null}
     </StackWrapper>
   );
 };
 
-const Title = styled.h3`
-  color: ${(p) => p.theme.light["0"]};
+const Title = styled.span`
+  color: ${(p) => p.theme.light["-9"]};
+  display: inline-block;
+  margin-left: 4px;
+`;
+
+const StackHeading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: ${(p) => p.theme.light["-5"]};
+  background-color: ${(p) => p.theme.dark["+3"]};
+  border-top: 1px solid ${(p) => p.theme.dark["+7"]};
+  border-bottom: 1px solid ${(p) => p.theme.dark["+7"]};
   font-size: 13px;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
+  padding: 6px 12px;
 `;
 
 const StackWrapper = styled.div`
@@ -95,32 +111,39 @@ const StackWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 30px;
-  background-color: ${(p) => p.theme.dark["0"]};
+  background-color: ${(p) => p.theme.dark["+1"]};
 `;
 
-const BorderBox = styled.div`
+export const BorderBox = styled.div`
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid ${(p) => p.theme.dark["+2"]};
+  border-bottom: 1px solid ${(p) => p.theme.dark["+3"]};
   margin-bottom: 12px;
   padding: 12px 0;
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
-const TypeKind = styled.span`
-  color: ${(p) => p.theme.yellow["+5"]};
+const TypeKind = styled.code`
+  color: ${(p) => p.theme.yellow["+3"]};
   margin-right: 6px;
 
   &[data-kind="interface"] {
-    color: ${(p) => p.theme.red["+5"]};
+    color: ${(p) => p.theme.red["+3"]};
   }
 
   &[data-kind="enum"] {
-    color: ${(p) => p.theme.purple["+5"]};
+    color: ${(p) => p.theme.purple["+3"]};
   }
 
   &[data-kind="union"] {
-    color: ${(p) => p.theme.blue["+5"]};
+    color: ${(p) => p.theme.blue["+3"]};
+  }
+
+  &[data-kind="scalar"] {
+    color: ${(p) => p.theme.orange["+3"]};
   }
 `;
 
@@ -143,14 +166,24 @@ const TextButton = styled.button`
 
 const BackButton = styled(TextButton)`
   width: max-content;
-  color: ${(p) => p.theme.light["0"]};
-  border: 1px solid ${(p) => p.theme.dark["+5"]};
+  color: ${(p) => p.theme.light["-9"]};
+  font-size: 12px;
   border-radius: 3px;
   margin-right: 6px;
-  padding: 6px;
+  padding: 4px 6px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    background-color: ${(p) => p.theme.grey["-9"]};
+    text-decoration: none;
+  }
 `;
 
-const StackButtons = styled.menu`
-  display: flex;
-  padding: 0;
+const Description = styled.p`
+  font-size: 13px;
+  color: ${(p) => p.theme.light["-9"]};
+  margin: 12px;
 `;

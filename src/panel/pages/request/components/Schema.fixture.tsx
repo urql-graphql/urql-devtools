@@ -39,7 +39,7 @@ type Mutation {
   likeThread(threadId: ID!): Thread!
   likeReply(replyId: ID!): Reply!
   signup(username: String!, password: String!): SigninResult!
-  signin(username: String!, password: String!): SigninResult!
+  signin(username: String!, password: String!): SigninResult! @deprecated(reason: "Test")
 }
 
 type Query {
@@ -74,6 +74,13 @@ enum SortBy {
   OLDEST
 }
 
+interface Test {
+  foo: String!
+  bar: SortBy!
+}
+
+union Action = Like | Reply
+
 type Subscription {
   newThread: Thread!
   newReply(threadId: ID!): Reply!
@@ -92,10 +99,11 @@ type Thread {
   likesNumber: Int
   likes(skip: Int, limit: Int): [Like!]
   hasUserLiked: Boolean
+  test: Test
 }
 
 input ThreadInput {
-  title: String!
+  title: String! = "Title!"
   text: String
 }
 
