@@ -64,9 +64,7 @@ export const Schema = () => {
                 <span>Query</span>
               </CollapsibleHeader>
               {isActiveId(1) && (
-                <FieldsContainer>
-                  <Fields node={schemaTypes?.Query} setType={setType} />
-                </FieldsContainer>
+                <Fields node={schemaTypes?.Query} setType={setType} />
               )}
             </>
           ) : null}
@@ -77,9 +75,7 @@ export const Schema = () => {
                 <span>Mutation</span>
               </CollapsibleHeader>
               {isActiveId(2) && (
-                <FieldsContainer>
-                  <Fields node={schemaTypes?.Mutation} setType={setType} />
-                </FieldsContainer>
+                <Fields node={schemaTypes?.Mutation} setType={setType} />
               )}
             </>
           ) : null}
@@ -90,9 +86,7 @@ export const Schema = () => {
                 <span>Subscription</span>
               </CollapsibleHeader>
               {isActiveId(3) && (
-                <FieldsContainer>
-                  <Fields node={schemaTypes?.Subscription} setType={setType} />
-                </FieldsContainer>
+                <Fields node={schemaTypes?.Subscription} setType={setType} />
               )}
             </>
           ) : null}
@@ -130,8 +124,5 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   color: ${(p) => p.theme.light["-3"]};
-`;
-
-const FieldsContainer = styled.div`
   background-color: ${(p) => p.theme.dark["+1"]};
 `;

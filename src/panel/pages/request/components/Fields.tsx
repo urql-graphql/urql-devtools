@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, Fragment } from "react";
 import {
   isInterfaceType,
   isObjectType,
@@ -71,9 +71,9 @@ export const Fields: FC<FieldProps> = ({ node, setType }) => {
                 <>
                   <ArgWrapper data-multiline={`${hasDescriptions}`}>
                     {args.map((arg, idx) => (
-                      <>
+                      <Fragment key={idx}>
                         {getDescription(arg)}
-                        <code key={idx}>
+                        <code>
                           <span>
                             <code>{arg.name}</code>
                             <Separator content=":" />
@@ -84,7 +84,7 @@ export const Fields: FC<FieldProps> = ({ node, setType }) => {
                             )}
                           </span>
                         </code>
-                      </>
+                      </Fragment>
                     ))}
                   </ArgWrapper>
                 </>
