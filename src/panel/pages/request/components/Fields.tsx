@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, Fragment } from "react";
 import {
   isInterfaceType,
   isObjectType,
@@ -58,33 +58,29 @@ export const Fields: FC<FieldProps> = ({ node, setType }) => {
       <>
         {keys.map((field, i) => {
           const args = fields[field].args;
-          const hasDescriptions = args.some((arg) => arg.description);
+          const hasDescription = args.some((arg) => arg.description);
 
           return (
-            <FieldWrapper key={i} data-multiline={`${hasDescriptions}`}>
+            <FieldWrapper key={i} data-multiline={`${hasDescription}`}>
               {getDescription(fields[field])}
               <span>
                 <Name>{fields[field].name}</Name>
-                {args.length ? "(" : null}
+                {args.length > 0 ? "(" : null}
               </span>
               {args.length > 0 ? (
                 <>
-                  <ArgWrapper data-multiline={`${hasDescriptions}`}>
+                  <ArgWrapper data-multiline={`${hasDescription}`}>
                     {args.map((arg, idx) => (
-                      <>
+                      <Fragment key={idx}>
                         {getDescription(arg)}
-                        <code key={idx}>
-                          <span>
-                            <code>{arg.name}</code>
-                            <Separator content=":" />
-                            <Type type={arg.type} setType={setType} />
-                            {getDefaultValue(arg)}
-                            {idx !== args.length - 1 && (
-                              <Separator content="," />
-                            )}
-                          </span>
+                        <code>
+                          <code>{arg.name}</code>
+                          <Separator content=":" />
+                          <Type type={arg.type} setType={setType} />
+                          {getDefaultValue(arg)}
+                          {idx !== args.length - 1 && <Separator content="," />}
                         </code>
-                      </>
+                      </Fragment>
                     ))}
                   </ArgWrapper>
                 </>

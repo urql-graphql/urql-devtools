@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import {
   GraphQLType,
-  GraphQLList,
-  GraphQLNonNull,
   GraphQLNamedType,
+  isNonNullType,
+  isListType,
 } from "graphql";
 import styled from "styled-components";
 
@@ -15,7 +15,7 @@ interface TypeProps {
 export const Type: FC<TypeProps> = ({ setType, type }) => {
   if (!type) return null;
 
-  if (type instanceof GraphQLNonNull) {
+  if (isNonNullType(type)) {
     return (
       <>
         <Type type={type.ofType} setType={setType} />!
@@ -23,7 +23,7 @@ export const Type: FC<TypeProps> = ({ setType, type }) => {
     );
   }
 
-  if (type instanceof GraphQLList) {
+  if (isListType(type)) {
     return (
       <>
         {"["}

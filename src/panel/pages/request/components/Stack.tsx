@@ -118,7 +118,6 @@ const StackWrapper = styled.div`
 export const Box = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 12px 0;
 `;
 
 const TypeKind = styled.code`

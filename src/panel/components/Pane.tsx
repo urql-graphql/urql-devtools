@@ -5,17 +5,30 @@ import React, {
   useMemo,
   MouseEventHandler,
   ComponentProps,
+  useRef,
 } from "react";
 import styled from "styled-components";
 import { useOrientationWatcher } from "../hooks";
 
-const PaneRoot: FC<ComponentProps<typeof PaneContainer>> = ({
+interface OverrideProps {
+  forcedOrientation?: { isPortrait: boolean };
+  initSize: { x: number; y: number };
+}
+
+const PaneRoot: FC<ComponentProps<typeof PaneContainer> & OverrideProps> = ({
   children,
+  forcedOrientation,
+  initSize,
   ...props
 }) => {
   const [grabbed, setGrabbed] = useState(false);
-  const [size, setSize] = useState({ x: 400, y: 400 });
-  const { isPortrait } = useOrientationWatcher();
+  const [size, setSize] = useState(initSize ? initSize : { x: 400, y: 400 });
+  const dynamicOrientation = useOrientationWatcher();
+  const paneRef = useRef(null);
+
+  const { isPortrait } = forcedOrientation
+    ? forcedOrientation
+    : dynamicOrientation;
 
   type position = { x: number; y: number };
   const handleClick = useCallback<MouseEventHandler>(
@@ -73,13 +86,19 @@ const PaneRoot: FC<ComponentProps<typeof PaneContainer>> = ({
   );
 
   return (
-    <PaneContainer {...props} style={{ ...props.style, ...style }}>
+    <PaneContainer
+      {...props}
+      style={{ ...props.style, ...style }}
+      data-portrait={`${isPortrait}`}
+      ref={paneRef}
+    >
       {children}
       <DraggingEdge
         role="seperator"
         aria-orientation={isPortrait ? "horizontal" : "vertical"}
         aria-grabbed={grabbed}
         onMouseDown={handleClick}
+        data-portrait={`${isPortrait}`}
       />
     </PaneContainer>
   );
@@ -95,7 +114,7 @@ const PaneContainer = styled.div`
   width: 100%;
   height: 400px;
 
-  @media (min-aspect-ratio: 1/1) {
+  &[data-portrait="false"] {
     width: 400px;
     height: 100%;
     border-top: none;
@@ -115,7 +134,7 @@ const DraggingEdge = styled.div`
   height: ${edgeWidth}px;
   top: -${edgeWidth / 2}px;
 
-  @media (min-aspect-ratio: 1/1) {
+  &[data-portrait="false"] {
     width: ${edgeWidth}px;
     height: 100%;
     margin-top: 0;
