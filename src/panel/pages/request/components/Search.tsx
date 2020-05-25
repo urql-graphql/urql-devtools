@@ -1,88 +1,163 @@
-import React, { FC, useMemo, useCallback } from "react";
+import React, {
+  FC,
+  useMemo,
+  useCallback,
+  ChangeEvent,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import { GraphQLNamedType } from "graphql";
 import styled from "styled-components";
 import { TypeMap } from "graphql/type/schema";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface SearchProps {
   typeMap: TypeMap;
   setType: (type: GraphQLNamedType) => void;
 }
 
-export const Search: FC<SearchProps> = (props) => {
-  const [results, setResults] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  const typeKeys = useMemo(() => Object.keys(props.typeMap));
+export const Search: FC<SearchProps> = ({ typeMap, setType }) => {
+  const containerRef = useRef<HTMLDivElement>(undefined as any);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [listOpen, setListOpen] = useState<boolean>(false);
+  let typeKeys = useMemo(() => Object.keys(typeMap), [typeMap]);
+  const results = useMemo(
+    () =>
+      (typeKeys = typeKeys.filter((key) =>
+        key.toLowerCase().startsWith(searchValue.toLowerCase())
+      )),
+    [searchValue]
+  );
 
-  const handleOnChange = () => {};
+  useEffect(() => {
+    if (searchValue && results.length) {
+      setListOpen(true);
+    } else {
+      setListOpen(false);
+    }
+  }, [searchValue, results]);
+
+  useEffect(() => {
+    const onOutsideClick = (e: MouseEvent) => {
+      if (!containerRef?.current?.contains(e.target as Node)) {
+        setListOpen(false);
+      } else if (searchValue && results.length) {
+        setListOpen(true);
+      }
+    };
+
+    window.addEventListener("click", onOutsideClick);
+
+    return () => {
+      window.removeEventListener("click", onOutsideClick);
+    };
+  }, [searchValue, results]);
+
+  const handleOnChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setSearchValue(e.target.value || "");
+    },
+    [setSearchValue]
+  );
+
+  const handleTypeSelect = useCallback(
+    (type) => {
+      setType(type);
+      setListOpen(false);
+    },
+    [setListOpen, setType]
+  );
+
   return (
-    <div>
-      <input value={searchValue} />
-      <ul>
-        {results.map((res) => (
-          <li>{res.name}</li>
-        ))}
-      </ul>
-    </div>
+    <Container ref={containerRef}>
+      <InputWrapper>
+        <Icon icon={faSearch} />
+        <Input
+          type="search"
+          value={searchValue}
+          onChange={handleOnChange}
+          placeholder="Search for a type in schema"
+        />
+      </InputWrapper>
+      {listOpen ? (
+        <List>
+          {results.map((res, i) => (
+            <ListItem key={i}>
+              <TextButton onClick={() => handleTypeSelect(typeMap[res])}>
+                {typeMap[res].name}
+              </TextButton>
+            </ListItem>
+          ))}
+        </List>
+      ) : null}
+    </Container>
   );
 };
 
-const StackHeading = styled.div`
+const Container = styled.div`
+  background-color: ${(p) => p.theme.dark["+5"]};
+`;
+
+const Icon = styled(FontAwesomeIcon)`
+  font-size: 13px;
+  margin-right: 6px;
+  color: ${(p) => p.theme.light["-9"]};
+`;
+
+const InputWrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 250px;
   color: ${(p) => p.theme.light["-5"]};
-  background-color: ${(p) => p.theme.dark["+3"]};
-  border-top: 1px solid ${(p) => p.theme.dark["+7"]};
-  border-bottom: 1px solid ${(p) => p.theme.dark["+7"]};
   font-size: 13px;
   padding: 6px 12px;
 
-  &:first-of-type {
-    background-color: ${(p) => p.theme.dark["+5"]};
-    border-bottom: none;
+  &::after {
+    content: "|";
+    color: ${(p) => p.theme.grey["-2"]};
   }
 `;
 
-const StackWrapper = styled.div`
-  box-sizing: border-box;
+const Input = styled.input`
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  color: ${(p) => p.theme.light["-5"]};
+`;
+
+const List = styled.ul`
   position: absolute;
   right: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
+  left: 0;
   display: flex;
+  width: 250px;
+  max-height: 400px;
+  margin-top: 0;
+  padding: 12px 6px;
+  list-style: none;
   flex-direction: column;
-  background-color: ${(p) => p.theme.dark["+1"]};
+  background-color: ${(p) => p.theme.dark["+2"]};
+  border: 1px solid ${(p) => p.theme.dark["+4"]};
+
+  z-index: 2;
+  overflow: auto;
 `;
 
-export const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+const ListItem = styled.li`
+  padding: 6px;
 
-const TypeKind = styled.code`
-  color: ${(p) => p.theme.yellow["+3"]};
-  margin-right: 6px;
-
-  &[data-kind="interface"] {
-    color: ${(p) => p.theme.red["+3"]};
-  }
-
-  &[data-kind="enum"] {
-    color: ${(p) => p.theme.purple["+3"]};
-  }
-
-  &[data-kind="union"] {
-    color: ${(p) => p.theme.blue["+3"]};
-  }
-
-  &[data-kind="scalar"] {
-    color: ${(p) => p.theme.orange["+3"]};
+  &:hover {
+    background-color: ${(p) => p.theme.dark["+3"]};
   }
 `;
 
 const TextButton = styled.button`
   display: inline-block;
+  width: 100%;
   background: transparent;
   outline: none;
   border: none;
@@ -96,34 +171,4 @@ const TextButton = styled.button`
   &:hover {
     text-decoration: underline;
   }
-`;
-
-const BackButton = styled(TextButton)`
-  width: max-content;
-  color: ${(p) => p.theme.light["-9"]};
-  font-size: 12px;
-  border-radius: 3px;
-  margin-right: 6px;
-  padding: 4px 6px;
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  &:hover {
-    background-color: ${(p) => p.theme.grey["-9"]};
-    text-decoration: none;
-  }
-`;
-
-const Title = styled.span`
-  color: ${(p) => p.theme.light["-9"]};
-  display: inline-block;
-  padding: 4px 6px;
-`;
-
-const Description = styled.p`
-  font-size: 13px;
-  color: ${(p) => p.theme.light["-9"]};
-  margin: 12px;
 `;

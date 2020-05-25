@@ -5,6 +5,7 @@ import { RequestContext } from "../../../context";
 import { Arrow } from "../../../components";
 import { Stack } from "./Stack";
 import { Fields } from "./Fields";
+import { Search } from "./Search";
 
 type ActiveIds = 1 | 2 | 3;
 
@@ -52,58 +53,71 @@ export const Schema = () => {
   };
 
   return (
-    <>
-      {stack.length > 0 ? (
-        <Stack stack={stack} setType={setType} setStack={setStack} />
-      ) : (
-        <Wrapper>
-          {schemaTypes.Query ? (
-            <>
-              <CollapsibleHeader
-                onClick={() => handleHeaderClick(1)}
-                aria-expanded={isActiveId(1)}
-              >
-                <Arrow data-active={isActiveId(1)} />
-                <span>Query</span>
-              </CollapsibleHeader>
-              {isActiveId(1) && (
-                <Fields node={schemaTypes?.Query} setType={setType} />
-              )}
-            </>
-          ) : null}
-          {schemaTypes.Mutation ? (
-            <>
-              <CollapsibleHeader
-                onClick={() => handleHeaderClick(2)}
-                aria-expanded={isActiveId(2)}
-              >
-                <Arrow data-active={isActiveId(2)} />
-                <span>Mutation</span>
-              </CollapsibleHeader>
-              {isActiveId(2) && (
-                <Fields node={schemaTypes?.Mutation} setType={setType} />
-              )}
-            </>
-          ) : null}
-          {schemaTypes.Subscription ? (
-            <>
-              <CollapsibleHeader
-                onClick={() => handleHeaderClick(3)}
-                aria-expanded={isActiveId(3)}
-              >
-                <Arrow data-active={isActiveId(3)} />
-                <span>Subscription</span>
-              </CollapsibleHeader>
-              {isActiveId(3) && (
-                <Fields node={schemaTypes?.Subscription} setType={setType} />
-              )}
-            </>
-          ) : null}
-        </Wrapper>
-      )}
-    </>
+    <FlexContainer>
+      <Search typeMap={schemaTypes} setType={setType} />
+      <Container>
+        {stack.length > 0 ? (
+          <Stack stack={stack} setType={setType} setStack={setStack} />
+        ) : (
+          <Wrapper>
+            {schemaTypes.Query ? (
+              <>
+                <CollapsibleHeader
+                  onClick={() => handleHeaderClick(1)}
+                  aria-expanded={isActiveId(1)}
+                >
+                  <Arrow data-active={isActiveId(1)} />
+                  <span>Query</span>
+                </CollapsibleHeader>
+                {isActiveId(1) && (
+                  <Fields node={schemaTypes?.Query} setType={setType} />
+                )}
+              </>
+            ) : null}
+            {schemaTypes.Mutation ? (
+              <>
+                <CollapsibleHeader
+                  onClick={() => handleHeaderClick(2)}
+                  aria-expanded={isActiveId(2)}
+                >
+                  <Arrow data-active={isActiveId(2)} />
+                  <span>Mutation</span>
+                </CollapsibleHeader>
+                {isActiveId(2) && (
+                  <Fields node={schemaTypes?.Mutation} setType={setType} />
+                )}
+              </>
+            ) : null}
+            {schemaTypes.Subscription ? (
+              <>
+                <CollapsibleHeader
+                  onClick={() => handleHeaderClick(3)}
+                  aria-expanded={isActiveId(3)}
+                >
+                  <Arrow data-active={isActiveId(3)} />
+                  <span>Subscription</span>
+                </CollapsibleHeader>
+                {isActiveId(3) && (
+                  <Fields node={schemaTypes?.Subscription} setType={setType} />
+                )}
+              </>
+            ) : null}
+          </Wrapper>
+        )}
+      </Container>
+    </FlexContainer>
   );
 };
+
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const Container = styled.div`
+  position: relative;
+`;
 
 const CollapsibleHeader = styled.button`
   display: flex;
