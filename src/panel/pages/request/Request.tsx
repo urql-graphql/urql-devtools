@@ -1,16 +1,14 @@
-import React, { ComponentProps, FC, useRef } from "react";
+import React, { ComponentProps, FC } from "react";
 import styled from "styled-components";
 import { Background } from "../../components/Background";
 import { Pane } from "../../components";
 import { Query, Schema, Settings, Response } from "./components";
 
 export const Request: FC<ComponentProps<typeof Page>> = (props) => {
-  const ref = useRef(null);
-
   return (
     <Page {...props}>
       <Settings />
-      <PageContent ref={ref}>
+      <PageContent>
         <Query />
         {/* {TODO: Hack to offset the panels so they aren't on top of each other.
        There's definitely better way to do this */}
@@ -73,8 +71,6 @@ const Page = styled(Background)`
 `;
 
 const SchemaContainer = styled(Pane)`
-  min-width: 100%;
-  width: 100%;
   & > div {
     min-width: 100%;
     width: 100%;

@@ -126,10 +126,6 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
       return parsedNodemap;
     }
 
-    if (isSchemaField(selectionNode)) {
-      return parsedNodemap;
-    }
-
     const name = selectionNode.name.value || "query";
     const args = getFieldArguments(selectionNode, variables);
     const key = getFieldKey(name, args);
@@ -223,6 +219,3 @@ const isFragmentSpread = (node: ASTNode): node is FragmentSpreadNode =>
 const isFragmentNode = (node: ASTNode): node is FragmentDefinitionNode => {
   return node.kind === Kind.FRAGMENT_DEFINITION;
 };
-
-const isSchemaField = (node: FieldNode): boolean =>
-  node.name.value === "__schema";
