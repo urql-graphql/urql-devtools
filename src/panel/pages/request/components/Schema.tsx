@@ -59,8 +59,11 @@ export const Schema = () => {
         <Wrapper>
           {schemaTypes.Query ? (
             <>
-              <CollapsibleHeader onClick={() => handleHeaderClick(1)}>
-                <Arrow data-active={`${isActiveId(1)}`} />
+              <CollapsibleHeader
+                onClick={() => handleHeaderClick(1)}
+                aria-expanded={isActiveId(1)}
+              >
+                <Arrow data-active={isActiveId(1)} />
                 <span>Query</span>
               </CollapsibleHeader>
               {isActiveId(1) && (
@@ -70,8 +73,11 @@ export const Schema = () => {
           ) : null}
           {schemaTypes.Mutation ? (
             <>
-              <CollapsibleHeader onClick={() => handleHeaderClick(2)}>
-                <Arrow data-active={`${isActiveId(2)}`} />
+              <CollapsibleHeader
+                onClick={() => handleHeaderClick(2)}
+                aria-expanded={isActiveId(2)}
+              >
+                <Arrow data-active={isActiveId(2)} />
                 <span>Mutation</span>
               </CollapsibleHeader>
               {isActiveId(2) && (
@@ -81,8 +87,11 @@ export const Schema = () => {
           ) : null}
           {schemaTypes.Subscription ? (
             <>
-              <CollapsibleHeader onClick={() => handleHeaderClick(3)}>
-                <Arrow data-active={`${isActiveId(3)}`} />
+              <CollapsibleHeader
+                onClick={() => handleHeaderClick(3)}
+                aria-expanded={isActiveId(3)}
+              >
+                <Arrow data-active={isActiveId(3)} />
                 <span>Subscription</span>
               </CollapsibleHeader>
               {isActiveId(3) && (
