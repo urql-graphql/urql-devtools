@@ -26,7 +26,9 @@ export const Search: FC<SearchProps> = ({ typeMap, setType }) => {
   const results = useMemo(
     () =>
       (typeKeys = typeKeys.filter((key) =>
-        key.toLowerCase().startsWith(searchValue.toLowerCase())
+        searchValue.length === 1
+          ? key.toLowerCase().startsWith(searchValue.toLowerCase())
+          : key.toLowerCase().includes(searchValue.toLowerCase())
       )),
     [searchValue]
   );
@@ -86,13 +88,31 @@ export const Search: FC<SearchProps> = ({ typeMap, setType }) => {
           {results.map((res, i) => (
             <ListItem key={i}>
               <TextButton onClick={() => handleTypeSelect(typeMap[res])}>
-                {typeMap[res].name}
+                <HighlightMatch name={typeMap[res].name} term={searchValue} />
               </TextButton>
             </ListItem>
           ))}
         </List>
       ) : null}
     </Container>
+  );
+};
+
+interface HighlightProps {
+  name: string;
+  term: string;
+}
+
+const HighlightMatch: FC<HighlightProps> = ({ name, term }) => {
+  const start = name.toLowerCase().indexOf(term.toLowerCase());
+  const end = start + term.length;
+
+  return (
+    <>
+      <span>{name.slice(0, start)}</span>
+      <strong>{name.slice(start, end)}</strong>
+      <span>{name.slice(end, name.length)}</span>
+    </>
   );
 };
 
