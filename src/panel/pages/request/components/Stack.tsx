@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useCallback, useState } from "react";
 import {
   GraphQLNamedType,
   GraphQLScalarType,
@@ -9,6 +9,7 @@ import {
 } from "graphql";
 import styled from "styled-components";
 import { Fields } from "./Fields";
+import { Collapsible } from "./Collapsible";
 
 const getKind = (node: GraphQLNamedType) => {
   if (node instanceof GraphQLScalarType) return "scalar";
@@ -21,18 +22,15 @@ const getKind = (node: GraphQLNamedType) => {
 };
 
 interface StackProps {
-  stack: GraphQLNamedType[] | [];
+  currentType?: GraphQLNamedType;
   setStack: (type: GraphQLNamedType[] | []) => void;
   setType: (type: GraphQLNamedType) => void;
 }
 
-export const Stack: FC<StackProps> = ({ stack, setStack, setType }) => {
-  if (!stack.length) {
-    return null;
-  }
+type ActiveIds = 1 | 2;
 
-  const currentType = stack[stack.length - 1];
-  const prevType = stack[stack.length - 2];
+export const Stack: FC<StackProps> = ({ currentType, setType }) => {
+  const [activeIds, setActiveIds] = useState<ActiveIds[]>([1, 2]);
 
   if (!currentType) {
     return null;
@@ -48,60 +46,48 @@ export const Stack: FC<StackProps> = ({ stack, setStack, setType }) => {
     );
   }, [currentType]);
 
+  const isActiveId = useCallback((id) => activeIds.includes(id), [activeIds]);
+
+  const handleOnClick = useCallback(
+    (id) => {
+      if (isActiveId(id)) {
+        setActiveIds((current) => current.filter((cur) => cur !== id));
+      } else {
+        setActiveIds((current) => [id, ...current]);
+      }
+    },
+    [setActiveIds, activeIds, isActiveId]
+  );
+
   return (
     <StackWrapper>
-      <StackHeading>
-        <BackButton onClick={() => setStack([...stack].slice(0, -1))}>
-          {(prevType && prevType.name) || "Root"}
-        </BackButton>
-        <span>
-          <TypeKind data-kind={kind}>{kind}</TypeKind>
-          <span>{currentType.name}</span>
-        </span>
-        <div>
-          {stack.length > 1 ? (
-            <BackButton onClick={() => setStack([])}>Root</BackButton>
-          ) : null}
-        </div>
-      </StackHeading>
+      <TypeNameWrapper>
+        <TypeKind data-kind={kind}>{kind}</TypeKind>
+        <span>{currentType.name}</span>
+      </TypeNameWrapper>
       {currentType.description ? (
-        <>
-          <StackHeading>
-            <Title>Description</Title>
-          </StackHeading>
+        <Collapsible
+          title="Description"
+          onClick={() => handleOnClick(1)}
+          isActive={isActiveId(1)}
+        >
           <Description>{currentType.description}</Description>
-        </>
+        </Collapsible>
       ) : null}
       {hasFields ? (
-        <>
-          <StackHeading>
-            <Title>Fields</Title>
-          </StackHeading>
+        <Collapsible
+          title="Fields"
+          onClick={() => handleOnClick(2)}
+          isActive={isActiveId(2)}
+        >
           <Box>
             <Fields node={currentType} setType={setType} />
           </Box>
-        </>
+        </Collapsible>
       ) : null}
     </StackWrapper>
   );
 };
-
-const StackHeading = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: ${(p) => p.theme.light["-5"]};
-  background-color: ${(p) => p.theme.dark["+3"]};
-  border-top: 1px solid ${(p) => p.theme.dark["+7"]};
-  border-bottom: 1px solid ${(p) => p.theme.dark["+7"]};
-  font-size: 13px;
-  padding: 6px 12px;
-
-  &:first-of-type {
-    background-color: ${(p) => p.theme.dark["+5"]};
-    border-bottom: none;
-  }
-`;
 
 const StackWrapper = styled.div`
   box-sizing: border-box;
@@ -141,49 +127,15 @@ const TypeKind = styled.code`
   }
 `;
 
-const TextButton = styled.button`
-  display: inline-block;
-  background: transparent;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  color: ${(p) => p.theme.orange["+3"]};
-  font-size: inherit;
-  text-align: left;
-  padding: 0;
-  margin: 0;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const BackButton = styled(TextButton)`
-  width: max-content;
-  color: ${(p) => p.theme.light["-9"]};
-  font-size: 12px;
-  border-radius: 3px;
-  margin-right: 6px;
-  padding: 4px 6px;
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  &:hover {
-    background-color: ${(p) => p.theme.grey["-9"]};
-    text-decoration: none;
-  }
-`;
-
-const Title = styled.span`
-  color: ${(p) => p.theme.light["-9"]};
-  display: inline-block;
-  padding: 4px 6px;
-`;
-
 const Description = styled.p`
   font-size: 13px;
   color: ${(p) => p.theme.light["-9"]};
   margin: 12px;
+`;
+
+const TypeNameWrapper = styled.div`
+  font-size: 13px;
+  color: ${(p) => p.theme.light["0"]};
+  margin: 12px;
+  padding: 0 4px;
 `;

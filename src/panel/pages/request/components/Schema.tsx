@@ -2,10 +2,11 @@ import React, { useContext, useState, useCallback } from "react";
 import { GraphQLNamedType } from "graphql";
 import styled from "styled-components";
 import { RequestContext } from "../../../context";
-import { Arrow } from "../../../components";
 import { Stack } from "./Stack";
 import { Fields } from "./Fields";
 import { Search } from "./Search";
+import { TopBar } from "./TopBar";
+import { Collapsible } from "./Collapsible";
 
 type ActiveIds = 1 | 2 | 3;
 
@@ -54,53 +55,44 @@ export const Schema = () => {
 
   return (
     <FlexContainer>
-      <Search typeMap={schemaTypes} setType={setType} />
+      <TopBar setStack={setStack} stack={stack}>
+        <Search typeMap={schemaTypes} setType={setType} />
+      </TopBar>
       <Container>
         {stack.length > 0 ? (
-          <Stack stack={stack} setType={setType} setStack={setStack} />
+          <Stack
+            currentType={stack[stack.length - 1]}
+            setType={setType}
+            setStack={setStack}
+          />
         ) : (
           <Wrapper>
             {schemaTypes.Query ? (
-              <>
-                <CollapsibleHeader
-                  onClick={() => handleHeaderClick(1)}
-                  aria-expanded={isActiveId(1)}
-                >
-                  <Arrow data-active={isActiveId(1)} />
-                  <span>Query</span>
-                </CollapsibleHeader>
-                {isActiveId(1) && (
-                  <Fields node={schemaTypes?.Query} setType={setType} />
-                )}
-              </>
+              <Collapsible
+                title="Query"
+                isActive={isActiveId(1)}
+                onClick={() => handleHeaderClick(1)}
+              >
+                <Fields node={schemaTypes?.Query} setType={setType} />
+              </Collapsible>
             ) : null}
             {schemaTypes.Mutation ? (
-              <>
-                <CollapsibleHeader
-                  onClick={() => handleHeaderClick(2)}
-                  aria-expanded={isActiveId(2)}
-                >
-                  <Arrow data-active={isActiveId(2)} />
-                  <span>Mutation</span>
-                </CollapsibleHeader>
-                {isActiveId(2) && (
-                  <Fields node={schemaTypes?.Mutation} setType={setType} />
-                )}
-              </>
+              <Collapsible
+                title="Mutation"
+                isActive={isActiveId(2)}
+                onClick={() => handleHeaderClick(2)}
+              >
+                <Fields node={schemaTypes?.Mutation} setType={setType} />
+              </Collapsible>
             ) : null}
             {schemaTypes.Subscription ? (
-              <>
-                <CollapsibleHeader
-                  onClick={() => handleHeaderClick(3)}
-                  aria-expanded={isActiveId(3)}
-                >
-                  <Arrow data-active={isActiveId(3)} />
-                  <span>Subscription</span>
-                </CollapsibleHeader>
-                {isActiveId(3) && (
-                  <Fields node={schemaTypes?.Subscription} setType={setType} />
-                )}
-              </>
+              <Collapsible
+                title="Subscription"
+                isActive={isActiveId(3)}
+                onClick={() => handleHeaderClick(3)}
+              >
+                <Fields node={schemaTypes?.Subscription} setType={setType} />
+              </Collapsible>
             ) : null}
           </Wrapper>
         )}
@@ -117,21 +109,6 @@ const FlexContainer = styled.div`
 
 const Container = styled.div`
   position: relative;
-`;
-
-const CollapsibleHeader = styled.button`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  color: ${(p) => p.theme.light["-5"]};
-  background-color: ${(p) => p.theme.dark["+3"]};
-  border: 1px solid ${(p) => p.theme.dark["+7"]};
-  font-size: 13px;
-  padding: 6px;
-
-  &:hover {
-    background-color: ${(p) => p.theme.dark["+5"]};
-  }
 `;
 
 const Title = styled.h3`

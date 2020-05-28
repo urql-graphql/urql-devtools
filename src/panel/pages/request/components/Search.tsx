@@ -22,7 +22,9 @@ export const Search: FC<SearchProps> = ({ typeMap, setType }) => {
   const containerRef = useRef<HTMLDivElement>(undefined as any);
   const [searchValue, setSearchValue] = useState<string>("");
   const [listOpen, setListOpen] = useState<boolean>(false);
+
   let typeKeys = useMemo(() => Object.keys(typeMap), [typeMap]);
+
   const results = useMemo(
     () =>
       (typeKeys = typeKeys.filter((key) =>
@@ -117,6 +119,7 @@ const HighlightMatch: FC<HighlightProps> = ({ name, term }) => {
 };
 
 const Container = styled.div`
+  width: 250px;
   background-color: ${(p) => p.theme.dark["+5"]};
 `;
 
@@ -131,14 +134,17 @@ const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 250px;
+  width: 100%;
   color: ${(p) => p.theme.light["-5"]};
   font-size: 13px;
   padding: 6px 12px;
+  padding-left: 0;
 
-  &::after {
+  &::before {
     content: "|";
+    display: inline-block;
     color: ${(p) => p.theme.grey["-2"]};
+    padding-right: 6px;
   }
 `;
 
