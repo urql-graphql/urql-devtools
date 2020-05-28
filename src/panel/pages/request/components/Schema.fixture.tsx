@@ -145,7 +145,7 @@ const RequestProviderMock: FC<Partial<ContextType<typeof RequestContext>>> = ({
 export default {
   basic: (
     <RequestProviderMock>
-      <Schema />
+      <Schema data-snapshot />
     </RequestProviderMock>
   ),
 };

@@ -8,7 +8,7 @@ const setTypeMock = (type: any) => console.log(type);
 export default {
   basic: (
     <div style={{ position: "relative", width: "100%" }}>
-      <Search typeMap={typeMap} setType={setTypeMock} />
+      <Search data-snapshot typeMap={typeMap} setType={setTypeMock} />
     </div>
   ),
 };

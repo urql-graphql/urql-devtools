@@ -21,22 +21,26 @@ export default {
   object: <Objects />,
   interface: (
     <Box>
-      <Fields setType={setTypeMock} node={typeMap["Test"]} />
+      <Fields data-snapshot setType={setTypeMock} node={typeMap["Test"]} />
     </Box>
   ),
   enum: (
     <Box>
-      <Fields setType={setTypeMock} node={typeMap["SortBy"]} />
+      <Fields data-snapshot setType={setTypeMock} node={typeMap["SortBy"]} />
     </Box>
   ),
   union: (
     <Box>
-      <Fields setType={setTypeMock} node={typeMap["Action"]} />
+      <Fields data-snapshot setType={setTypeMock} node={typeMap["Action"]} />
     </Box>
   ),
   input: (
     <Box>
-      <Fields setType={setTypeMock} node={typeMap["ThreadInput"]} />
+      <Fields
+        data-snapshot
+        setType={setTypeMock}
+        node={typeMap["ThreadInput"]}
+      />
     </Box>
   ),
 };
