@@ -129,7 +129,7 @@
     "polished": "^3.6.5",
     "prettier": "^2.0.5",
     "prism-react-renderer": "^1.1.1",
-    "puppeteer": "^3.3.0",
+    "puppeteer": "^4.0.1",
     "react": "^16.13.1",
     "react-cosmos": "5.4.0",
     "react-dom": "^16.13.1",
