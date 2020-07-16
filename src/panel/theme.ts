@@ -1,9 +1,8 @@
-import { lighten, darken } from "polished";
+import { lighten, darken, mix } from "polished";
 import { createGlobalStyle } from "styled-components";
 
 const dark = "#141414";
 const light = "#fff";
-const grey = "#808080";
 const blue = "#0084FF";
 const green = "#80DF68";
 const orange = "#FF7940";
@@ -27,36 +26,36 @@ export const theme = {
   },
   light: {
     "0": light,
-    "-1": darken(0.02, light),
-    "-2": darken(0.04, light),
-    "-3": darken(0.06, light),
-    "-4": darken(0.08, light),
-    "-5": darken(0.1, light),
-    "-6": darken(0.12, light),
-    "-7": darken(0.14, light),
-    "-8": darken(0.16, light),
-    "-9": darken(0.18, light),
+    "-1": mix(0.02, dark, light),
+    "-2": mix(0.04, dark, light),
+    "-3": mix(0.06, dark, light),
+    "-4": mix(0.08, dark, light),
+    "-5": mix(0.1, dark, light),
+    "-6": mix(0.12, dark, light),
+    "-7": mix(0.14, dark, light),
+    "-8": mix(0.16, dark, light),
+    "-9": mix(0.18, dark, light),
   },
   grey: {
-    "0": grey,
-    "-1": darken(0.02, grey),
-    "-2": darken(0.04, grey),
-    "-3": darken(0.06, grey),
-    "-4": darken(0.08, grey),
-    "-5": darken(0.1, grey),
-    "-6": darken(0.12, grey),
-    "-7": darken(0.14, grey),
-    "-8": darken(0.16, grey),
-    "-9": darken(0.18, grey),
-    "+1": lighten(0.02, grey),
-    "+2": lighten(0.04, grey),
-    "+3": lighten(0.06, grey),
-    "+4": lighten(0.08, grey),
-    "+5": lighten(0.1, grey),
-    "+6": lighten(0.12, grey),
-    "+7": lighten(0.14, grey),
-    "+8": lighten(0.16, grey),
-    "+9": lighten(0.18, grey),
+    "0": mix(0.5, dark, light),
+    "-1": mix(0.52, dark, light),
+    "-2": mix(0.54, dark, light),
+    "-3": mix(0.56, dark, light),
+    "-4": mix(0.58, dark, light),
+    "-5": mix(0.6, dark, light),
+    "-6": mix(0.62, dark, light),
+    "-7": mix(0.64, dark, light),
+    "-8": mix(0.66, dark, light),
+    "-9": mix(0.68, dark, light),
+    "+1": mix(0.48, dark, light),
+    "+2": mix(0.46, dark, light),
+    "+3": mix(0.44, dark, light),
+    "+4": mix(0.42, dark, light),
+    "+5": mix(0.4, dark, light),
+    "+6": mix(0.38, dark, light),
+    "+7": mix(0.36, dark, light),
+    "+8": mix(0.34, dark, light),
+    "+9": mix(0.32, dark, light),
   },
   blue: {
     "0": blue,
