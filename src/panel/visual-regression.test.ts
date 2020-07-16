@@ -42,6 +42,10 @@ describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
   }: {
     viewport: "landscape" | "portrait";
   }) => {
+    if ((await page.$(".sb-show-errordisplay")) !== null) {
+      throw Error("Fixture failed to open");
+    }
+
     const element = await page.$("[data-snapshot=true]");
 
     if (element === null) {
