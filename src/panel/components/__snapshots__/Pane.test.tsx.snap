@@ -2,6 +2,7 @@
 
 exports[`on mount on landscape orientation matches snapshot 1`] = `
 <PaneContainer
+  data-portrait="false"
   style={
     Object {
       "height": "auto",
@@ -13,6 +14,7 @@ exports[`on mount on landscape orientation matches snapshot 1`] = `
   <DraggingEdge
     aria-grabbed={false}
     aria-orientation="vertical"
+    data-portrait="false"
     onMouseDown={[Function]}
     role="seperator"
   />
@@ -21,6 +23,7 @@ exports[`on mount on landscape orientation matches snapshot 1`] = `
 
 exports[`on mount on portrait orientation matches snapshot 1`] = `
 <PaneContainer
+  data-portrait="true"
   style={
     Object {
       "height": 400,
@@ -32,6 +35,7 @@ exports[`on mount on portrait orientation matches snapshot 1`] = `
   <DraggingEdge
     aria-grabbed={false}
     aria-orientation="horizontal"
+    data-portrait="true"
     onMouseDown={[Function]}
     role="seperator"
   />

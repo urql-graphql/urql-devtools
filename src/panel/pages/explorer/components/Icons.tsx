@@ -1,15 +1,6 @@
 import React, { FC } from "react";
 import { useTheme } from "styled-components";
 
-export const ArrowIcon: FC<JSX.IntrinsicElements["svg"]> = (props) => (
-  <svg height="10" width="10" viewBox="0 0 4 8" {...props}>
-    <path
-      d="M4 3.982a.485.485 0 01-.127.355C3.731 4.5.61 7.729.465 7.892c-.145.163-.443.163-.443-.147L0 .255c0-.31.298-.31.442-.147C.587.271 3.71 3.5 3.852 3.663c.085.1.148.173.148.319z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
 export const SeeMoreIcon: FC<JSX.IntrinsicElements["svg"]> = (props) => (
   <svg width="13" height="9" viewBox="0 0 13 9" fill="none" {...props}>
     <rect width="13" height="9" rx="2" fill="#11171A" />
