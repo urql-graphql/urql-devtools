@@ -3,7 +3,7 @@
   <h1>Urql Devtools</h1>
   <p>The official browser extension for Urql</p>
   <a href="https://circleci.com/gh/FormidableLabs/workflows/urql-devtools">
-    <img alt="CircleCI Build Status" src="https://badgen.net/circleci/github/FormidableLabs/urql-devtools?label=build" />
+    <img alt="CircleCI Build Status" src="https://badgen.net/circleci/github/FormidableLabs/urql-devtools/master?label=build" />
   </a>
   <a href="https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm">
     <img alt="Chrome Web Store" src="https://badgen.net/chrome-web-store/v/mcfphkbpmkbeofnkjehahlmidmceblmm?color=fbbc07" />
