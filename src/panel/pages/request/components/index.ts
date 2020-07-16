@@ -1,3 +1,4 @@
 export * from "./Query";
-export * from "./Response";
 export * from "./Settings";
+export * from "./Schema";
+export * from "./Response";

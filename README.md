@@ -3,7 +3,7 @@
   <h1>Urql Devtools</h1>
   <p>The official browser extension for Urql</p>
   <a href="https://circleci.com/gh/FormidableLabs/workflows/urql-devtools">
-    <img alt="CircleCI Build Status" src="https://badgen.net/circleci/github/FormidableLabs/urql-devtools?label=build" />
+    <img alt="CircleCI Build Status" src="https://badgen.net/circleci/github/FormidableLabs/urql-devtools/master?label=build" />
   </a>
   <a href="https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm">
     <img alt="Chrome Web Store" src="https://badgen.net/chrome-web-store/v/mcfphkbpmkbeofnkjehahlmidmceblmm?color=fbbc07" />
@@ -49,7 +49,7 @@ Explore your backend schema and trigger queries directly via your running Urql c
 
 Follow the instructions to [install and setup the devtools exchange](https://github.com/FormidableLabs/urql-devtools-exchange#usage)
 
-### Browser
+### 🌐 Browser
 
 Install the extension for your browser of choice
 
@@ -58,7 +58,7 @@ Install the extension for your browser of choice
 
 Open the [devtools panel](https://developers.google.com/web/tools/chrome-devtools/open) in your browser and click on the _Urql_ tab
 
-### React Native
+### 📱 React Native
 
 Start the electron app from a dedicated shell
 

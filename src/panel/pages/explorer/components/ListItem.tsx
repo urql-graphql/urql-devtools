@@ -11,8 +11,7 @@ import styled from "styled-components";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { ExplorerContext } from "../../../context";
 import { useFlash } from "../hooks";
-import { InlineCodeHighlight } from "../../../components";
-import { ArrowIcon } from "./Icons";
+import { InlineCodeHighlight, Arrow } from "../../../components";
 import { Arguments } from "./Arguments";
 import { Tree } from "./Tree";
 
@@ -161,22 +160,6 @@ const ChildrenName = styled.span`
   color: ${(p) => p.theme.light["0"]};
   font-weight: bold;
   font-size: 13px;
-`;
-
-const Arrow = styled(ArrowIcon)`
-  flex-shrink: 0;
-  height: 10px;
-  width: 10px;
-  margin-left: 2px;
-  margin-right: 5px;
-  color: ${(p) => p.theme.light["-5"]};
-  transform: rotate(0deg);
-  transition: transform 100ms ease;
-
-  &[data-active="true"] {
-    color: ${(p) => p.theme.light["0"]};
-    transform: rotate(90deg);
-  }
 `;
 
 const Typename = styled.div`

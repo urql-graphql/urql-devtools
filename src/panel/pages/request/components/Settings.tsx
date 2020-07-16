@@ -1,18 +1,35 @@
 import React, { FC, useCallback } from "react";
 import styled from "styled-components";
-import { faPlay, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import prettier from "prettier/standalone";
+import parserGraphql from "prettier/parser-graphql";
+import {
+  faPlay,
+  faTrashAlt,
+  faAlignLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRequest } from "../../../context";
 
 export const Settings: FC = () => {
-  const { setQuery, execute } = useRequest();
+  const { setQuery, execute, query } = useRequest();
 
   const handleTrashClick = useCallback(() => setQuery(""), [setQuery]);
+
+  const handleFormatClick = useCallback(() => {
+    if (query) {
+      const formatted = prettier.format(query, {
+        parser: "graphql",
+        plugins: [parserGraphql],
+      });
+      setQuery(formatted);
+    }
+  }, [query, setQuery]);
 
   return (
     <Container>
       <Icon title="Run (⌃ ⏎)" icon={faPlay} onClick={execute} />
       <Icon title="Clear" icon={faTrashAlt} onClick={handleTrashClick} />
+      <Icon title="Prettify" icon={faAlignLeft} onClick={handleFormatClick} />
     </Container>
   );
 };
@@ -20,6 +37,7 @@ export const Settings: FC = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   width: 100%;
   padding: 3px 10px;
   background: ${(props) => props.theme.dark["+3"]};
