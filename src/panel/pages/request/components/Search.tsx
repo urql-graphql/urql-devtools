@@ -153,12 +153,20 @@ const Input = styled.input`
   border: none;
   width: 100%;
   color: ${(p) => p.theme.light["-5"]};
+
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid ${(p) => p.theme.grey["-5"]};
+  }
 `;
 
 const List = styled.ul`
   position: absolute;
   right: 0;
-  left: 0;
+  left: 55px;
   display: flex;
   width: 250px;
   max-height: 400px;
