@@ -161,6 +161,13 @@ const Input = styled.input`
     outline: none;
     border-bottom: 1px solid ${(p) => p.theme.grey["-5"]};
   }
+
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    display: none;
+  }
 `;
 
 const List = styled.ul`
