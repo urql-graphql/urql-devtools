@@ -39,4 +39,9 @@ const CollapsibleHeader = styled.button`
   &:hover {
     background-color: ${(p) => p.theme.dark["+5"]};
   }
+
+  &:focus {
+    background-color: ${(p) => p.theme.dark["+5"]};
+    outline: none;
+  }
 `;
