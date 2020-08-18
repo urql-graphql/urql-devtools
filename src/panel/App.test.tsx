@@ -1,6 +1,6 @@
 jest.mock("./context/Devtools.tsx", () => {
   return {
-    ...jest.requireActual("./context/Devtools.tsx"),
+    ...(jest.requireActual("./context/Devtools.tsx") as {}),
     useDevtoolsContext: jest.fn(),
   };
 });

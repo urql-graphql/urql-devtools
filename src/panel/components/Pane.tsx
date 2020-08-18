@@ -12,7 +12,8 @@ import { useOrientationWatcher } from "../hooks";
 
 interface OverrideProps {
   forcedOrientation?: { isPortrait: boolean };
-  initSize: { x: number; y: number };
+  initSize?: { x: number; y: number };
+  "data-snapshot"?: boolean;
 }
 
 const PaneRoot: FC<ComponentProps<typeof PaneContainer> & OverrideProps> = ({
