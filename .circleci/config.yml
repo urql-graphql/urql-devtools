@@ -187,6 +187,12 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - type check:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
       - test:
           requires:
             - install
