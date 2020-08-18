@@ -35,7 +35,8 @@
     "visual-regression": "./scripts/regression.sh",
     "visual-regression:exec": "jest --no-cache visual-regression --runInBand",
     "webpack:electron": "webpack --config webpack/webpack.electron.config.js",
-    "webpack:extension": "webpack --config webpack/webpack.extension.config.js"
+    "webpack:extension": "webpack --config webpack/webpack.extension.config.js",
+    "type-check": "yarn tsc"
   },
   "bin": "./scripts/cli.js",
   "engines": {
