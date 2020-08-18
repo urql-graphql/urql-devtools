@@ -10,7 +10,7 @@ import "codemirror/addon/lint/lint.css";
 import "codemirror-graphql/lint";
 import "codemirror-graphql/hint";
 import "codemirror-graphql/mode";
-import CodeMirror, { ShowHintOptions } from "codemirror";
+import CodeMirror, { ShowHintOptions, LintStateOptions } from "codemirror";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRequest } from "../../../context";
@@ -41,7 +41,7 @@ export const Query = () => {
     }
 
     // TODO!: Update types
-    codemirror.setOption("lint", { schema });
+    codemirror.setOption("lint", ({ schema } as unknown) as LintStateOptions);
     codemirror.setOption("hintOptions", ({
       schema,
     } as unknown) as ShowHintOptions);
