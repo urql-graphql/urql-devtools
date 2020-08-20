@@ -14,8 +14,8 @@ beforeAll(() => {
 // This fixture is variable (dependent on Date.now) so we need to snapshot it in jest
 describe("on fetching", () => {
   describe("network duration", () => {
-    it("is fetching", () => {
-      const fixtures = require("./TimelineRow.fixture").default;
+    it("is fetching", async () => {
+      const { default: fixtures } = await import("./TimelineRow.fixture");
       dateNow.mockReturnValue(5000);
       const wrapper = mount(
         <ThemeDecorator>{fixtures["network fetching"]}</ThemeDecorator>
@@ -25,8 +25,8 @@ describe("on fetching", () => {
       expect(duration.props()).toHaveProperty("data-state", "fetching");
     });
 
-    it("grows to current time", () => {
-      const fixtures = require("./TimelineRow.fixture").default;
+    it("grows to current time", async () => {
+      const { default: fixtures } = await import("./TimelineRow.fixture");
       const wrapper = mount(
         <ThemeDecorator>{fixtures["network fetching"]}</ThemeDecorator>
       );

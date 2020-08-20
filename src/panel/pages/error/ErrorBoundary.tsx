@@ -11,7 +11,7 @@ export class ErrorBoundary extends Component<
 > {
   state: { error?: Error } = {};
 
-  componentDidCatch(error: Error) {
+  componentDidCatch(error: Error): void {
     this.setState({
       error: error,
     });
@@ -30,7 +30,7 @@ export class ErrorBoundary extends Component<
     openExternalUrl(url);
   };
 
-  render() {
+  render(): React.ReactNode {
     if (!this.state.error) {
       return this.props.children;
     }

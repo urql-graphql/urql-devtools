@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { RequestContext } from "../../../context";
 import { CodeHighlight } from "../../../components";
 
-export const Response = () => {
+export const Response: React.FC = () => {
   const { fetching, response, error } = useContext(RequestContext);
 
   const { state, code } = useMemo(() => {

@@ -2,7 +2,12 @@ import { useEffect, useState, useMemo } from "react";
 
 const aspectQuery = window.matchMedia("(min-aspect-ratio: 1/1)");
 
-export const useOrientationWatcher = () => {
+interface OrientationWatcher {
+  isPortrait: boolean;
+  isLandscape: boolean;
+}
+
+export const useOrientationWatcher = (): OrientationWatcher => {
   const [state, setState] = useState(aspectQuery.matches);
 
   useEffect(() => {

@@ -117,13 +117,10 @@ const ListItemKeyVal = styled.div`
   margin: 0;
 `;
 
-export const SystemListItem = ({
-  node,
-  index,
-}: {
+export const SystemListItem: React.FC<{
   node: ParsedFieldNode;
   index?: number;
-}) => (
+}> = ({ node, index }) => (
   <Item withChildren={false}>
     <Typename>
       {`${node.value}`}

@@ -18,7 +18,7 @@ import { useRequest } from "../../../context";
 /** Query editor
  * Inspired by Graphiql's query editor - https://github.com/graphql/graphiql/blob/master/packages/graphiql/src/components/QueryEditor.js
  */
-export const Query = () => {
+export const Query: React.FC = () => {
   const [codemirror, setCodeMirror] = useState<CodeMirror.Editor | undefined>();
   const { query, setQuery, execute, schema } = useRequest();
 
@@ -28,7 +28,7 @@ export const Query = () => {
     }
 
     codemirror.setOption("extraKeys", {
-      ...(codemirror.getOption("extraKeys") as object),
+      ...(codemirror.getOption("extraKeys") as CodeMirror.KeyMap),
       "Ctrl-Enter": execute,
       "Cmd-Enter": execute,
     });

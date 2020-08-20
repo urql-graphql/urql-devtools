@@ -38,7 +38,8 @@ interface TimelineContextValue {
 
 export const TimelineContext = createContext<TimelineContextValue>(null as any);
 
-export const useTimelineContext = () => useContext(TimelineContext);
+export const useTimelineContext = (): TimelineContextValue =>
+  useContext(TimelineContext);
 
 const DEFAULT_WIDTH = 30000;
 export const START_PADDING = 500;
