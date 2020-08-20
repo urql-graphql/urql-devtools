@@ -28,7 +28,7 @@ export type ParsedNodeMap = Record<string, ParsedFieldNode>;
 
 interface HandleResponseArgs {
   operation: Operation;
-  data: OperationResult["data"];
+  data?: OperationResult["data"];
   parsedNodes?: ParsedNodeMap;
 }
 
@@ -86,7 +86,7 @@ interface CopyFromDataArgs {
   cacheOutcome: OperationDebugMeta["cacheOutcome"];
   parsedNodes: ParsedNodeMap;
   selections: readonly SelectionNode[];
-  data: OperationResult["data"];
+  data?: OperationResult["data"];
   owner: {};
 }
 
@@ -130,7 +130,7 @@ const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {
     const args = getFieldArguments(selectionNode, variables);
     const key = getFieldKey(name, args);
     const value =
-      data[
+      data?.[
         selectionNode.alias !== undefined
           ? selectionNode.alias.value
           : selectionNode.name.value
