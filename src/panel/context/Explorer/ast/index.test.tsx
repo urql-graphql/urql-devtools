@@ -1310,3 +1310,36 @@ it("embedded object on entity", () => {
     }
   `);
 });
+
+it("Handles empty data", () => {
+  expectCorrectOutput({
+    query: gql`
+      {
+        __typename
+        int
+      }
+    `,
+    data: null,
+  }).toMatchInlineSnapshot(`
+    Object {
+      "__typename": Object {
+        "_id": "[nanoid]",
+        "_owner": Object {},
+        "args": undefined,
+        "cacheOutcome": "hit",
+        "key": "__typename",
+        "name": "__typename",
+        "value": undefined,
+      },
+      "int": Object {
+        "_id": "[nanoid]",
+        "_owner": Object {},
+        "args": undefined,
+        "cacheOutcome": "hit",
+        "key": "int",
+        "name": "int",
+        "value": undefined,
+      },
+    }
+  `);
+});
