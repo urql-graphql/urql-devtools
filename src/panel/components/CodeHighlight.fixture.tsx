@@ -48,7 +48,7 @@ export default {
       </p>
     </Wrapper>
   ),
-  "Inline - string (collapsed)": (
+  "Inline - string (large)": (
     <Wrapper>
       <p data-snapshot>
         value:{" "}
@@ -70,7 +70,7 @@ export default {
       </p>
     </Wrapper>
   ),
-  "Inline - object (collapsed)": (
+  "Inline - object (large)": (
     <Wrapper>
       <p data-snapshot>
         value:{" "}
@@ -95,7 +95,7 @@ export default {
       </p>
     </Wrapper>
   ),
-  "Inline - array (collapsed)": (
+  "Inline - array (large)": (
     <Wrapper>
       <p data-snapshot>
         value:{" "}

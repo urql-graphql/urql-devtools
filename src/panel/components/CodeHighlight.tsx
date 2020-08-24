@@ -35,10 +35,8 @@ export const CodeHighlight: FC<any> = memo(function CodeHighlightMemo(props) {
 
 export const InlineCodeHighlight: FC<any> = memo(
   function InlineCodeHighlightMemo({ code, ...props }) {
-    const trimmedCode = trimCode(code, props.language);
-
     return (
-      <Highlight {...defaultProps} code={trimmedCode} {...props}>
+      <Highlight {...defaultProps} code={code} {...props}>
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <StyledInlineBlock
             className={`${className} ${props.className}`}
@@ -67,33 +65,6 @@ export const InlineCodeHighlight: FC<any> = memo(
     );
   }
 );
-
-const trimCode = (code: string, language: string) => {
-  if (language !== "json" || !code) {
-    return code;
-  }
-
-  // Collapse object
-  if (code[0] === "{" && code.length > 16) {
-    return `${code.substring(0, 14)}…}`;
-  }
-
-  // Collapse array
-  if (code[0] === "[" && code.length > 16) {
-    return `${code.substring(0, 14)}…]`;
-  }
-
-  // Collapse string
-  if (code[0] === '"' && code.length > 16) {
-    return `${code.substring(0, 14)}…"`;
-  }
-
-  if (code[0] === '"' && code.length > 16) {
-    return `${code.substring(0, 14)}…"`;
-  }
-
-  return code;
-};
 
 export const StyledInlineBlock = styled.pre`
   display: inline-flex;
