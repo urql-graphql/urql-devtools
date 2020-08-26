@@ -10,7 +10,7 @@ import { useTimelineContext } from "../../../../context";
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
 export const TimelinePane: FC<
-  ({ event: DebugEvent } | { source: Operation } | {}) &
+  ({ event: DebugEvent } | { source?: Operation }) &
     ComponentProps<typeof Container>
 > = ({ event, source, ...props }) => {
   const content = useMemo(() => {
@@ -98,7 +98,9 @@ const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
     <Heading>Variables</Heading>
     <CodeHighlight
       language={"javascript"}
-      code={JSONtoJavascriptString(operation.variables || {})}
+      code={JSONtoJavascriptString(
+        (operation.variables || {}) as Record<string, unknown>
+      )}
     />
   </PaneSection>
 );
@@ -183,5 +185,5 @@ const Icon = styled(FontAwesomeIcon)`
 const removeTrailingNewline = (s: string) =>
   s.substring(0, s.lastIndexOf("\n"));
 
-const JSONtoJavascriptString = (o: object) =>
+const JSONtoJavascriptString = (o: Record<string, unknown>) =>
   JSON.stringify(o, null, 2).replace(/"([^"]+)":/g, "$1:");

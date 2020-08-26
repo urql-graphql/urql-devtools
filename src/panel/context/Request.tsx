@@ -16,22 +16,22 @@ interface RequestContextValue {
   query?: string;
   setQuery: (s: string) => void;
   fetching: boolean;
-  response?: object;
+  response?: Record<string, unknown>;
   execute: () => void;
-  error?: object;
+  error?: Record<string, unknown>;
   schema?: GraphQLSchema;
 }
 
 export const RequestContext = createContext<RequestContextValue>(null as any);
 
-export const useRequest = () => useContext(RequestContext);
+export const useRequest = (): RequestContextValue => useContext(RequestContext);
 
 export const RequestProvider: FC = ({ children }) => {
   const { sendMessage, addMessageHandler } = useDevtoolsContext();
   const [state, setState] = useState<{
     fetching: boolean;
-    response?: object;
-    error?: object;
+    response?: Record<string, unknown>;
+    error?: Record<string, unknown>;
   }>({ fetching: false, response: undefined, error: undefined });
   const [query, setQuery] = useState<string>();
   const [schema, setSchema] = useState<GraphQLSchema>();

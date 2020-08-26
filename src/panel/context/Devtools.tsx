@@ -32,7 +32,8 @@ const REQUIRED_VERSION = "2.0.0";
 
 export const DevtoolsContext = createContext<DevtoolsContextType>(null as any);
 
-export const useDevtoolsContext = () => useContext(DevtoolsContext);
+export const useDevtoolsContext = (): DevtoolsContextType =>
+  useContext(DevtoolsContext);
 
 export const DevtoolsProvider: FC = ({ children }) => {
   const [client, setClient] = useState<DevtoolsContextType["client"]>({

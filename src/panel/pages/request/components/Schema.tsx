@@ -10,7 +10,7 @@ import { Collapsible } from "./Collapsible";
 
 type ActiveIds = 1 | 2 | 3;
 
-export const Schema = () => {
+export const Schema: React.FC = () => {
   const [activeIds, setActiveIds] = useState<ActiveIds[]>([1]);
   const [stack, setStack] = useState<GraphQLNamedType[]>([]);
   const { schema } = useContext(RequestContext);

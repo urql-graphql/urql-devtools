@@ -15,7 +15,7 @@ import { getFieldArguments, getNormalizedVariables } from "./variables";
 
 export interface ParsedFieldNode {
   _id: string;
-  _owner: {};
+  _owner: Record<string, unknown>;
   cacheOutcome?: OperationDebugMeta["cacheOutcome"];
   key: string;
   name: string;
@@ -36,7 +36,7 @@ export const handleResponse = ({
   operation,
   data,
   parsedNodes = {},
-}: HandleResponseArgs) => {
+}: HandleResponseArgs): ParsedNodeMap => {
   if (operation.operationName !== "query") {
     return parsedNodes;
   }
@@ -86,8 +86,8 @@ interface CopyFromDataArgs {
   cacheOutcome: OperationDebugMeta["cacheOutcome"];
   parsedNodes: ParsedNodeMap;
   selections: readonly SelectionNode[];
-  data?: OperationResult["data"];
-  owner: {};
+  data: OperationResult["data"];
+  owner: Record<string, unknown>;
 }
 
 const parseNodes = (copyArgs: CopyFromDataArgs): ParsedNodeMap => {

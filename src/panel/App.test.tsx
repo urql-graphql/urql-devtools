@@ -1,6 +1,9 @@
 jest.mock("./context/Devtools.tsx", () => {
   return {
-    ...(jest.requireActual("./context/Devtools.tsx") as {}),
+    ...(jest.requireActual("./context/Devtools.tsx") as Record<
+      string,
+      unknown
+    >),
     useDevtoolsContext: jest.fn(),
   };
 });

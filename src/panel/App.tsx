@@ -20,7 +20,7 @@ import {
   TimelineProvider,
 } from "./context";
 
-export const App = () => {
+export const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <ErrorBoundary>

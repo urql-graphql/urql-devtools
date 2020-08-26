@@ -10,7 +10,7 @@ import Maybe from "graphql/tsutils/Maybe";
 export const getFieldArguments = (
   node: FieldNode,
   vars: Operation["variables"]
-) => {
+): Record<string, unknown> | undefined => {
   if (node.arguments === undefined || node.arguments.length === 0) {
     return;
   }
@@ -21,14 +21,14 @@ export const getFieldArguments = (
       [arg.name.value]: valueFromASTUntyped(arg.value, vars),
     }),
     {}
-  );
+  ) as Record<string, unknown>;
 };
 
 /** Returns a normalized form of variables with defaulted values */
 export const getNormalizedVariables = (
   variableDefinitions: OperationDefinitionNode["variableDefinitions"] = [],
   variables?: Maybe<Record<string, any>>
-) =>
+): Record<string, unknown> | undefined =>
   variableDefinitions.reduce<Operation["variables"]>(
     (normalized, definition) => ({
       ...normalized,
@@ -38,4 +38,4 @@ export const getNormalizedVariables = (
       ),
     }),
     {}
-  );
+  ) as Record<string, unknown>;
