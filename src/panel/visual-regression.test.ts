@@ -69,26 +69,29 @@ describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
     });
   };
 
-  beforeEach(async () => {
-    await page.goto(rendererUrl, { waitUntil: "load" });
-    await page.mouse.move(0, 0);
-    await delay(500);
-  });
-
-  describe("landscape viewport", () => {
+  describe("Go to page, test landscape and portrait viewport", () => {
+    // Only load the page once for each viewport orientation
+    let pageRendered = false;
     beforeEach(async () => {
+      if (pageRendered) {
+        return;
+      }
+
+      await page.goto(rendererUrl, { waitUntil: "load" });
+      await page.mouse.move(0, 0);
+      await delay(500);
+      pageRendered = true;
+    });
+
+    it("matches landscape snapshot", async () => {
       await page.setViewport({ width: 1200, height: 600 });
+      await matchSnapshot({ viewport: "landscape" });
     });
 
-    it("matches snapshot", () => matchSnapshot({ viewport: "landscape" }));
-  });
-
-  describe("portrait viewport", () => {
-    beforeEach(async () => {
+    it("matches portrait snapshot", async () => {
       await page.setViewport({ width: 600, height: 1200 });
+      await matchSnapshot({ viewport: "portrait" });
     });
-
-    it("matches snapshot", () => matchSnapshot({ viewport: "portrait" }));
   });
 });
 
