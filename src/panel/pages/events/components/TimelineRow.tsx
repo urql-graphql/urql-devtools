@@ -11,7 +11,13 @@ import {
 export const TimelineRow: FC<
   { events: DebugEvent[] } & ComponentProps<typeof Container>
 > = ({ events, ...props }) => {
-  const { container, scale, setSelectedEvent, filter } = useTimelineContext();
+  const {
+    container,
+    scale,
+    setSelectedEvent,
+    selectedEvent,
+    filter,
+  } = useTimelineContext();
 
   const eventElements = useMemo(
     () =>
@@ -122,6 +128,7 @@ export const TimelineRow: FC<
             <TimelineNetworkDuration
               key={`n-${p.elements.length}`}
               state="success"
+              isSelected={e.timestamp === selectedEvent?.timestamp}
               style={{
                 position: "absolute",
                 left: scale(p.start.timestamp),
@@ -141,6 +148,7 @@ export const TimelineRow: FC<
             ...p.elements,
             <TimelineNetworkDuration
               key={`n-${p.elements.length}`}
+              isSelected={e.timestamp === selectedEvent?.timestamp}
               state="error"
               style={{
                 position: "absolute",

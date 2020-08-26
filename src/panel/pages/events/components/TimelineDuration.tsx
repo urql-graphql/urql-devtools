@@ -9,9 +9,12 @@ export const TimelineAliveDuration = styled.div`
 
 type NetworkState = "fetching" | "success" | "error";
 
-export const NetworkDuration = styled.div`
+export const NetworkDuration = styled.div<{ isSelected?: boolean }>`
   cursor: pointer;
   height: 10px;
+
+  outline: ${({ isSelected, theme }) =>
+    isSelected ? `${theme.grey["-7"]} solid 3px` : "none"};
 
   &[data-state="fetching"] {
     background: ${(props) => props.theme.blue["-1"]};
@@ -27,7 +30,9 @@ export const NetworkDuration = styled.div`
 `;
 
 export const TimelineNetworkDuration: FC<
-  { state: NetworkState } & ComponentProps<typeof NetworkDuration>
+  { state: NetworkState; isSelected?: boolean } & ComponentProps<
+    typeof NetworkDuration
+  >
 > = ({ state, ...props }) => {
   const { ref, tooltipProps, isVisible } = useTooltip();
 
