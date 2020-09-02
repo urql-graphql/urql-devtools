@@ -23,6 +23,7 @@
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-use-before-define": 0,
     "@typescript-eslint/prefer-interface": 0,
+    "@typescript-eslint/no-var-requires": 0,
     "import/named": 0,
     "react/prop-types": 0,
     "react/no-children-prop": 0
