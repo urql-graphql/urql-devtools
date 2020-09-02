@@ -1,5 +1,4 @@
 import { ExchangeMessage, DevtoolsMessage } from "@urql/devtools";
-import { ipcRenderer } from "electron";
 import { DevtoolsPanelConnectionName } from "../../types";
 
 export interface ConnectionType {
@@ -22,6 +21,8 @@ export const createConnection = (): ConnectionType => {
   }
 
   let listeners: Array<(msg: ExchangeMessage | DevtoolsMessage) => void> = [];
+  const ipcRenderer = require("electron")
+    .ipcRenderer as import("electron").IpcRenderer;
 
   ipcRenderer.on("message", (_event, message) =>
     listeners.forEach((l) => l(message))
