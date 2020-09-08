@@ -255,12 +255,10 @@ export const TimelineRow: FC<
         ]
       : [];
 
-    return [
-      ...reducedDurations.alive.elements,
-      ...finalAliveDuration,
-      ...reducedDurations.network.elements,
-      ...finalNetworkDuration,
-    ];
+    return reducedDurations.alive.elements
+      .concat(finalAliveDuration)
+      .concat(reducedDurations.network.elements)
+      .concat(finalNetworkDuration);
   }, [events, scale, container.clientWidth, setSelectedEvent]);
 
   return (
