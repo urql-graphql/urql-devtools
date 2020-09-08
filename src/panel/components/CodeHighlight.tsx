@@ -1,12 +1,14 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, ComponentPropsWithoutRef } from "react";
 import styled from "styled-components";
 
 type PrismLanguage = "json" | "graphql";
 
-export const CodeHighlight: FC<{
-  code: string;
-  language: PrismLanguage;
-}> = ({ code, language }) => {
+export const CodeHighlight: FC<
+  {
+    code: string;
+    language: PrismLanguage;
+  } & ComponentPropsWithoutRef<typeof StyledCodeBlock>
+> = ({ code, language, ...props }) => {
   const handleRef = useCallback(
     (ref) => {
       if (ref === null) {
@@ -21,19 +23,21 @@ export const CodeHighlight: FC<{
 
   return (
     <StyledCodeBlock
+      {...props}
       ref={handleRef}
-      className={`language language-${language}`}
+      className={`language language-${language} ${props.className || ""}`}
     >
       <code>{code}</code>
     </StyledCodeBlock>
   );
 };
-CodeHighlight.displayName = "CodeHighlight";
 
-export const InlineCodeHighlight: FC<{
-  code: string;
-  language: PrismLanguage;
-}> = ({ code, language }) => {
+export const InlineCodeHighlight: FC<
+  {
+    code: string;
+    language: PrismLanguage;
+  } & ComponentPropsWithoutRef<typeof StyledCodeBlock>
+> = ({ code, language, ...props }) => {
   const handleRef = useCallback(
     (ref) => {
       if (ref === null) {
@@ -48,8 +52,9 @@ export const InlineCodeHighlight: FC<{
 
   return (
     <StyledInlineBlock
+      {...props}
       ref={handleRef}
-      className={`language language-${language}`}
+      className={`language language-${language} ${props.className || ""}`}
     >
       <code>{code}</code>
     </StyledInlineBlock>
