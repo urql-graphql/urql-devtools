@@ -1,15 +1,15 @@
 import * as Prism from "prismjs";
 import "prismjs/components/prism-json";
 import "prismjs/components/prism-graphql";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import styled from "styled-components";
 
 type PrismLanguage = "json" | "graphql";
 
-export const CodeHighlight: FC<{ code: string; language: PrismLanguage }> = ({
-  code,
-  language,
-}) => (
+export const CodeHighlight: FC<{
+  code: string;
+  language: PrismLanguage;
+}> = memo(({ code, language }) => (
   <StyledCodeBlock className={`language language-${language}`}>
     <code
       dangerouslySetInnerHTML={{
@@ -17,12 +17,13 @@ export const CodeHighlight: FC<{ code: string; language: PrismLanguage }> = ({
       }}
     />
   </StyledCodeBlock>
-);
+));
+CodeHighlight.displayName = "CodeHighlight";
 
 export const InlineCodeHighlight: FC<{
   code: string;
   language: PrismLanguage;
-}> = ({ code, language }) => (
+}> = memo(({ code, language }) => (
   <StyledInlineBlock className={`language language-${language}`}>
     <code
       dangerouslySetInnerHTML={{
@@ -30,7 +31,8 @@ export const InlineCodeHighlight: FC<{
       }}
     />
   </StyledInlineBlock>
-);
+));
+InlineCodeHighlight.displayName = "InlineCodeHighlight";
 
 export const StyledInlineBlock = styled.pre`
   display: inline-flex;
