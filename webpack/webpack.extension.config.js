@@ -15,6 +15,7 @@ const inOutConfig = isExtension
         background: `${root}/src/extension/background.ts`,
         devtools: `${root}/src/extension/devtools.ts`,
         content_script: `${root}/src/extension/content_script.ts`,
+        "prism-panel": `${root}/src/panel/Prism.ts`,
         panel: `${root}/src/panel/panel.tsx`,
       },
       output: {
@@ -39,6 +40,16 @@ module.exports = {
   devtool: "source-map",
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   optimization: {
+    // splitChunks: {
+    //   chunks: "all",
+    //   cacheGroups: {
+    //     prismjs: {
+    //       test: /node_modules\/prismjs\/prism.js/,
+    //       name: "prism-panel",
+    //       chunks: "all",
+    //     },
+    //   },
+    // },
     minimizer: [
       new TerserPlugin({
         test: /\.js(\?.*)?$/i,
@@ -120,7 +131,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: `${root}/src/panel/panel.html`,
       filename: "panel.html",
-      chunks: ["panel"],
+      chunks: ["prism-panel", "panel"],
     }),
     new CspHtmlWebpackPlugin({
       "default-src": "'self'",

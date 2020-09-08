@@ -1,23 +1,36 @@
-import * as Prism from "prismjs";
 import "prismjs/components/prism-json";
 import "prismjs/components/prism-graphql";
-import React, { FC, memo } from "react";
+import React, { FC, memo, useCallback } from "react";
 import styled from "styled-components";
 
 type PrismLanguage = "json" | "graphql";
 
+// @ts-ignore
+Prism.manual = true;
+console.log(Prism.languages);
+
 export const CodeHighlight: FC<{
   code: string;
   language: PrismLanguage;
-}> = memo(({ code, language }) => (
-  <StyledCodeBlock className={`language language-${language}`}>
-    <code
-      dangerouslySetInnerHTML={{
-        __html: Prism.highlight(code, Prism.languages[language], language),
-      }}
-    />
-  </StyledCodeBlock>
-));
+}> = ({ code, language }) => {
+  const handleRef = useCallback((ref) => {
+    console.log(ref);
+    if (ref === null) {
+      return;
+    }
+
+    Prism.highlightElement(ref, true, () => console.log("DONEE"));
+  }, []);
+
+  return (
+    <StyledCodeBlock
+      ref={handleRef}
+      className={`language language-${language}`}
+    >
+      <code>{code}</code>
+    </StyledCodeBlock>
+  );
+};
 CodeHighlight.displayName = "CodeHighlight";
 
 export const InlineCodeHighlight: FC<{
