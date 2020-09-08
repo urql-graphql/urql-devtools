@@ -108,10 +108,8 @@ export const TimelineRow: FC<
 
       // Request started
       if (p.start === undefined && e.type === "fetchRequest") {
-        return {
-          ...p,
-          start: e,
-        };
+        p.start = e;
+        return p;
       }
 
       // Safety condition - shouldn't occur
@@ -121,45 +119,41 @@ export const TimelineRow: FC<
 
       // Response
       if (e.type === "fetchSuccess") {
-        return {
-          start: undefined,
-          elements: [
-            ...p.elements,
-            <TimelineNetworkDuration
-              key={`n-${p.elements.length}`}
-              state="success"
-              isSelected={e.timestamp === selectedEvent?.timestamp}
-              style={{
-                position: "absolute",
-                left: scale(p.start.timestamp),
-                right: container.clientWidth - scale(e.timestamp),
-                bottom: 0,
-              }}
-              onClick={handleClick}
-            />,
-          ],
-        };
+        p.start = undefined;
+        p.elements.push(
+          <TimelineNetworkDuration
+            key={`n-${p.elements.length}`}
+            state="success"
+            isSelected={e.timestamp === selectedEvent?.timestamp}
+            style={{
+              position: "absolute",
+              left: scale(p.start.timestamp),
+              right: container.clientWidth - scale(e.timestamp),
+              bottom: 0,
+            }}
+            onClick={handleClick}
+          />
+        );
+        return p;
       }
 
       if (e.type === "fetchError" || e.type === "teardown") {
-        return {
-          start: undefined,
-          elements: [
-            ...p.elements,
-            <TimelineNetworkDuration
-              key={`n-${p.elements.length}`}
-              isSelected={e.timestamp === selectedEvent?.timestamp}
-              state="error"
-              style={{
-                position: "absolute",
-                left: scale(p.start.timestamp),
-                right: container.clientWidth - scale(e.timestamp),
-                bottom: 0,
-              }}
-              onClick={handleClick}
-            />,
-          ],
-        };
+        p.elements.push(
+          <TimelineNetworkDuration
+            key={`n-${p.elements.length}`}
+            isSelected={e.timestamp === selectedEvent?.timestamp}
+            state="error"
+            style={{
+              position: "absolute",
+              left: scale(p.start.timestamp),
+              right: container.clientWidth - scale(e.timestamp),
+              bottom: 0,
+            }}
+            onClick={handleClick}
+          />
+        );
+        p.start = undefined;
+        return p;
       }
 
       return p;
@@ -180,10 +174,8 @@ export const TimelineRow: FC<
 
       // First event to start timeline duration
       if (p.start === undefined && e.type !== "teardown") {
-        return {
-          ...p,
-          start: e,
-        };
+        p.start = e;
+        return p;
       }
 
       if (p.start === undefined) {
@@ -204,20 +196,18 @@ export const TimelineRow: FC<
         e.type === "teardown" ||
         (isMutationResponse && activeMutations === 0)
       ) {
-        return {
-          start: undefined,
-          elements: [
-            ...p.elements,
-            <TimelineAliveDuration
-              key={`d-${p.elements.length}`}
-              style={{
-                position: "absolute",
-                left: scale(p.start.timestamp),
-                right: container.clientWidth - scale(e.timestamp),
-              }}
-            />,
-          ],
-        };
+        p.elements.push(
+          <TimelineAliveDuration
+            key={`d-${p.elements.length}`}
+            style={{
+              position: "absolute",
+              left: scale(p.start.timestamp),
+              right: container.clientWidth - scale(e.timestamp),
+            }}
+          />
+        );
+        p.start = undefined;
+        return p;
       }
 
       return p;
