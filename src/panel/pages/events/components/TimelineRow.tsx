@@ -39,13 +39,12 @@ export const TimelineRow: FC<
               scale(groups[previousIndex][0].event.timestamp) <
             5
           ) {
-            return [
-              ...groups.slice(0, previousIndex),
-              [...groups[previousIndex], entry],
-            ];
+            groups[previousIndex].push(entry);
+            return groups;
           }
 
-          return [...groups, [entry]];
+          groups.push([entry]);
+          return groups;
         }, [])
         .map((group) => {
           if (group.length === 1) {
@@ -119,7 +118,6 @@ export const TimelineRow: FC<
 
       // Response
       if (e.type === "fetchSuccess") {
-        p.start = undefined;
         p.elements.push(
           <TimelineNetworkDuration
             key={`n-${p.elements.length}`}
@@ -134,6 +132,7 @@ export const TimelineRow: FC<
             onClick={handleClick}
           />
         );
+        p.start = undefined;
         return p;
       }
 
