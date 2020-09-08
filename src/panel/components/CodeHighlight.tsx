@@ -1,69 +1,35 @@
-import React, { FC, memo } from "react";
-import Highlight, { defaultProps } from "prism-react-renderer";
+import * as Prism from "prismjs";
+import "prismjs/components/prism-json";
+import "prismjs/components/prism-graphql";
+import React, { FC } from "react";
 import styled from "styled-components";
 
-export const CodeHighlight: FC<any> = memo(function CodeHighlightMemo(props) {
-  return (
-    <Highlight {...defaultProps} {...props}>
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <StyledCodeBlock
-          className={`${className} ${props.className}`}
-          style={{ ...style, backgroundColor: undefined, color: undefined }}
-        >
-          <code>
-            {tokens.map((line, i) => (
-              <div
-                key={i}
-                {...getLineProps({ line, key: i })}
-                style={undefined}
-              >
-                {line.map((token, key) => (
-                  <span
-                    key={key}
-                    {...getTokenProps({ token, key })}
-                    style={undefined}
-                  />
-                ))}
-              </div>
-            ))}
-          </code>
-        </StyledCodeBlock>
-      )}
-    </Highlight>
-  );
-});
+type PrismLanguage = "json" | "graphql";
 
-export const InlineCodeHighlight: FC<any> = memo(
-  function InlineCodeHighlightMemo({ code, ...props }) {
-    return (
-      <Highlight {...defaultProps} code={code} {...props}>
-        {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <StyledInlineBlock
-            className={`${className} ${props.className}`}
-            style={{ ...style, backgroundColor: undefined, color: undefined }}
-          >
-            <code>
-              {tokens.map((line, i) => (
-                <div
-                  key={i}
-                  {...getLineProps({ line, key: i })}
-                  style={undefined}
-                >
-                  {line.map((token, key) => (
-                    <span
-                      key={key}
-                      {...getTokenProps({ token, key })}
-                      style={undefined}
-                    />
-                  ))}
-                </div>
-              ))}
-            </code>
-          </StyledInlineBlock>
-        )}
-      </Highlight>
-    );
-  }
+export const CodeHighlight: FC<{ code: string; language: PrismLanguage }> = ({
+  code,
+  language,
+}) => (
+  <StyledCodeBlock className={`language language-${language}`}>
+    <code
+      dangerouslySetInnerHTML={{
+        __html: Prism.highlight(code, Prism.languages[language], language),
+      }}
+    />
+  </StyledCodeBlock>
+);
+
+export const InlineCodeHighlight: FC<{
+  code: string;
+  language: PrismLanguage;
+}> = ({ code, language }) => (
+  <StyledInlineBlock className={`language language-${language}`}>
+    <code
+      dangerouslySetInnerHTML={{
+        __html: Prism.highlight(code, Prism.languages[language], language),
+      }}
+    />
+  </StyledInlineBlock>
 );
 
 export const StyledInlineBlock = styled.pre`
