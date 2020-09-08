@@ -1,26 +1,23 @@
-import "prismjs/components/prism-json";
-import "prismjs/components/prism-graphql";
-import React, { FC, memo, useCallback } from "react";
+import React, { FC, useCallback } from "react";
 import styled from "styled-components";
 
 type PrismLanguage = "json" | "graphql";
-
-// @ts-ignore
-Prism.manual = true;
-console.log(Prism.languages);
 
 export const CodeHighlight: FC<{
   code: string;
   language: PrismLanguage;
 }> = ({ code, language }) => {
-  const handleRef = useCallback((ref) => {
-    console.log(ref);
-    if (ref === null) {
-      return;
-    }
+  const handleRef = useCallback(
+    (ref) => {
+      if (ref === null) {
+        return;
+      }
 
-    Prism.highlightElement(ref, true, () => console.log("DONEE"));
-  }, []);
+      // Run prism on element (in web worker/async)
+      Prism.highlightElement(ref, true);
+    },
+    [language]
+  );
 
   return (
     <StyledCodeBlock
@@ -36,16 +33,28 @@ CodeHighlight.displayName = "CodeHighlight";
 export const InlineCodeHighlight: FC<{
   code: string;
   language: PrismLanguage;
-}> = memo(({ code, language }) => (
-  <StyledInlineBlock className={`language language-${language}`}>
-    <code
-      dangerouslySetInnerHTML={{
-        __html: Prism.highlight(code, Prism.languages[language], language),
-      }}
-    />
-  </StyledInlineBlock>
-));
-InlineCodeHighlight.displayName = "InlineCodeHighlight";
+}> = ({ code, language }) => {
+  const handleRef = useCallback(
+    (ref) => {
+      if (ref === null) {
+        return;
+      }
+
+      // Run prism on element (sync)
+      Prism.highlightElement(ref, false);
+    },
+    [language]
+  );
+
+  return (
+    <StyledInlineBlock
+      ref={handleRef}
+      className={`language language-${language}`}
+    >
+      <code>{code}</code>
+    </StyledInlineBlock>
+  );
+};
 
 export const StyledInlineBlock = styled.pre`
   display: inline-flex;
