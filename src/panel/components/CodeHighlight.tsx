@@ -18,7 +18,7 @@ export const CodeHighlight: FC<
       // Run prism on element (in web worker/async)
       Prism.highlightElement(ref, true);
     },
-    [language]
+    [code, language]
   );
 
   return (
@@ -47,7 +47,7 @@ export const InlineCodeHighlight: FC<
       // Run prism on element (sync)
       Prism.highlightElement(ref, false);
     },
-    [language]
+    [code, language]
   );
 
   return (
