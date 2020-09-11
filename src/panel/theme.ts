@@ -271,6 +271,8 @@ export const GlobalStyle = createGlobalStyle`
 
   /* JSON */
   .language-json, .language-javascript, .language-shell {
+    color: ${(p) => p.theme.light["-8"]};
+    
     .token.boolean {
       color: ${(p) => p.theme.green["+3"]};
     }
