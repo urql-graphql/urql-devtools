@@ -30,7 +30,7 @@ export const Mismatch: FC<ComponentProps<typeof Container>> = (props) => {
   );
 };
 
-const code = `
+const code = `\
 # Yarn
 yarn add @urql/devtools
  
