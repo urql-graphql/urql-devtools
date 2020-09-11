@@ -1,7 +1,7 @@
 import React, { FC, useCallback, ComponentPropsWithoutRef } from "react";
 import styled from "styled-components";
 
-type PrismLanguage = "json" | "graphql";
+type PrismLanguage = "js" | "graphql";
 
 export const CodeHighlight: FC<
   {
@@ -10,15 +10,17 @@ export const CodeHighlight: FC<
   } & ComponentPropsWithoutRef<typeof StyledCodeBlock>
 > = ({ code, language, ...props }) => {
   const handleRef = useCallback(
-    (ref) => {
+    (ref: HTMLPreElement | null) => {
       if (ref === null) {
         return;
       }
 
+      (ref.children[0] as HTMLElement).textContent = code;
       // Run prism on element (in web worker/async)
-      Prism.highlightElement(ref, true);
+      // when code is a chonker
+      Prism.highlightElement(ref, code.length > 600);
     },
-    [language]
+    [code, language]
   );
 
   return (
@@ -27,7 +29,7 @@ export const CodeHighlight: FC<
       ref={handleRef}
       className={`language language-${language} ${props.className || ""}`}
     >
-      <code>{code}</code>
+      <code dangerouslySetInnerHTML={{ __html: code }} />
     </StyledCodeBlock>
   );
 };

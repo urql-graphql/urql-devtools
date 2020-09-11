@@ -36,7 +36,7 @@ export default {
         value:{" "}
         <CodeHighlight
           code={JSON.stringify({ number: 1234, string: "Hello" }, null, 2)}
-          language="json"
+          language="js"
         />
       </p>
     </Wrapper>
@@ -44,7 +44,7 @@ export default {
   "Inline - string": (
     <Wrapper>
       <p data-snapshot>
-        value: <InlineCodeHighlight code={'"Hello world"'} language="json" />
+        value: <InlineCodeHighlight code={'"Hello world"'} language="js" />
       </p>
     </Wrapper>
   ),
@@ -54,7 +54,7 @@ export default {
         value:{" "}
         <InlineCodeHighlight
           code={'"Hello world this string is very long"'}
-          language="json"
+          language="js"
         />
       </p>
     </Wrapper>
@@ -65,7 +65,7 @@ export default {
         value:{" "}
         <InlineCodeHighlight
           code={JSON.stringify({ prop: 123 })}
-          language="json"
+          language="js"
         />
       </p>
     </Wrapper>
@@ -79,7 +79,7 @@ export default {
             prop: 123,
             otherProp: "some string",
           })}
-          language="json"
+          language="js"
         />
       </p>
     </Wrapper>
@@ -88,10 +88,7 @@ export default {
     <Wrapper>
       <p data-snapshot>
         value:{" "}
-        <InlineCodeHighlight
-          code={JSON.stringify([1, "two"])}
-          language="json"
-        />
+        <InlineCodeHighlight code={JSON.stringify([1, "two"])} language="js" />
       </p>
     </Wrapper>
   ),
@@ -101,7 +98,7 @@ export default {
         value:{" "}
         <InlineCodeHighlight
           code={JSON.stringify([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])}
-          language="json"
+          language="js"
         />
       </p>
     </Wrapper>

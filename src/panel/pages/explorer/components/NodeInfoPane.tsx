@@ -79,7 +79,7 @@ const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => {
           <Title>Arguments</Title>
           <CodeHighlight
             code={JSON.stringify(node.args, null, 2)}
-            language="json"
+            language="js"
           />
         </Container>
       ) : null}
@@ -87,7 +87,7 @@ const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => {
         <Container>
           <Title>Value</Title>
           {isExpanded ? (
-            <CodeHighlight code={value} language="json" />
+            <CodeHighlight code={value} language="js" />
           ) : (
             <ExpandPrompt role={"button"} onClick={handleReveal}>
               Click to expand

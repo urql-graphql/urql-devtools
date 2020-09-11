@@ -10,3 +10,8 @@ declare namespace NodeJS {
     PKG_VERSION: string;
   }
 }
+
+/**
+ * Implicit prism declaration (injected by ./prism.ts).
+ */
+declare const Prism: import("prismjs");

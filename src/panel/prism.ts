@@ -1,5 +1,5 @@
-import Prism from "prismjs/prism.js";
-import "prismjs/components/prism-json";
+import Prism from "prismjs";
+import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-graphql";
 
 /* eslint-disable-next-line */
