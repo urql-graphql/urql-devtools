@@ -8,7 +8,9 @@ const ErrorChild = () => {
     throw err;
   }
 
-  err.stack = err.stack.replace(/localhost/g, "cosmos").replace(/:\d+/g, ":1");
+  err.stack = err.stack
+    .replace(/localhost|host.docker.internal/g, "cosmos")
+    .replace(/:\d+/g, ":1");
   throw err;
 };
 
