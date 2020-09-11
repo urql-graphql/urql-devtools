@@ -1,7 +1,7 @@
 import React, { FC, useCallback, ComponentPropsWithoutRef } from "react";
 import styled from "styled-components";
 
-type PrismLanguage = "js" | "graphql";
+type PrismLanguage = "javascript" | "graphql";
 
 export const CodeHighlight: FC<
   {

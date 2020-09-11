@@ -91,7 +91,7 @@ export const ListItem: FC<ListItemProps> = ({ node, depth = 0 }) => {
       <animated.span style={flashStyle}>
         <InlineCodeHighlight
           code={JSON.stringify(node.children || node.value) || "undefined"}
-          language="js"
+          language="javascript"
         />
       </animated.span>
     </ListItemKeyVal>

@@ -20,7 +20,7 @@ export const Response: React.FC = () => {
         code: (
           <CodeHighlight
             code={JSON.stringify(response, null, 2)}
-            language="js"
+            language="javascript"
           />
         ),
       };
@@ -30,7 +30,10 @@ export const Response: React.FC = () => {
       return {
         state: "Error",
         code: (
-          <CodeHighlight code={JSON.stringify(error, null, 2)} language="js" />
+          <CodeHighlight
+            code={JSON.stringify(error, null, 2)}
+            language="javascript"
+          />
         ),
       };
     }

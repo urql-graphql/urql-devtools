@@ -23,7 +23,7 @@ export const Arguments: FC<
           {`${key}: `}
           <InlineCodeHighlight
             code={JSON.stringify(value) || "undefined"}
-            language="js"
+            language="javascript"
           />
           {index !== entries.length - 1 && ", "}
         </Fragment>
