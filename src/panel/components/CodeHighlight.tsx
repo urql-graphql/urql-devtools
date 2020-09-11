@@ -49,7 +49,7 @@ export const InlineCodeHighlight: FC<
       // Run prism on element (sync)
       Prism.highlightElement(ref, false);
     },
-    [language]
+    [code, language]
   );
 
   return (
