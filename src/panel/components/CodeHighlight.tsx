@@ -29,7 +29,7 @@ export const CodeHighlight: FC<
       ref={handleRef}
       className={`language language-${language} ${props.className || ""}`}
     >
-      <code dangerouslySetInnerHTML={{ __html: code }} />
+      <code />
     </StyledCodeBlock>
   );
 };
