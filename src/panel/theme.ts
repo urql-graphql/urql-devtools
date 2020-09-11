@@ -208,7 +208,6 @@ export const theme = {
 
 export const GlobalStyle = createGlobalStyle`
   /** Global styles for prism-react-renderer and codemirror */
-
   .CodeMirror, code {
     font-size: 12px;
   }
@@ -272,6 +271,8 @@ export const GlobalStyle = createGlobalStyle`
 
   /* JSON */
   .language-json, .language-javascript, .language-shell {
+    color: ${(p) => p.theme.light["-8"]};
+    
     .token.boolean {
       color: ${(p) => p.theme.green["+3"]};
     }
@@ -307,6 +308,11 @@ export const GlobalStyle = createGlobalStyle`
     .token.operator {
       color: ${(p) => p.theme.grey["-5"]};
     }
+  }
+
+  /* GraphQL */
+  .language-graphql {
+    color: ${(p) => p.theme.blue["+5"]};
   }
 
   .CodeMirror-hints li.CodeMirror-hint-active {

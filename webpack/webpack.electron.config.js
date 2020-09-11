@@ -12,6 +12,7 @@ module.exports = {
   output: {
     path: `${root}/dist/electron`,
     filename: "main.js",
+    globalObject: "this",
   },
   // Everything other than relative/absolute imports are externals
   externals: [nodeExternals()],

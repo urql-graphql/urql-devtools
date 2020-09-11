@@ -15,6 +15,7 @@ const inOutConfig = isExtension
         background: `${root}/src/extension/background.ts`,
         devtools: `${root}/src/extension/devtools.ts`,
         content_script: `${root}/src/extension/content_script.ts`,
+        "prism-panel": `${root}/src/panel/prism.ts`,
         panel: `${root}/src/panel/panel.tsx`,
       },
       output: {
@@ -25,6 +26,7 @@ const inOutConfig = isExtension
     }
   : {
       entry: {
+        "prism-panel": `${root}/src/panel/prism.ts`,
         panel: `${root}/src/panel/panel.tsx`,
       },
       output: {
@@ -120,7 +122,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: `${root}/src/panel/panel.html`,
       filename: "panel.html",
-      chunks: ["panel"],
+      chunks: ["prism-panel", "panel"],
     }),
     new CspHtmlWebpackPlugin({
       "default-src": "'self'",

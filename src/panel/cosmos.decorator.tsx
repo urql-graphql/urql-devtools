@@ -1,8 +1,9 @@
+import "./App.css";
+import "./prism";
 import React, { FC } from "react";
 import { MemoryRouter } from "react-router";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme, GlobalStyle } from "./theme";
-import "./App.css";
 import { DevtoolsContext } from "./context";
 
 const FixtureStyle = createGlobalStyle`
