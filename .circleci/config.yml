@@ -231,6 +231,7 @@ workflows:
             - lint
             - prettier
             - test
+            - type check
             - build
             - visual regression
             - lint firefox
@@ -246,6 +247,7 @@ workflows:
             - lint
             - prettier
             - test
+            - type check
             - build
             - visual regression
             - lint firefox
@@ -261,6 +263,7 @@ workflows:
             - lint
             - prettier
             - test
+            - type check
             - build
             - visual regression
             - lint firefox
