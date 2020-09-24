@@ -15,6 +15,19 @@ export const Schema: React.FC = () => {
   const [stack, setStack] = useState<GraphQLNamedType[]>([]);
   const { schema } = useContext(RequestContext);
 
+  const isActiveId = useCallback((id) => activeIds.includes(id), [activeIds]);
+
+  const handleHeaderClick = useCallback(
+    (id) => {
+      if (isActiveId(id)) {
+        setActiveIds((current) => current.filter((cur) => cur !== id));
+      } else {
+        setActiveIds((current) => [id, ...current]);
+      }
+    },
+    [setActiveIds, activeIds, isActiveId]
+  );
+
   if (schema === undefined) {
     return (
       <Wrapper>
@@ -33,19 +46,6 @@ export const Schema: React.FC = () => {
       </Wrapper>
     );
   }
-
-  const isActiveId = useCallback((id) => activeIds.includes(id), [activeIds]);
-
-  const handleHeaderClick = useCallback(
-    (id) => {
-      if (isActiveId(id)) {
-        setActiveIds((current) => current.filter((cur) => cur !== id));
-      } else {
-        setActiveIds((current) => [id, ...current]);
-      }
-    },
-    [setActiveIds, activeIds, isActiveId]
-  );
 
   const schemaTypes = schema.getTypeMap();
 
