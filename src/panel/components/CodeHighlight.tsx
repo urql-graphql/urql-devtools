@@ -22,7 +22,8 @@ export const CodeHighlight: FC<
         ? ref.replaceChild(child, ref.firstChild)
         : ref.appendChild(child);
 
-      // Run prism on pre
+      // Run prism on element (in web worker/async)
+      // when code is a chonker
       Prism.highlightElement(ref, code.length > 600);
     },
     [language, code]
