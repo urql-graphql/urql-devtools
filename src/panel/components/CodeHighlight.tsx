@@ -11,16 +11,22 @@ export const CodeHighlight: FC<
 > = ({ code, language, ...props }) => {
   const handleRef = useCallback(
     (ref: HTMLPreElement | null) => {
-      if (ref === null) {
+      if (!ref) {
         return;
       }
 
-      (ref.children[0] as HTMLElement).textContent = code;
+      // Create new child node with text
+      const child = document.createElement("code");
+      child.textContent = code;
+      ref.firstChild
+        ? ref.replaceChild(child, ref.firstChild)
+        : ref.appendChild(child);
+
       // Run prism on element (in web worker/async)
       // when code is a chonker
       Prism.highlightElement(ref, code.length > 600);
     },
-    [code, language]
+    [language, code]
   );
 
   return (
@@ -28,9 +34,7 @@ export const CodeHighlight: FC<
       {...props}
       ref={handleRef}
       className={`language language-${language} ${props.className || ""}`}
-    >
-      <code />
-    </StyledCodeBlock>
+    />
   );
 };
 
@@ -41,15 +45,22 @@ export const InlineCodeHighlight: FC<
   } & ComponentPropsWithoutRef<typeof StyledCodeBlock>
 > = ({ code, language, ...props }) => {
   const handleRef = useCallback(
-    (ref) => {
-      if (ref === null) {
+    (ref: HTMLPreElement | null) => {
+      if (!ref) {
         return;
       }
 
-      // Run prism on element (sync)
+      // Create new child node with text
+      const child = document.createElement("code");
+      child.textContent = code;
+      ref.firstChild
+        ? ref.replaceChild(child, ref.firstChild)
+        : ref.appendChild(child);
+
+      // Run prism on pre
       Prism.highlightElement(ref, false);
     },
-    [code, language]
+    [language, code]
   );
 
   return (
@@ -57,9 +68,7 @@ export const InlineCodeHighlight: FC<
       {...props}
       ref={handleRef}
       className={`language language-${language} ${props.className || ""}`}
-    >
-      <code>{code}</code>
-    </StyledInlineBlock>
+    />
   );
 };
 
