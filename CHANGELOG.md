@@ -1,5 +1,22 @@
 # Changelog
 
+## [v2.3.1](https://github.com/FormidableLabs/urql-devtools/tree/v2.3.1) (2020-09-28)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.3.0...v2.3.1)
+
+**Fixed bugs:**
+
+- Cache explorer not updating on new values [\#312](https://github.com/FormidableLabs/urql-devtools/issues/312)
+- \[Runtime error\]: React invariant on schema explorer [\#311](https://github.com/FormidableLabs/urql-devtools/issues/311)
+- The devtools doesn't work when app is inside an iframe [\#280](https://github.com/FormidableLabs/urql-devtools/issues/280)
+
+**Merged pull requests:**
+
+- Fix issue with mutated code block [\#314](https://github.com/FormidableLabs/urql-devtools/pull/314) ([andyrichardson](https://github.com/andyrichardson))
+- Fix invariant on schema explorer [\#313](https://github.com/FormidableLabs/urql-devtools/pull/313) ([andyrichardson](https://github.com/andyrichardson))
+- Add type check to dependencies [\#310](https://github.com/FormidableLabs/urql-devtools/pull/310) ([andyrichardson](https://github.com/andyrichardson))
+- Inject extension files into all frames in a tab [\#281](https://github.com/FormidableLabs/urql-devtools/pull/281) ([wgolledge](https://github.com/wgolledge))
+
 ## [v2.3.0](https://github.com/FormidableLabs/urql-devtools/tree/v2.3.0) (2020-09-14)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.2.0...v2.3.0)
