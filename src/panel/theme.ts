@@ -377,3 +377,9 @@ export const GlobalStyle = createGlobalStyle`
     background: rgba(255, 255, 255, 0.05);
   }
 `;
+
+export const LightModeStyle = createGlobalStyle`
+  body {
+    filter: invert(1) hue-rotate(180deg) saturate(3) brightness(1.085) contrast(0.99);
+  }
+`;

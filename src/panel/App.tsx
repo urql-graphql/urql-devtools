@@ -11,7 +11,7 @@ import {
   ErrorBoundary,
 } from "./pages";
 import { Navigation } from "./components/Navigation";
-import { theme, GlobalStyle } from "./theme";
+import { theme, GlobalStyle, LightModeStyle } from "./theme";
 import {
   DevtoolsProvider,
   RequestProvider,
@@ -19,6 +19,7 @@ import {
   useDevtoolsContext,
   TimelineProvider,
 } from "./context";
+import { isLightMode } from "./util/EnvUtils";
 
 export const App: FC = () => {
   return (
@@ -29,6 +30,7 @@ export const App: FC = () => {
         </DevtoolsProvider>
       </ErrorBoundary>
       <GlobalStyle />
+      {isLightMode() && <LightModeStyle />}
     </ThemeProvider>
   );
 };
