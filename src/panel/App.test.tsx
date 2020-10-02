@@ -31,20 +31,11 @@ describe("App", () => {
       chrome.devtools.panels.themeName = origThemeName;
     });
 
-    it("has a GlobalStyle component", () => {
-      expect(
-        shallow(<App />)
-          .find("GlobalStyle")
-          .exists()
-      ).toBe(true);
-    });
+    it("has a GlobalStyle component but no LightModeStyle component", () => {
+      const wrapper = shallow(<App />);
 
-    it("does not have a LightModeStyle component", () => {
-      expect(
-        shallow(<App />)
-          .find("LightModeStyle")
-          .exists()
-      ).toBe(false);
+      expect(wrapper.find("GlobalStyle").exists()).toBe(true);
+      expect(wrapper.find("LightModeStyle").exists()).toBe(false);
     });
   });
 
@@ -59,20 +50,11 @@ describe("App", () => {
       chrome.devtools.panels.themeName = origThemeName;
     });
 
-    it("has a GlobalStyle component", () => {
-      expect(
-        shallow(<App />)
-          .find("GlobalStyle")
-          .exists()
-      ).toBe(true);
-    });
+    it("has a GlobalStyle component and a LightModeStyle component", () => {
+      const wrapper = shallow(<App />);
 
-    it("has a LightModeStyle component", () => {
-      expect(
-        shallow(<App />)
-          .find("LightModeStyle")
-          .exists()
-      ).toBe(true);
+      expect(wrapper.find("GlobalStyle").exists()).toBe(true);
+      expect(wrapper.find("LightModeStyle").exists()).toBe(true);
     });
   });
 });
