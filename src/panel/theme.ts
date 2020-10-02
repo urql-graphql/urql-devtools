@@ -378,8 +378,12 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
+GlobalStyle.displayName = "GlobalStyle";
+
 export const LightModeStyle = createGlobalStyle`
   body {
     filter: invert(1) hue-rotate(180deg) saturate(3) brightness(1.085) contrast(0.99);
   }
 `;
+
+LightModeStyle.displayName = "LightModeStyle";
