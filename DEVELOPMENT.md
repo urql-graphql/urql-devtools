@@ -93,7 +93,7 @@ yarn start
 
 ##### Start an app
 
-There's a react native app that uses `@urql/devtools` [such as this one](https://github.com/kadikraman/UrqlTest).
+If you don't already have a React Native app that uses @urql/devtools, you could use [this example app](https://github.com/kadikraman/UrqlTest)
 
 
 ## 🚀 Publishing releases
