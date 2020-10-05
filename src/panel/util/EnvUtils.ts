@@ -1,10 +1,6 @@
 export const isDarkMode = (): boolean => {
   if (process.env.BUILD_ENV === "extension") {
-    if (typeof chrome !== "undefined") {
-      return chrome.devtools.panels.themeName === "dark";
-    }
-
-    return true;
+    return chrome.devtools.panels.themeName === "dark";
   }
 
   const systemPreferences = require("electron")
