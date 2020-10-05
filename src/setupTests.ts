@@ -12,6 +12,9 @@ declare const global: {
       inspectedWindow: {
         eval: () => any;
       };
+      panels: {
+        themeName: "default" | "dark";
+      };
     };
   };
   browser: puppeteer.Browser;
@@ -38,6 +41,9 @@ declare const jasmine: jest.MatcherContext;
     devtools: {
       inspectedWindow: {
         eval: jest.fn(),
+      },
+      panels: {
+        themeName: "dark",
       },
     },
   };

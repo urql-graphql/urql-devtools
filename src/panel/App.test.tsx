@@ -19,6 +19,44 @@ describe("App", () => {
       expect(shallow(<App />)).toMatchSnapshot();
     });
   });
+
+  describe("in dark mode", () => {
+    const origThemeName = chrome.devtools.panels.themeName;
+
+    beforeAll(() => {
+      chrome.devtools.panels.themeName = "dark";
+    });
+
+    afterAll(() => {
+      chrome.devtools.panels.themeName = origThemeName;
+    });
+
+    it("has a GlobalStyle component but no LightModeStyle component", () => {
+      const wrapper = shallow(<App />);
+
+      expect(wrapper.find("GlobalStyle").exists()).toBe(true);
+      expect(wrapper.find("LightModeStyle").exists()).toBe(false);
+    });
+  });
+
+  describe("in light mode", () => {
+    const origThemeName = chrome.devtools.panels.themeName;
+
+    beforeAll(() => {
+      chrome.devtools.panels.themeName = "default";
+    });
+
+    afterAll(() => {
+      chrome.devtools.panels.themeName = origThemeName;
+    });
+
+    it("has a GlobalStyle component and a LightModeStyle component", () => {
+      const wrapper = shallow(<App />);
+
+      expect(wrapper.find("GlobalStyle").exists()).toBe(true);
+      expect(wrapper.find("LightModeStyle").exists()).toBe(true);
+    });
+  });
 });
 
 describe("App routes", () => {
