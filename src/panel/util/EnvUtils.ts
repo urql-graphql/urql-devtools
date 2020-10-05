@@ -8,15 +8,7 @@ export const isDarkMode = (): boolean => {
   const nativeTheme = require("electron")
     .nativeTheme as import("electron").NativeTheme;
 
-  if (nativeTheme) {
-    return nativeTheme.shouldUseDarkColors;
-  }
-
-  // Legacy Electron
-  const systemPreferences = require("electron")
-    .systemPreferences as import("electron").SystemPreferences;
-
-  return systemPreferences?.isDarkMode() || true;
+  return nativeTheme?.shouldUseDarkColors || true;
 };
 
 export const isLightMode = (): boolean => !isDarkMode();
