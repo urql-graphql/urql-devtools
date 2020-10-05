@@ -60,6 +60,7 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
 
   return (
     <PaneSection>
+      <Title>Event</Title>
       <Heading>Event</Heading>
       <p>{event.type}</p>
       <Heading>Message</Heading>
@@ -85,6 +86,7 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
 /** Info about the source operation for the given event. */
 const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
   <PaneSection>
+    <Title>Operation</Title>
     <Heading>Key</Heading>
     <p>{operation.key}</p>
     <Heading>Operation type</Heading>
@@ -117,6 +119,14 @@ const Body = styled(Pane.Body)`
   @media (min-aspect-ratio: 1/1) {
     flex-direction: column;
   }
+`;
+
+const Title = styled.h2`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  font-size: 12px;
+  font-weight: normal;
 `;
 
 const Heading = styled.h3`
