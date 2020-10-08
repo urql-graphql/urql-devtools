@@ -66,6 +66,16 @@ Start the electron app from a dedicated shell
 npx urql-devtools
 ```
 
+> **Note:** Android users may have difficulty connecting to the electron app when running in an
+> emulator. The devtools exchange uses `localhost:7700` to connect to the electron app running on
+> your local machine, but in an Android emulator `localhost` routes to the device itself rather
+> than your local machine. To successfully connect, use the `adb` tool to forward port 7700 to your
+> local machine:
+>
+> ```sh
+> adb reverse tcp:7700 tcp:7700
+> ```
+
 ## Integrations
 
 Visit the [debugging docs](https://formidable.com/open-source/urql/docs/advanced/debugging/#adding-your-own-debug-events) to find out how to integrate your self-made exchanges with our devtools.
