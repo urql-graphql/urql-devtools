@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.4.0](https://github.com/FormidableLabs/urql-devtools/tree/2.4.0) (2020-10-08)
+## [v2.4.0](https://github.com/FormidableLabs/urql-devtools/tree/2.4.0) (2020-10-08)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.3.1...2.4.0)
 
