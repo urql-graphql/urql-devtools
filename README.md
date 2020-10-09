@@ -66,6 +66,12 @@ Start the electron app from a dedicated shell
 npx urql-devtools
 ```
 
+> **Note:** Android users may need to forward port 7700 from their device to their local machine:
+>
+> ```sh
+> adb reverse tcp:7700 tcp:7700
+> ```
+
 ## Integrations
 
 Visit the [debugging docs](https://formidable.com/open-source/urql/docs/advanced/debugging/#adding-your-own-debug-events) to find out how to integrate your self-made exchanges with our devtools.
