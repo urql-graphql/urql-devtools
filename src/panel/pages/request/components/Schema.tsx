@@ -1,4 +1,9 @@
-import React, { useContext, useState, useCallback, ComponentProps } from "react";
+import React, {
+  useContext,
+  useState,
+  useCallback,
+  ComponentProps,
+} from "react";
 import { GraphQLNamedType } from "graphql";
 import styled from "styled-components";
 import { RequestContext } from "../../../context";
@@ -10,7 +15,9 @@ import { Collapsible } from "./Collapsible";
 
 type ActiveIds = 1 | 2 | 3;
 
-export const Schema: React.FC<ComponentProps<typeof FlexContainer>> = (props) => {
+export const Schema: React.FC<ComponentProps<typeof FlexContainer>> = (
+  props
+) => {
   const [activeIds, setActiveIds] = useState<ActiveIds[]>([1]);
   const [stack, setStack] = useState<GraphQLNamedType[]>([]);
   const { schema } = useContext(RequestContext);
