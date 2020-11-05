@@ -42,6 +42,9 @@ type Mutation {
 }
 
 type Query {
+  """
+  This is an awesome query!
+  """
   threads(sortBy: SortBy!, skip: Int = 0, limit: Int): [Thread!]!
   thread(id: ID!): Thread
   me: User

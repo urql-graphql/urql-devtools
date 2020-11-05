@@ -58,18 +58,26 @@ export const Fields: FC<FieldProps> = ({ node, setType }) => {
       <>
         {keys.map((field, i) => {
           const args = fields[field].args;
-          const hasDescription = args.some((arg) => arg.description);
+          const hasArgumentLevelDescription = args.some(
+            (arg) => arg.description
+          );
+          const hasFieldLevelDescription = !!fields[field].description;
 
           return (
-            <FieldWrapper key={i} data-multiline={`${hasDescription}`}>
-              {getDescription(fields[field])}
+            <FieldWrapper
+              key={i}
+              data-multiline={`${
+                hasArgumentLevelDescription || hasFieldLevelDescription
+              }`}
+            >
+              <div>{getDescription(fields[field])}</div>
               <span>
                 <Name>{fields[field].name}</Name>
                 {args.length > 0 ? "(" : null}
               </span>
               {args.length > 0 ? (
                 <>
-                  <ArgWrapper data-multiline={`${hasDescription}`}>
+                  <ArgWrapper data-multiline={`${hasArgumentLevelDescription}`}>
                     {args.map((arg, idx) => (
                       <Fragment key={idx}>
                         {getDescription(arg)}
