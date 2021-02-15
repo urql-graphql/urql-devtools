@@ -94,7 +94,7 @@
     "@types/ws": "^7.2.6",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
-    "@urql/core": "^1.12.3",
+    "@urql/core": "^2.0.0",
     "@urql/devtools": "https://pkg.csb.dev/FormidableLabs/urql-devtools-exchange/commit/89b2a7aa/@urql/devtools",
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^26.3.0",
