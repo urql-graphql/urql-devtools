@@ -19,7 +19,7 @@ export const defaultEvents: ExchangeDebugEventMessage[] = [
       timestamp: Date.now(),
       operation: {
         key: 12345,
-        operationName: "query",
+        kind: "query",
         variables: {
           name: "carl",
           address: {

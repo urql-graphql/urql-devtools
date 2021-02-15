@@ -167,7 +167,7 @@ export const TimelineRow: FC<
       e: DebugEvent<T>
     ) => {
       // Semaphore addition
-      if (e.operation.operationName === "mutation" && e.type === "execution") {
+      if (e.operation.kind === "mutation" && e.type === "execution") {
         activeMutations++;
       }
 
@@ -182,7 +182,7 @@ export const TimelineRow: FC<
       }
 
       const isMutationResponse =
-        e.operation.operationName === "mutation" &&
+        e.operation.kind === "mutation" &&
         (e.type === "update" || e.type === "error");
 
       // Semaphore removal

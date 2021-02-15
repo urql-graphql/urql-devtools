@@ -14,7 +14,7 @@ const mockDebugEvent: DebugEvent = {
   message: "An operation was executed",
   source: "MyComponent",
   operation: {
-    operationName: "query",
+    kind: "query",
     key: 1,
     context: {
       requestPolicy: "network-only",

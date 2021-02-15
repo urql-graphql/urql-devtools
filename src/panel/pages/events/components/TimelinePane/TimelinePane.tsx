@@ -90,7 +90,7 @@ const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
     <Heading>Key</Heading>
     <p>{operation.key}</p>
     <Heading>Operation type</Heading>
-    <p>{operation.operationName}</p>
+    <p>{operation.kind}</p>
     <br />
     <Heading>Query</Heading>
     <CodeHighlight

@@ -45,7 +45,7 @@ export default {
                   timestamp: Date.now(),
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
                 {
@@ -54,7 +54,7 @@ export default {
                   timestamp: Date.now() + 25000,
                   source: "otherExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
                 {
@@ -63,7 +63,7 @@ export default {
                   timestamp: Date.now() + 65000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
                 {
@@ -72,7 +72,7 @@ export default {
                   timestamp: Date.now() + 80000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
               ] as any
@@ -96,7 +96,7 @@ export default {
                   timestamp: Date.now(),
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
                 {
@@ -105,7 +105,7 @@ export default {
                   timestamp: Date.now(),
                   source: "fetchExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
                 {
@@ -114,7 +114,7 @@ export default {
                   timestamp: Date.now() + 65000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
                 {
@@ -123,7 +123,7 @@ export default {
                   timestamp: Date.now() + 80000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
               ] as any
@@ -147,7 +147,7 @@ export default {
                   timestamp: Date.now(),
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
                 {
@@ -156,7 +156,7 @@ export default {
                   timestamp: Date.now(),
                   source: "fetchExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
                 {
@@ -165,7 +165,7 @@ export default {
                   timestamp: Date.now() + 65000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
                 {
@@ -174,7 +174,7 @@ export default {
                   timestamp: Date.now() + 80000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
               ] as any
@@ -197,7 +197,7 @@ export default {
                   timestamp: Date.now(),
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
                 {
@@ -206,7 +206,7 @@ export default {
                   timestamp: Date.now(),
                   source: "fetchExchange",
                   operation: {
-                    operationName: "query",
+                    kind: "query",
                   },
                 },
               ] as any
@@ -230,7 +230,7 @@ export default {
                   timestamp: Date.now(),
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -239,7 +239,7 @@ export default {
                   timestamp: Date.now() + 2000,
                   source: "dedupExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -248,7 +248,7 @@ export default {
                   timestamp: Date.now() + 3000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -257,7 +257,7 @@ export default {
                   timestamp: Date.now() + 5000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -266,7 +266,7 @@ export default {
                   timestamp: Date.now() + 6000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -275,7 +275,7 @@ export default {
                   timestamp: Date.now() + 7000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -284,7 +284,7 @@ export default {
                   timestamp: Date.now() + 8000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
               ] as any
@@ -308,7 +308,7 @@ export default {
                   timestamp: Date.now(),
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -317,7 +317,7 @@ export default {
                   timestamp: Date.now() + 3000,
                   source: "dedupExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -326,7 +326,7 @@ export default {
                   timestamp: Date.now() + 4000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -335,7 +335,7 @@ export default {
                   timestamp: Date.now() + 5000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -344,7 +344,7 @@ export default {
                   timestamp: Date.now() + 7000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
               ] as any
@@ -368,7 +368,7 @@ export default {
                   timestamp: Date.now() + 1000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -377,7 +377,7 @@ export default {
                   timestamp: Date.now() + 1001,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
                 {
@@ -386,7 +386,7 @@ export default {
                   timestamp: Date.now() + 8000,
                   source: "devtoolsExchange",
                   operation: {
-                    operationName: "mutation",
+                    kind: "mutation",
                   },
                 },
               ] as any[]

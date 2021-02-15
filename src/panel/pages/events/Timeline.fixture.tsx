@@ -6,7 +6,7 @@ import { Timeline } from "./Timeline";
 
 const operation1 = {
   key: 1,
-  operationName: "query",
+  kind: "query",
   query: gql`
     query Users {
       users {
@@ -23,7 +23,7 @@ const operation1 = {
 
 const operation2 = {
   key: 2,
-  operationName: "mutation",
+  kind: "mutation",
   query: gql`
     mutation AddUser($id: ID!) {
       addUser(id: $id) {
