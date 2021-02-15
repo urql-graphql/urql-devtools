@@ -17,7 +17,7 @@ const expectCorrectOutput = (testcase: TestCase) => {
   const operation: Operation = {
     query: testcase.query,
     variables: testcase.variables,
-    operationName: "query",
+    kind: "query",
     context: { meta: { cacheOutcome: "hit" } },
   } as any;
 

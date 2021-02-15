@@ -37,7 +37,7 @@ export const handleResponse = ({
   data,
   parsedNodes = {},
 }: HandleResponseArgs): ParsedNodeMap => {
-  if (operation.operationName !== "query") {
+  if (operation.kind !== "query") {
     return parsedNodes;
   }
 

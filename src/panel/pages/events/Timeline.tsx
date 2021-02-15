@@ -100,9 +100,7 @@ export const Timeline: FC<ComponentProps<typeof Page>> = (props) => {
   const sources = useMemo<Operation[]>(
     () =>
       eventOrder.map((key) => {
-        const source = events[key].find(
-          (e) => e.operation.operationName !== "teardown"
-        );
+        const source = events[key].find((e) => e.operation.kind !== "teardown");
 
         // Only events for given source is teardown
         // Unknown source type
@@ -145,7 +143,7 @@ export const Timeline: FC<ComponentProps<typeof Page>> = (props) => {
               key={key}
               events={events[key]}
               style={{
-                display: filter.graphqlType.includes(sources[i].operationName)
+                display: filter.graphqlType.includes(sources[i].kind)
                   ? undefined
                   : "none",
               }}
@@ -166,12 +164,10 @@ export const Timeline: FC<ComponentProps<typeof Page>> = (props) => {
               <TimelineSourceIcon
                 key={s.key}
                 title="Source operation"
-                kind={
-                  s.operationName === "teardown" ? "query" : s.operationName
-                }
+                kind={s.kind === "teardown" ? "query" : s.kind}
                 onClick={handleSourceClick(s)}
                 style={{
-                  display: filter.graphqlType.includes(s.operationName)
+                  display: filter.graphqlType.includes(s.kind)
                     ? undefined
                     : "none",
                 }}
