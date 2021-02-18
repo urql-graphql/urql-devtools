@@ -8,7 +8,6 @@ export const Arguments: FC<
     args?: ParsedFieldNode["args"];
   } & ComponentProps<typeof ArgumentText>
 > = ({ args, ...props }) => {
-  console.log(args);
   if (!args) {
     return null;
   }
