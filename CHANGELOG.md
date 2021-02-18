@@ -1,5 +1,22 @@
 # Changelog
 
+## [v2.4.2](https://github.com/FormidableLabs/urql-devtools/tree/v2.4.2) (2021-02-18)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.4.1...v2.4.2)
+
+**Fixed bugs:**
+
+- Page content not rendering in Firefox [\#335](https://github.com/FormidableLabs/urql-devtools/issues/335)
+
+**Closed issues:**
+
+- Devtools: TypeError: Cannot read property '0' of undefined [\#334](https://github.com/FormidableLabs/urql-devtools/issues/334)
+- \[Runtime error\]: Cannot read property '0' of undefined [\#333](https://github.com/FormidableLabs/urql-devtools/issues/333)
+
+**Merged pull requests:**
+
+- Explicitly set viewport height for Firefox [\#336](https://github.com/FormidableLabs/urql-devtools/pull/336) ([andyrichardson](https://github.com/andyrichardson))
+
 ## [v2.4.1](https://github.com/FormidableLabs/urql-devtools/tree/v2.4.1) (2021-02-15)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.4.0...v2.4.1)
