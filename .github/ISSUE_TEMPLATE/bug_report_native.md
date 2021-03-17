@@ -1,9 +1,9 @@
 ---
 name: Bug report (standalone)
-about: Create a bug report for use with the native/standalone version of devtools.
+about: Create a bug report for the native/standalone version of devtools.
 title: ""
-labels: Bug
-assignees: "Electron"
+labels: Bug, Electron
+assignees: ""
 ---
 
 # About
