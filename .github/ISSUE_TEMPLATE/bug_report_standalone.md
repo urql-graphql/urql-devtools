@@ -40,10 +40,10 @@ Devtools is unresponsive when using on an Android device with expo.
 
 # Additional info
 
-| environment | version |
-| - | - |
-| os | Macbuntu 20.04 |
-| node | 0.0.0 |
-| urql | 0.0.0 |
-| urql-devtools | 0.0.0 |
-| @urql/devtools | 0.0.0 |
+| environment    | version        |
+| -------------- | -------------- |
+| os             | Macbuntu 20.04 |
+| node           | 0.0.0          |
+| urql           | 0.0.0          |
+| urql-devtools  | 0.0.0          |
+| @urql/devtools | 0.0.0          |
