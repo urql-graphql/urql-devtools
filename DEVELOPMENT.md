@@ -38,8 +38,10 @@ With a fixture environment, you can:
 
 Make sure to run the following command after making any visual changes/additions to fixtures
 
+> Note: Check the diff output in `src/panel/__image_snapshots__/__diff_output__` before updating snapshots
+
 ```
-yarn visual-regression -u
+yarn visual-regression
 ```
 
 ### Shallow environment (panel/extension/electron)
