@@ -32,11 +32,10 @@ export const Fields: FC<FieldProps> = ({ node, setType }) => {
       <Deprecated>{`Deprecated: ${field.deprecationReason}`}</Deprecated>
     ) : null;
 
-  const getDefaultValue = (field: GraphQLInputField | GraphQLArgument) => {
-    return field.defaultValue !== undefined || null ? (
-      <Default>{` = ${field.defaultValue}`}</Default>
+  const getDefaultValue = (field: GraphQLInputField | GraphQLArgument) =>
+    field.defaultValue !== undefined || null ? (
+      <Default>{` = ${JSON.stringify(field.defaultValue)}`}</Default>
     ) : null;
-  };
 
   const getDescription = (
     field:

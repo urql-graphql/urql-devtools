@@ -48,6 +48,10 @@ type Query {
   threads(sortBy: SortBy!, skip: Int = 0, limit: Int): [Thread!]!
   thread(id: ID!): Thread
   me: User
+  """
+  Test with object for default args
+  """
+  specificThread(thread: ThreadInput! = { title: "Test", text: "Hello" }): [Thread!]!
 }
 
 "Reply to a post, this is a little longer description"
