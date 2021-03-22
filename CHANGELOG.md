@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.4.3](https://github.com/FormidableLabs/urql-devtools/tree/2.4.3) (2021-03-22)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.4.2...2.4.3)
+
+**Fixed bugs:**
+
+- \[Runtime error\]: Cannot convert object to primitive value [\#323](https://github.com/FormidableLabs/urql-devtools/issues/323)
+
+**Closed issues:**
+
+- \[Runtime error\]: Cannot read property '0' of undefined [\#339](https://github.com/FormidableLabs/urql-devtools/issues/339)
+- \[Runtime error\]: Add support for Urql 2 [\#330](https://github.com/FormidableLabs/urql-devtools/issues/330)
+- \[Runtime error\]: Cannot convert object to primitive value [\#329](https://github.com/FormidableLabs/urql-devtools/issues/329)
+
+**Merged pull requests:**
+
+- Default to watch mode for visual regression [\#343](https://github.com/FormidableLabs/urql-devtools/pull/343) ([andyrichardson](https://github.com/andyrichardson))
+- Add stringification of default input arguments [\#341](https://github.com/FormidableLabs/urql-devtools/pull/341) ([andyrichardson](https://github.com/andyrichardson))
+- Bump prismjs from 1.21.0 to 1.23.0 [\#337](https://github.com/FormidableLabs/urql-devtools/pull/337) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v2.4.2](https://github.com/FormidableLabs/urql-devtools/tree/v2.4.2) (2021-02-18)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.4.1...v2.4.2)
