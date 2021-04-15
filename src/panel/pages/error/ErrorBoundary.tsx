@@ -58,28 +58,110 @@ export class ErrorBoundary extends Component<
   }
 }
 
+const generateErrorTemplate = (err: Error) => {
+  if (process.env.BUILD_ENV === "extension") {
+    return `
+  # About
+    
+  <!-- Replace the below description with a brief summary -->
+    
+  Devtools does not detect a running instance of urql.
+  
+  # Reproduction
+  
+  <!-- Replace the below steps with your reproduction. -->
+  
+  1.  Clone [this example](https://github.com/FormidableLabs/urql/tree/main/packages/react-urql/examples/1-getting-started) project
+  2.  Run \`yarn install\`
+  3.  Run \`yarn start\`
+  4.  Open chrome and navigate to [http://localhost:8080](http://localhost:8080)
+  5.  Open the urql devtools panel
+  
+  ## Expected result
+  
+  <!-- Tell us what you expected. -->
+  
+  - Extension detects app
+  
+  ## Actual result
+  
+  <!-- Tell us what actually happened. -->
+  
+  - Extension shows message "Waiting for exchange"
+  
+  ## Stack trace
+  
+  \`\`\`
+  ${err.stack}
+  \`\`\`
+  
+  # Additional info
+  
+  | environment    | version   |
+  | -------------- | --------- |
+  | browser        | Chrome 69 |
+  | urql           | 0.0.0     |
+  | urql devtools  | 0.0.0     |
+  | @urql/devtools | 0.0.0     |
+    `;
+  }
+  // Electron error template
+  return `
+  # About
+  
+  <!-- Replace the below description with a brief summary -->
+  
+  Devtools is unresponsive when using on an Android device with expo.
+  
+  # Reproduction
+  
+  <!-- Replace the below steps with your reproduction. -->
+  
+  1.  Clone [this example](https://github.com/kadikraman/UrqlTest) react native project
+  2.  Plug in Android phone via USB
+  3.  Run \`yarn install\`
+  4.  Run \`yarn start\`
+  5.  Open devtools using npx \`npx urql-devtools\`
+    
+  ## Expected result
+  
+  <!-- Tell us what you expected. -->
+  
+  - App opens on Android phone
+  - Urql Devtools opens in standalone window
+  - Urql devtools detects app
+  
+  ## Actual result
+  
+  <!-- Tell us what actually happened. -->
+  
+  - App opens on Android phone
+  - Urql devtools opens in standalone window
+  - Urql devtools stays on "waiting for exchange" notice  
+  ## Stack trace
+  
+  \`\`\`
+  ${err.stack}
+  \`\`\`
+  
+  # Additional info
+  
+  | environment    | version        |
+  | -------------- | -------------- |
+  | os             | Macbuntu 20.04 |
+  | node           | 0.0.0          |
+  | urql           | 0.0.0          |
+  | urql-devtools  | 0.0.0          |
+  | @urql/devtools | 0.0.0          |
+  `;
+};
+
 const createIssueUrl = (err: Error) => {
   const uri = `https://github.com/FormidableLabs/urql-devtools/issues/new`;
   const params = new URLSearchParams({
     title: `[Runtime error]: ${err.message || "Unknown error"}`,
-    body: `
-## About
-A runtime error occurred.
-
-## Reproduction
-
-<!-- Enter steps taken to reproduce the error. -->
-
-## Additional info
-
-<!-- Any additional info that may be useful. -->
-
-## Stack trace
-
-\`\`\`
-${err.stack}
-\`\`\`
-  `,
+    labels: process.env.BUILD_ENV === "extension" ? "Bug" : "Bug,Electron",
+    body: generateErrorTemplate(err),
   });
 
   return `${uri}?${params}`;
