@@ -74,7 +74,6 @@ Visit the [live urql project](https://urql-devtools-exchange.netlify.app/) - or 
 
 #### Standalone environment (electron)
 
-
 ##### Start a build
 
 Run the following command to start a watched build.
@@ -94,7 +93,6 @@ yarn start
 ##### Start an app
 
 If you don't already have a React Native app that uses @urql/devtools, you could use [this example app](https://github.com/kadikraman/UrqlTest)
-
 
 ## 🚀 Publishing releases
 
