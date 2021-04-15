@@ -14,13 +14,9 @@ This is a graphical interface for debugging and interacting with `urql` which co
 
 Here are a few useful approaches to get started developing.
 
-### Live project
+### Development environments
 
-If you just need a working project which uses the devtools exchange, there's a [live project here](https://urql-devtools-exchange.netlify.app/).
-
-> Note: The live project uses the devtools exchange's master branch
-
-### Fixture environment (panel)
+#### Fixture environment (panel)
 
 The easiest way to get started on a change in the devtools panel is in the fixture environment.
 
@@ -34,7 +30,7 @@ With a fixture environment, you can:
 - quickly make visual changes to the panel (with hot reloading)
 - increase test coverage
 
-#### Updating fixture snapshots
+##### Updating fixture snapshots
 
 Make sure to run the following command after making any visual changes/additions to fixtures
 
@@ -44,7 +40,7 @@ Make sure to run the following command after making any visual changes/additions
 yarn visual-regression
 ```
 
-### Shallow environment (panel/extension/electron)
+#### Shallow environment (panel/extension/electron)
 
 When working on functional changes (such as messaging, event handling, etc), the easiest way is going to be in a shallow/test environment.
 
@@ -54,11 +50,13 @@ Tests environments can be spun up using the following command.
 yarn test --watch
 ```
 
-### Browser environment (extension)
+### Integration environments
 
-Running an E2E version of the extension can be useful for times where a more integrated environment is required.
+Running an devtools in an integrated environment can be useful for working on/testing messaging features.
 
-#### Start a build
+#### Browser environment (extension)
+
+##### Start a build
 
 Run the following command to start a watched build.
 
@@ -66,19 +64,17 @@ Run the following command to start a watched build.
 yarn dev:extension
 ```
 
-#### Load the extension
+##### Load the extension
 
 Load the built extension in [chrome](https://developer.chrome.com/extensions/getstarted#manifest) or [firefox](https://developer.mozilla.org/en-US/docs/Tools/about:debugging#Extensions).
 
-#### Visit a project
+##### Visit a project
 
-Start a project which uses the devtools exchange and navigate to it in your browser - or alternatively use the [live project](#Live-project).
+Visit the [live urql project](https://urql-devtools-exchange.netlify.app/) - or create an app which uses the devtools exchange and navigate to it in your browser.
 
-### Standalone environment (electron)
+#### Standalone environment (electron)
 
-Running an E2E version of the extension can be useful for times where a more integrated environment is required.
-
-#### Start a build
+##### Start a build
 
 Run the following command to start a watched build.
 
@@ -86,13 +82,17 @@ Run the following command to start a watched build.
 yarn dev:electron
 ```
 
-#### Start the app
+##### Start devtools
 
 Run the following command in a separate shell to start the built app.
 
 ```sh
 yarn start
 ```
+
+##### Start an app
+
+If you don't already have a React Native app that uses @urql/devtools, you could use [this example app](https://github.com/kadikraman/UrqlTest)
 
 ## 🚀 Publishing releases
 
