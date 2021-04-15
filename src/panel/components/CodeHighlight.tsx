@@ -3,6 +3,11 @@ import styled from "styled-components";
 
 type PrismLanguage = "javascript" | "graphql";
 
+export const CopyButton = ({ ...props }) => {
+  // const [copy, setCopied] = useState("Copy");
+  return <StyledCopyButton {...props}>Copy</StyledCopyButton>;
+};
+
 export const CodeHighlight: FC<
   {
     code: string;
@@ -21,7 +26,6 @@ export const CodeHighlight: FC<
       ref.firstChild
         ? ref.replaceChild(child, ref.firstChild)
         : ref.appendChild(child);
-
       // Run prism on element (in web worker/async)
       // when code is a chonker
       Prism.highlightElement(ref, code.length > 600);
@@ -30,11 +34,14 @@ export const CodeHighlight: FC<
   );
 
   return (
-    <StyledCodeBlock
-      {...props}
-      ref={handleRef}
-      className={`language language-${language} ${props.className || ""}`}
-    />
+    <>
+      <StyledCodeBlock
+        {...props}
+        ref={handleRef}
+        className={`language language-${language} ${props.className || ""}`}
+      />
+      <CopyButton />
+    </>
   );
 };
 
@@ -88,4 +95,18 @@ export const StyledInlineBlock = styled.pre`
 const StyledCodeBlock = styled.pre`
   background: ${(props) => props.theme.dark["+2"]} !important;
   font-size: 12px !important;
+`;
+
+const StyledCopyButton = styled.button`
+  background: ${(props) => props.theme.dark["+2"]} !important;
+  opacity: 0.5;
+  margin: 1rem;
+  padding: 0.5rem;
+  color: white;
+  border: ${(props) => props.theme.dark["+1"]} !important;
+  border-radius: 4px;
+
+  :hover {
+    background: #adadad !important;
+  }
 `;
