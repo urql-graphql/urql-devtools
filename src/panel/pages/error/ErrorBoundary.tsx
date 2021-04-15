@@ -61,10 +61,6 @@ export class ErrorBoundary extends Component<
 const generateErrorTemplate = (err: Error) => {
   if (process.env.BUILD_ENV === "extension") {
     return `
-  | name                           | about                                                              | title | labels | assignees |
-  | ------------------------------ | ------------------------------------------------------------------ | ----- | ------ | --------- |
-  | Bug report (browser extension) | Create a bug report for the browser extension version of devtools. |       | Bug    |           |
-
   # About
     
   <!-- Replace the below description with a brief summary -->
@@ -93,7 +89,7 @@ const generateErrorTemplate = (err: Error) => {
   
   - Extension shows message "Waiting for exchange"
   
-    ## Stack trace
+  ## Stack trace
   
   \`\`\`
   ${err.stack}
@@ -111,10 +107,6 @@ const generateErrorTemplate = (err: Error) => {
   }
   // Electron error template
   return `
-  | name                    | about                                                              | title | labels        | assignees |
-  | ----------------------- | ------------------------------------------------------------------ | ----- | ------------- | --------- |
-  | Bug report (standalone) | Create a bug report for the native/standalone version of devtools. |       | Bug, Electron |           |
-  
   # About
   
   <!-- Replace the below description with a brief summary -->
@@ -168,6 +160,7 @@ const createIssueUrl = (err: Error) => {
   const uri = `https://github.com/FormidableLabs/urql-devtools/issues/new`;
   const params = new URLSearchParams({
     title: `[Runtime error]: ${err.message || "Unknown error"}`,
+    labels: process.env.BUILD_ENV === "extension" ? "Bug" : "Bug,Electron",
     body: generateErrorTemplate(err),
   });
 
