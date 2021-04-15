@@ -86,6 +86,7 @@ export const Query: React.FC = () => {
   return (
     <Container>
       <textarea
+        id="query-text-box"
         ref={handleRef}
         defaultValue={
           query ||

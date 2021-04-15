@@ -8,8 +8,8 @@ import {
   faAlignLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons/faCopy";
 import { useRequest } from "../../../context";
-
 export const Settings: FC = () => {
   const { setQuery, execute, query } = useRequest();
 
@@ -25,11 +25,23 @@ export const Settings: FC = () => {
     }
   }, [query, setQuery]);
 
+  const handleCopy = async () => {
+    const text = document.getElementById("query-text-box")?.textContent;
+    if (text) {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        console.error("Failed to copy!", err);
+      }
+    }
+  };
+
   return (
     <Container>
       <Icon title="Run (⌃ ⏎)" icon={faPlay} onClick={execute} />
       <Icon title="Clear" icon={faTrashAlt} onClick={handleTrashClick} />
       <Icon title="Prettify" icon={faAlignLeft} onClick={handleFormatClick} />
+      <Icon icon={faCopy} title="Copy" onClick={handleCopy} id="copy-icon" />
     </Container>
   );
 };
