@@ -1,12 +1,13 @@
-import React, { FC, useCallback, ComponentPropsWithoutRef } from "react";
+import React, {
+  FC,
+  useCallback,
+  ComponentPropsWithoutRef,
+  useState,
+  useEffect,
+} from "react";
 import styled from "styled-components";
 
 type PrismLanguage = "javascript" | "graphql";
-
-export const CopyButton = ({ ...props }) => {
-  // const [copy, setCopied] = useState("Copy");
-  return <StyledCopyButton {...props}>Copy</StyledCopyButton>;
-};
 
 export const CodeHighlight: FC<
   {
@@ -14,12 +15,34 @@ export const CodeHighlight: FC<
     language: PrismLanguage;
   } & ComponentPropsWithoutRef<typeof StyledCodeBlock>
 > = ({ code, language, ...props }) => {
+  const [visible, setVisibility] = useState(false);
+  const [copy, setCopied] = useState(false);
+
+  const handleClick = async () => {
+    const text = document.getElementsByClassName("language")[0].textContent;
+    if (text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
+      } catch (err) {
+        console.error("Failed to copy!", err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!copy) return;
+    const timeout = setTimeout(function () {
+      setCopied(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [copy]);
+
   const handleRef = useCallback(
     (ref: HTMLPreElement | null) => {
       if (!ref) {
         return;
       }
-
       // Create new child node with text
       const child = document.createElement("code");
       child.textContent = code;
@@ -34,14 +57,21 @@ export const CodeHighlight: FC<
   );
 
   return (
-    <>
+    <Div
+      onMouseEnter={() => setVisibility(true)}
+      onMouseLeave={() => setVisibility(false)}
+    >
       <StyledCodeBlock
         {...props}
         ref={handleRef}
         className={`language language-${language} ${props.className || ""}`}
       />
-      <CopyButton />
-    </>
+      {visible ? (
+        <CopyButton onClick={handleClick} id="copy-button">
+          {copy ? "Copied" : "Copy"}
+        </CopyButton>
+      ) : null}
+    </Div>
   );
 };
 
@@ -97,16 +127,22 @@ const StyledCodeBlock = styled.pre`
   font-size: 12px !important;
 `;
 
-const StyledCopyButton = styled.button`
+const CopyButton = styled.button`
   background: ${(props) => props.theme.dark["+2"]} !important;
-  opacity: 0.5;
   margin: 1rem;
   padding: 0.5rem;
   color: white;
   border: ${(props) => props.theme.dark["+1"]} !important;
   border-radius: 4px;
+  position: absolute;
+  top: 0;
+  right: 6px;
 
   :hover {
     background: #adadad !important;
   }
+`;
+
+const Div = styled.div`
+  position: relative;
 `;
