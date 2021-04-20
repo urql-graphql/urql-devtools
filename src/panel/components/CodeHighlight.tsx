@@ -16,14 +16,14 @@ export const CodeHighlight: FC<
   } & ComponentPropsWithoutRef<typeof StyledCodeBlock>
 > = ({ code, language, ...props }) => {
   const [visible, setVisibility] = useState(false);
-  const [copy, setCopied] = useState(false);
+  const [copy, setCopied] = useState({ state: false });
 
   const handleClick = async () => {
     const text = document.getElementsByClassName("language")[0].textContent;
     if (text) {
       try {
         await navigator.clipboard.writeText(text);
-        setCopied(true);
+        setCopied({ state: true });
       } catch (err) {
         console.error("Failed to copy!", err);
       }
@@ -33,7 +33,7 @@ export const CodeHighlight: FC<
   useEffect(() => {
     if (!copy) return;
     const timeout = setTimeout(function () {
-      setCopied(false);
+      setCopied({ state: false });
     }, 1000);
     return () => clearTimeout(timeout);
   }, [copy]);
@@ -68,7 +68,7 @@ export const CodeHighlight: FC<
       />
       {visible ? (
         <CopyButton onClick={handleClick} id="copy-button">
-          {copy ? "Copied" : "Copy"}
+          {copy.state ? "Copied" : "Copy"}
         </CopyButton>
       ) : null}
     </Div>
