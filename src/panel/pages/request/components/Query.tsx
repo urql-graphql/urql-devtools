@@ -60,6 +60,13 @@ export const Query: React.FC = () => {
     }
 
     if (query !== undefined && query !== codemirror.getValue()) {
+      const storageQuery = localStorage.getItem("urql-last-request");
+
+      if (query === "" && storageQuery) {
+        codemirror.setValue(storageQuery);
+        return;
+      }
+
       codemirror.setValue(query);
     }
   }, [query, codemirror]);
