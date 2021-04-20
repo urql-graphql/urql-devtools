@@ -13,10 +13,7 @@ import { useRequest } from "../../../context";
 export const Settings: FC = () => {
   const { setQuery, execute, query } = useRequest();
 
-  const handleTrashClick = useCallback(() => {
-    localStorage.removeItem("urql-last-request");
-    setQuery("");
-  }, [setQuery]);
+  const handleTrashClick = useCallback(() => setQuery(""), [setQuery]);
 
   const handleFormatClick = useCallback(() => {
     if (query) {
@@ -25,7 +22,6 @@ export const Settings: FC = () => {
         plugins: [parserGraphql],
       });
       setQuery(formatted);
-      localStorage.setItem("urql-last-request", formatted);
     }
   }, [query, setQuery]);
 

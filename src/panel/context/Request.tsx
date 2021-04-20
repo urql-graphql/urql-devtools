@@ -33,7 +33,9 @@ export const RequestProvider: FC = ({ children }) => {
     response?: Record<string, unknown>;
     error?: Record<string, unknown>;
   }>({ fetching: false, response: undefined, error: undefined });
-  const [query, setQuery] = useState<string>();
+  const [query, setQuery] = useState<string>(
+    localStorage.getItem("urql-last-request") || ""
+  );
   const [schema, setSchema] = useState<GraphQLSchema>();
 
   const execute = useCallback(() => {
@@ -98,6 +100,14 @@ export const RequestProvider: FC = ({ children }) => {
       query: getIntrospectionQuery(),
     });
   }, []);
+
+  useEffect(() => {
+    if (!query) {
+      localStorage.removeItem("urql-last-request");
+    } else {
+      localStorage.setItem("urql-last-request", query);
+    }
+  }, [query]);
 
   const value = useMemo(
     () => ({
