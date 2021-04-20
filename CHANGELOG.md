@@ -1,8 +1,26 @@
 # Changelog
 
-## [2.4.3](https://github.com/FormidableLabs/urql-devtools/tree/2.4.3) (2021-03-22)
+## [v2.5.0](https://github.com/FormidableLabs/urql-devtools/tree/v2.5.0) (2021-04-20)
 
-[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.4.2...2.4.3)
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.4.3...v2.5.0)
+
+**Added enhancements:**
+
+- Update bug report template on runtime error [\#340](https://github.com/FormidableLabs/urql-devtools/issues/340)
+- Add copy to clipboard functionality to code blocks [\#307](https://github.com/FormidableLabs/urql-devtools/issues/307)
+
+**Merged pull requests:**
+
+- Feature/code block copy [\#349](https://github.com/FormidableLabs/urql-devtools/pull/349) ([jmfulgham](https://github.com/jmfulgham))
+- Add Copy feature [\#348](https://github.com/FormidableLabs/urql-devtools/pull/348) ([jmfulgham](https://github.com/jmfulgham))
+- fix: Add new issue templates for electron and extension apps [\#347](https://github.com/FormidableLabs/urql-devtools/pull/347) ([ValGeorgiev](https://github.com/ValGeorgiev))
+- Bump y18n from 4.0.0 to 4.0.1 [\#344](https://github.com/FormidableLabs/urql-devtools/pull/344) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump elliptic from 6.5.3 to 6.5.4 [\#338](https://github.com/FormidableLabs/urql-devtools/pull/338) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Restructure dev docs + add RN app link [\#317](https://github.com/FormidableLabs/urql-devtools/pull/317) ([andyrichardson](https://github.com/andyrichardson))
+
+## [v2.4.3](https://github.com/FormidableLabs/urql-devtools/tree/v2.4.3) (2021-03-22)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.4.2...v2.4.3)
 
 **Fixed bugs:**
 

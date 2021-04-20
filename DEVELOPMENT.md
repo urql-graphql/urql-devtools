@@ -107,7 +107,7 @@ Set the version attribute in the _package.json_
 > Note: This step requires docker
 
 ```
-yarn changelog --future-release [release version] --token [your github oauth token]
+yarn changelog --future-release v0.0.0[release number] --token [your github oauth token]
 ```
 
 #### 3. Push/merge new version to master
