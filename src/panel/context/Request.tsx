@@ -33,8 +33,8 @@ export const RequestProvider: FC = ({ children }) => {
     response?: Record<string, unknown>;
     error?: Record<string, unknown>;
   }>({ fetching: false, response: undefined, error: undefined });
-  const [query, setQuery] = useState<string>(
-    localStorage.getItem("urql-last-request") || ""
+  const [query, setQuery] = useState<string | undefined>(
+    localStorage.getItem("urql-last-request") || undefined
   );
   const [schema, setSchema] = useState<GraphQLSchema>();
 
@@ -102,11 +102,10 @@ export const RequestProvider: FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (!query) {
-      localStorage.removeItem("urql-last-request");
-    } else {
-      localStorage.setItem("urql-last-request", query);
+    if (query === undefined) {
+      return;
     }
+    localStorage.setItem("urql-last-request", query);
   }, [query]);
 
   const value = useMemo(
