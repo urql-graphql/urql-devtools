@@ -68,7 +68,7 @@ describe("on mount", () => {
           "error": undefined,
           "execute": [Function],
           "fetching": false,
-          "query": undefined,
+          "query": "",
           "response": undefined,
           "schema": undefined,
           "setQuery": [Function],
@@ -189,7 +189,7 @@ describe("on debug message", () => {
             "error": undefined,
             "execute": [Function],
             "fetching": true,
-            "query": undefined,
+            "query": "stub query",
             "response": undefined,
             "schema": GraphQLSchema {
               "__allowedLegacyNames": Array [],
@@ -262,7 +262,7 @@ describe("on debug message", () => {
           Object {
             "execute": [Function],
             "fetching": false,
-            "query": undefined,
+            "query": "stub query",
             "response": Object {
               "test": "response",
             },
@@ -310,7 +310,7 @@ describe("on debug message", () => {
             },
             "execute": [Function],
             "fetching": false,
-            "query": undefined,
+            "query": "stub query",
             "schema": undefined,
             "setQuery": [Function],
           }
