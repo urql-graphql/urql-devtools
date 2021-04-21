@@ -46,9 +46,12 @@ export const CodeHighlight: FC<
       // Create new child node with text
       const child = document.createElement("code");
       child.textContent = code;
-      ref.firstChild
-        ? ref.replaceChild(child, ref.firstChild)
-        : ref.appendChild(child);
+
+      if (ref.hasChildNodes()) {
+        ref.innerHTML = "";
+      }
+
+      ref.appendChild(child);
       // Run prism on element (in web worker/async)
       // when code is a chonker
       Prism.highlightElement(ref, code.length > 600);
