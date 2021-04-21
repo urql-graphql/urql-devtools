@@ -14,6 +14,8 @@ import { RequestProvider, RequestContext } from "./Request";
 
 const sendMessage = jest.fn();
 const addMessageHandler = jest.fn();
+const getItem = jest.spyOn(Storage.prototype, "getItem");
+const setItem = jest.spyOn(Storage.prototype, "setItem");
 
 beforeEach(() => {
   mocked(useDevtoolsContext).mockReturnValue({
@@ -41,6 +43,7 @@ const Fixture = () => {
 
 describe("on mount", () => {
   beforeEach(() => {
+    getItem.mockReturnValue(null);
     mount(
       <RequestProvider>
         <Fixture />
@@ -61,6 +64,10 @@ describe("on mount", () => {
     });
   });
 
+  it("does not persist query to local storage", () => {
+    expect(setItem).toBeCalledTimes(0);
+  });
+
   describe("state", () => {
     it("matches snapshot", () => {
       expect(state).toMatchInlineSnapshot(`
@@ -69,6 +76,37 @@ describe("on mount", () => {
           "execute": [Function],
           "fetching": false,
           "query": undefined,
+          "response": undefined,
+          "schema": undefined,
+          "setQuery": [Function],
+        }
+      `);
+    });
+  });
+});
+
+describe("on remount", () => {
+  beforeEach(() => {
+    getItem.mockReturnValue("query { _id }");
+    mount(
+      <RequestProvider>
+        <Fixture />
+      </RequestProvider>
+    );
+  });
+
+  afterEach(() => {
+    getItem.mockReturnValue(null);
+  });
+
+  describe("state", () => {
+    it("matches snapshot", () => {
+      expect(state).toMatchInlineSnapshot(`
+        Object {
+          "error": undefined,
+          "execute": [Function],
+          "fetching": false,
+          "query": "query { _id }",
           "response": undefined,
           "schema": undefined,
           "setQuery": [Function],
@@ -90,6 +128,11 @@ describe("on setQuery", () => {
     act(() => {
       state.setQuery(query);
     });
+  });
+
+  it("persists query to local storage", () => {
+    expect(setItem).toBeCalledTimes(1);
+    expect(setItem).toBeCalledWith("urql-last-request", query);
   });
 
   describe("state", () => {
