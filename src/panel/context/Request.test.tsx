@@ -14,6 +14,8 @@ import { RequestProvider, RequestContext } from "./Request";
 
 const sendMessage = jest.fn();
 const addMessageHandler = jest.fn();
+const getItem = jest.spyOn(localStorage, 'getItem');
+const setItem = jest.spyOn(localStorage, 'setItem');
 
 beforeEach(() => {
   mocked(useDevtoolsContext).mockReturnValue({
@@ -41,6 +43,7 @@ const Fixture = () => {
 
 describe("on mount", () => {
   beforeEach(() => {
+    getItem.mockReturnValue(null);
     mount(
       <RequestProvider>
         <Fixture />
@@ -60,6 +63,10 @@ describe("on mount", () => {
       query: getIntrospectionQuery(),
     });
   });
+  
+  it("does not persist query to local storage", () => {
+    expect(setItem).toBeCalledTimes(0);
+  });
 
   describe("state", () => {
     it("matches snapshot", () => {
@@ -68,7 +75,7 @@ describe("on mount", () => {
           "error": undefined,
           "execute": [Function],
           "fetching": false,
-          "query": "",
+          "query": undefined,
           "response": undefined,
           "schema": undefined,
           "setQuery": [Function],
@@ -77,6 +84,34 @@ describe("on mount", () => {
     });
   });
 });
+
+describe("on remount", () => {
+  beforeEach(() => {
+    getItem.mockReturnValue("query { _id }");
+    mount(
+      <RequestProvider>
+        <Fixture />
+      </RequestProvider>
+    );
+  });
+
+  describe("state", () => {
+    it("matches snapshot", () => {
+      expect(state).toMatchInlineSnapshot(`
+        Object {
+          "error": undefined,
+          "execute": [Function],
+          "fetching": false,
+          "query": "query { _id }",
+          "response": undefined,
+          "schema": undefined,
+          "setQuery": [Function],
+        }
+      `);
+    });
+  });
+});
+
 
 describe("on setQuery", () => {
   const query = "stub query";
@@ -90,6 +125,11 @@ describe("on setQuery", () => {
     act(() => {
       state.setQuery(query);
     });
+  });
+
+  it("persists query to local storage", () => {
+    expect(setItem).toBeCalledTimes(1);
+    expect(setItem).toBeCalledWith("urql-last-request", query);
   });
 
   describe("state", () => {
