@@ -14,7 +14,7 @@ export const TimelineSourceIcon = styled.div<{
   transition: background-color 150ms ease-out;
 
   :before {
-    content: "${({ kind }) => kind && kind[0].toUpperCase()}";
+    content: "${({ kind }) => kind[0].toUpperCase()}";
   }
 
   &:hover {
