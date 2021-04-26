@@ -1,6 +1,8 @@
 import "jest-styled-components";
 import { configure } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+// @TODO: use the official adapter when its published.
+// More info: https://github.com/enzymejs/enzyme/issues/2429
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import puppeteer from "puppeteer";
 
 process.env.BUILD_ENV = "extension";

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App on mount matches snapshot 1`] = `
-<ThemeProvider
+<Component
   theme={
     Object {
       "blue": Object {
@@ -205,7 +205,7 @@ exports[`App on mount matches snapshot 1`] = `
     </DevtoolsProvider>
   </ErrorBoundary>
   <GlobalStyle />
-</ThemeProvider>
+</Component>
 `;
 
 exports[`App routes on mount on connected matches snapshot 1`] = `
