@@ -6,7 +6,7 @@ const flashState = { background: "rgba(255, 255, 255, 1)" };
 
 type Flash = () => void;
 
-type UseFlashResponse = [React.CSSProperties, Flash];
+type UseFlashResponse = [any, Flash];
 
 /** Hook for flashing a screen element */
 export const useFlash = (): UseFlashResponse => {
@@ -23,5 +23,5 @@ export const useFlash = (): UseFlashResponse => {
     [setSpring]
   );
 
-  return [props as React.CSSProperties, flash];
+  return [props, flash];
 };
