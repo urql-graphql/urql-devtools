@@ -13,6 +13,7 @@ import {
   GraphQLObjectType,
 } from "graphql";
 import styled from "styled-components";
+import { InlineCodeHighlight } from "../../../components";
 import { Type } from "./Type";
 
 interface FieldProps {
@@ -34,7 +35,13 @@ export const Fields: FC<FieldProps> = ({ node, setType }) => {
 
   const getDefaultValue = (field: GraphQLInputField | GraphQLArgument) =>
     field.defaultValue !== undefined || null ? (
-      <Default>{` = ${JSON.stringify(field.defaultValue)}`}</Default>
+      <Default>
+        {` = `}
+        <InlineCodeHighlight
+          code={JSON.stringify(field.defaultValue)}
+          language="javascript"
+        />
+      </Default>
     ) : null;
 
   const getDescription = (
