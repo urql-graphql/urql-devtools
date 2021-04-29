@@ -31,10 +31,6 @@ const Container = styled(Background)`
 const ListContainer = styled.section`
   flex: 2;
   flex-basis: 70%;
-  padding-left: 1rem;
-  padding-top: 0.5rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
   overflow: auto;
 `;
 

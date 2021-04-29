@@ -30,7 +30,7 @@ export const NodeInfoPane: FC<ComponentProps<typeof Pane>> = (props) => {
 
   return (
     <Pane {...props}>
-      <PaneBody>{content}</PaneBody>
+      <Pane.Body>{content}</Pane.Body>
     </Pane>
   );
 };
@@ -60,32 +60,26 @@ const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => {
 
   return (
     <>
-      <Container>
-        <Title>Name</Title>
+      <Pane.Item title="Name">
         <Name>{node.name}</Name>
-      </Container>
+      </Pane.Item>
       {node.cacheOutcome ? (
-        <Container>
-          <Title>Cache Outcome</Title>
-          <div>
-            <CacheIcon state={node.cacheOutcome} />
-            <Name>{node.cacheOutcome}</Name>
-            {getDescription(node.cacheOutcome)}
-          </div>
-        </Container>
+        <Pane.Item title="Cache Outcome">
+          <CacheIcon state={node.cacheOutcome} />
+          <Name>{node.cacheOutcome}</Name>
+          {getDescription(node.cacheOutcome)}
+        </Pane.Item>
       ) : null}
       {node.args ? (
-        <Container>
-          <Title>Arguments</Title>
+        <Pane.Item title="Arguments">
           <CodeHighlight
             code={JSON.stringify(node.args, null, 2)}
             language="javascript"
           />
-        </Container>
+        </Pane.Item>
       ) : null}
       {value ? (
-        <Container>
-          <Title>Value</Title>
+        <Pane.Item title="Value">
           {isExpanded ? (
             <CodeHighlight code={value} language="javascript" />
           ) : (
@@ -93,7 +87,7 @@ const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => {
               Click to expand
             </ExpandPrompt>
           )}
-        </Container>
+        </Pane.Item>
       ) : null}
     </>
   );
@@ -125,25 +119,9 @@ const getDescription = (status: ParsedFieldNode["cacheOutcome"]) => {
 const ExpandPrompt = styled.div`
   text-align: center;
   padding: 15px;
-  background: ${(p) => p.theme.dark["+3"]};
+  background: ${(p) => p.theme.dark["+2"]};
   color: ${(p) => p.theme.grey["+6"]};
   cursor: pointer;
-`;
-
-const PaneBody = styled(Pane.Body)`
-  padding: 20px;
-`;
-
-const Container = styled.div`
-  margin-bottom: 1rem;
-`;
-
-const Title = styled.h3`
-  color: ${(p) => p.theme.light["0"]};
-  font-size: 13px;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
 `;
 
 const Name = styled.code`
@@ -157,10 +135,11 @@ const Description = styled.p`
 `;
 
 const TextContainer = styled.div`
-  padding: 2rem 1rem;
+  padding: 20px;
 `;
 
 const Text = styled.p`
+  margin: 0;
   text-align: center;
   color: ${(p) => p.theme.grey["-1"]};
 `;

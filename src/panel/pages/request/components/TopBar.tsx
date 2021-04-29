@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { GraphQLNamedType } from "graphql";
 import styled from "styled-components";
 import { faHome, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Toolbar } from "../../../components";
 
 interface TopBarProps {
   setStack: (stack: GraphQLNamedType[] | []) => void;
@@ -14,23 +14,25 @@ export const TopBar: FC<TopBarProps> = ({ setStack, stack, children }) => {
 
   return (
     <FlexContainer>
-      <Container>
-        <ButtonContainer>
-          <IconButton
-            onClick={() => setStack([])}
-            data-disabled={stack.length < 2}
-          >
-            <Icon icon={faHome} title="Root" />
-          </IconButton>
-          <IconButton
-            onClick={() => setStack([...stack].slice(0, -1))}
-            data-disabled={stack.length === 0}
-          >
-            <Icon icon={faArrowLeft} title={prevType?.name || "Root"} />
-          </IconButton>
-        </ButtonContainer>
+      <Toolbar
+        items={[
+          {
+            title: "Root",
+            icon: faHome,
+            disabled: stack.length < 2,
+            onClick: () => setStack([]),
+          },
+          {
+            title: prevType?.name || "Root",
+            icon: faArrowLeft,
+            disabled: stack.length === 0,
+            onClick: () => setStack([...stack].slice(0, -1)),
+          },
+        ]}
+      >
         {children}
-      </Container>
+      </Toolbar>
+
       <Breadcrumbs>
         <TextButton
           data-disabled={stack.length === 0}
@@ -54,58 +56,13 @@ export const TopBar: FC<TopBarProps> = ({ setStack, stack, children }) => {
   );
 };
 
-const Container = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
 const FlexContainer = styled.div`
-  background-color: ${(p) => p.theme.dark["+5"]};
+  background-color: ${(p) => p.theme.dark["+2"]};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-`;
-
-const ButtonContainer = styled.menu`
-  display: flex;
-  align-items: center;
-  padding: 0;
-  margin: 0 4px;
-`;
-
-const Icon = styled(FontAwesomeIcon)`
-  font-size: 13px;
-  color: currentColor;
-`;
-
-const IconButton = styled.button`
-  display: inline-block;
-  background: transparent;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  color: ${(p) => p.theme.light["-9"]};
-  font-size: inherit;
-  text-align: left;
-  padding: 4px;
-  margin: 0;
-  border-radius: 3px;
-
-  &:first-of-type {
-    margin-right: 4px;
-  }
-
-  &:hover {
-    background-color: ${(p) => p.theme.grey["-9"]};
-  }
-
-  &[data-disabled="true"] {
-    pointer-events: none;
-    color: ${(p) => p.theme.grey["-6"]};
-  }
 `;
 
 const TextButton = styled.button`

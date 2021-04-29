@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import styled from "styled-components";
 import { RequestContext } from "../../../context";
-import { CodeHighlight } from "../../../components";
+import { CodeHighlight, Pane } from "../../../components";
 
 export const Response: React.FC = () => {
   const { fetching, response, error } = useContext(RequestContext);
@@ -51,30 +51,26 @@ export const Response: React.FC = () => {
 
     return (
       <>
-        <Title>State</Title>
-        <Status>
-          <Icon data-state={state.toLowerCase()} /> {state}
-        </Status>
-        {code && (
-          <>
-            <Title>Response</Title>
-            {code}
-          </>
-        )}
+        <Pane.Item title="State">
+          <Status>
+            <Icon data-state={state.toLowerCase()} /> {state}
+          </Status>
+        </Pane.Item>
+
+        {code && <Pane.Item title="Response">{code}</Pane.Item>}
       </>
     );
   }, [code, state]);
 };
 
 const Prompt = styled.div`
-  padding: 30px;
+  padding: 20px;
   text-align: center;
   color: ${(p) => p.theme.grey["0"]};
 `;
 
 const Status = styled.code`
   color: ${(p) => p.theme.grey["+2"]};
-  margin-bottom: 15px;
   font-size: 12px;
   display: flex;
   align-items: center;
@@ -106,12 +102,4 @@ const Icon = styled.span`
     border-color: ${(p) => p.theme.red["0"]};
     background-color: ${(p) => p.theme.red["-1"]};
   }
-`;
-
-const Title = styled.h3`
-  color: ${(p) => p.theme.light["0"]};
-  font-size: 13px;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
 `;

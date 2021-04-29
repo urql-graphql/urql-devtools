@@ -60,25 +60,26 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
 
   return (
     <PaneSection>
-      <Title>Event</Title>
-      <Heading>Event</Heading>
-      <p>{event.type}</p>
-      <Heading>Message</Heading>
-      <p>
-        <Icon icon={faQuoteLeft} />
-        {event.message}
-      </p>
-      <Heading>Timestamp</Heading>
-      <p>
-        <Icon icon={faStopwatch} />
-        {timestamp}
-      </p>
+      <Pane.Header>Event</Pane.Header>
+      <Pane.Item title="Event">
+        <p>{event.type}</p>
+      </Pane.Item>
+      <Pane.Item title="Message">
+        <p>
+          <Icon icon={faQuoteLeft} />
+          {event.message}
+        </p>
+      </Pane.Item>
+      <Pane.Item title="Timestamp">
+        <p>
+          <Icon icon={faStopwatch} />
+          {timestamp}
+        </p>
+      </Pane.Item>
       {event.data && (
-        <>
-          <br />
-          <Heading>Metadata</Heading>
+        <Pane.Item title="Metadata">
           <CodeHighlight language={"javascript"} code={metadata} />
-        </>
+        </Pane.Item>
       )}
     </PaneSection>
   );
@@ -86,24 +87,27 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
 /** Info about the source operation for the given event. */
 const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
   <PaneSection>
-    <Title>Operation</Title>
-    <Heading>Key</Heading>
-    <p>{operation.key}</p>
-    <Heading>Operation type</Heading>
-    <p>{operation.kind}</p>
-    <br />
-    <Heading>Query</Heading>
-    <CodeHighlight
-      language={"graphql"}
-      code={removeTrailingNewline(print(operation.query))}
-    />
-    <Heading>Variables</Heading>
-    <CodeHighlight
-      language={"javascript"}
-      code={JSONtoJavascriptString(
-        (operation.variables || {}) as Record<string, unknown>
-      )}
-    />
+    <Pane.Header>Operation</Pane.Header>
+    <Pane.Item title="Key">
+      <p>{operation.key}</p>
+    </Pane.Item>
+    <Pane.Item title="Operation type">
+      <p>{operation.kind}</p>
+    </Pane.Item>
+    <Pane.Item title="Query">
+      <CodeHighlight
+        language={"graphql"}
+        code={removeTrailingNewline(print(operation.query))}
+      />
+    </Pane.Item>
+    <Pane.Item title="Variables">
+      <CodeHighlight
+        language={"javascript"}
+        code={JSONtoJavascriptString(
+          (operation.variables || {}) as Record<string, unknown>
+        )}
+      />
+    </Pane.Item>
   </PaneSection>
 );
 
@@ -121,36 +125,15 @@ const Body = styled(Pane.Body)`
   }
 `;
 
-const Title = styled.h2`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  font-size: 12px;
-  font-weight: normal;
-`;
-
-const Heading = styled.h3`
-  color: #fff;
-  font-size: 13px;
-  font-weight: normal;
-  margin-top: 14px;
-  margin-bottom: 5px;
-
-  &:first-child {
-    margin-top: 0;
-  }
-`;
-
 const PaneSection = styled.section`
   color: ${(p) => p.theme.grey["+5"]};
   box-sizing: border-box;
   background: ${(props) => props.theme.dark[0]};
-  padding: 20px;
   overflow: auto;
 
   p {
     font-size: 12px;
-    margin: 10px 0;
+    margin: 0;
   }
 
   @media (max-aspect-ratio: 1/1) {
@@ -160,7 +143,7 @@ const PaneSection = styled.section`
     & + & {
       max-height: 100%;
       min-width: 50%;
-      border-left: solid 1px ${(p) => p.theme.dark["+3"]};
+      border-left: solid 1px ${(p) => p.theme.dark["+4"]};
     }
   }
 
@@ -183,7 +166,7 @@ const PaneSection = styled.section`
 
 const GetStartedSection = styled(PaneSection)`
   flex-grow: 1;
-  padding: 50px 30px;
+  padding: 20px;
   text-align: center;
   color: ${(p) => p.theme.grey["0"]};
 `;

@@ -77,13 +77,13 @@ export const Search: FC<SearchProps> = ({ typeMap, setType }) => {
   return (
     <Container ref={containerRef}>
       <InputWrapper>
-        <Icon icon={faSearch} />
         <Input
           type="search"
           value={searchValue}
           onChange={handleOnChange}
           placeholder="Search for a type in schema"
         />
+        <Icon icon={faSearch} />
       </InputWrapper>
       {listOpen ? (
         <List>
@@ -119,47 +119,43 @@ const HighlightMatch: FC<HighlightProps> = ({ name, term }) => {
 };
 
 const Container = styled.div`
-  width: 250px;
-  background-color: ${(p) => p.theme.dark["+5"]};
+  flex: 1;
 `;
 
 const Icon = styled(FontAwesomeIcon)`
   font-size: 13px;
-  margin-right: 6px;
-  color: ${(p) => p.theme.light["-9"]};
+  color: ${(p) => p.theme.grey["0"]};
+  pointer-events: none;
+
+  input:focus ~ & {
+    color: ${(p) => p.theme.accent["0"]};
+  }
 `;
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.label`
   position: relative;
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   color: ${(p) => p.theme.light["-5"]};
-  font-size: 13px;
-  padding: 6px 12px;
-  padding-left: 0;
-
-  &::before {
-    content: "|";
-    display: inline-block;
-    color: ${(p) => p.theme.grey["-2"]};
-    padding-right: 6px;
-  }
+  padding-left: 10px;
+  border-left: 1px solid ${(p) => p.theme.dark["+4"]};
 `;
 
 const Input = styled.input`
+  flex: 1;
   background-color: transparent;
   border: none;
   width: 100%;
+  height: 32px;
+  padding: 0 10px;
   color: ${(p) => p.theme.light["-5"]};
-
-  padding-bottom: 3px;
-  border-bottom: 1px solid transparent;
+  font-size: 12px;
 
   &:focus {
     outline: none;
-    border-bottom: 1px solid ${(p) => p.theme.grey["-5"]};
   }
 
   &::-webkit-search-decoration,
@@ -173,7 +169,7 @@ const Input = styled.input`
 const List = styled.ul`
   position: absolute;
   right: 0;
-  left: 55px;
+  left: 64px;
   display: flex;
   width: 250px;
   max-height: 400px;

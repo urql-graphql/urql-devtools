@@ -1,4 +1,4 @@
-import { lighten, darken, mix } from "polished";
+import { lighten, darken, mix, tint, shade } from "polished";
 import { createGlobalStyle } from "styled-components";
 
 const dark = "#141414";
@@ -10,6 +10,7 @@ const yellow = "#FFE248";
 const red = "#FF4D58";
 const purple = "#813BF2";
 const pink = "#FA65BE";
+const accent = "#7776D2";
 
 export const theme = {
   dark: {
@@ -204,6 +205,27 @@ export const theme = {
     "+8": lighten(0.4, pink),
     "+9": lighten(0.45, pink),
   },
+  accent: {
+    "0": accent,
+    "-1": shade(0.1, accent),
+    "-2": shade(0.2, accent),
+    "-3": shade(0.3, accent),
+    "-4": shade(0.4, accent),
+    "-5": shade(0.5, accent),
+    "-6": shade(0.6, accent),
+    "-7": shade(0.7, accent),
+    "-8": shade(0.8, accent),
+    "-9": shade(0.9, accent),
+    "+1": tint(0.1, accent),
+    "+2": tint(0.2, accent),
+    "+3": tint(0.3, accent),
+    "+4": tint(0.4, accent),
+    "+5": tint(0.5, accent),
+    "+6": tint(0.6, accent),
+    "+7": tint(0.7, accent),
+    "+8": tint(0.8, accent),
+    "+9": tint(0.9, accent),
+  },
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -227,7 +249,7 @@ export const GlobalStyle = createGlobalStyle`
     .CodeMirror-cursor {
       border-left: solid 1px ${(p) => p.theme.light["-2"]};
     }
-    
+
     .token.plain, .token.function, .token.class-name, .cm-property, .cm-def {
       color: ${(p) => p.theme.blue["+5"]};
     }
@@ -272,7 +294,7 @@ export const GlobalStyle = createGlobalStyle`
   /* JSON */
   .language-json, .language-javascript, .language-shell {
     color: ${(p) => p.theme.light["-8"]};
-    
+
     .token.boolean {
       color: ${(p) => p.theme.green["+3"]};
     }
@@ -296,7 +318,7 @@ export const GlobalStyle = createGlobalStyle`
     .token.comment {
       color: ${(p) => p.theme.grey["+3"]};
     }
-    
+
     .token.property, .token.plain {
       color: ${(p) => p.theme.light["-8"]};
     }
@@ -349,13 +371,14 @@ export const GlobalStyle = createGlobalStyle`
   pre[class*="language-"] {
     overflow: auto;
     position: relative;
-    margin: 0.5em 0;
-    padding: 1.25em 1em;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 0;
   }
 
 
   html {
-    scrollbar-color: rgba(255, 255, 255, 0.05) transparent;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
     scrollbar-width: thin;
   }
 
@@ -372,13 +395,12 @@ export const GlobalStyle = createGlobalStyle`
     background: transparent;
   }
 
-
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
   }
 
   ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:active {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.2);
   }
 `;
 

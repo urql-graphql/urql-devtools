@@ -120,7 +120,7 @@ const Container = styled.div`
 
 const Title = styled.h3`
   color: ${(p) => p.theme.light["0"]};
-  font-size: 13px;
+  font-size: 12px;
   font-weight: normal;
   margin-top: 0;
   margin-bottom: 0.5rem;
@@ -131,5 +131,4 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   color: ${(p) => p.theme.light["-3"]};
-  background-color: ${(p) => p.theme.dark["+1"]};
 `;

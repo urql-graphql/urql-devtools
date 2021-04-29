@@ -105,6 +105,13 @@ const PaneRoot: FC<ComponentProps<typeof PaneContainer> & OverrideProps> = ({
   );
 };
 
+const PaneItem: FC<{ title?: string }> = ({ title, children }) => (
+  <Item>
+    {title && <ItemTitle>{title}</ItemTitle>}
+    {children}
+  </Item>
+);
+
 const PaneContainer = styled.div`
   position: relative;
   display: flex;
@@ -149,7 +156,42 @@ const Body = styled.div`
   overflow: auto;
 `;
 
-type Pane = typeof PaneRoot & { Body: typeof Body };
+const Header = styled.h2`
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 10px;
+  background: ${(props) => props.theme.dark["+2"]};
+  border-bottom: solid 1px ${(props) => props.theme.dark["+4"]};
+  font-size: 12px;
+  font-weight: 400;
+`;
+
+const Item = styled.div`
+  padding: 10px;
+
+  & + & {
+    border-top: solid 1px ${(props) => props.theme.dark["+4"]};
+  }
+`;
+
+const ItemTitle = styled.h3`
+  color: ${(p) => p.theme.light["0"]};
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 5px;
+`;
+
+type Pane = typeof PaneRoot & {
+  Body: typeof Body;
+  Header: typeof Header;
+  Item: typeof PaneItem;
+};
 
 (PaneRoot as Pane).Body = Body;
+(PaneRoot as Pane).Header = Header;
+(PaneRoot as Pane).Item = PaneItem;
+
 export const Pane = PaneRoot as Pane;
