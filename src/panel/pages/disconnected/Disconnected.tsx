@@ -42,7 +42,7 @@ const Hint = styled.p`
 const Logo = styled(Icon)`
   width: 150px;
 
-  > * {
+  path {
     fill: ${(p) => p.theme.light["0"]};
   }
 `;

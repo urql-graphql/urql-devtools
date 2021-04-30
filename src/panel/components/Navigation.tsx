@@ -70,7 +70,8 @@ const Item = styled.a<{ alignRight?: boolean }>`
 const Logo = styled(Icon)`
   width: 32px;
   height: 19px;
-  > * {
+
+  path {
     fill: ${(p) => p.theme.grey["0"]};
   }
 `;
