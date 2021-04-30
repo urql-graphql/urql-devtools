@@ -61,23 +61,27 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
   return (
     <PaneSection>
       <Pane.Header>Event</Pane.Header>
-      <Pane.Item title="Event">
+      <Pane.Item>
+        <Pane.ItemTitle>Event</Pane.ItemTitle>
         <p>{event.type}</p>
       </Pane.Item>
-      <Pane.Item title="Message">
+      <Pane.Item>
+        <Pane.ItemTitle>Message</Pane.ItemTitle>
         <p>
           <Icon icon={faQuoteLeft} />
           {event.message}
         </p>
       </Pane.Item>
-      <Pane.Item title="Timestamp">
+      <Pane.Item>
+        <Pane.ItemTitle>Timestamp</Pane.ItemTitle>
         <p>
           <Icon icon={faStopwatch} />
           {timestamp}
         </p>
       </Pane.Item>
       {event.data && (
-        <Pane.Item title="Metadata">
+        <Pane.Item>
+          <Pane.ItemTitle>Metadata</Pane.ItemTitle>
           <CodeHighlight language={"javascript"} code={metadata} />
         </Pane.Item>
       )}
@@ -88,19 +92,23 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
 const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
   <PaneSection>
     <Pane.Header>Operation</Pane.Header>
-    <Pane.Item title="Key">
+    <Pane.Item>
+      <Pane.ItemTitle>Key</Pane.ItemTitle>
       <p>{operation.key}</p>
     </Pane.Item>
-    <Pane.Item title="Operation type">
+    <Pane.Item>
+      <Pane.ItemTitle>Operation type</Pane.ItemTitle>
       <p>{operation.kind}</p>
     </Pane.Item>
-    <Pane.Item title="Query">
+    <Pane.Item>
+      <Pane.ItemTitle>Query</Pane.ItemTitle>
       <CodeHighlight
         language={"graphql"}
         code={removeTrailingNewline(print(operation.query))}
       />
     </Pane.Item>
-    <Pane.Item title="Variables">
+    <Pane.Item>
+      <Pane.ItemTitle>Variables</Pane.ItemTitle>
       <CodeHighlight
         language={"javascript"}
         code={JSONtoJavascriptString(

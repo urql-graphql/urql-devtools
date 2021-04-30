@@ -51,13 +51,19 @@ export const Response: React.FC = () => {
 
     return (
       <>
-        <Pane.Item title="State">
+        <Pane.Item>
+          <Pane.ItemTitle>State</Pane.ItemTitle>
           <Status>
             <Icon data-state={state.toLowerCase()} /> {state}
           </Status>
         </Pane.Item>
 
-        {code && <Pane.Item title="Response">{code}</Pane.Item>}
+        {code && (
+          <Pane.Item>
+            <Pane.ItemTitle>Response</Pane.ItemTitle>
+            {code}
+          </Pane.Item>
+        )}
       </>
     );
   }, [code, state]);

@@ -105,13 +105,6 @@ const PaneRoot: FC<ComponentProps<typeof PaneContainer> & OverrideProps> = ({
   );
 };
 
-const PaneItem: FC<{ title?: string }> = ({ title, children }) => (
-  <Item>
-    {title && <ItemTitle>{title}</ItemTitle>}
-    {children}
-  </Item>
-);
-
 const PaneContainer = styled.div`
   position: relative;
   display: flex;
@@ -187,11 +180,13 @@ const ItemTitle = styled.h3`
 type Pane = typeof PaneRoot & {
   Body: typeof Body;
   Header: typeof Header;
-  Item: typeof PaneItem;
+  Item: typeof Item;
+  ItemTitle: typeof ItemTitle;
 };
 
 (PaneRoot as Pane).Body = Body;
 (PaneRoot as Pane).Header = Header;
-(PaneRoot as Pane).Item = PaneItem;
+(PaneRoot as Pane).Item = Item;
+(PaneRoot as Pane).ItemTitle = ItemTitle;
 
 export const Pane = PaneRoot as Pane;

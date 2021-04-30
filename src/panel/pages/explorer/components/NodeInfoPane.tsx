@@ -60,18 +60,21 @@ const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => {
 
   return (
     <>
-      <Pane.Item title="Name">
+      <Pane.Item>
+        <Pane.ItemTitle>Name</Pane.ItemTitle>
         <Name>{node.name}</Name>
       </Pane.Item>
       {node.cacheOutcome ? (
-        <Pane.Item title="Cache Outcome">
+        <Pane.Item>
+          <Pane.ItemTitle>Cache Outcome</Pane.ItemTitle>
           <CacheIcon state={node.cacheOutcome} />
           <Name>{node.cacheOutcome}</Name>
           {getDescription(node.cacheOutcome)}
         </Pane.Item>
       ) : null}
       {node.args ? (
-        <Pane.Item title="Arguments">
+        <Pane.Item>
+          <Pane.ItemTitle>Arguments</Pane.ItemTitle>
           <CodeHighlight
             code={JSON.stringify(node.args, null, 2)}
             language="javascript"
@@ -79,7 +82,8 @@ const NodeInfoContent: FC<{ node: ParsedFieldNode }> = ({ node }) => {
         </Pane.Item>
       ) : null}
       {value ? (
-        <Pane.Item title="Value">
+        <Pane.Item>
+          <Pane.ItemTitle>Value</Pane.ItemTitle>
           {isExpanded ? (
             <CodeHighlight code={value} language="javascript" />
           ) : (
