@@ -33,6 +33,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   border-bottom: solid 1px ${(p) => p.theme.dark["+4"]};
+  background-color: ${(props) => props.theme.dark[0]};
   height: 36px;
   top: 0;
   left: 0;
