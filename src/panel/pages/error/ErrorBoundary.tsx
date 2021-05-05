@@ -62,41 +62,41 @@ const generateErrorTemplate = (err: Error) => {
   if (process.env.BUILD_ENV === "extension") {
     return `
   # About
-    
+
   <!-- Replace the below description with a brief summary -->
-    
+
   Devtools does not detect a running instance of urql.
-  
+
   # Reproduction
-  
+
   <!-- Replace the below steps with your reproduction. -->
-  
+
   1.  Clone [this example](https://github.com/FormidableLabs/urql/tree/main/packages/react-urql/examples/1-getting-started) project
   2.  Run \`yarn install\`
   3.  Run \`yarn start\`
   4.  Open chrome and navigate to [http://localhost:8080](http://localhost:8080)
   5.  Open the urql devtools panel
-  
+
   ## Expected result
-  
+
   <!-- Tell us what you expected. -->
-  
+
   - Extension detects app
-  
+
   ## Actual result
-  
+
   <!-- Tell us what actually happened. -->
-  
+
   - Extension shows message "Waiting for exchange"
-  
+
   ## Stack trace
-  
+
   \`\`\`
   ${err.stack}
   \`\`\`
-  
+
   # Additional info
-  
+
   | environment    | version   |
   | -------------- | --------- |
   | browser        | Chrome 69 |
@@ -108,44 +108,44 @@ const generateErrorTemplate = (err: Error) => {
   // Electron error template
   return `
   # About
-  
+
   <!-- Replace the below description with a brief summary -->
-  
+
   Devtools is unresponsive when using on an Android device with expo.
-  
+
   # Reproduction
-  
+
   <!-- Replace the below steps with your reproduction. -->
-  
+
   1.  Clone [this example](https://github.com/kadikraman/UrqlTest) react native project
   2.  Plug in Android phone via USB
   3.  Run \`yarn install\`
   4.  Run \`yarn start\`
   5.  Open devtools using npx \`npx urql-devtools\`
-    
+
   ## Expected result
-  
+
   <!-- Tell us what you expected. -->
-  
+
   - App opens on Android phone
   - Urql Devtools opens in standalone window
   - Urql devtools detects app
-  
+
   ## Actual result
-  
+
   <!-- Tell us what actually happened. -->
-  
+
   - App opens on Android phone
   - Urql devtools opens in standalone window
-  - Urql devtools stays on "waiting for exchange" notice  
+  - Urql devtools stays on "waiting for exchange" notice
   ## Stack trace
-  
+
   \`\`\`
   ${err.stack}
   \`\`\`
-  
+
   # Additional info
-  
+
   | environment    | version        |
   | -------------- | -------------- |
   | os             | Macbuntu 20.04 |
@@ -179,7 +179,7 @@ const Content = styled.div`
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: ${(p) => p.theme.dark["0"]};
+  background: ${(p) => p.theme.canvas};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -196,26 +196,26 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
-  color: ${(p) => p.theme.light["0"]};
+  color: ${(p) => p.theme.text};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
   text-align: center;
-  color: ${(p) => p.theme.grey["+4"]};
+  color: ${(p) => p.theme.textDimmed};
 `;
 
 const BugIcon = styled(FontAwesomeIcon)`
   font-size: 60px;
   margin-bottom: 40px;
-  color: ${(p) => p.theme.red["0"]};
+  color: ${(p) => p.theme.error};
 `;
 
 const Code = styled(CodeHighlight)`
   max-width: 100%;
   box-sizing: border-box;
-  color: ${(p) => p.theme.red["0"]};
+  color: ${(p) => p.theme.error};
 `;
 
 const Button = styled.button`
@@ -224,17 +224,19 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   outline: none;
-  color: ${(p) => p.theme.light["-6"]};
-  background: ${(p) => p.theme.dark["+5"]};
-  border-color: ${(p) => p.theme.dark["+5"]};
+  color: ${(p) => p.theme.primaryContrast};
+  background: ${(p) => p.theme.primary};
 
   &[data-type="icon"] {
     padding: 7px 10px;
   }
 
-  &:hover:not(:active) {
-    color: ${(p) => p.theme.light["-2"]};
-    background-color: ${(p) => p.theme.dark["+9"]};
+  &:hover {
+    background: ${(p) => p.theme.primaryHover};
+  }
+
+  &:active {
+    background: ${(p) => p.theme.primaryActive};
   }
 `;
 

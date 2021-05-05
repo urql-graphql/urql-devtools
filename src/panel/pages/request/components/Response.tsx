@@ -72,11 +72,11 @@ export const Response: React.FC = () => {
 const Prompt = styled.div`
   padding: 20px;
   text-align: center;
-  color: ${(p) => p.theme.grey["0"]};
+  color: ${(p) => p.theme.textDimmed};
 `;
 
 const Status = styled.code`
-  color: ${(p) => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.textDimmed};
   font-size: 12px;
   display: flex;
   align-items: center;
@@ -92,20 +92,20 @@ const Icon = styled.span`
   border-radius: 50%;
 
   &[data-state="idle"] {
-    border-color: ${(p) => p.theme.grey["0"]};
+    border-color: ${(p) => p.theme.divider};
   }
 
   &[data-state="fetching"] {
-    border-color: ${(p) => p.theme.blue["0"]};
+    border-color: ${(p) => p.theme.pending};
   }
 
   &[data-state="success"] {
-    border-color: ${(p) => p.theme.green["0"]};
-    background-color: ${(p) => p.theme.green["0"]};
+    border-color: ${(p) => p.theme.success};
+    background-color: ${(p) => p.theme.success};
   }
 
   &[data-state="error"] {
-    border-color: ${(p) => p.theme.red["0"]};
-    background-color: ${(p) => p.theme.red["-1"]};
+    border-color: ${(p) => p.theme.error};
+    background-color: ${(p) => p.theme.error};
   }
 `;

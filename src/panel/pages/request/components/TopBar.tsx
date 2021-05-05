@@ -57,7 +57,7 @@ export const TopBar: FC<TopBarProps> = ({ setStack, stack, children }) => {
 };
 
 const FlexContainer = styled.div`
-  background-color: ${(p) => p.theme.dark["+2"]};
+  background-color: ${(p) => p.theme.canvasElevated05};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,15 +75,14 @@ const TextButton = styled.button`
   text-align: left;
   padding: 0;
   margin: 0;
-  color: inherit;
-  color: ${(p) => p.theme.orange["+3"]};
+  color: ${(p) => p.theme.primary};
 
   &:hover {
     text-decoration: underline;
   }
 
   &[data-disabled="true"] {
-    color: ${(p) => p.theme.grey["0"]};
+    color: ${(p) => p.theme.textDimmed};
     pointer-events: none;
   }
 
@@ -92,7 +91,7 @@ const TextButton = styled.button`
       content: ">";
       display: inline-block;
       margin: 0 3px;
-      color: ${(p) => p.theme.grey["0"]};
+      color: ${(p) => p.theme.textDimmed};
     }
   }
 `;
@@ -102,5 +101,5 @@ const Breadcrumbs = styled.nav`
   align-items: center;
   padding: 5px;
   margin: 0 4px;
-  color: ${(p) => p.theme.grey["0"]};
+  color: ${(p) => p.theme.textDimmed};
 `;

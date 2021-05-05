@@ -26,8 +26,8 @@ export const CacheOutcomeIcon: FC<
     state?: "hit" | "miss" | "partial";
   }
 > = ({ state, ...props }) => {
-  const { yellow } = useTheme();
-  const fillColor = yellow["+4"];
+  const { cache } = useTheme();
+  const fillColor = cache;
 
   return (
     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" {...props}>

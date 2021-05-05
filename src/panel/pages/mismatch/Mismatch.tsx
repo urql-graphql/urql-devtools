@@ -33,7 +33,7 @@ export const Mismatch: FC<ComponentProps<typeof Container>> = (props) => {
 const code = `\
 # Yarn
 yarn add @urql/devtools
- 
+
 # Npm
 npm update @urql/devtools
 `;
@@ -49,7 +49,7 @@ const Content = styled.div`
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: ${(p) => p.theme.dark["0"]};
+  background: ${(p) => p.theme.canvas};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,20 +66,20 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
-  color: ${(p) => p.theme.light["0"]};
+  color: ${(p) => p.theme.text};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
   text-align: center;
-  color: ${(p) => p.theme.grey["+4"]};
+  color: ${(p) => p.theme.textDimmed};
 `;
 
 const Icon = styled(FontAwesomeIcon)`
   font-size: 80px;
   margin-bottom: 40px;
-  color: ${(p) => p.theme.red["0"]};
+  color: ${(p) => p.theme.error};
 `;
 
 const Code = styled(CodeHighlight)`

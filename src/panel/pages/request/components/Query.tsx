@@ -1,4 +1,3 @@
-import "codemirror/theme/material.css";
 import "codemirror/lib/codemirror";
 import "codemirror/lib/codemirror.css";
 import "codemirror/addon/hint/show-hint";
@@ -71,7 +70,6 @@ export const Query: React.FC = () => {
 
     const editor = CodeMirror.fromTextArea(ref, {
       mode: "graphql",
-      theme: "material",
       tabSize: 2,
       lineNumbers: true,
       autoCloseBrackets: "{}[]\"\"''",
@@ -102,9 +100,4 @@ const Container = styled.div`
   flex-direction: column;
   flex-grow: 1;
   padding-top: 10px;
-
-  .cm-s-material,
-  .CodeMirror-gutters {
-    background: ${(props) => props.theme.dark["0"]} !important;
-  }
 `;

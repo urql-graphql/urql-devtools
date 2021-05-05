@@ -177,7 +177,7 @@ export const Fields: FC<FieldProps> = ({ node, setType }) => {
 };
 
 const Description = styled.code`
-  color: ${(p) => p.theme.green["+3"]};
+  color: ${(p) => p.theme.syntax.string};
 `;
 
 const FieldWrapper = styled.div`
@@ -188,7 +188,7 @@ const FieldWrapper = styled.div`
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 12px;
-  color: ${(p) => p.theme.light["-3"]};
+  color: ${(p) => p.theme.text};
   white-space: nowrap;
 
   &:first-child {
@@ -204,7 +204,6 @@ const FieldWrapper = styled.div`
     flex-direction: column;
 
     & > ${Description} {
-      color: ${(p) => p.theme.light["-5"]};
       margin-bottom: 6px;
     }
   }
@@ -214,24 +213,24 @@ const Separator = styled.span`
   &::before {
     content: ${({ content }: { content: string }) => `"${content}"`};
     display: inline-block;
-    color: ${(p) => p.theme.light["0"]};
+    color: ${(p) => p.theme.text};
     margin-right: 6px;
   }
 `;
 
 const Name = styled.span`
-  color: ${(p) => p.theme.grey["+9"]};
+  color: ${(p) => p.theme.syntax.text};
 `;
 
 const Deprecated = styled.code`
   display: inline-block;
-  color: ${(p) => p.theme.purple["+5"]};
+  color: ${(p) => p.theme.syntax.invalid};
   margin-left: 6px;
 `;
 
 const Default = styled.code`
   display: inline-block;
-  color: ${(p) => p.theme.green["+5"]};
+  color: ${(p) => p.theme.syntax.plain};
   margin-left: 6px;
 `;
 

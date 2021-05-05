@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  faCog,
   faPlay,
   faTrashAlt,
   faAlignLeft,
@@ -11,12 +12,18 @@ export default {
     <Toolbar
       items={[
         {
-          title: "Item 1",
+          title: "Settings",
+          icon: faCog,
+          onClick: () => console.log("Settings"),
+          active: true,
+        },
+        {
+          title: "Run",
           icon: faPlay,
           onClick: () => console.log("Run"),
         },
         {
-          title: "Item 2",
+          title: "Clear",
           icon: faTrashAlt,
           onClick: () => console.log("Clear"),
         },

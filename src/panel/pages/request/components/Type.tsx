@@ -46,7 +46,7 @@ const TextButton = styled.button`
   outline: none;
   border: none;
   cursor: pointer;
-  color: ${(p) => p.theme.orange["+3"]};
+  color: ${(p) => p.theme.syntax.base};
   font-size: inherit;
   text-align: left;
   padding: 0;

@@ -25,7 +25,7 @@ export const Tick = styled.div<{ label: string }>`
     width: 2px;
     top: 25px;
     bottom: 0;
-    background: ${(p) => p.theme.dark["+5"]};
+    background: ${(p) => p.theme.divider};
     opacity: 0.3;
   }
 `;

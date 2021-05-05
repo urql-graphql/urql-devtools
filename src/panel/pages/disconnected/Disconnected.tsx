@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: ${(p) => p.theme.dark["0"]};
+  background: ${(p) => p.theme.canvas};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,19 +30,19 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
-  color: ${(p) => p.theme.light["0"]};
+  color: ${(p) => p.theme.text};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
-  color: ${(p) => p.theme.grey["+4"]};
+  color: ${(p) => p.theme.textDimmed};
 `;
 
 const Logo = styled(Icon)`
   width: 150px;
 
   path {
-    fill: ${(p) => p.theme.light["0"]};
+    fill: ${(p) => p.theme.text};
   }
 `;

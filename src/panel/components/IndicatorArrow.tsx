@@ -16,12 +16,11 @@ export const Arrow = styled(ArrowIcon)`
   width: 10px;
   margin-left: 2px;
   margin-right: 5px;
-  color: ${(p) => p.theme.light["-5"]};
+  color: ${(p) => p.theme.text};
   transform: rotate(0deg);
   transition: transform 100ms ease;
 
   &[data-active="true"] {
-    color: ${(p) => p.theme.light["0"]};
     transform: rotate(90deg);
   }
 `;

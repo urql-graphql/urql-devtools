@@ -37,7 +37,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  border-bottom: solid 1px ${(p) => p.theme.dark["+4"]};
+  border-bottom: solid 1px ${(p) => p.theme.divider};
 `;
 
 const Item = styled.button<{ active?: boolean }>`
@@ -45,17 +45,19 @@ const Item = styled.button<{ active?: boolean }>`
   width: 32px;
   height: 32px;
   flex-shrink: 0;
+  color: ${(p) => (p.active ? p.theme.primary : p.theme.textDimmed)};
+
+  &:hover {
+    color: ${(p) =>
+      p.active ? p.theme.primaryHover : p.theme.textDimmedHover};
+  }
+
+  &:active {
+    color: ${(p) =>
+      p.active ? p.theme.primaryActive : p.theme.textDimmedActive};
+  }
 
   &::[disabled] {
     opacity: 0.5;
-  }
-
-  &:hover {
-    color: ${(p) => (p.active ? p.theme.accent["+3"] : p.theme.light["-9"])};
-  }
-
-  &,
-  &:active {
-    color: ${(p) => (p.active ? p.theme.accent["0"] : p.theme.grey["0"])};
   }
 `;

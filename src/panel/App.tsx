@@ -11,7 +11,7 @@ import {
   ErrorBoundary,
 } from "./pages";
 import { Navigation } from "./components/Navigation";
-import { theme, GlobalStyle, LightModeStyle } from "./theme";
+import { lightTheme, darkTheme, GlobalStyle } from "./theme";
 import {
   DevtoolsProvider,
   RequestProvider,
@@ -23,14 +23,13 @@ import { isLightMode } from "./util/EnvUtils";
 
 export const App: FC = () => {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={isLightMode() ? lightTheme : darkTheme}>
       <ErrorBoundary>
         <DevtoolsProvider>
           <AppRoutes />
         </DevtoolsProvider>
       </ErrorBoundary>
       <GlobalStyle />
-      {isLightMode() && <LightModeStyle />}
     </ThemeProvider>
   );
 };

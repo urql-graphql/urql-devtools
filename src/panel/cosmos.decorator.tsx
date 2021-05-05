@@ -1,17 +1,17 @@
 import "./App.css";
 import "./prism";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { MemoryRouter } from "react-router";
-import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { theme, GlobalStyle } from "./theme";
+import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+import { lightTheme, darkTheme, GlobalStyle, Theme } from "./theme";
 import { DevtoolsContext } from "./context";
 
-const FixtureStyle = createGlobalStyle`
+const FixtureStyle = createGlobalStyle<Theme>`
   body, html, #root {
     height: 100%;
     margin: 0;
     font-size: 12px;
-    background: ${(p) => p.theme.dark["0"]};
+    background: ${(p) => p.theme.canvas};
   }
 
   #root {
@@ -23,12 +23,32 @@ const FixtureStyle = createGlobalStyle`
   }
 `;
 
-export const ThemeDecorator: FC = ({ children, ...props }) => (
-  <ThemeProvider {...props} theme={theme}>
-    <GlobalStyle />
-    {children}
-  </ThemeProvider>
-);
+const ThemeToggle = styled.button`
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  right: 0;
+  top: initial !important;
+  background: #202020;
+  color: #fff;
+  padding: 10px;
+`;
+
+export const ThemeDecorator: FC = ({ children, ...props }) => {
+  const [theme, setTheme] = useState("dark");
+
+  return (
+    <ThemeProvider {...props} theme={theme === "dark" ? darkTheme : lightTheme}>
+      <ThemeToggle
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      >
+        Toggle theme
+      </ThemeToggle>
+      <GlobalStyle />
+      {children}
+    </ThemeProvider>
+  );
+};
 
 export const DevtoolsDecorator: FC = (props) => (
   <DevtoolsContext.Provider

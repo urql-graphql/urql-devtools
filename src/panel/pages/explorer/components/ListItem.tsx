@@ -134,7 +134,7 @@ const Item = styled.li`
     withChildren ? "0" : "1rem"};
   min-height: 1.4rem;
   line-height: 1.4rem;
-  color: ${(p) => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.textDimmed};
 `;
 
 const OutlineContainer = styled(animated.div)`
@@ -148,13 +148,13 @@ const OutlineContainer = styled(animated.div)`
 `;
 
 const Name = styled.span`
-  color: ${(p) => p.theme.light["-9"]};
+  color: ${(p) => p.theme.text};
 `;
 
 const ChildrenName = styled.span`
   flex-shrink: 0;
   margin-right: 3px;
-  color: ${(p) => p.theme.light["0"]};
+  color: ${(p) => p.theme.text};
   font-weight: bold;
   font-size: 13px;
 `;
@@ -165,10 +165,10 @@ const Typename = styled.div`
   margin-bottom: 0.15rem;
   margin-top: -0.1rem;
   padding: 3px 5px;
-  border: 1px solid ${(p) => `${p.theme.grey["-1"]}`};
+  border: 1px solid ${(p) => `${p.theme.divider}`};
   border-radius: 2px;
-  background-color: ${(p) => p.theme.dark["+1"]};
-  color: ${(p) => p.theme.grey["+2"]};
+  background-color: ${(p) => p.theme.canvasElevated05};
+  color: ${(p) => p.theme.text};
   font-size: 11px;
   line-height: 1rem;
 `;

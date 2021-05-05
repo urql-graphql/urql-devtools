@@ -21,15 +21,15 @@ const Svg = styled.svg`
   transition: filter 300ms ease;
 
   & > * {
-    fill: ${(props) => props.theme.grey["0"]};
+    fill: ${(p) => p.theme.textDimmed};
   }
 
   &:hover > * {
-    fill: ${(props) => props.theme.grey["+8"]};
+    fill: ${(p) => p.theme.textDimmedHover};
   }
 
   &:active > * {
-    fill: ${(props) => props.theme.grey["+4"]};
+    fill: ${(p) => p.theme.textDimmedActive};
   }
 `;
 
@@ -114,7 +114,7 @@ const SvgContainer = styled.span`
 const EventPopout = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${(p) => p.theme.dark["+2"]};
+  background-color: ${(p) => p.theme.canvasElevated05};
   padding: 5px;
 
   & > * + * {
