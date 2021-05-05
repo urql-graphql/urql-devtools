@@ -74,7 +74,7 @@ jobs:
   visual regression:
     <<: *ramdisk
     docker:
-      - image: buildkite/puppeteer:v8
+      - image: buildkite/puppeteer:8.0.0
         user: node
         environment:
           COSMOS_HOST: localhost
