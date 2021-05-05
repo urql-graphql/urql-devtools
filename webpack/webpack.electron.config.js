@@ -4,7 +4,7 @@ const root = `${__dirname}/..`;
 
 module.exports = {
   target: "node",
-  devtool: "source-map",
+  devtool: "cheap-module-source-map",
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   entry: {
     main: `${root}/src/electron/main.ts`,

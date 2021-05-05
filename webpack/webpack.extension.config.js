@@ -38,14 +38,13 @@ const inOutConfig = isExtension
 
 module.exports = {
   ...inOutConfig,
-  devtool: "source-map",
+  devtool: "cheap-module-source-map",
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   optimization: {
     minimizer: [
       new TerserPlugin({
         test: /\.js(\?.*)?$/i,
         parallel: true,
-        sourceMap: true,
         terserOptions: {
           output: {
             ascii_only: true, // Required for codemirror
@@ -112,7 +111,7 @@ module.exports = {
         },
       ].filter(Boolean),
     }),
-    isExtension && new webpack.IgnorePlugin(/electron/),
+    isExtension && new webpack.IgnorePlugin({ resourceRegExp: /electron/ }),
     isExtension &&
       new HtmlWebpackPlugin({
         template: `${root}/src/extension/devtools.html`,
