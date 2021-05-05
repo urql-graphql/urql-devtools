@@ -6,3 +6,4 @@ export * from "./CodeHighlight";
 export * from "./Collapsible";
 export * from "./Navigation";
 export * from "./IndicatorArrow";
+export * from "./Toolbar";

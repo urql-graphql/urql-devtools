@@ -17,7 +17,7 @@ const FixtureStyle = createGlobalStyle`
   #root {
     display: flex;
   }
-  
+
   #root > * {
     top: 0;
   }

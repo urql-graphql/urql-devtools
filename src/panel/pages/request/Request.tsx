@@ -44,7 +44,6 @@ const PaneSection = styled.section`
   overflow: auto;
   flex-grow: 1;
   flex-basis: 0;
-  padding: 30px;
 
   h1 {
     background-color: ${(p) => p.theme.dark["+3"]};
@@ -52,7 +51,7 @@ const PaneSection = styled.section`
     top: -20px;
     margin: -20px;
     padding: 2px 10px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 400;
     border-bottom: solid 1px ${(p) => p.theme.dark["+5"]};
     z-index: 1;

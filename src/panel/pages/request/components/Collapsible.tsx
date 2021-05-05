@@ -31,17 +31,17 @@ const CollapsibleHeader = styled.button`
   align-items: center;
   width: 100%;
   color: ${(p) => p.theme.light["-5"]};
-  background-color: ${(p) => p.theme.dark["+3"]};
-  border: 1px solid ${(p) => p.theme.dark["+7"]};
-  font-size: 13px;
+  border-top: 1px solid ${(p) => p.theme.dark["+4"]};
+  border-bottom: 1px solid ${(p) => p.theme.dark["+4"]};
+  font-size: 12px;
   padding: 6px;
 
   &:hover {
-    background-color: ${(p) => p.theme.dark["+5"]};
+    background: ${(p) => p.theme.accent["-8"]};
   }
 
   &:focus {
-    background-color: ${(p) => p.theme.dark["+5"]};
+    background: ${(p) => p.theme.accent["-8"]};
     outline: none;
   }
 `;

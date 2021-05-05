@@ -12,3 +12,13 @@ code,
 pre {
   font-family: "Roboto Mono", monospace;
 }
+
+button {
+  border: 0;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}

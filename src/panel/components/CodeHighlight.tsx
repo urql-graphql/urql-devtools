@@ -126,23 +126,22 @@ export const StyledInlineBlock = styled.pre`
 `;
 
 const StyledCodeBlock = styled.pre`
-  background: ${(props) => props.theme.dark["+2"]} !important;
+  background: ${(props) => props.theme.dark["+1"]} !important;
   font-size: 12px !important;
 `;
 
 const CopyButton = styled.button`
-  background: ${(props) => props.theme.dark["+2"]} !important;
-  margin: 1rem;
+  background: ${(props) => props.theme.dark["+1"]} !important;
   padding: 0.5rem;
   color: white;
   border: ${(props) => props.theme.dark["+1"]} !important;
   border-radius: 4px;
   position: absolute;
-  top: 0;
-  right: 6px;
+  top: 5px;
+  right: 5px;
 
-  :hover {
-    background: #adadad !important;
+  &:hover {
+    background: ${(props) => props.theme.dark["+3"]} !important;
   }
 `;
 
