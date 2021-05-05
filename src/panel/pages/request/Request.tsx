@@ -39,21 +39,21 @@ const PaneBody = styled(Pane.Body)`
 `;
 
 const PaneSection = styled.section`
-  color: ${(p) => p.theme.text};
-  background: ${(p) => p.theme.canvas};
+  color: ${(p) => p.theme.text.base};
+  background: ${(p) => p.theme.canvas.base};
   overflow: auto;
   flex-grow: 1;
   flex-basis: 0;
 
   h1 {
-    background-color: ${(p) => p.theme.text};
+    background-color: ${(p) => p.theme.text.base};
     position: sticky;
     top: -20px;
     margin: -20px;
     padding: 2px 10px;
     font-size: 12px;
     font-weight: 400;
-    border-bottom: solid 1px ${(p) => p.theme.divider};
+    border-bottom: solid 1px ${(p) => p.theme.divider.base};
     z-index: 1;
   }
 
@@ -63,7 +63,7 @@ const PaneSection = styled.section`
 `;
 
 const Page = styled(Background)`
-  background-color: ${(p) => p.theme.canvas};
+  background-color: ${(p) => p.theme.canvas.base};
   @media (min-aspect-ratio: 1/1) {
     flex-direction: column;
   }

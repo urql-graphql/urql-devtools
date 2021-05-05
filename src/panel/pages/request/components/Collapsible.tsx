@@ -30,18 +30,18 @@ const CollapsibleHeader = styled.button`
   display: flex;
   align-items: center;
   width: 100%;
-  color: ${(p) => p.theme.textDimmed};
-  border-top: 1px solid ${(p) => p.theme.divider};
-  border-bottom: 1px solid ${(p) => p.theme.divider};
+  color: ${(p) => p.theme.textDimmed.base};
+  border-top: 1px solid ${(p) => p.theme.divider.base};
+  border-bottom: 1px solid ${(p) => p.theme.divider.base};
   font-size: 12px;
   padding: 6px;
 
   &:hover {
-    background: ${(p) => p.theme.hover};
+    background: ${(p) => p.theme.canvas.hover};
   }
 
   &:focus {
-    background: ${(p) => p.theme.active};
+    background: ${(p) => p.theme.canvas.active};
     outline: none;
   }
 

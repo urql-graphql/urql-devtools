@@ -49,7 +49,7 @@ const Content = styled.div`
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: ${(p) => p.theme.canvas};
+  background: ${(p) => p.theme.canvas.base};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,20 +66,20 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.theme.text.base};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
   text-align: center;
-  color: ${(p) => p.theme.textDimmed};
+  color: ${(p) => p.theme.textDimmed.base};
 `;
 
 const Icon = styled(FontAwesomeIcon)`
   font-size: 80px;
   margin-bottom: 40px;
-  color: ${(p) => p.theme.error};
+  color: ${(p) => p.theme.error.base};
 `;
 
 const Code = styled(CodeHighlight)`

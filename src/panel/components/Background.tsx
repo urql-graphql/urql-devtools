@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Background = styled.div`
   overflow: hidden;
   position: fixed;
-  background-color: ${(p) => p.theme.canvas};
+  background-color: ${(p) => p.theme.canvas.base};
   top: 36px;
   bottom: 0;
   left: 0;

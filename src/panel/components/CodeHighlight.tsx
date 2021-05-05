@@ -126,13 +126,13 @@ export const StyledInlineBlock = styled.pre`
 `;
 
 const StyledCodeBlock = styled.pre`
-  background: ${(p) => p.theme.canvasElevated05} !important;
+  background: ${(p) => p.theme.canvas.elevated05} !important;
   font-size: 12px !important;
 `;
 
 const CopyButton = styled.button`
-  background: ${(p) => p.theme.canvasElevated10};
-  color: ${(p) => p.theme.text};
+  background: ${(p) => p.theme.canvas.elevated10};
+  color: ${(p) => p.theme.text.base};
   padding: 0.5rem;
   border-radius: 4px;
   position: absolute;

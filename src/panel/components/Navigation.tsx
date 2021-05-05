@@ -32,8 +32,8 @@ const Container = styled.div`
   z-index: 1;
   display: flex;
   align-items: center;
-  border-bottom: solid 1px ${(p) => p.theme.divider};
-  background: ${(p) => p.theme.canvas};
+  border-bottom: solid 1px ${(p) => p.theme.divider.base};
+  background: ${(p) => p.theme.canvas.base};
   height: 36px;
   top: 0;
   left: 0;
@@ -49,15 +49,15 @@ const Item = styled.a<{ alignRight?: boolean }>`
   font-size: 12px;
   font-weight: 400;
   text-decoration: none;
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.theme.text.base};
   ${({ alignRight }) => alignRight && `margin-left: auto;`}
 
   &:hover {
-    background: ${(p) => p.theme.hover};
+    background: ${(p) => p.theme.canvas.hover};
   }
 
   &:active {
-    background: ${(p) => p.theme.active};
+    background: ${(p) => p.theme.canvas.active};
   }
 
   &.active::after {
@@ -67,7 +67,7 @@ const Item = styled.a<{ alignRight?: boolean }>`
     right: 0;
     bottom: -1px;
     height: 2px;
-    background: ${(p) => p.theme.primary};
+    background: ${(p) => p.theme.primary.base};
   }
 `;
 
@@ -76,6 +76,6 @@ const Logo = styled(Icon)`
   height: 19px;
 
   path {
-    fill: ${(p) => p.theme.textDimmed};
+    fill: ${(p) => p.theme.textDimmed.base};
   }
 `;

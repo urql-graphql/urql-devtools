@@ -119,7 +119,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h3`
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.theme.text.base};
   font-size: 12px;
   font-weight: normal;
   margin-top: 0;
@@ -130,5 +130,5 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  color: ${(p) => p.theme.textDimmed};
+  color: ${(p) => p.theme.textDimmed.base};
 `;

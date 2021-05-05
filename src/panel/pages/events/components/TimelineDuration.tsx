@@ -4,7 +4,7 @@ import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
 
 export const TimelineAliveDuration = styled.div`
   height: 20px;
-  background: ${(p) => p.theme.canvasElevated05};
+  background: ${(p) => p.theme.canvas.elevated05};
 `;
 
 type NetworkState = "fetching" | "success" | "error";
@@ -14,18 +14,18 @@ export const NetworkDuration = styled.div<{ isSelected?: boolean }>`
   height: 10px;
 
   outline: ${({ isSelected, theme }) =>
-    isSelected ? `${theme.divider} solid 3px` : "none"};
+    isSelected ? `${theme.divider.base} solid 3px` : "none"};
 
   &[data-state="fetching"] {
-    background: ${(p) => p.theme.pending};
+    background: ${(p) => p.theme.pending.base};
   }
 
   &[data-state="success"] {
-    background: ${(p) => p.theme.success};
+    background: ${(p) => p.theme.success.base};
   }
 
   &[data-state="error"] {
-    background: ${(p) => p.theme.error};
+    background: ${(p) => p.theme.error.base};
   }
 `;
 

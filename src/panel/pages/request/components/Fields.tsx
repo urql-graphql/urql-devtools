@@ -188,7 +188,7 @@ const FieldWrapper = styled.div`
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 12px;
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.theme.text.base};
   white-space: nowrap;
 
   &:first-child {
@@ -213,7 +213,7 @@ const Separator = styled.span`
   &::before {
     content: ${({ content }: { content: string }) => `"${content}"`};
     display: inline-block;
-    color: ${(p) => p.theme.text};
+    color: ${(p) => p.theme.text.base};
     margin-right: 6px;
   }
 `;

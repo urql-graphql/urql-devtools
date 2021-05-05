@@ -29,14 +29,14 @@ const Tab = styled.h3`
   margin: 0;
   padding: 10px;
   font-size: 12px;
-  color: ${(p) => p.theme.textDimmed};
+  color: ${(p) => p.theme.textDimmed.base};
 
   &[data-active="true"] {
-    color: ${(p) => p.theme.text};
+    color: ${(p) => p.theme.text.base};
   }
 
   &:hover {
-    color: ${(p) => p.theme.textDimmedHover};
+    color: ${(p) => p.theme.textDimmed.hover};
     cursor: pointer;
   }
 `;

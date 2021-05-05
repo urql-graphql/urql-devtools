@@ -13,26 +13,42 @@ const colors = {
 };
 
 export const lightTheme = {
-  canvas: colors.white,
-  canvasInverted: colors.black,
-  canvasElevated05: mix(0.05, colors.black, colors.white),
-  canvasElevated10: mix(0.1, colors.black, colors.white),
-  text: colors.black,
-  textDimmed: tint(0.4, colors.black),
-  textDimmedHover: tint(0.3, colors.black),
-  textDimmedActive: tint(0.2, colors.black),
-  textInverted: colors.white,
-  divider: shade(0.1, colors.white),
-  hover: tint(0.9, colors.purple),
-  active: tint(0.85, colors.purple),
-  primary: colors.purple,
-  primaryHover: shade(0.05, colors.purple),
-  primaryActive: shade(0.1, colors.purple),
-  primaryContrast: colors.white,
-  success: colors.green,
-  error: colors.red,
-  pending: colors.blue,
-  cache: colors.orange,
+  canvas: {
+    base: colors.white,
+    hover: tint(0.9, colors.purple),
+    active: tint(0.85, colors.purple),
+    elevated05: mix(0.05, colors.black, colors.white),
+    elevated10: mix(0.1, colors.black, colors.white),
+  },
+  text: {
+    base: colors.black,
+  },
+  textDimmed: {
+    base: tint(0.4, colors.black),
+    hover: tint(0.3, colors.black),
+    active: tint(0.2, colors.black),
+  },
+  divider: {
+    base: shade(0.1, colors.white),
+  },
+  primary: {
+    base: colors.purple,
+    hover: shade(0.05, colors.purple),
+    active: shade(0.1, colors.purple),
+    contrast: colors.white,
+  },
+  secondary: {
+    base: colors.orange,
+  },
+  success: {
+    base: colors.green,
+  },
+  error: {
+    base: colors.red,
+  },
+  pending: {
+    base: colors.blue,
+  },
   syntax: {
     base: shade(0.3, colors.orange),
     atom: tint(0.1, colors.black),
@@ -63,26 +79,42 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
-  canvas: colors.black,
-  canvasInverted: colors.white,
-  canvasElevated05: tint(0.05, colors.black),
-  canvasElevated10: tint(0.1, colors.black),
-  text: colors.white,
-  textDimmed: shade(0.4, colors.white),
-  textDimmedHover: shade(0.3, colors.white),
-  textDimmedActive: shade(0.2, colors.white),
-  textInverted: colors.black,
-  divider: tint(0.15, colors.black),
-  hover: mix(0.9, colors.black, colors.purple),
-  active: mix(0.85, colors.black, colors.purple),
-  primary: colors.purple,
-  primaryHover: tint(0.1, colors.purple),
-  primaryActive: tint(0.2, colors.purple),
-  primaryContrast: colors.white,
-  success: colors.green,
-  error: colors.red,
-  pending: colors.blue,
-  cache: colors.yellow,
+  canvas: {
+    base: colors.black,
+    hover: mix(0.9, colors.black, colors.purple),
+    active: mix(0.85, colors.black, colors.purple),
+    elevated05: tint(0.05, colors.black),
+    elevated10: tint(0.1, colors.black),
+  },
+  text: {
+    base: colors.white,
+  },
+  textDimmed: {
+    base: shade(0.4, colors.white),
+    hover: shade(0.3, colors.white),
+    active: shade(0.2, colors.white),
+  },
+  divider: {
+    base: tint(0.15, colors.black),
+  },
+  primary: {
+    base: colors.purple,
+    hover: tint(0.1, colors.purple),
+    active: tint(0.2, colors.purple),
+    contrast: colors.white,
+  },
+  secondary: {
+    base: colors.yellow,
+  },
+  success: {
+    base: colors.green,
+  },
+  error: {
+    base: colors.red,
+  },
+  pending: {
+    base: colors.blue,
+  },
   syntax: {
     base: tint(0.2, colors.blue),
     atom: tint(0.9, colors.black),
@@ -112,17 +144,13 @@ export const darkTheme = {
   },
 };
 
-export type Theme = {
-  theme: typeof lightTheme | typeof darkTheme;
-};
-
 // Syntax highlighting for Prism and CodeMirror
 // - Supported languages: JSON and GraphQL
 // - Find out which tokens are necessary for supported languages here: https://prismjs.com/faq.html#how-do-i-know-which-tokens-i-can-style-for
 // - Light theme based on: https://github.com/PrismJS/prism-themes/blob/master/themes/prism-vs.css
 // - Dark theme based on: https://github.com/PrismJS/prism-themes/blob/master/themes/prism-vsc-dark-plus.css
 
-export const GlobalStyle = createGlobalStyle<Theme>`
+export const GlobalStyle = createGlobalStyle`
   /** Global styles for prism-react-renderer and codemirror */
   .CodeMirror, code {
     font-size: 12px;
@@ -130,16 +158,16 @@ export const GlobalStyle = createGlobalStyle<Theme>`
 
   .cm-s-default,
   .CodeMirror-gutters {
-    background: ${(p) => p.theme.canvas};
-    border-color: ${(p) => p.theme.canvas};
+    background: ${(p) => p.theme.canvas.base};
+    border-color: ${(p) => p.theme.canvas.base};
   }
 
   .CodeMirror-cursor {
-    border-color: ${(p) => p.theme.text};
+    border-color: ${(p) => p.theme.text.base};
   }
 
   .CodeMirror-hints li.CodeMirror-hint-active {
-    background: ${(p) => p.theme.canvas};
+    background: ${(p) => p.theme.canvas.base};
   }
 
   .CodeMirror-matchingbracket {
@@ -148,23 +176,23 @@ export const GlobalStyle = createGlobalStyle<Theme>`
   }
 
   .CodeMirror-selected {
-    background: ${(p) => p.theme.canvasElevated05};
+    background: ${(p) => p.theme.canvas.elevated05};
   }
 
   .CodeMirror-focused .CodeMirror-selected {
-    background: ${(p) => p.theme.canvasElevated10};
+    background: ${(p) => p.theme.canvas.elevated10};
   }
 
   .CodeMirror-line::selection,
   .CodeMirror-line>span::selection,
   .CodeMirror-line>span>span::selection {
-    background: ${(p) => p.theme.canvasElevated10};
+    background: ${(p) => p.theme.canvas.elevated10};
   }
 
   .CodeMirror-line::-moz-selection,
   .CodeMirror-line>span::-moz-selection,
   .CodeMirror-line>span>span::-moz-selection {
-    background: ${(p) => p.theme.canvasElevated10};
+    background: ${(p) => p.theme.canvas.elevated10};
   }
 
   .cm-s-default, [class*="language-"] {

@@ -109,8 +109,8 @@ const PaneContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background: ${(p) => p.theme.canvas};
-  border-top: solid 1px ${(p) => p.theme.divider};
+  background: ${(p) => p.theme.canvas.base};
+  border-top: solid 1px ${(p) => p.theme.divider.base};
 
   width: 100%;
   height: 400px;
@@ -119,7 +119,7 @@ const PaneContainer = styled.div`
     width: 400px;
     height: 100%;
     border-top: none;
-    border-left: solid 1px ${(p) => p.theme.divider};
+    border-left: solid 1px ${(p) => p.theme.divider.base};
   }
 `;
 
@@ -155,8 +155,8 @@ const Header = styled.h2`
   z-index: 1;
   margin: 0;
   padding: 10px;
-  background: ${(p) => p.theme.canvasElevated05};
-  border-bottom: solid 1px ${(p) => p.theme.divider};
+  background: ${(p) => p.theme.canvas.elevated05};
+  border-bottom: solid 1px ${(p) => p.theme.divider.base};
   font-size: 12px;
   font-weight: 400;
 `;
@@ -165,12 +165,12 @@ const Item = styled.div`
   padding: 10px;
 
   & + & {
-    border-top: solid 1px ${(p) => p.theme.divider};
+    border-top: solid 1px ${(p) => p.theme.divider.base};
   }
 `;
 
 const ItemTitle = styled.h3`
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.theme.text.base};
   font-size: 12px;
   font-weight: normal;
   margin-top: 0;

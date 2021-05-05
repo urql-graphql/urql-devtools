@@ -25,7 +25,7 @@ export const Explorer: FC<ComponentProps<typeof Container>> = (props) => {
 };
 
 const Container = styled(Background)`
-  background-color: ${(p) => p.theme.canvas};
+  background-color: ${(p) => p.theme.canvas.base};
 `;
 
 const ListContainer = styled.section`
@@ -36,7 +36,7 @@ const ListContainer = styled.section`
 
 const TitleWrapper = styled.div`
   padding: 1rem;
-  color: ${(p) => p.theme.textDimmed};
+  color: ${(p) => p.theme.textDimmed.base};
   font-weight: normal;
 `;
 

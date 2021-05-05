@@ -179,7 +179,7 @@ const Content = styled.div`
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: ${(p) => p.theme.canvas};
+  background: ${(p) => p.theme.canvas.base};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -196,26 +196,26 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.theme.text.base};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
   text-align: center;
-  color: ${(p) => p.theme.textDimmed};
+  color: ${(p) => p.theme.textDimmed.base};
 `;
 
 const BugIcon = styled(FontAwesomeIcon)`
   font-size: 60px;
   margin-bottom: 40px;
-  color: ${(p) => p.theme.error};
+  color: ${(p) => p.theme.error.base};
 `;
 
 const Code = styled(CodeHighlight)`
   max-width: 100%;
   box-sizing: border-box;
-  color: ${(p) => p.theme.error};
+  color: ${(p) => p.theme.error.base};
 `;
 
 const Button = styled.button`
@@ -224,19 +224,19 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   outline: none;
-  color: ${(p) => p.theme.primaryContrast};
-  background: ${(p) => p.theme.primary};
+  color: ${(p) => p.theme.primary.contrast};
+  background: ${(p) => p.theme.primary.base};
 
   &[data-type="icon"] {
     padding: 7px 10px;
   }
 
   &:hover {
-    background: ${(p) => p.theme.primaryHover};
+    background: ${(p) => p.theme.primary.hover};
   }
 
   &:active {
-    background: ${(p) => p.theme.primaryActive};
+    background: ${(p) => p.theme.primary.active};
   }
 `;
 

@@ -3,15 +3,15 @@ import "./prism";
 import React, { FC, useState } from "react";
 import { MemoryRouter } from "react-router";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
-import { lightTheme, darkTheme, GlobalStyle, Theme } from "./theme";
+import { lightTheme, darkTheme, GlobalStyle } from "./theme";
 import { DevtoolsContext } from "./context";
 
-const FixtureStyle = createGlobalStyle<Theme>`
+const FixtureStyle = createGlobalStyle`
   body, html, #root {
     height: 100%;
     margin: 0;
     font-size: 12px;
-    background: ${(p) => p.theme.canvas};
+    background: ${(p) => p.theme.canvas.base};
   }
 
   #root {

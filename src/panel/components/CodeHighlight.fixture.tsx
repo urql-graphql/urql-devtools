@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   padding: 20px;
 
   p {
-    color: ${(p) => p.theme.text};
+    color: ${(p) => p.theme.text.base};
   }
 `;
 

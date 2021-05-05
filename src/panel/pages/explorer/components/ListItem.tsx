@@ -134,7 +134,7 @@ const Item = styled.li`
     withChildren ? "0" : "1rem"};
   min-height: 1.4rem;
   line-height: 1.4rem;
-  color: ${(p) => p.theme.textDimmed};
+  color: ${(p) => p.theme.textDimmed.base};
 `;
 
 const OutlineContainer = styled(animated.div)`
@@ -148,13 +148,13 @@ const OutlineContainer = styled(animated.div)`
 `;
 
 const Name = styled.span`
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.theme.text.base};
 `;
 
 const ChildrenName = styled.span`
   flex-shrink: 0;
   margin-right: 3px;
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.theme.text.base};
   font-weight: bold;
   font-size: 13px;
 `;
@@ -167,8 +167,8 @@ const Typename = styled.div`
   padding: 3px 5px;
   border: 1px solid ${(p) => `${p.theme.divider}`};
   border-radius: 2px;
-  background-color: ${(p) => p.theme.canvasElevated05};
-  color: ${(p) => p.theme.text};
+  background-color: ${(p) => p.theme.canvas.elevated05};
+  color: ${(p) => p.theme.text.base};
   font-size: 11px;
   line-height: 1rem;
 `;

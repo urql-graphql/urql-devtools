@@ -16,7 +16,7 @@ export const Arrow = styled(ArrowIcon)`
   width: 10px;
   margin-left: 2px;
   margin-right: 5px;
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.theme.text.base};
   transform: rotate(0deg);
   transition: transform 100ms ease;
 

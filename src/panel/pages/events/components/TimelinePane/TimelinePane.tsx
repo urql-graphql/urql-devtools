@@ -120,7 +120,7 @@ const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
 );
 
 const Container = styled(Pane)`
-  background-color: ${(p) => p.theme.canvas};
+  background-color: ${(p) => p.theme.canvas.base};
 `;
 
 const Body = styled(Pane.Body)`
@@ -134,9 +134,9 @@ const Body = styled(Pane.Body)`
 `;
 
 const PaneSection = styled.section`
-  color: ${(p) => p.theme.textDimmed};
+  color: ${(p) => p.theme.textDimmed.base};
   box-sizing: border-box;
-  background: ${(p) => p.theme.canvas};
+  background: ${(p) => p.theme.canvas.base};
   overflow: auto;
 
   p {
@@ -151,7 +151,7 @@ const PaneSection = styled.section`
     & + & {
       max-height: 100%;
       min-width: 50%;
-      border-left: solid 1px ${(p) => p.theme.divider};
+      border-left: solid 1px ${(p) => p.theme.divider.base};
     }
   }
 
@@ -167,7 +167,7 @@ const PaneSection = styled.section`
     & + & {
       flex-grow: 1;
       flex-basis: 0;
-      border-top: solid 1px ${(p) => p.theme.divider};
+      border-top: solid 1px ${(p) => p.theme.divider.base};
     }
   }
 `;
@@ -176,7 +176,7 @@ const GetStartedSection = styled(PaneSection)`
   flex-grow: 1;
   padding: 20px;
   text-align: center;
-  color: ${(p) => p.theme.textDimmed};
+  color: ${(p) => p.theme.textDimmed.base};
 `;
 
 const Icon = styled(FontAwesomeIcon)`

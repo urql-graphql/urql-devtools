@@ -98,7 +98,7 @@ const StackWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${(p) => p.theme.canvasElevated05};
+  background-color: ${(p) => p.theme.canvas.elevated05};
 `;
 
 export const Box = styled.div`
@@ -137,13 +137,13 @@ const TypeKind = styled.code`
 
 const Description = styled.p`
   font-size: 13px;
-  color: ${(p) => p.theme.textDimmed};
+  color: ${(p) => p.theme.textDimmed.base};
   margin: 12px;
 `;
 
 const TypeNameWrapper = styled.div`
   font-size: 13px;
-  color: ${(p) => p.theme.text};
+  color: ${(p) => p.theme.text.base};
   margin: 12px;
   padding: 0 4px;
 `;
