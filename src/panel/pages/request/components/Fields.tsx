@@ -219,7 +219,7 @@ const Separator = styled.span`
 `;
 
 const Name = styled.span`
-  color: ${(p) => p.theme.syntax.text};
+  color: ${(p) => p.theme.syntax.property};
 `;
 
 const Deprecated = styled.code`
@@ -230,7 +230,7 @@ const Deprecated = styled.code`
 
 const Default = styled.code`
   display: inline-block;
-  color: ${(p) => p.theme.syntax.plain};
+  color: ${(p) => p.theme.syntax.description};
   margin-left: 6px;
 `;
 

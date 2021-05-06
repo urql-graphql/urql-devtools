@@ -46,6 +46,7 @@ exports[`App on mount matches snapshot 1`] = `
         "function": "#e8e8e9",
         "input": "#9291db",
         "interface": "#9291db",
+        "invalid": "#F65151",
         "keyword": "#9291db",
         "meta": "#F65151",
         "null": "#a4a5a8",

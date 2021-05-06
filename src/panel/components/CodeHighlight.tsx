@@ -131,7 +131,7 @@ const StyledCodeBlock = styled.pre`
 `;
 
 const CopyButton = styled.button`
-  background: ${(p) => p.theme.canvas.elevated10};
+  background: ${(p) => p.theme.canvas.elevated05};
   color: ${(p) => p.theme.text.base};
   padding: 0.5rem;
   border-radius: 4px;
@@ -140,7 +140,7 @@ const CopyButton = styled.button`
   right: 5px;
 
   &:hover {
-    background: ${(p) => p.theme.canvasElevation20} !important;
+    background: ${(p) => p.theme.canvas.elevated10} !important;
   }
 `;
 
