@@ -21,18 +21,16 @@ import {
 } from "./context";
 import { isLightMode } from "./util/EnvUtils";
 
-export const App: FC = () => {
-  return (
-    <ThemeProvider theme={isLightMode() ? lightTheme : darkTheme}>
-      <ErrorBoundary>
-        <DevtoolsProvider>
-          <AppRoutes />
-        </DevtoolsProvider>
-      </ErrorBoundary>
-      <GlobalStyle />
-    </ThemeProvider>
-  );
-};
+export const App: FC = () => (
+  <ThemeProvider theme={isLightMode() ? lightTheme : darkTheme}>
+    <ErrorBoundary>
+      <DevtoolsProvider>
+        <AppRoutes />
+      </DevtoolsProvider>
+    </ErrorBoundary>
+    <GlobalStyle />
+  </ThemeProvider>
+);
 
 export const AppRoutes: FC = () => {
   const { client } = useDevtoolsContext();
