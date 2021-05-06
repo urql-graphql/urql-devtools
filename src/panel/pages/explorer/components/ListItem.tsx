@@ -165,7 +165,7 @@ const Typename = styled.div`
   margin-bottom: 0.15rem;
   margin-top: -0.1rem;
   padding: 3px 5px;
-  border: 1px solid ${(p) => `${p.theme.divider}`};
+  border: 1px solid ${(p) => `${p.theme.divider.base}`};
   border-radius: 2px;
   background-color: ${(p) => p.theme.canvas.elevated05};
   color: ${(p) => p.theme.text.base};
