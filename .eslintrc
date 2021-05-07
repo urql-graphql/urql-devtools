@@ -6,7 +6,6 @@
     "plugin:import/errors",
     "plugin:import/typescript",
     "prettier",
-    "prettier/@typescript-eslint",
     "plugin:react/recommended"
   ],
   "rules": {

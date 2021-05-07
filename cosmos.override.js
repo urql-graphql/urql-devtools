@@ -18,9 +18,10 @@ module.exports = (c) => ({
     alias: {
       "react-error-overlay": `${__dirname}/src/panel/util/ErrorOverlay.ts`,
     },
-  },
-  node: {
-    fs: "empty",
+    fallback: {
+      fs: false,
+      path: false,
+    },
   },
   plugins: [
     new webpack.DefinePlugin({

@@ -20,7 +20,7 @@ version: 2
     working_directory: /mnt/ramdisk
   - &node_env
     docker:
-      - image: node:13-alpine
+      - image: node:14-alpine
         user: node
 
 jobs:
@@ -143,7 +143,7 @@ jobs:
   deploy firefox:
     <<: *ramdisk
     docker:
-      - image: node:13
+      - image: node:14
         user: node
     steps:
       - checkout

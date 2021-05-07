@@ -4,7 +4,6 @@ import {
   valueFromASTUntyped,
 } from "graphql";
 import { Operation } from "@urql/core";
-import Maybe from "graphql/tsutils/Maybe";
 
 /** Evaluates a fields arguments taking vars into account */
 export const getFieldArguments = (
@@ -27,7 +26,7 @@ export const getFieldArguments = (
 /** Returns a normalized form of variables with defaulted values */
 export const getNormalizedVariables = (
   variableDefinitions: OperationDefinitionNode["variableDefinitions"] = [],
-  variables?: Maybe<Record<string, any>>
+  variables?: Record<string, any>
 ): Record<string, unknown> | undefined =>
   variableDefinitions.reduce<Operation["variables"]>(
     (normalized, definition) => ({
