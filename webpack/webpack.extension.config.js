@@ -38,7 +38,7 @@ const inOutConfig = isExtension
 
 module.exports = {
   ...inOutConfig,
-  devtool: "cheap-module-source-map",
+  devtool: "source-map",
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   optimization: {
     minimizer: [
