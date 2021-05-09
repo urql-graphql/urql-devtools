@@ -88,10 +88,8 @@ export const Search: FC<SearchProps> = ({ typeMap, setType }) => {
       {listOpen ? (
         <List>
           {results.map((res, i) => (
-            <ListItem key={i}>
-              <TextButton onClick={() => handleTypeSelect(typeMap[res])}>
-                <HighlightMatch name={typeMap[res].name} term={searchValue} />
-              </TextButton>
+            <ListItem key={i} onClick={() => handleTypeSelect(typeMap[res])}>
+              <HighlightMatch name={typeMap[res].name} term={searchValue} />
             </ListItem>
           ))}
         </List>
@@ -186,26 +184,12 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   padding: 6px;
+  color: ${(p) => p.theme.orange["+3"]};
+  cursor: pointer;
 
   &:hover {
     background-color: ${(p) => p.theme.dark["+3"]};
-  }
-`;
-
-const TextButton = styled.button`
-  display: inline-block;
-  width: 100%;
-  background: transparent;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  color: ${(p) => p.theme.orange["+3"]};
-  font-size: inherit;
-  text-align: left;
-  padding: 0;
-  margin: 0;
-
-  &:hover {
     text-decoration: underline;
   }
 `;
+
