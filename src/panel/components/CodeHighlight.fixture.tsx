@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   padding: 20px;
 
   p {
-    color: ${(p) => p.theme.light["0"]};
+    color: ${(p) => p.theme.text.base};
   }
 `;
 
@@ -35,7 +35,11 @@ export default {
       <p data-snapshot>
         value:{" "}
         <CodeHighlight
-          code={JSON.stringify({ number: 1234, string: "Hello" }, null, 2)}
+          code={JSON.stringify(
+            { number: 1234, string: "Hello", null: null, boolean: true },
+            null,
+            2
+          )}
           language="javascript"
         />
       </p>

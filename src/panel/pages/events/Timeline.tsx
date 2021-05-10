@@ -185,7 +185,7 @@ export const Timeline: FC<ComponentProps<typeof Page>> = (props) => {
 };
 
 const Page = styled(Background)`
-  background-color: ${(p) => p.theme.dark["0"]};
+  background-color: ${(p) => p.theme.canvas.base};
   @media (min-aspect-ratio: 1/1) {
     flex-direction: column;
   }
@@ -219,7 +219,7 @@ const TimelineIcons = styled.div`
   margin-top: 60px;
   padding-top: 18px;
   height: max-content;
-  background: ${(p) => p.theme.dark["0"]};
+  background: ${(p) => p.theme.canvas.base};
   z-index: 1;
 
   > * {

@@ -35,5 +35,5 @@ export const Arguments: FC<
 const ArgumentText = styled.div`
   flex-basis: 0;
   flex-grow: 1;
-  color: ${(p) => p.theme.grey["+4"]};
+  color: ${(p) => p.theme.text.base};
 `;

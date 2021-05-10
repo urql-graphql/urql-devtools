@@ -98,7 +98,7 @@ const StackWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${(p) => p.theme.dark["+1"]};
+  background-color: ${(p) => p.theme.canvas.elevated05};
 `;
 
 export const Box = styled.div`
@@ -107,35 +107,43 @@ export const Box = styled.div`
 `;
 
 const TypeKind = styled.code`
-  color: ${(p) => p.theme.yellow["+3"]};
+  color: ${(p) => p.theme.syntax.base};
   margin-right: 6px;
 
   &[data-kind="interface"] {
-    color: ${(p) => p.theme.red["+3"]};
+    color: ${(p) => p.theme.syntax.interface};
   }
 
   &[data-kind="enum"] {
-    color: ${(p) => p.theme.purple["+3"]};
+    color: ${(p) => p.theme.syntax.enum};
   }
 
   &[data-kind="union"] {
-    color: ${(p) => p.theme.blue["+3"]};
+    color: ${(p) => p.theme.syntax.union};
   }
 
   &[data-kind="scalar"] {
-    color: ${(p) => p.theme.orange["+3"]};
+    color: ${(p) => p.theme.syntax.scalar};
+  }
+
+  &[data-kind="input"] {
+    color: ${(p) => p.theme.syntax.input};
+  }
+
+  &[data-kind="type"] {
+    color: ${(p) => p.theme.syntax.type};
   }
 `;
 
 const Description = styled.p`
   font-size: 13px;
-  color: ${(p) => p.theme.light["-9"]};
+  color: ${(p) => p.theme.textDimmed.base};
   margin: 12px;
 `;
 
 const TypeNameWrapper = styled.div`
   font-size: 13px;
-  color: ${(p) => p.theme.light["0"]};
+  color: ${(p) => p.theme.text.base};
   margin: 12px;
   padding: 0 4px;
 `;

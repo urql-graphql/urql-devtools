@@ -12,6 +12,7 @@ import { shallow } from "enzyme";
 import { mocked } from "ts-jest/utils";
 import { App, AppRoutes } from "./App";
 import { useDevtoolsContext } from "./context";
+import { darkTheme, lightTheme } from "./theme";
 
 describe("App", () => {
   describe("on mount", () => {
@@ -31,11 +32,11 @@ describe("App", () => {
       chrome.devtools.panels.themeName = origThemeName;
     });
 
-    it("has a GlobalStyle component but no LightModeStyle component", () => {
+    it("has a GlobalStyle component and dark theme passed to ThemeProvider", () => {
       const wrapper = shallow(<App />);
 
       expect(wrapper.find("GlobalStyle").exists()).toBe(true);
-      expect(wrapper.find("LightModeStyle").exists()).toBe(false);
+      expect(wrapper.find("ThemeProvider").prop("theme")).toBe(darkTheme);
     });
   });
 
@@ -50,11 +51,11 @@ describe("App", () => {
       chrome.devtools.panels.themeName = origThemeName;
     });
 
-    it("has a GlobalStyle component and a LightModeStyle component", () => {
+    it("has a GlobalStyle component and light theme passed to ThemeProvider", () => {
       const wrapper = shallow(<App />);
 
       expect(wrapper.find("GlobalStyle").exists()).toBe(true);
-      expect(wrapper.find("LightModeStyle").exists()).toBe(true);
+      expect(wrapper.find("ThemeProvider").prop("theme")).toBe(lightTheme);
     });
   });
 });

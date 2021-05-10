@@ -4,8 +4,8 @@ export const TimelineSourceIcon = styled.div<{
   kind: "query" | "mutation" | "subscription";
 }>`
   border-radius: 2px;
-  background-color: ${(p) => p.theme.dark["+6"]};
-  color: ${(p) => p.theme.light["-8"]};
+  background-color: ${(p) => p.theme.canvas.elevated05};
+  color: ${(p) => p.theme.text.base};
   cursor: pointer;
   height: 20px;
   line-height: 20px;
@@ -18,7 +18,6 @@ export const TimelineSourceIcon = styled.div<{
   }
 
   &:hover {
-    background-color: ${(p) => p.theme.dark["+9"]};
-    color: ${(p) => p.theme.light["-2"]};
+    background-color: ${(p) => p.theme.canvas.elevated10};
   }
 `;

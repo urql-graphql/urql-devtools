@@ -124,11 +124,11 @@ const Container = styled.div`
 
 const Icon = styled(FontAwesomeIcon)`
   font-size: 13px;
-  color: ${(p) => p.theme.grey["0"]};
+  color: ${(p) => p.theme.textDimmed.base};
   pointer-events: none;
 
   input:focus ~ & {
-    color: ${(p) => p.theme.accent["0"]};
+    color: ${(p) => p.theme.primary.base};
   }
 `;
 
@@ -139,9 +139,9 @@ const InputWrapper = styled.label`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  color: ${(p) => p.theme.light["-5"]};
+  color: ${(p) => p.theme.textDimmed.base};
   padding-left: 10px;
-  border-left: 1px solid ${(p) => p.theme.dark["+4"]};
+  border-left: 1px solid ${(p) => p.theme.divider.base};
 `;
 
 const Input = styled.input`
@@ -151,7 +151,7 @@ const Input = styled.input`
   width: 100%;
   height: 32px;
   padding: 0 10px;
-  color: ${(p) => p.theme.light["-5"]};
+  color: ${(p) => p.theme.text.base};
   font-size: 12px;
 
   &:focus {
@@ -177,8 +177,8 @@ const List = styled.ul`
   padding: 12px 6px;
   list-style: none;
   flex-direction: column;
-  background-color: ${(p) => p.theme.dark["+2"]};
-  border: 1px solid ${(p) => p.theme.dark["+4"]};
+  background-color: ${(p) => p.theme.canvas.base};
+  border: 1px solid ${(p) => p.theme.divider.base};
 
   z-index: 2;
   overflow: auto;
@@ -188,7 +188,7 @@ const ListItem = styled.li`
   padding: 6px;
 
   &:hover {
-    background-color: ${(p) => p.theme.dark["+3"]};
+    background-color: ${(p) => p.theme.canvas.hover};
   }
 `;
 
@@ -199,7 +199,7 @@ const TextButton = styled.button`
   outline: none;
   border: none;
   cursor: pointer;
-  color: ${(p) => p.theme.orange["+3"]};
+  color: ${(p) => p.theme.text.base};
   font-size: inherit;
   text-align: left;
   padding: 0;

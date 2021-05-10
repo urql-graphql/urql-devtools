@@ -126,22 +126,21 @@ export const StyledInlineBlock = styled.pre`
 `;
 
 const StyledCodeBlock = styled.pre`
-  background: ${(props) => props.theme.dark["+1"]} !important;
+  background: ${(p) => p.theme.canvas.elevated05} !important;
   font-size: 12px !important;
 `;
 
 const CopyButton = styled.button`
-  background: ${(props) => props.theme.dark["+1"]} !important;
+  background: ${(p) => p.theme.canvas.elevated05};
+  color: ${(p) => p.theme.text.base};
   padding: 0.5rem;
-  color: white;
-  border: ${(props) => props.theme.dark["+1"]} !important;
   border-radius: 4px;
   position: absolute;
   top: 5px;
   right: 5px;
 
   &:hover {
-    background: ${(props) => props.theme.dark["+3"]} !important;
+    background: ${(p) => p.theme.canvas.elevated10} !important;
   }
 `;
 

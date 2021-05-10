@@ -67,10 +67,10 @@ const List = styled.ul`
   padding-top: 0.3rem;
   padding-left: 0.5rem;
   margin-left: 5px;
-  border-left: 3px solid ${(p) => p.theme.dark["+3"]};
+  border-left: 3px solid ${(p) => p.theme.divider.base};
   list-style: none;
   font-size: 13px;
-  color: ${(p) => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.textDimmed.base};
 
   &:last-of-type {
     margin-bottom: 0;

@@ -123,17 +123,17 @@ const getDescription = (status: ParsedFieldNode["cacheOutcome"]) => {
 const ExpandPrompt = styled.div`
   text-align: center;
   padding: 15px;
-  background: ${(p) => p.theme.dark["+2"]};
-  color: ${(p) => p.theme.grey["+6"]};
+  background: ${(p) => p.theme.canvas.elevated05};
+  color: ${(p) => p.theme.textDimmed.base};
   cursor: pointer;
 `;
 
 const Name = styled.code`
-  color: ${(p) => p.theme.grey["+2"]};
+  color: ${(p) => p.theme.textDimmed.base};
 `;
 
 const Description = styled.p`
-  color: ${(p) => p.theme.grey["+2"]}d4;
+  color: ${(p) => p.theme.textDimmed.base};
   margin-bottom: 0;
   margin-top: 5px;
 `;
@@ -145,7 +145,7 @@ const TextContainer = styled.div`
 const Text = styled.p`
   margin: 0;
   text-align: center;
-  color: ${(p) => p.theme.grey["-1"]};
+  color: ${(p) => p.theme.textDimmed.base};
 `;
 
 const CacheIcon = styled(CacheOutcomeIcon)`

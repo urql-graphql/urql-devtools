@@ -113,7 +113,7 @@ export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
 const FilterList = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: solid 1px ${(p) => p.theme.dark["+4"]};
+  border-bottom: solid 1px ${(p) => p.theme.divider.base};
 `;
 
 const FilterGroup = styled.div`
@@ -123,7 +123,7 @@ const FilterGroup = styled.div`
   align-items: center;
 
   & + & {
-    border-left: solid 1px ${(p) => p.theme.dark["+8"]};
+    border-left: solid 1px ${(p) => p.theme.divider.base};
   }
 `;
 
@@ -136,20 +136,28 @@ const FilterButton = styled.button`
   border-radius: 2px;
   cursor: pointer;
   outline: none;
-  background: ${(props) => props.theme.dark["+6"]};
-  color: ${(p) => p.theme.grey["0"]};
+  background: ${(p) => p.theme.canvas.base};
+  color: ${(p) => p.theme.text.base};
 
-  &:hover:not(:active) {
-    filter: brightness(130%);
+  &:hover {
+    background: ${(p) => p.theme.canvas.hover};
+  }
+
+  &:active {
+    background: ${(p) => p.theme.canvas.active};
   }
 
   &[aria-selected="true"] {
-    background: ${(p) => p.theme.light["-2"]};
-    color: ${(p) => p.theme.dark["+2"]};
-  }
+    background: ${(p) => p.theme.primary.base};
+    color: ${(p) => p.theme.primary.contrast};
 
-  &[aria-selected="true"]:hover:not(:active) {
-    filter: brightness(90%);
+    &:hover {
+      background: ${(p) => p.theme.primary.hover};
+    }
+
+    &:active {
+      background: ${(p) => p.theme.primary.active};
+    }
   }
 `;
 
