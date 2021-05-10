@@ -15,7 +15,7 @@ export const Explorer: FC<ComponentProps<typeof Container>> = (props) => {
         ) : (
           <TitleWrapper>
             <Title>Responses will be shown here</Title>
-            <span>Make a new request or refresh the page</span>
+            <Description>Make a new request or refresh the page</Description>
           </TitleWrapper>
         )}
       </ListContainer>
@@ -25,7 +25,7 @@ export const Explorer: FC<ComponentProps<typeof Container>> = (props) => {
 };
 
 const Container = styled(Background)`
-  background-color: ${(p) => p.theme.canvas.base};
+  background-color: ${(p) => p.theme.colors.canvas.base};
 `;
 
 const ListContainer = styled.section`
@@ -35,12 +35,19 @@ const ListContainer = styled.section`
 `;
 
 const TitleWrapper = styled.div`
-  padding: 1rem;
-  color: ${(p) => p.theme.textDimmed.base};
+  padding: ${(p) => p.theme.space[6]};
+  color: ${(p) => p.theme.colors.textDimmed.base};
   font-weight: normal;
 `;
 
 const Title = styled.h2`
   font-weight: normal;
-  font-size: 1rem;
+  font-size: ${(p) => p.theme.fontSizes.body.xl};
+  line-height: ${(p) => p.theme.lineHeights.body.xl};
+  color: ${(p) => p.theme.colors.text.base};
+  margin: 0;
+`;
+
+const Description = styled.p`
+  margin-top: ${(p) => p.theme.space[3]};
 `;

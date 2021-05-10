@@ -1,3 +1,4 @@
+import { rem } from "polished";
 import React, {
   useState,
   useEffect,
@@ -54,23 +55,24 @@ export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
 
 const TooltipElement = styled.div<{ positionOffset: number }>`
   position: relative;
-  background-color: ${(p) => p.theme.canvas.elevated10};
-  border-radius: 2px;
-  color: ${(p) => p.theme.text.base};
-  font-size: 12px;
+  background-color: ${(p) => p.theme.colors.canvas.elevated10};
+  border-radius: ${(p) => p.theme.radii.s};
+  color: ${(p) => p.theme.colors.text.base};
+  font-size: ${(p) => p.theme.fontSizes.body.m};
+  line-height: ${(p) => p.theme.lineHeights.body.m};
   margin: 0;
-  padding: 10px 20px;
+  padding: ${(p) => `${p.theme.space[3]} ${p.theme.space[4]}`};
   white-space: nowrap;
 
   &::after {
     content: "";
     display: block;
     position: absolute;
-    border-top: 9px solid ${(p) => p.theme.canvas.elevated10};
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    margin-top: -1px;
-    left: calc(50% - ${(p) => p.positionOffset}px);
+    border-top: ${rem(9)} solid ${(p) => p.theme.colors.canvas.elevated10};
+    border-left: ${rem(6)} solid transparent;
+    border-right: ${rem(6)} solid transparent;
+    margin-top: -${rem(1)};
+    left: calc(50% - ${(p) => rem(p.positionOffset)});
     top: 100%;
     transform: translate(-50%, 0);
   }

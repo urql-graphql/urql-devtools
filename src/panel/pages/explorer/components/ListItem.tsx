@@ -129,12 +129,16 @@ export const SystemListItem: React.FC<{
   </Item>
 );
 
-const Item = styled.li`
-  padding-left: ${({ withChildren }: { withChildren: boolean }) =>
-    withChildren ? "0" : "1rem"};
-  min-height: 1.4rem;
-  line-height: 1.4rem;
-  color: ${(p) => p.theme.textDimmed.base};
+const Item = styled.li<{ withChildren: boolean }>`
+  padding-left: ${({ theme, withChildren }) =>
+    withChildren ? "0" : theme.space[4]};
+  font-size: ${(p) => p.theme.fontSizes.body.m};
+  line-height: ${(p) => p.theme.lineHeights.body.m};
+  color: ${(p) => p.theme.colors.textDimmed.base};
+
+  & + & {
+    margin-top: ${(p) => p.theme.space[2]};
+  }
 `;
 
 const OutlineContainer = styled(animated.div)`
@@ -142,33 +146,30 @@ const OutlineContainer = styled(animated.div)`
   display: flex;
   white-space: nowrap;
   overflow: hidden;
-  align-items: center;
+  align-items: baseline;
   width: 100%;
-  padding-left: 3px;
 `;
 
 const Name = styled.span`
-  color: ${(p) => p.theme.text.base};
+  color: ${(p) => p.theme.colors.text.base};
 `;
 
 const ChildrenName = styled.span`
   flex-shrink: 0;
-  margin-right: 3px;
-  color: ${(p) => p.theme.text.base};
+  margin-right: ${(p) => p.theme.space[2]};
+  color: ${(p) => p.theme.colors.text.base};
   font-weight: bold;
-  font-size: 13px;
+  font-size: ${(p) => p.theme.fontSizes.body.m};
+  line-height: ${(p) => p.theme.lineHeights.body.m};
 `;
 
 const Typename = styled.div`
   display: inline-block;
-  margin-left: -7px;
-  margin-bottom: 0.15rem;
-  margin-top: -0.1rem;
-  padding: 3px 5px;
-  border: 1px solid ${(p) => `${p.theme.divider.base}`};
-  border-radius: 2px;
-  background-color: ${(p) => p.theme.canvas.elevated05};
-  color: ${(p) => p.theme.text.base};
-  font-size: 11px;
-  line-height: 1rem;
+  padding: ${(p) => `${p.theme.space[1]} ${p.theme.space[2]}`};
+  border: 1px solid ${(p) => `${p.theme.colors.divider.base}`};
+  border-radius: ${(p) => p.theme.radii.s};
+  background-color: ${(p) => p.theme.colors.canvas.elevated05};
+  color: ${(p) => p.theme.colors.text.base};
+  font-size: ${(p) => p.theme.fontSizes.body.s};
+  line-height: ${(p) => p.theme.lineHeights.body.s};
 `;

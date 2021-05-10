@@ -63,14 +63,13 @@ const sortFields = (nodes: ParsedFieldNode[]) => {
 
 const List = styled.ul`
   margin: 0;
-  padding-bottom: 0.3rem;
-  padding-top: 0.3rem;
-  padding-left: 0.5rem;
-  margin-left: 5px;
-  border-left: 3px solid ${(p) => p.theme.divider.base};
+  padding: ${(p) => p.theme.space[3]};
+  margin-left: ${(p) => p.theme.space[2]};
+  border-left: 3px solid ${(p) => p.theme.colors.divider.base};
   list-style: none;
-  font-size: 13px;
-  color: ${(p) => p.theme.textDimmed.base};
+  font-size: ${(p) => p.theme.fontSizes.body.l};
+  line-height: ${(p) => p.theme.lineHeights.body.l};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 
   &:last-of-type {
     margin-bottom: 0;
@@ -78,7 +77,6 @@ const List = styled.ul`
 
   &[role="tree"] {
     border-left: none;
-    padding-left: 0;
 
     & > li {
       border-left: none;

@@ -1,6 +1,7 @@
 import React, { FC, useMemo, ComponentProps, cloneElement } from "react";
 import styled from "styled-components";
 import { DebugEvent } from "@urql/core";
+import { rem } from "polished";
 import { useTimelineContext } from "../../../context";
 import { TimelineEvent, TimelineEventGroup } from "./TimelineEvent";
 import {
@@ -294,10 +295,6 @@ export const TimelineRow: FC<
 
 const Container = styled.div`
   position: relative;
-  height: 20px;
-  padding-top: 8px;
-
-  & + & {
-    margin-top: 8px;
-  }
+  height: ${rem(20)};
+  margin-top: ${(p) => p.theme.space[5]};
 `;

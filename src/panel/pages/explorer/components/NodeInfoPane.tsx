@@ -8,6 +8,7 @@ import React, {
   useRef,
 } from "react";
 import styled from "styled-components";
+import { rem } from "polished";
 import { ParsedFieldNode } from "../../../context/Explorer/ast";
 import { Pane, CodeHighlight } from "../../../components";
 import { ExplorerContext } from "../../../context";
@@ -122,34 +123,34 @@ const getDescription = (status: ParsedFieldNode["cacheOutcome"]) => {
 
 const ExpandPrompt = styled.div`
   text-align: center;
-  padding: 15px;
-  background: ${(p) => p.theme.canvas.elevated05};
-  color: ${(p) => p.theme.textDimmed.base};
+  padding: ${(p) => p.theme.space[5]};
+  background: ${(p) => p.theme.colors.canvas.elevated05};
+  color: ${(p) => p.theme.colors.textDimmed.base};
   cursor: pointer;
 `;
 
 const Name = styled.code`
-  color: ${(p) => p.theme.textDimmed.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 `;
 
 const Description = styled.p`
-  color: ${(p) => p.theme.textDimmed.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
   margin-bottom: 0;
-  margin-top: 5px;
+  margin-top: ${(p) => p.theme.space[2]};
 `;
 
 const TextContainer = styled.div`
-  padding: 20px;
+  padding: ${(p) => p.theme.space[6]};
 `;
 
 const Text = styled.p`
   margin: 0;
   text-align: center;
-  color: ${(p) => p.theme.textDimmed.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 `;
 
 const CacheIcon = styled(CacheOutcomeIcon)`
   position: relative;
-  top: 1px;
-  margin-right: 0.5rem;
+  top: ${rem(1)};
+  margin-right: ${(p) => p.theme.space[3]};
 `;

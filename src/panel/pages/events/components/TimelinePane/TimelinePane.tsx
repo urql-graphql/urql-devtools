@@ -120,7 +120,7 @@ const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
 );
 
 const Container = styled(Pane)`
-  background-color: ${(p) => p.theme.canvas.base};
+  background-color: ${(p) => p.theme.colors.canvas.base};
 `;
 
 const Body = styled(Pane.Body)`
@@ -134,13 +134,14 @@ const Body = styled(Pane.Body)`
 `;
 
 const PaneSection = styled.section`
-  color: ${(p) => p.theme.textDimmed.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
   box-sizing: border-box;
-  background: ${(p) => p.theme.canvas.base};
+  background: ${(p) => p.theme.colors.canvas.base};
   overflow: auto;
 
   p {
-    font-size: 12px;
+    font-size: ${(p) => p.theme.fontSizes.body.m};
+    line-height: ${(p) => p.theme.lineHeights.body.m};
     margin: 0;
   }
 
@@ -151,7 +152,7 @@ const PaneSection = styled.section`
     & + & {
       max-height: 100%;
       min-width: 50%;
-      border-left: solid 1px ${(p) => p.theme.divider.base};
+      border-left: solid 1px ${(p) => p.theme.colors.divider.base};
     }
   }
 
@@ -167,20 +168,20 @@ const PaneSection = styled.section`
     & + & {
       flex-grow: 1;
       flex-basis: 0;
-      border-top: solid 1px ${(p) => p.theme.divider.base};
+      border-top: solid 1px ${(p) => p.theme.colors.divider.base};
     }
   }
 `;
 
 const GetStartedSection = styled(PaneSection)`
   flex-grow: 1;
-  padding: 20px;
+  padding: ${(p) => p.theme.space[6]};
   text-align: center;
-  color: ${(p) => p.theme.textDimmed.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 `;
 
 const Icon = styled(FontAwesomeIcon)`
-  margin-right: 8px;
+  margin-right: ${(p) => p.theme.space[2]};
 `;
 
 const removeTrailingNewline = (s: string) =>

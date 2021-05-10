@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { TypeMap } from "graphql/type/schema";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { rem } from "polished";
 
 interface SearchProps {
   typeMap: TypeMap;
@@ -123,12 +124,13 @@ const Container = styled.div`
 `;
 
 const Icon = styled(FontAwesomeIcon)`
-  font-size: 13px;
-  color: ${(p) => p.theme.textDimmed.base};
+  font-size: ${(p) => p.theme.fontSizes.body.l};
+  line-height: ${(p) => p.theme.lineHeights.body.l};
+  color: ${(p) => p.theme.colors.textDimmed.base};
   pointer-events: none;
 
   input:focus ~ & {
-    color: ${(p) => p.theme.primary.base};
+    color: ${(p) => p.theme.colors.primary.base};
   }
 `;
 
@@ -139,9 +141,9 @@ const InputWrapper = styled.label`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  color: ${(p) => p.theme.textDimmed.base};
-  padding-left: 10px;
-  border-left: 1px solid ${(p) => p.theme.divider.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
+  padding-left: ${(p) => p.theme.space[3]};
+  border-left: 1px solid ${(p) => p.theme.colors.divider.base};
 `;
 
 const Input = styled.input`
@@ -149,10 +151,10 @@ const Input = styled.input`
   background-color: transparent;
   border: none;
   width: 100%;
-  height: 32px;
-  padding: 0 10px;
-  color: ${(p) => p.theme.text.base};
-  font-size: 12px;
+  height: ${rem(32)};
+  padding: 0 ${(p) => p.theme.space[3]};
+  color: ${(p) => p.theme.colors.text.base};
+  font-size: ${(p) => p.theme.fontSizes.body.m};
 
   &:focus {
     outline: none;
@@ -169,26 +171,26 @@ const Input = styled.input`
 const List = styled.ul`
   position: absolute;
   right: 0;
-  left: 64px;
+  left: ${rem(64)};
   display: flex;
-  width: 250px;
-  max-height: 400px;
+  width: ${rem(250)};
+  max-height: ${rem(400)};
   margin-top: 0;
-  padding: 12px 6px;
+  padding: ${(p) => p.theme.space[3]};
   list-style: none;
   flex-direction: column;
-  background-color: ${(p) => p.theme.canvas.base};
-  border: 1px solid ${(p) => p.theme.divider.base};
+  background-color: ${(p) => p.theme.colors.canvas.base};
+  border: 1px solid ${(p) => p.theme.colors.divider.base};
 
   z-index: 2;
   overflow: auto;
 `;
 
 const ListItem = styled.li`
-  padding: 6px;
+  padding: ${(p) => p.theme.space[3]};
 
   &:hover {
-    background-color: ${(p) => p.theme.canvas.hover};
+    background-color: ${(p) => p.theme.colors.canvas.hover};
   }
 `;
 
@@ -199,7 +201,7 @@ const TextButton = styled.button`
   outline: none;
   border: none;
   cursor: pointer;
-  color: ${(p) => p.theme.text.base};
+  color: ${(p) => p.theme.colors.text.base};
   font-size: inherit;
   text-align: left;
   padding: 0;

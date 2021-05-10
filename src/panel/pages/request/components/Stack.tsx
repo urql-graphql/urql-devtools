@@ -98,7 +98,7 @@ const StackWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${(p) => p.theme.canvas.elevated05};
+  background-color: ${(p) => p.theme.colors.canvas.elevated05};
 `;
 
 export const Box = styled.div`
@@ -107,43 +107,45 @@ export const Box = styled.div`
 `;
 
 const TypeKind = styled.code`
-  color: ${(p) => p.theme.syntax.base};
-  margin-right: 6px;
+  color: ${(p) => p.theme.colors.syntax.base};
+  margin-right: ${(p) => p.theme.space[2]};
 
   &[data-kind="interface"] {
-    color: ${(p) => p.theme.syntax.interface};
+    color: ${(p) => p.theme.colors.syntax.interface};
   }
 
   &[data-kind="enum"] {
-    color: ${(p) => p.theme.syntax.enum};
+    color: ${(p) => p.theme.colors.syntax.enum};
   }
 
   &[data-kind="union"] {
-    color: ${(p) => p.theme.syntax.union};
+    color: ${(p) => p.theme.colors.syntax.union};
   }
 
   &[data-kind="scalar"] {
-    color: ${(p) => p.theme.syntax.scalar};
+    color: ${(p) => p.theme.colors.syntax.scalar};
   }
 
   &[data-kind="input"] {
-    color: ${(p) => p.theme.syntax.input};
+    color: ${(p) => p.theme.colors.syntax.input};
   }
 
   &[data-kind="type"] {
-    color: ${(p) => p.theme.syntax.type};
+    color: ${(p) => p.theme.colors.syntax.type};
   }
 `;
 
 const Description = styled.p`
-  font-size: 13px;
-  color: ${(p) => p.theme.textDimmed.base};
-  margin: 12px;
+  font-size: ${(p) => p.theme.fontSizes.body.l};
+  line-height: ${(p) => p.theme.lineHeights.body.l};
+  color: ${(p) => p.theme.colors.textDimmed.base};
+  padding: ${(p) => p.theme.space[3]};
+  margin: 0;
 `;
 
 const TypeNameWrapper = styled.div`
-  font-size: 13px;
-  color: ${(p) => p.theme.text.base};
-  margin: 12px;
-  padding: 0 4px;
+  font-size: ${(p) => p.theme.fontSizes.body.l};
+  line-height: ${(p) => p.theme.lineHeights.body.l};
+  color: ${(p) => p.theme.colors.text.base};
+  padding: ${(p) => p.theme.space[3]};
 `;

@@ -27,16 +27,17 @@ const Container = styled.div`
 
 const Tab = styled.h3`
   margin: 0;
-  padding: 10px;
-  font-size: 12px;
-  color: ${(p) => p.theme.textDimmed.base};
+  padding: ${(p) => p.theme.space[3]};
+  font-size: ${(p) => p.theme.fontSizes.body.m};
+  line-height: ${(p) => p.theme.lineHeights.body.m};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 
   &[data-active="true"] {
-    color: ${(p) => p.theme.text.base};
+    color: ${(p) => p.theme.colors.text.base};
   }
 
   &:hover {
-    color: ${(p) => p.theme.textDimmed.hover};
+    color: ${(p) => p.theme.colors.textDimmed.hover};
     cursor: pointer;
   }
 `;

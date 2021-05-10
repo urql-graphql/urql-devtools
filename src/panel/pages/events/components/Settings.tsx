@@ -113,50 +113,51 @@ export const Filter: FC<ComponentProps<typeof FilterList>> = (props) => {
 const FilterList = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: solid 1px ${(p) => p.theme.divider.base};
+  border-bottom: solid 1px ${(p) => p.theme.colors.divider.base};
 `;
 
 const FilterGroup = styled.div`
-  margin: 6px 0;
-  padding: 0 5px;
+  margin: ${(p) => p.theme.space[2]} 0;
+  padding: 0 ${(p) => p.theme.space[2]};
   display: flex;
   align-items: center;
 
   & + & {
-    border-left: solid 1px ${(p) => p.theme.divider.base};
+    border-left: solid 1px ${(p) => p.theme.colors.divider.base};
   }
 `;
 
 const FilterButton = styled.button`
-  padding: 3px 6px;
+  padding: ${(p) => `${p.theme.space[2]} ${p.theme.space[3]}`};
   border: none;
-  font-size: 12px;
+  font-size: ${(p) => p.theme.fontSizes.body.m};
+  font-height: ${(p) => p.theme.lineHeights.body.m};
   font-weight: 500;
-  margin: 0 4px;
-  border-radius: 2px;
+  margin: 0 ${(p) => p.theme.space[2]};
+  border-radius: ${(p) => p.theme.radii.s};
   cursor: pointer;
   outline: none;
-  background: ${(p) => p.theme.canvas.base};
-  color: ${(p) => p.theme.text.base};
+  background: ${(p) => p.theme.colors.canvas.base};
+  color: ${(p) => p.theme.colors.text.base};
 
   &:hover {
-    background: ${(p) => p.theme.canvas.hover};
+    background: ${(p) => p.theme.colors.canvas.hover};
   }
 
   &:active {
-    background: ${(p) => p.theme.canvas.active};
+    background: ${(p) => p.theme.colors.canvas.active};
   }
 
   &[aria-selected="true"] {
-    background: ${(p) => p.theme.primary.base};
-    color: ${(p) => p.theme.primary.contrast};
+    background: ${(p) => p.theme.colors.primary.base};
+    color: ${(p) => p.theme.colors.primary.contrast};
 
     &:hover {
-      background: ${(p) => p.theme.primary.hover};
+      background: ${(p) => p.theme.colors.primary.hover};
     }
 
     &:active {
-      background: ${(p) => p.theme.primary.active};
+      background: ${(p) => p.theme.colors.primary.active};
     }
   }
 `;

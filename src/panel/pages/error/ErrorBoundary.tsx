@@ -2,6 +2,7 @@ import React, { Component, ComponentProps } from "react";
 import { faBug, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
+import { rem } from "polished";
 import { CodeHighlight } from "../../components";
 import { openExternalUrl } from "../../util";
 
@@ -172,14 +173,14 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 100%;
-  width: 400px;
-  margin: 20px;
+  width: ${rem(400)};
+  margin: ${(p) => p.theme.space[6]};
 `;
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: ${(p) => p.theme.canvas.base};
+  background: ${(p) => p.theme.colors.canvas.base};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -190,53 +191,53 @@ const Container = styled.div`
     flex-direction: row;
 
     & > ${Content} {
-      margin: 20px;
+      margin: ${rem(6)};
     }
   }
 `;
 
 const Header = styled.h1`
-  color: ${(p) => p.theme.text.base};
+  color: ${(p) => p.theme.colors.text.base};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
   text-align: center;
-  color: ${(p) => p.theme.textDimmed.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 `;
 
 const BugIcon = styled(FontAwesomeIcon)`
-  font-size: 60px;
-  margin-bottom: 40px;
-  color: ${(p) => p.theme.error.base};
+  font-size: ${(p) => p.theme.fontSizes.display.m};
+  margin-bottom: ${(p) => p.theme.space[8]};
+  color: ${(p) => p.theme.colors.error.base};
 `;
 
 const Code = styled(CodeHighlight)`
   max-width: 100%;
   box-sizing: border-box;
-  color: ${(p) => p.theme.error.base};
+  color: ${(p) => p.theme.colors.error.base};
 `;
 
 const Button = styled.button`
-  margin: 5px;
-  padding: 7px 15px;
-  border-radius: 4px;
+  margin: ${(p) => p.theme.space[2]};
+  padding: ${(p) => `${p.theme.space[3]} ${p.theme.space[5]}`};
+  border-radius: ${(p) => p.theme.radii.m};
   cursor: pointer;
   outline: none;
-  color: ${(p) => p.theme.primary.contrast};
-  background: ${(p) => p.theme.primary.base};
+  color: ${(p) => p.theme.colors.primary.contrast};
+  background: ${(p) => p.theme.colors.primary.base};
 
   &[data-type="icon"] {
-    padding: 7px 10px;
+    padding: ${(p) => `${p.theme.space[3]} ${p.theme.space[5]}`};
   }
 
   &:hover {
-    background: ${(p) => p.theme.primary.hover};
+    background: ${(p) => p.theme.colors.primary.hover};
   }
 
   &:active {
-    background: ${(p) => p.theme.primary.active};
+    background: ${(p) => p.theme.colors.primary.active};
   }
 `;
 

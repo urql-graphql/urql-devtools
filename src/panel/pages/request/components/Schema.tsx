@@ -119,16 +119,18 @@ const Container = styled.div`
 `;
 
 const Title = styled.h3`
-  color: ${(p) => p.theme.text.base};
-  font-size: 12px;
+  color: ${(p) => p.theme.colors.text.base};
+  font-size: ${(p) => p.theme.fontSizes.body.m};
+  line-height: ${(p) => p.theme.lineHeights.body.m};
   font-weight: normal;
   margin-top: 0;
   margin-bottom: 0.5rem;
+  padding: ${(p) => p.theme.space[3]};
 `;
 
 const Wrapper = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  color: ${(p) => p.theme.textDimmed.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 `;

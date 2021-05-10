@@ -1,4 +1,5 @@
 import React, { ComponentProps, FC } from "react";
+import { rem } from "polished";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import Icon from "../../assets/icon.svg";
@@ -32,9 +33,9 @@ const Container = styled.div`
   z-index: 1;
   display: flex;
   align-items: center;
-  border-bottom: solid 1px ${(p) => p.theme.divider.base};
-  background: ${(p) => p.theme.canvas.base};
-  height: 36px;
+  border-bottom: solid 1px ${(p) => p.theme.colors.divider.base};
+  background: ${(p) => p.theme.colors.canvas.base};
+  height: ${rem(36)};
   top: 0;
   left: 0;
   right: 0;
@@ -45,19 +46,20 @@ const Item = styled.a<{ alignRight?: boolean }>`
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 10px;
-  font-size: 12px;
+  padding: 0 ${(p) => p.theme.space[3]};
+  font-size: ${(p) => p.theme.fontSizes.body.m};
+  font-height: ${(p) => p.theme.lineHeights.body.m};
   font-weight: 400;
   text-decoration: none;
-  color: ${(p) => p.theme.text.base};
+  color: ${(p) => p.theme.colors.text.base};
   ${({ alignRight }) => alignRight && `margin-left: auto;`}
 
   &:hover {
-    background: ${(p) => p.theme.canvas.hover};
+    background: ${(p) => p.theme.colors.canvas.hover};
   }
 
   &:active {
-    background: ${(p) => p.theme.canvas.active};
+    background: ${(p) => p.theme.colors.canvas.active};
   }
 
   &.active::after {
@@ -65,17 +67,17 @@ const Item = styled.a<{ alignRight?: boolean }>`
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -1px;
-    height: 2px;
-    background: ${(p) => p.theme.primary.base};
+    bottom: ${(p) => `-${p.theme.space[1]}`};
+    height: ${(p) => p.theme.space[1]};
+    background: ${(p) => p.theme.colors.primary.base};
   }
 `;
 
 const Logo = styled(Icon)`
-  width: 32px;
-  height: 19px;
+  width: ${rem(32)};
+  height: ${rem(19)};
 
   path {
-    fill: ${(p) => p.theme.textDimmed.base};
+    fill: ${(p) => p.theme.colors.textDimmed.base};
   }
 `;

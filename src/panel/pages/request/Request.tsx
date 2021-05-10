@@ -39,31 +39,32 @@ const PaneBody = styled(Pane.Body)`
 `;
 
 const PaneSection = styled.section`
-  color: ${(p) => p.theme.text.base};
-  background: ${(p) => p.theme.canvas.base};
+  color: ${(p) => p.theme.colors.text.base};
+  background: ${(p) => p.theme.colors.canvas.base};
   overflow: auto;
   flex-grow: 1;
   flex-basis: 0;
 
   h1 {
-    background-color: ${(p) => p.theme.text.base};
+    background-color: ${(p) => p.theme.colors.text.base};
     position: sticky;
-    top: -20px;
-    margin: -20px;
-    padding: 2px 10px;
-    font-size: 12px;
+    top: ${(p) => `-${p.theme.space[6]}`};
+    margin: ${(p) => `-${p.theme.space[6]}`};
+    padding: ${(p) => `${p.theme.space[1]} ${p.theme.space[3]}`};
+    font-size: ${(p) => p.theme.fontSizes.body.m};
+    line-height: ${(p) => p.theme.lineHeights.body.m};
     font-weight: 400;
-    border-bottom: solid 1px ${(p) => p.theme.divider.base};
+    border-bottom: solid 1px ${(p) => p.theme.colors.divider.base};
     z-index: 1;
   }
 
   h1 + * {
-    margin-top: 40px;
+    margin-top: ${(p) => p.theme.space[8]};
   }
 `;
 
 const Page = styled(Background)`
-  background-color: ${(p) => p.theme.canvas.base};
+  background-color: ${(p) => p.theme.colors.canvas.base};
   @media (min-aspect-ratio: 1/1) {
     flex-direction: column;
   }
@@ -87,7 +88,7 @@ const PageContent = styled.div`
   }
 
   .CodeMirror {
-    font-size: 12px;
+    font-size: ${(p) => p.theme.fontSizes.body.m};
     height: auto;
     width: 100%;
     height: 100%;

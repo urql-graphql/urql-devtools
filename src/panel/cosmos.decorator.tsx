@@ -10,8 +10,7 @@ const FixtureStyle = createGlobalStyle`
   body, html, #root {
     height: 100%;
     margin: 0;
-    font-size: 12px;
-    background: ${(p) => p.theme.canvas.base};
+    background: ${(p) => p.theme.colors.canvas.base};
   }
 
   #root {

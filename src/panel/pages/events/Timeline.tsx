@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import { Operation } from "@urql/core";
+import { rem } from "polished";
 import { useTimelineContext, START_PADDING } from "../../context";
 import { Background } from "../../components/Background";
 import {
@@ -185,7 +186,7 @@ export const Timeline: FC<ComponentProps<typeof Page>> = (props) => {
 };
 
 const Page = styled(Background)`
-  background-color: ${(p) => p.theme.canvas.base};
+  background-color: ${(p) => p.theme.colors.canvas.base};
   @media (min-aspect-ratio: 1/1) {
     flex-direction: column;
   }
@@ -213,23 +214,22 @@ const TimelineIcons = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40px;
+  width: ${rem(40)};
 
   /* Margin prevents ticks from being hidden. */
-  margin-top: 60px;
-  padding-top: 18px;
+  margin-top: ${(p) => p.theme.space[10]};
   height: max-content;
-  background: ${(p) => p.theme.canvas.base};
+  background: ${(p) => p.theme.colors.canvas.base};
   z-index: 1;
 
   > * {
-    margin-bottom: 16px;
+    margin-top: ${(p) => p.theme.space[5]};
   }
 
   > *:after {
     content: "";
-    width: 200px;
-    height: 200px;
+    width: ${rem(200)};
+    height: ${rem(200)};
   }
 `;
 
@@ -237,7 +237,7 @@ const TimelineList = styled.div`
   cursor: grab;
   display: block;
   position: relative;
-  padding: 70px 0;
+  padding: ${(p) => p.theme.space[10]} 0;
   overflow-y: visible;
   width: 100%;
   box-sizing: border-box;

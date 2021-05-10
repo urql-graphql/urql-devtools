@@ -1,31 +1,32 @@
 import styled from "styled-components";
 import React, { FC, ComponentProps } from "react";
+import { rem } from "polished";
 import { useTooltip, TimelineTooltip } from "./TimelineTooltip";
 
 export const TimelineAliveDuration = styled.div`
-  height: 20px;
-  background: ${(p) => p.theme.canvas.elevated05};
+  height: ${(p) => p.theme.space[6]};
+  background: ${(p) => p.theme.colors.canvas.elevated05};
 `;
 
 type NetworkState = "fetching" | "success" | "error";
 
 export const NetworkDuration = styled.div<{ isSelected?: boolean }>`
   cursor: pointer;
-  height: 10px;
+  height: ${rem(10)};
 
   outline: ${({ isSelected, theme }) =>
-    isSelected ? `${theme.divider.base} solid 3px` : "none"};
+    isSelected ? `${theme.colors.divider.base} solid 3px` : "none"};
 
   &[data-state="fetching"] {
-    background: ${(p) => p.theme.pending.base};
+    background: ${(p) => p.theme.colors.pending.base};
   }
 
   &[data-state="success"] {
-    background: ${(p) => p.theme.success.base};
+    background: ${(p) => p.theme.colors.success.base};
   }
 
   &[data-state="error"] {
-    background: ${(p) => p.theme.error.base};
+    background: ${(p) => p.theme.colors.error.base};
   }
 `;
 
