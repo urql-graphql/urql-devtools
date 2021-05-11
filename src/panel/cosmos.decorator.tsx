@@ -1,8 +1,9 @@
 import "./App.css";
 import "./prism";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC } from "react";
 import { MemoryRouter } from "react-router";
-import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { useSelect } from "react-cosmos/fixture";
 import { lightTheme, darkTheme, GlobalStyle } from "./theme";
 import { DevtoolsContext } from "./context";
 
@@ -23,27 +24,13 @@ const FixtureStyle = createGlobalStyle`
   }
 `;
 
-const ThemeToggle = styled.button`
-  position: fixed;
-  z-index: 1000;
-  bottom: 0;
-  right: 0;
-  top: initial !important;
-  background: #202020;
-  color: #fff;
-  padding: 10px;
-`;
-
 export const ThemeDecorator: FC = ({ children, ...props }) => {
-  const [theme, setTheme] = useState("dark");
-
-  const toggleTheme = useCallback(() => {
-    setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"));
-  }, []);
+  const [theme] = useSelect("theme", {
+    options: ["light", "dark"],
+  });
 
   return (
     <ThemeProvider {...props} theme={theme === "dark" ? darkTheme : lightTheme}>
-      <ThemeToggle onClick={toggleTheme}>Toggle theme</ThemeToggle>
       <GlobalStyle />
       {children}
     </ThemeProvider>
