@@ -26,7 +26,7 @@ const FixtureStyle = createGlobalStyle`
 
 export const ThemeDecorator: FC = ({ children, ...props }) => {
   const [theme] = useSelect("theme", {
-    options: ["light", "dark"],
+    options: ["dark", "light"],
   });
 
   return (
