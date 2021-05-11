@@ -45,7 +45,7 @@ export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
         {...props}
         ref={ref}
         positionOffset={offset}
-        style={{ ...styleProp, marginLeft: offset }}
+        style={{ ...styleProp, marginLeft: rem(offset) }}
       >
         {children}
       </TooltipElement>
