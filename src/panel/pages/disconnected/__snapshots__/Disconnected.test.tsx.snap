@@ -2,7 +2,7 @@
 
 exports[`on mount matches snapshot 1`] = `
 <Fragment>
-  <Memo(GlobalStyleComponent) />
+  <Memo(l) />
   <Container>
     <Logo />
     <Header>
