@@ -1,3 +1,4 @@
 {
-  "silent": true
+  "silent": true,
+  "node": "14"
 }
