@@ -148,7 +148,7 @@ const FilterButton = styled.button`
   border-radius: 2px;
   cursor: pointer;
   outline: none;
-  background: ${(p) => p.theme.canvas.base};
+  background: ${(p) => p.theme.canvas.elevated05};
   color: ${(p) => p.theme.text.base};
 
   &:hover {
