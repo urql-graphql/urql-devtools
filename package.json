@@ -33,7 +33,7 @@
     "start": "electron dist/electron/main.js",
     "test": "jest --testPathIgnorePatterns visual-regression",
     "visual-regression": "./scripts/regression.sh --watch",
-    "visual-regression:exec": "jest --no-cache visual-regression --runInBand -u",
+    "visual-regression:exec": "jest --no-cache visual-regression --runInBand",
     "webpack:electron": "webpack --config webpack/webpack.electron.config.js",
     "webpack:extension": "webpack --config webpack/webpack.extension.config.js",
     "type-check": "yarn tsc"
