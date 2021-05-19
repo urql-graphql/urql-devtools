@@ -5,14 +5,17 @@ exports[`App on mount matches snapshot 1`] = `
   theme={
     Object {
       "canvas": Object {
-        "active": "#292b3f",
-        "base": "#1C1E26",
-        "elevated05": "#272930",
-        "elevated10": "#32343b",
-        "hover": "#252637",
+        "active": "#2a2a38",
+        "base": "#1d1d1d",
+        "elevated05": "#303030",
+        "elevated10": "#373737",
+        "hover": "#26252f",
+      },
+      "codeblock": Object {
+        "background": "#252525",
       },
       "divider": Object {
-        "base": "#3e3f46",
+        "base": "#434343",
       },
       "error": Object {
         "base": "#F65151",
@@ -21,10 +24,10 @@ exports[`App on mount matches snapshot 1`] = `
         "base": "#00A1FF",
       },
       "primary": Object {
-        "active": "#9291db",
+        "active": "#9d9cdf",
         "base": "#7776D2",
-        "contrast": "#FFFFFF",
-        "hover": "#8483d6",
+        "contrast": "#fff",
+        "hover": "#8a89d8",
       },
       "secondary": Object {
         "base": "#FFE248",
@@ -33,7 +36,7 @@ exports[`App on mount matches snapshot 1`] = `
         "base": "#2DAF7E",
       },
       "syntax": Object {
-        "atom": "#e8e8e9",
+        "atom": "#e8e8e8",
         "attrName": "#33b3ff",
         "base": "#33b3ff",
         "boolean": "#9291db",
@@ -41,19 +44,19 @@ exports[`App on mount matches snapshot 1`] = `
         "className": "#44b9cb",
         "comment": "#6cc7a4",
         "constant": "#33b3ff",
-        "description": "#a4a5a8",
+        "description": "#a4a4a4",
         "enum": "#6cc7a4",
-        "function": "#e8e8e9",
+        "function": "#e8e8e8",
         "input": "#9291db",
         "interface": "#9291db",
         "invalid": "#F65151",
         "keyword": "#9291db",
         "meta": "#F65151",
-        "null": "#a4a5a8",
+        "null": "#a4a4a4",
         "number": "#6cc7a4",
-        "operator": "#e8e8e9",
+        "operator": "#e8e8e8",
         "property": "#33b3ff",
-        "punctuation": "#e8e8e9",
+        "punctuation": "#e8e8e8",
         "scalar": "#ed9b3d",
         "string": "#ed9b3d",
         "type": "#33b3ff",
@@ -61,12 +64,15 @@ exports[`App on mount matches snapshot 1`] = `
         "variable": "#33b3ff",
       },
       "text": Object {
-        "base": "#FFFFFF",
+        "base": "#e9e9e9",
       },
       "textDimmed": Object {
-        "active": "#ccc",
-        "base": "#999",
-        "hover": "#b2b2b2",
+        "active": "#d0d0d0",
+        "base": "#d0d0d0",
+        "hover": "#fff",
+      },
+      "tooltip": Object {
+        "background": "#151515",
       },
     }
   }

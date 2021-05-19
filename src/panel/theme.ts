@@ -2,7 +2,7 @@ import { tint, shade, darken, lighten, mix } from "polished";
 import { createGlobalStyle } from "styled-components";
 
 const colors = {
-  black: "#1a1a1b",
+  black: "#1d1d1d",
   blue: "#00A1FF",
   green: "#2DAF7E",
   orange: "#EB9028",
