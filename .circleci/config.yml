@@ -33,7 +33,10 @@ jobs:
       - run:
           name: Check for dependencies
           command: "([[ -d node_modules ]] && circleci-agent step halt) || exit 0"
-      - run: yarn install --frozen-lockfile
+      - run:
+          command: yarn install --frozen-lockfile
+          environment:
+            PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 1
       - save_cache:
           key: *node_modules_cache_key
           paths:
