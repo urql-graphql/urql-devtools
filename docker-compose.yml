@@ -23,6 +23,7 @@ services:
       - USER=root
       - CIRCLE_NODE_TOTAL
       - CIRCLE_NODE_INDEX
+      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome
     entrypoint: ["/bin/bash", "-c"]
     command:
       - npx wait-on http://cosmos:5000 && yarn jest --clearCache && yarn run visual-regression:exec
