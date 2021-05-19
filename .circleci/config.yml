@@ -33,7 +33,10 @@ jobs:
       - run:
           name: Check for dependencies
           command: "([[ -d node_modules ]] && circleci-agent step halt) || exit 0"
-      - run: yarn install --frozen-lockfile
+      - run:
+          command: yarn install --frozen-lockfile
+          environment:
+            PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 1
       - save_cache:
           key: *node_modules_cache_key
           paths:
@@ -74,7 +77,7 @@ jobs:
   visual regression:
     <<: *ramdisk
     docker:
-      - image: buildkite/puppeteer:v3.0.4
+      - image: buildkite/puppeteer:8.0.0
         user: node
         environment:
           COSMOS_HOST: localhost
@@ -86,7 +89,10 @@ jobs:
       - run:
           command: yarn cosmos
           background: true
-      - run: sleep 5 && yarn run visual-regression:exec
+      - run:
+          command: sleep 5 && yarn run visual-regression:exec
+          environment:
+            PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
       - store_artifacts:
           path: src/panel/__image_snapshots__/__diff_output__/
 

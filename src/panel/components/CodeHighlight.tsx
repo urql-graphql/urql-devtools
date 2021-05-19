@@ -126,7 +126,7 @@ export const StyledInlineBlock = styled.pre`
 `;
 
 const StyledCodeBlock = styled.pre`
-  background: ${(p) => p.theme.colors.canvas.elevated05} !important;
+  background: ${(p) => p.theme.codeblock.background} !important;
   font-size: ${(p) => p.theme.fontSizes.body.m} !important;
 `;
 

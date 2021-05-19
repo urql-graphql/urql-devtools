@@ -1,14 +1,13 @@
-import { tint, shade, mix, rem } from "polished";
+import { tint, shade, darken, lighten, mix, rem } from "polished";
 import { createGlobalStyle } from "styled-components";
 
 const colors = {
-  black: "#1C1E26",
+  black: "#1d1d1d",
   blue: "#00A1FF",
   green: "#2DAF7E",
   orange: "#EB9028",
   purple: "#7776D2",
   red: "#F65151",
-  white: "#FFFFFF",
   yellow: "#FFE248",
 };
 
@@ -59,11 +58,17 @@ export const lightTheme = {
   },
   colors: {
     canvas: {
-      base: colors.white,
+      base: "#fff",
       hover: tint(0.9, colors.purple),
       active: tint(0.85, colors.purple),
-      elevated05: mix(0.05, colors.black, colors.white),
-      elevated10: mix(0.1, colors.black, colors.white),
+      elevated05: darken(0.05, "#fff"),
+      elevated10: darken(0.1, "#fff"),
+    },
+    codeblock: {
+      background: darken(0.05, "#fff"),
+    },
+    tooltip: {
+      background: darken(0.1, "#fff"),
     },
     text: {
       base: colors.black,
@@ -74,13 +79,13 @@ export const lightTheme = {
       active: tint(0.2, colors.black),
     },
     divider: {
-      base: shade(0.1, colors.white),
+      base: shade(0.1, "#fff"),
     },
     primary: {
       base: colors.purple,
       hover: shade(0.05, colors.purple),
       active: shade(0.1, colors.purple),
-      contrast: colors.white,
+      contrast: "#fff",
     },
     secondary: {
       base: colors.orange,
@@ -132,25 +137,31 @@ export const darkTheme = {
       base: colors.black,
       hover: mix(0.9, colors.black, colors.purple),
       active: mix(0.85, colors.black, colors.purple),
-      elevated05: tint(0.05, colors.black),
-      elevated10: tint(0.1, colors.black),
+      elevated05: lighten(0.075, colors.black),
+      elevated10: lighten(0.1, colors.black),
+    },
+    codeblock: {
+      background: lighten(0.03, colors.black),
+    },
+    tooltip: {
+      background: darken(0.03, colors.black),
     },
     text: {
-      base: colors.white,
+      base: lighten(0.8, colors.black),
     },
     textDimmed: {
-      base: shade(0.4, colors.white),
-      hover: shade(0.3, colors.white),
-      active: shade(0.2, colors.white),
+      base: lighten(0.7, colors.black),
+      hover: lighten(0.9, colors.black),
+      active: lighten(0.7, colors.black),
     },
     divider: {
-      base: tint(0.15, colors.black),
+      base: lighten(0.15, colors.black),
     },
     primary: {
       base: colors.purple,
-      hover: tint(0.1, colors.purple),
-      active: tint(0.2, colors.purple),
-      contrast: colors.white,
+      hover: lighten(0.05, colors.purple),
+      active: lighten(0.1, colors.purple),
+      contrast: lighten(0.9, colors.black),
     },
     secondary: {
       base: colors.yellow,
@@ -231,19 +242,19 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .CodeMirror-focused .CodeMirror-selected {
-    background: ${(p) => p.theme.colors.canvas.elevated10};
+    background: ${(p) => p.theme.colors.codeblock.background};
   }
 
   .CodeMirror-line::selection,
   .CodeMirror-line>span::selection,
   .CodeMirror-line>span>span::selection {
-    background: ${(p) => p.theme.colors.canvas.elevated10};
+    background: ${(p) => p.theme.colors.codeblock.background};
   }
 
   .CodeMirror-line::-moz-selection,
   .CodeMirror-line>span::-moz-selection,
   .CodeMirror-line>span>span::-moz-selection {
-    background: ${(p) => p.theme.colors.canvas.elevated10};
+    background: ${(p) => p.theme.colors.codeblock.background};
   }
 
   .cm-s-default, [class*="language-"] {

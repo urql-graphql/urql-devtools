@@ -55,7 +55,7 @@ export const TimelineTooltip: FC<JSX.IntrinsicElements["div"]> = ({
 
 const TooltipElement = styled.div<{ positionOffset: number }>`
   position: relative;
-  background-color: ${(p) => p.theme.colors.canvas.elevated10};
+  background-color: ${(p) => p.theme.colors.tooltip.background};
   border-radius: ${(p) => p.theme.radii.s};
   color: ${(p) => p.theme.colors.text.base};
   font-size: ${(p) => p.theme.fontSizes.body.m};
@@ -68,7 +68,7 @@ const TooltipElement = styled.div<{ positionOffset: number }>`
     content: "";
     display: block;
     position: absolute;
-    border-top: ${rem(9)} solid ${(p) => p.theme.colors.canvas.elevated10};
+    border-top: ${rem(9)} solid ${(p) => p.theme.colors.tooltip.background};
     border-left: ${rem(6)} solid transparent;
     border-right: ${rem(6)} solid transparent;
     margin-top: -${rem(1)};

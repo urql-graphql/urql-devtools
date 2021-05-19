@@ -34,6 +34,8 @@ interface TimelineContextValue {
   setPosition: (time: number) => void;
   scale: ScaleLinear<number, number>;
   startTime: number;
+  zoomIn: () => void;
+  zoomOut: () => void;
 }
 
 export const TimelineContext = createContext<TimelineContextValue>(null as any);
@@ -43,6 +45,8 @@ export const useTimelineContext = (): TimelineContextValue =>
 
 const DEFAULT_WIDTH = 30000;
 export const START_PADDING = 500;
+const ZOOM_MIN = 5;
+const ZOOM_MAX = 0.05;
 
 const useTimelineDomain = () => {
   const startTime = useRef(Date.now());
@@ -135,8 +139,8 @@ const useTimelineDomain = () => {
     const delta = e.deltaY * 0.01;
     const newZoom =
       e.deltaY < 0
-        ? Math.max(0.05, domain.current.zoom + delta)
-        : Math.min(5, domain.current.zoom + delta);
+        ? Math.max(ZOOM_MAX, domain.current.zoom + delta)
+        : Math.min(ZOOM_MIN, domain.current.zoom + delta);
     const endTime = domain.current.start + domain.current.zoom * DEFAULT_WIDTH;
     const scale = scaleLinear()
       .domain([domain.current.start, endTime])
@@ -150,6 +154,20 @@ const useTimelineDomain = () => {
       ...domain.current,
       start: Math.max(newStart, startTime.current - START_PADDING),
       zoom: newZoom,
+    };
+  }, []);
+
+  const zoomIn = useCallback(() => {
+    domain.current = {
+      ...domain.current,
+      zoom: Math.max(ZOOM_MAX, domain.current.zoom - 0.2),
+    };
+  }, []);
+
+  const zoomOut = useCallback(() => {
+    domain.current = {
+      ...domain.current,
+      zoom: Math.min(ZOOM_MIN, domain.current.zoom + 0.2),
     };
   }, []);
 
@@ -236,6 +254,8 @@ const useTimelineDomain = () => {
       startTime: startTime.current,
       setPosition,
       scale: scale.scale,
+      zoomIn,
+      zoomOut,
     }),
     [scale, setContainer]
   );

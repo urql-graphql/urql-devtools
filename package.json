@@ -33,7 +33,7 @@
     "start": "electron dist/electron/main.js",
     "test": "jest --testPathIgnorePatterns visual-regression",
     "visual-regression": "./scripts/regression.sh --watch",
-    "visual-regression:exec": "jest --no-cache visual-regression --runInBand",
+    "visual-regression:exec": "jest --no-cache visual-regression --runInBand -u",
     "webpack:electron": "webpack --config webpack/webpack.electron.config.js",
     "webpack:extension": "webpack --config webpack/webpack.extension.config.js",
     "type-check": "yarn tsc"
@@ -133,7 +133,7 @@
     "prettier": "^2.1.1",
     "puppeteer": "^3.3.0",
     "react": "^16.13.1",
-    "react-cosmos": "5.4.0",
+    "react-cosmos": "5.6.2",
     "react-dom": "^16.13.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",

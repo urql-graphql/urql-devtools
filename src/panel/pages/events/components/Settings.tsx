@@ -4,6 +4,8 @@ import {
   faCog,
   faFastBackward,
   faFastForward,
+  faSearchPlus,
+  faSearchMinus,
 } from "@fortawesome/free-solid-svg-icons";
 import { Collapsible, Toolbar } from "../../../components";
 import { useTimelineContext, START_PADDING } from "../../../context";
@@ -11,7 +13,7 @@ import { useTimelineContext, START_PADDING } from "../../../context";
 export const Settings: FC<ComponentProps<typeof Container>> = (props) => {
   const [collapsed, setCollapsed] = useState(true);
   const handleExpandToggle = useCallback(() => setCollapsed((c) => !c), []);
-  const { setPosition, startTime } = useTimelineContext();
+  const { setPosition, startTime, zoomIn, zoomOut } = useTimelineContext();
 
   const handleBackClick = useCallback(
     () => setPosition(startTime - START_PADDING),
@@ -32,6 +34,16 @@ export const Settings: FC<ComponentProps<typeof Container>> = (props) => {
             icon: faCog,
             active: !collapsed,
             onClick: handleExpandToggle,
+          },
+          {
+            title: "Zoom in",
+            icon: faSearchPlus,
+            onClick: zoomIn,
+          },
+          {
+            title: "Zoom out",
+            icon: faSearchMinus,
+            onClick: zoomOut,
           },
           {
             title: "Back to start [Home]",
@@ -137,7 +149,7 @@ const FilterButton = styled.button`
   border-radius: ${(p) => p.theme.radii.s};
   cursor: pointer;
   outline: none;
-  background: ${(p) => p.theme.colors.canvas.base};
+  background: ${(p) => p.theme.colors.canvas.elevated05};
   color: ${(p) => p.theme.colors.text.base};
 
   &:hover {
