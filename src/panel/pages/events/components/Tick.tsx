@@ -10,7 +10,7 @@ export const Tick = styled.div<{ label: string }>`
     content: "${(p) => p.label}";
     font-family: "Roboto";
     font-size: 12px;
-    color: #fff;
+    color: ${(p) => p.theme.text.base};
     opacity: 0.9;
 
     display: block;

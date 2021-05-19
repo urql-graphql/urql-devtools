@@ -155,7 +155,7 @@ const Header = styled.h2`
   z-index: 1;
   margin: 0;
   padding: 10px;
-  background: ${(p) => p.theme.canvas.elevated05};
+  background: ${(p) => p.theme.codeblock.background};
   border-bottom: solid 1px ${(p) => p.theme.divider.base};
   font-size: 12px;
   font-weight: 400;
