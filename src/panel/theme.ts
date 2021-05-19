@@ -19,6 +19,12 @@ export const lightTheme = {
     elevated05: darken(0.05, "#fff"),
     elevated10: darken(0.1, "#fff"),
   },
+  codeblock: {
+    background: darken(0.05, "#fff"),
+  },
+  tooltip: {
+    background: darken(0.1, "#fff"),
+  },
   text: {
     base: colors.black,
   },
@@ -84,7 +90,13 @@ export const darkTheme = {
     hover: mix(0.9, colors.black, colors.purple),
     active: mix(0.85, colors.black, colors.purple),
     elevated05: lighten(0.075, colors.black),
-    elevated10: lighten(0.125, colors.black),
+    elevated10: lighten(0.1, colors.black),
+  },
+  codeblock: {
+    background: lighten(0.03, colors.black),
+  },
+  tooltip: {
+    background: darken(0.03, colors.black),
   },
   text: {
     base: lighten(0.8, colors.black),
@@ -181,19 +193,19 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .CodeMirror-focused .CodeMirror-selected {
-    background: ${(p) => p.theme.canvas.elevated10};
+    background: ${(p) => p.theme.codeblock.background};
   }
 
   .CodeMirror-line::selection,
   .CodeMirror-line>span::selection,
   .CodeMirror-line>span>span::selection {
-    background: ${(p) => p.theme.canvas.elevated10};
+    background: ${(p) => p.theme.codeblock.background};
   }
 
   .CodeMirror-line::-moz-selection,
   .CodeMirror-line>span::-moz-selection,
   .CodeMirror-line>span>span::-moz-selection {
-    background: ${(p) => p.theme.canvas.elevated10};
+    background: ${(p) => p.theme.codeblock.background};
   }
 
   .cm-s-default, [class*="language-"] {
