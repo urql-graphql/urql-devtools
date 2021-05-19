@@ -4,7 +4,7 @@ services:
     image: buildkite/puppeteer:8.0.0
     user: root
     working_dir: /app
-    environment: 
+    environment:
       - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
     volumes:
       - .:/app
