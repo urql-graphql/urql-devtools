@@ -67,8 +67,8 @@ const Item = styled.a<{ alignRight?: boolean }>`
     position: absolute;
     left: 0;
     right: 0;
-    bottom: ${(p) => `-${p.theme.space[1]}`};
-    height: ${(p) => p.theme.space[1]};
+    bottom: -1px;
+    height: ${rem(2)};
     background: ${(p) => p.theme.colors.primary.base};
   }
 `;
