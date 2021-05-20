@@ -1,3 +1,4 @@
+import { rem } from "polished";
 import React, { FC, ComponentProps } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import Icon from "../../../assets/icon.svg";
@@ -22,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: ${(p) => p.theme.canvas.base};
+  background: ${(p) => p.theme.colors.canvas.base};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,19 +31,19 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
-  color: ${(p) => p.theme.text.base};
+  color: ${(p) => p.theme.colors.text.base};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
-  color: ${(p) => p.theme.textDimmed.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 `;
 
 const Logo = styled(Icon)`
-  width: 150px;
+  width: ${rem(150)};
 
   path {
-    fill: ${(p) => p.theme.text.base};
+    fill: ${(p) => p.theme.colors.text.base};
   }
 `;

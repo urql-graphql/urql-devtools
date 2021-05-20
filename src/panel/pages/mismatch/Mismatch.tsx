@@ -1,5 +1,6 @@
 import React, { FC, ComponentProps } from "react";
 import styled from "styled-components";
+import { rem } from "polished";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb } from "@fortawesome/free-solid-svg-icons";
 import { CodeHighlight } from "../../components";
@@ -42,14 +43,14 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
-  margin: 10px;
+  width: ${rem(300)};
+  margin: ${(p) => p.theme.space[3]};
 `;
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: ${(p) => p.theme.canvas.base};
+  background: ${(p) => p.theme.colors.canvas.base};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,26 +61,26 @@ const Container = styled.div`
     flex-direction: row;
 
     & > ${Content} {
-      margin: 20px;
+      margin: ${(p) => p.theme.space[6]};
     }
   }
 `;
 
 const Header = styled.h1`
-  color: ${(p) => p.theme.text.base};
+  color: ${(p) => p.theme.colors.text.base};
   font-weight: 400;
   margin: 0;
 `;
 
 const Hint = styled.p`
   text-align: center;
-  color: ${(p) => p.theme.textDimmed.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 `;
 
 const Icon = styled(FontAwesomeIcon)`
-  font-size: 80px;
-  margin-bottom: 40px;
-  color: ${(p) => p.theme.error.base};
+  font-size: ${(p) => p.theme.fontSizes.display.l};
+  margin-bottom: ${(p) => p.theme.space[9]};
+  color: ${(p) => p.theme.colors.error.base};
 `;
 
 const Code = styled(CodeHighlight)`

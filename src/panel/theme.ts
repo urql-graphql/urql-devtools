@@ -1,4 +1,4 @@
-import { tint, shade, darken, lighten, mix } from "polished";
+import { tint, shade, darken, lighten, mix, rem } from "polished";
 import { createGlobalStyle } from "styled-components";
 
 const colors = {
@@ -12,148 +12,197 @@ const colors = {
 };
 
 export const lightTheme = {
-  canvas: {
-    base: "#fff",
-    hover: tint(0.9, colors.purple),
-    active: tint(0.85, colors.purple),
-    elevated05: darken(0.05, "#fff"),
-    elevated10: darken(0.1, "#fff"),
+  space: {
+    0: 0,
+    1: rem(2),
+    2: rem(4),
+    3: rem(8),
+    4: rem(12),
+    5: rem(16),
+    6: rem(20),
+    7: rem(24),
+    8: rem(32),
+    9: rem(48),
+    10: rem(64),
   },
-  codeblock: {
-    background: darken(0.05, "#fff"),
+  radii: {
+    s: rem(2),
+    m: rem(4),
+    round: "50%",
   },
-  tooltip: {
-    background: darken(0.1, "#fff"),
+  fontSizes: {
+    body: {
+      s: rem(11),
+      m: rem(12),
+      l: rem(13),
+      xl: rem(16),
+    },
+    display: {
+      s: rem(40),
+      m: rem(60),
+      l: rem(80),
+    },
   },
-  text: {
-    base: colors.black,
+  lineHeights: {
+    body: {
+      s: rem(14),
+      m: rem(15),
+      l: rem(16),
+      xl: rem(20),
+    },
+    display: {
+      s: rem(48),
+      m: rem(72),
+      l: rem(96),
+    },
   },
-  textDimmed: {
-    base: tint(0.4, colors.black),
-    hover: tint(0.3, colors.black),
-    active: tint(0.2, colors.black),
-  },
-  divider: {
-    base: shade(0.1, "#fff"),
-  },
-  primary: {
-    base: colors.purple,
-    hover: shade(0.05, colors.purple),
-    active: shade(0.1, colors.purple),
-    contrast: "#fff",
-  },
-  secondary: {
-    base: colors.orange,
-  },
-  success: {
-    base: colors.green,
-  },
-  error: {
-    base: colors.red,
-  },
-  pending: {
-    base: colors.blue,
-  },
-  syntax: {
-    base: shade(0.3, colors.orange),
-    atom: tint(0.1, colors.black),
-    attrName: shade(0.3, colors.orange),
-    boolean: shade(0.3, colors.purple),
-    builtin: shade(0.3, colors.purple),
-    className: shade(0.3, mix(0.5, colors.green, colors.blue)),
-    comment: shade(0.3, colors.green),
-    constant: shade(0.3, colors.orange),
-    description: tint(0.6, colors.black),
-    function: tint(0.1, colors.black),
-    invalid: colors.red,
-    keyword: shade(0.3, colors.purple),
-    meta: tint(0.4, colors.black),
-    null: tint(0.4, colors.black),
-    number: shade(0.3, colors.green),
-    operator: tint(0.1, colors.black),
-    property: shade(0.3, colors.orange),
-    punctuation: tint(0.1, colors.black),
-    string: shade(0.2, colors.red),
-    variable: shade(0.3, colors.orange),
-    interface: shade(0.3, colors.purple),
-    enum: shade(0.3, colors.green),
-    union: shade(0.3, mix(0.5, colors.green, colors.blue)),
-    scalar: shade(0.2, colors.red),
-    input: shade(0.3, colors.green),
-    type: shade(0.3, colors.orange),
+  colors: {
+    canvas: {
+      base: "#fff",
+      hover: tint(0.9, colors.purple),
+      active: tint(0.85, colors.purple),
+      elevated05: darken(0.05, "#fff"),
+      elevated10: darken(0.1, "#fff"),
+    },
+    codeblock: {
+      background: darken(0.05, "#fff"),
+    },
+    tooltip: {
+      background: darken(0.1, "#fff"),
+    },
+    text: {
+      base: colors.black,
+    },
+    textDimmed: {
+      base: tint(0.4, colors.black),
+      hover: tint(0.3, colors.black),
+      active: tint(0.2, colors.black),
+    },
+    divider: {
+      base: shade(0.1, "#fff"),
+    },
+    primary: {
+      base: colors.purple,
+      hover: shade(0.05, colors.purple),
+      active: shade(0.1, colors.purple),
+      contrast: "#fff",
+    },
+    secondary: {
+      base: colors.orange,
+    },
+    success: {
+      base: colors.green,
+    },
+    error: {
+      base: colors.red,
+    },
+    pending: {
+      base: colors.blue,
+    },
+    syntax: {
+      base: shade(0.3, colors.orange),
+      atom: tint(0.1, colors.black),
+      attrName: shade(0.3, colors.orange),
+      boolean: shade(0.3, colors.purple),
+      builtin: shade(0.3, colors.purple),
+      className: shade(0.3, mix(0.5, colors.green, colors.blue)),
+      comment: shade(0.3, colors.green),
+      constant: shade(0.3, colors.orange),
+      description: tint(0.6, colors.black),
+      function: tint(0.1, colors.black),
+      invalid: colors.red,
+      keyword: shade(0.3, colors.purple),
+      meta: tint(0.4, colors.black),
+      null: tint(0.4, colors.black),
+      number: shade(0.3, colors.green),
+      operator: tint(0.1, colors.black),
+      property: shade(0.3, colors.orange),
+      punctuation: tint(0.1, colors.black),
+      string: shade(0.2, colors.red),
+      variable: shade(0.3, colors.orange),
+      interface: shade(0.3, colors.purple),
+      enum: shade(0.3, colors.green),
+      union: shade(0.3, mix(0.5, colors.green, colors.blue)),
+      scalar: shade(0.2, colors.red),
+      input: shade(0.3, colors.green),
+      type: shade(0.3, colors.orange),
+    },
   },
 };
 
 export const darkTheme = {
-  canvas: {
-    base: colors.black,
-    hover: mix(0.9, colors.black, colors.purple),
-    active: mix(0.85, colors.black, colors.purple),
-    elevated05: lighten(0.075, colors.black),
-    elevated10: lighten(0.1, colors.black),
-  },
-  codeblock: {
-    background: lighten(0.03, colors.black),
-  },
-  tooltip: {
-    background: darken(0.03, colors.black),
-  },
-  text: {
-    base: lighten(0.8, colors.black),
-  },
-  textDimmed: {
-    base: lighten(0.7, colors.black),
-    hover: lighten(0.9, colors.black),
-    active: lighten(0.7, colors.black),
-  },
-  divider: {
-    base: lighten(0.15, colors.black),
-  },
-  primary: {
-    base: colors.purple,
-    hover: lighten(0.05, colors.purple),
-    active: lighten(0.1, colors.purple),
-    contrast: lighten(0.9, colors.black),
-  },
-  secondary: {
-    base: colors.yellow,
-  },
-  success: {
-    base: colors.green,
-  },
-  error: {
-    base: colors.red,
-  },
-  pending: {
-    base: colors.blue,
-  },
-  syntax: {
-    base: tint(0.2, colors.blue),
-    atom: tint(0.9, colors.black),
-    attrName: tint(0.2, colors.blue),
-    boolean: tint(0.2, colors.purple),
-    builtin: tint(0.2, colors.purple),
-    className: tint(0.2, mix(0.5, colors.green, colors.blue)),
-    comment: tint(0.3, colors.green),
-    constant: tint(0.2, colors.blue),
-    description: tint(0.6, colors.black),
-    function: tint(0.9, colors.black),
-    invalid: colors.red,
-    keyword: tint(0.2, colors.purple),
-    meta: colors.red,
-    null: tint(0.6, colors.black),
-    number: tint(0.3, colors.green),
-    operator: tint(0.9, colors.black),
-    property: tint(0.2, colors.blue),
-    punctuation: tint(0.9, colors.black),
-    string: tint(0.1, colors.orange),
-    variable: tint(0.2, colors.blue),
-    interface: tint(0.2, colors.purple),
-    enum: tint(0.3, colors.green),
-    union: tint(0.2, mix(0.5, colors.green, colors.blue)),
-    scalar: tint(0.1, colors.orange),
-    input: tint(0.2, colors.purple),
-    type: tint(0.2, colors.blue),
+  ...lightTheme,
+  colors: {
+    canvas: {
+      base: colors.black,
+      hover: mix(0.9, colors.black, colors.purple),
+      active: mix(0.85, colors.black, colors.purple),
+      elevated05: lighten(0.075, colors.black),
+      elevated10: lighten(0.1, colors.black),
+    },
+    codeblock: {
+      background: lighten(0.03, colors.black),
+    },
+    tooltip: {
+      background: darken(0.03, colors.black),
+    },
+    text: {
+      base: lighten(0.8, colors.black),
+    },
+    textDimmed: {
+      base: lighten(0.7, colors.black),
+      hover: lighten(0.9, colors.black),
+      active: lighten(0.7, colors.black),
+    },
+    divider: {
+      base: lighten(0.15, colors.black),
+    },
+    primary: {
+      base: colors.purple,
+      hover: lighten(0.05, colors.purple),
+      active: lighten(0.1, colors.purple),
+      contrast: lighten(0.9, colors.black),
+    },
+    secondary: {
+      base: colors.yellow,
+    },
+    success: {
+      base: colors.green,
+    },
+    error: {
+      base: colors.red,
+    },
+    pending: {
+      base: colors.blue,
+    },
+    syntax: {
+      base: tint(0.2, colors.blue),
+      atom: tint(0.9, colors.black),
+      attrName: tint(0.2, colors.blue),
+      boolean: tint(0.2, colors.purple),
+      builtin: tint(0.2, colors.purple),
+      className: tint(0.2, mix(0.5, colors.green, colors.blue)),
+      comment: tint(0.3, colors.green),
+      constant: tint(0.2, colors.blue),
+      description: tint(0.6, colors.black),
+      function: tint(0.9, colors.black),
+      invalid: colors.red,
+      keyword: tint(0.2, colors.purple),
+      meta: colors.red,
+      null: tint(0.6, colors.black),
+      number: tint(0.3, colors.green),
+      operator: tint(0.9, colors.black),
+      property: tint(0.2, colors.blue),
+      punctuation: tint(0.9, colors.black),
+      string: tint(0.1, colors.orange),
+      variable: tint(0.2, colors.blue),
+      interface: tint(0.2, colors.purple),
+      enum: tint(0.3, colors.green),
+      union: tint(0.2, mix(0.5, colors.green, colors.blue)),
+      scalar: tint(0.1, colors.orange),
+      input: tint(0.2, colors.purple),
+      type: tint(0.2, colors.blue),
+    },
   },
 };
 
@@ -166,117 +215,117 @@ export const darkTheme = {
 export const GlobalStyle = createGlobalStyle`
   /** Global styles for prism-react-renderer and codemirror */
   .CodeMirror, code {
-    font-size: 12px;
+    font-size: ${(p) => p.theme.fontSizes.body.m};
   }
 
   .cm-s-default,
   .CodeMirror-gutters {
-    background: ${(p) => p.theme.canvas.base};
-    border-color: ${(p) => p.theme.canvas.base};
+    background: ${(p) => p.theme.colors.canvas.base};
+    border-color: ${(p) => p.theme.colors.canvas.base};
   }
 
   .CodeMirror-cursor {
-    border-color: ${(p) => p.theme.text.base};
+    border-color: ${(p) => p.theme.colors.text.base};
   }
 
   .CodeMirror-hints li.CodeMirror-hint-active {
-    background: ${(p) => p.theme.canvas.base};
+    background: ${(p) => p.theme.colors.canvas.base};
   }
 
   .CodeMirror-matchingbracket {
     text-decoration: underline;
-    color: ${(p) => p.theme.syntax.punctuation} !important;
+    color: ${(p) => p.theme.colors.syntax.punctuation} !important;
   }
 
   .CodeMirror-selected {
-    background: ${(p) => p.theme.canvas.elevated05};
+    background: ${(p) => p.theme.colors.canvas.elevated05};
   }
 
   .CodeMirror-focused .CodeMirror-selected {
-    background: ${(p) => p.theme.codeblock.background};
+    background: ${(p) => p.theme.colors.codeblock.background};
   }
 
   .CodeMirror-line::selection,
   .CodeMirror-line>span::selection,
   .CodeMirror-line>span>span::selection {
-    background: ${(p) => p.theme.codeblock.background};
+    background: ${(p) => p.theme.colors.codeblock.background};
   }
 
   .CodeMirror-line::-moz-selection,
   .CodeMirror-line>span::-moz-selection,
   .CodeMirror-line>span>span::-moz-selection {
-    background: ${(p) => p.theme.codeblock.background};
+    background: ${(p) => p.theme.colors.codeblock.background};
   }
 
   .cm-s-default, [class*="language-"] {
-    color: ${(p) => p.theme.syntax.base};
+    color: ${(p) => p.theme.colors.syntax.base};
 
     .token.comment, .cm-comment {
-      color: ${(p) => p.theme.syntax.comment};
+      color: ${(p) => p.theme.colors.syntax.comment};
     }
 
     .token.punctuation, .cm-punctuation {
-      color: ${(p) => p.theme.syntax.punctuation};
+      color: ${(p) => p.theme.colors.syntax.punctuation};
     }
 
     .token.number, .cm-number {
-      color: ${(p) => p.theme.syntax.number};
+      color: ${(p) => p.theme.colors.syntax.number};
     }
 
     .token.string, .cm-string, .cm-string-2 {
-      color: ${(p) => p.theme.syntax.string};
+      color: ${(p) => p.theme.colors.syntax.string};
     }
 
     .token.operator {
-      color: ${(p) => p.theme.syntax.operator};
+      color: ${(p) => p.theme.colors.syntax.operator};
     }
 
     .token.keyword, .cm-keyword {
-      color: ${(p) => p.theme.syntax.keyword};
+      color: ${(p) => p.theme.colors.syntax.keyword};
     }
 
     .token.function {
-      color: ${(p) => p.theme.syntax.function};
+      color: ${(p) => p.theme.colors.syntax.function};
     }
 
     .token.constant {
-      color: ${(p) => p.theme.syntax.constant};
+      color: ${(p) => p.theme.colors.syntax.constant};
     }
 
     .token.class-name, .cm-def {
-      color: ${(p) => p.theme.syntax.className};
+      color: ${(p) => p.theme.colors.syntax.className};
     }
 
     .token.boolean {
-      color: ${(p) => p.theme.syntax.boolean};
+      color: ${(p) => p.theme.colors.syntax.boolean};
     }
 
     .token.property, .cm-property {
-      color: ${(p) => p.theme.syntax.property};
+      color: ${(p) => p.theme.colors.syntax.property};
     }
 
     .token.variable, .cm-variable {
-      color: ${(p) => p.theme.syntax.variable};
+      color: ${(p) => p.theme.colors.syntax.variable};
     }
 
     .token.attr-name, .cm-attribute {
-      color: ${(p) => p.theme.syntax.attrName};
+      color: ${(p) => p.theme.colors.syntax.attrName};
     }
 
     .cm-atom {
-      color: ${(p) => p.theme.syntax.atom};
+      color: ${(p) => p.theme.colors.syntax.atom};
     }
 
     .cm-builtin {
-      color: ${(p) => p.theme.syntax.builtin};
+      color: ${(p) => p.theme.colors.syntax.builtin};
     }
 
     .cm-meta {
-      color: ${(p) => p.theme.syntax.meta};
+      color: ${(p) => p.theme.colors.syntax.meta};
     }
 
     .cm-invalidchar {
-      color: ${(p) => p.theme.syntax.base};
+      color: ${(p) => p.theme.colors.syntax.base};
     }
   }
 
@@ -288,8 +337,8 @@ export const GlobalStyle = createGlobalStyle`
     word-break: normal;
     word-wrap: normal;
     font-family: Roboto Mono, monospace;
-    font-size: 12px;
-    line-height: 1.5em;
+    font-size: ${(p) => p.theme.fontSizes.body.m};
+    line-height: 1.5;
 
     -moz-tab-size: 4;
     -o-tab-size: 4;
@@ -303,15 +352,15 @@ export const GlobalStyle = createGlobalStyle`
 
   :not(pre) > code[class*="language-"] {
     white-space: normal;
-    border-radius: 0.2em;
-    padding: 0.1em;
+    border-radius: ${(p) => p.theme.radii.m};
+    padding: ${(p) => p.theme.space[1]};
   }
 
   pre[class*="language-"] {
     overflow: auto;
     position: relative;
-    padding: 10px;
-    margin-top: 10px;
+    padding: ${(p) => p.theme.space[3]};
+    margin-top: ${(p) => p.theme.space[3]};
     margin-bottom: 0;
   }
 
@@ -322,6 +371,11 @@ export const GlobalStyle = createGlobalStyle`
 
   html, body {
     height: 100%;
+  }
+
+  body {
+    font-size: ${(p) => p.theme.fontSizes.body.m};
+    line-height: ${(p) => p.theme.lineHeights.body.m};
   }
 
   ::-webkit-scrollbar {

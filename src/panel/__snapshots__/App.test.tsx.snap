@@ -4,75 +4,121 @@ exports[`App on mount matches snapshot 1`] = `
 <ThemeProvider
   theme={
     Object {
-      "canvas": Object {
-        "active": "#2a2a38",
-        "base": "#1d1d1d",
-        "elevated05": "#303030",
-        "elevated10": "#373737",
-        "hover": "#26252f",
+      "colors": Object {
+        "canvas": Object {
+          "active": "#2a2a38",
+          "base": "#1d1d1d",
+          "elevated05": "#303030",
+          "elevated10": "#373737",
+          "hover": "#26252f",
+        },
+        "codeblock": Object {
+          "background": "#252525",
+        },
+        "divider": Object {
+          "base": "#434343",
+        },
+        "error": Object {
+          "base": "#F65151",
+        },
+        "pending": Object {
+          "base": "#00A1FF",
+        },
+        "primary": Object {
+          "active": "#9d9cdf",
+          "base": "#7776D2",
+          "contrast": "#fff",
+          "hover": "#8a89d8",
+        },
+        "secondary": Object {
+          "base": "#FFE248",
+        },
+        "success": Object {
+          "base": "#2DAF7E",
+        },
+        "syntax": Object {
+          "atom": "#e8e8e8",
+          "attrName": "#33b3ff",
+          "base": "#33b3ff",
+          "boolean": "#9291db",
+          "builtin": "#9291db",
+          "className": "#44b9cb",
+          "comment": "#6cc7a4",
+          "constant": "#33b3ff",
+          "description": "#a4a4a4",
+          "enum": "#6cc7a4",
+          "function": "#e8e8e8",
+          "input": "#9291db",
+          "interface": "#9291db",
+          "invalid": "#F65151",
+          "keyword": "#9291db",
+          "meta": "#F65151",
+          "null": "#a4a4a4",
+          "number": "#6cc7a4",
+          "operator": "#e8e8e8",
+          "property": "#33b3ff",
+          "punctuation": "#e8e8e8",
+          "scalar": "#ed9b3d",
+          "string": "#ed9b3d",
+          "type": "#33b3ff",
+          "union": "#44b9cb",
+          "variable": "#33b3ff",
+        },
+        "text": Object {
+          "base": "#e9e9e9",
+        },
+        "textDimmed": Object {
+          "active": "#d0d0d0",
+          "base": "#d0d0d0",
+          "hover": "#fff",
+        },
+        "tooltip": Object {
+          "background": "#151515",
+        },
       },
-      "codeblock": Object {
-        "background": "#252525",
+      "fontSizes": Object {
+        "body": Object {
+          "l": "0.8125rem",
+          "m": "0.75rem",
+          "s": "0.6875rem",
+          "xl": "1rem",
+        },
+        "display": Object {
+          "l": "5rem",
+          "m": "3.75rem",
+          "s": "2.5rem",
+        },
       },
-      "divider": Object {
-        "base": "#434343",
+      "lineHeights": Object {
+        "body": Object {
+          "l": "1rem",
+          "m": "0.9375rem",
+          "s": "0.875rem",
+          "xl": "1.25rem",
+        },
+        "display": Object {
+          "l": "6rem",
+          "m": "4.5rem",
+          "s": "3rem",
+        },
       },
-      "error": Object {
-        "base": "#F65151",
+      "radii": Object {
+        "m": "0.25rem",
+        "round": "50%",
+        "s": "0.125rem",
       },
-      "pending": Object {
-        "base": "#00A1FF",
-      },
-      "primary": Object {
-        "active": "#9d9cdf",
-        "base": "#7776D2",
-        "contrast": "#fff",
-        "hover": "#8a89d8",
-      },
-      "secondary": Object {
-        "base": "#FFE248",
-      },
-      "success": Object {
-        "base": "#2DAF7E",
-      },
-      "syntax": Object {
-        "atom": "#e8e8e8",
-        "attrName": "#33b3ff",
-        "base": "#33b3ff",
-        "boolean": "#9291db",
-        "builtin": "#9291db",
-        "className": "#44b9cb",
-        "comment": "#6cc7a4",
-        "constant": "#33b3ff",
-        "description": "#a4a4a4",
-        "enum": "#6cc7a4",
-        "function": "#e8e8e8",
-        "input": "#9291db",
-        "interface": "#9291db",
-        "invalid": "#F65151",
-        "keyword": "#9291db",
-        "meta": "#F65151",
-        "null": "#a4a4a4",
-        "number": "#6cc7a4",
-        "operator": "#e8e8e8",
-        "property": "#33b3ff",
-        "punctuation": "#e8e8e8",
-        "scalar": "#ed9b3d",
-        "string": "#ed9b3d",
-        "type": "#33b3ff",
-        "union": "#44b9cb",
-        "variable": "#33b3ff",
-      },
-      "text": Object {
-        "base": "#e9e9e9",
-      },
-      "textDimmed": Object {
-        "active": "#d0d0d0",
-        "base": "#d0d0d0",
-        "hover": "#fff",
-      },
-      "tooltip": Object {
-        "background": "#151515",
+      "space": Object {
+        "0": 0,
+        "1": "0.125rem",
+        "10": "4rem",
+        "2": "0.25rem",
+        "3": "0.5rem",
+        "4": "0.75rem",
+        "5": "1rem",
+        "6": "1.25rem",
+        "7": "1.5rem",
+        "8": "2rem",
+        "9": "3rem",
       },
     }
   }

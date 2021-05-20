@@ -177,34 +177,32 @@ export const Fields: FC<FieldProps> = ({ node, setType }) => {
 };
 
 const Description = styled.code`
-  color: ${(p) => p.theme.syntax.string};
+  color: ${(p) => p.theme.colors.syntax.string};
 `;
 
 const FieldWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: baseline;
-  font-size: 13px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 12px;
-  color: ${(p) => p.theme.text.base};
+  font-size: ${(p) => p.theme.fontSizes.body.l};
+  line-height: ${(p) => p.theme.lineHeights.body.l};
+  padding: ${(p) => p.theme.space[3]};
+  color: ${(p) => p.theme.colors.text.base};
   white-space: nowrap;
 
-  &:first-child {
-    padding-top: 12px;
+  &:last-child {
+    border: none;
   }
 
-  &:last-child {
-    padding-bottom: 12px;
-    border: none;
+  & + & {
+    padding-top: 0;
   }
 
   &[data-multiline="true"] {
     flex-direction: column;
 
     & > ${Description} {
-      margin-bottom: 6px;
+      margin-bottom: ${(p) => p.theme.space[2]};
     }
   }
 `;
@@ -213,25 +211,25 @@ const Separator = styled.span`
   &::before {
     content: ${({ content }: { content: string }) => `"${content}"`};
     display: inline-block;
-    color: ${(p) => p.theme.text.base};
-    margin-right: 6px;
+    color: ${(p) => p.theme.colors.text.base};
+    margin-right: ${(p) => p.theme.space[2]};
   }
 `;
 
 const Name = styled.span`
-  color: ${(p) => p.theme.syntax.property};
+  color: ${(p) => p.theme.colors.syntax.property};
 `;
 
 const Deprecated = styled.code`
   display: inline-block;
-  color: ${(p) => p.theme.syntax.invalid};
-  margin-left: 6px;
+  color: ${(p) => p.theme.colors.syntax.invalid};
+  margin-left: ${(p) => p.theme.space[2]};
 `;
 
 const Default = styled.code`
   display: inline-block;
-  color: ${(p) => p.theme.syntax.description};
-  margin-left: 6px;
+  color: ${(p) => p.theme.colors.syntax.description};
+  margin-left: ${(p) => p.theme.space[2]};
 `;
 
 const ArgWrapper = styled.div`
@@ -240,7 +238,7 @@ const ArgWrapper = styled.div`
   &[data-multiline="true"] {
     flex-direction: column;
     & > code {
-      padding-left: 8px;
+      padding-left: ${(p) => p.theme.space[3]};
     }
   }
 `;

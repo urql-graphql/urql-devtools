@@ -57,7 +57,7 @@ export const TopBar: FC<TopBarProps> = ({ setStack, stack, children }) => {
 };
 
 const FlexContainer = styled.div`
-  background-color: ${(p) => p.theme.canvas.elevated05};
+  background-color: ${(p) => p.theme.colors.canvas.elevated05};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,18 +71,19 @@ const TextButton = styled.button`
   outline: none;
   border: none;
   cursor: pointer;
-  font-size: 11px;
+  font-size: ${(p) => p.theme.fontSizes.body.s};
+  line-height: ${(p) => p.theme.lineHeights.body.s};
   text-align: left;
   padding: 0;
   margin: 0;
-  color: ${(p) => p.theme.primary.base};
+  color: ${(p) => p.theme.colors.primary.base};
 
   &:hover {
     text-decoration: underline;
   }
 
   &[data-disabled="true"] {
-    color: ${(p) => p.theme.textDimmed.base};
+    color: ${(p) => p.theme.colors.textDimmed.base};
     pointer-events: none;
   }
 
@@ -90,8 +91,8 @@ const TextButton = styled.button`
     &::after {
       content: ">";
       display: inline-block;
-      margin: 0 3px;
-      color: ${(p) => p.theme.textDimmed.base};
+      margin: 0 ${(p) => p.theme.space[2]};
+      color: ${(p) => p.theme.colors.textDimmed.base};
     }
   }
 `;
@@ -99,7 +100,7 @@ const TextButton = styled.button`
 const Breadcrumbs = styled.nav`
   display: flex;
   align-items: center;
-  padding: 5px;
-  margin: 0 4px;
-  color: ${(p) => p.theme.textDimmed.base};
+  padding: ${(p) => p.theme.space[2]};
+  margin: 0 ${(p) => p.theme.space[2]};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 `;

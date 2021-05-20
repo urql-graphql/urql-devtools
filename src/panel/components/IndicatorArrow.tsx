@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React, { FC } from "react";
+import { rem } from "polished";
 
 const ArrowIcon: FC<JSX.IntrinsicElements["svg"]> = (props) => (
   <svg height="10" width="10" viewBox="0 0 4 8" {...props}>
@@ -12,11 +13,10 @@ const ArrowIcon: FC<JSX.IntrinsicElements["svg"]> = (props) => (
 
 export const Arrow = styled(ArrowIcon)`
   flex-shrink: 0;
-  height: 10px;
-  width: 10px;
-  margin-left: 2px;
-  margin-right: 5px;
-  color: ${(p) => p.theme.text.base};
+  width: ${rem(10)};
+  height: ${rem(10)};
+  margin-right: ${(p) => p.theme.space[2]};
+  color: ${(p) => p.theme.colors.text.base};
   transform: rotate(0deg);
   transition: transform 100ms ease;
 

@@ -1,3 +1,4 @@
+import { rem } from "polished";
 import React, {
   FC,
   useCallback,
@@ -109,17 +110,17 @@ const PaneContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background: ${(p) => p.theme.canvas.base};
-  border-top: solid 1px ${(p) => p.theme.divider.base};
+  background: ${(p) => p.theme.colors.canvas.base};
+  border-top: solid 1px ${(p) => p.theme.colors.divider.base};
 
   width: 100%;
-  height: 400px;
+  height: ${rem(400)};
 
   &[data-portrait="false"] {
-    width: 400px;
+    width: ${rem(400)};
     height: 100%;
     border-top: none;
-    border-left: solid 1px ${(p) => p.theme.divider.base};
+    border-left: solid 1px ${(p) => p.theme.colors.divider.base};
   }
 `;
 
@@ -154,27 +155,29 @@ const Header = styled.h2`
   top: 0;
   z-index: 1;
   margin: 0;
-  padding: 10px;
-  background: ${(p) => p.theme.codeblock.background};
-  border-bottom: solid 1px ${(p) => p.theme.divider.base};
-  font-size: 12px;
+  padding: ${(p) => p.theme.space[3]};
+  background: ${(p) => p.theme.colors.codeblock.background};
+  border-bottom: solid 1px ${(p) => p.theme.colors.divider.base};
+  font-size: ${(p) => p.theme.fontSizes.body.m};
+  line-height: ${(p) => p.theme.lineHeights.body.m};
   font-weight: 400;
 `;
 
 const Item = styled.div`
-  padding: 10px;
+  padding: ${(p) => p.theme.space[3]};
 
   & + & {
-    border-top: solid 1px ${(p) => p.theme.divider.base};
+    border-top: solid 1px ${(p) => p.theme.colors.divider.base};
   }
 `;
 
 const ItemTitle = styled.h3`
-  color: ${(p) => p.theme.text.base};
-  font-size: 12px;
+  color: ${(p) => p.theme.colors.text.base};
+  font-size: ${(p) => p.theme.fontSizes.body.m};
+  line-height: ${(p) => p.theme.lineHeights.body.m};
   font-weight: normal;
   margin-top: 0;
-  margin-bottom: 5px;
+  margin-bottom: ${(p) => p.theme.space[2]};
 `;
 
 type Pane = typeof PaneRoot & {

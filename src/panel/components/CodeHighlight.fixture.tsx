@@ -15,10 +15,10 @@ const query = gql`
 `;
 
 const Wrapper = styled.div`
-  padding: 20px;
+  padding: ${(p) => p.theme.space[6]};
 
   p {
-    color: ${(p) => p.theme.text.base};
+    color: ${(p) => p.theme.colors.text.base};
   }
 `;
 

@@ -1,31 +1,30 @@
+import { rem } from "polished";
 import styled from "styled-components";
 
 export const Tick = styled.div<{ label: string }>`
   position: absolute;
-  width: 2px;
-  top: 20px;
+  width: ${rem(2)};
+  top: ${(p) => p.theme.space[6]};
   bottom: 0;
 
   &:before {
     content: "${(p) => p.label}";
     font-family: "Roboto";
-    font-size: 12px;
-    color: ${(p) => p.theme.text.base};
-    opacity: 0.9;
-
+    font-size: ${(p) => p.theme.fontSizes.body.m};
+    color: ${(p) => p.theme.colors.textDimmed.base};
     display: block;
     text-align: center;
-    width: 100px;
-    margin-left: -50px;
+    width: ${rem(100)};
+    margin-left: -${rem(50)};
   }
 
   &:after {
     content: "";
     position: absolute;
-    width: 2px;
-    top: 25px;
+    width: ${rem(2)};
+    top: ${rem(25)};
     bottom: 0;
-    background: ${(p) => p.theme.divider.base};
+    background: ${(p) => p.theme.colors.divider.base};
     opacity: 0.3;
   }
 `;

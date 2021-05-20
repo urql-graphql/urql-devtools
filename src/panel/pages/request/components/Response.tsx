@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from "react";
 import styled from "styled-components";
+import { rem } from "polished";
 import { RequestContext } from "../../../context";
 import { CodeHighlight, Pane } from "../../../components";
 
@@ -70,42 +71,43 @@ export const Response: React.FC = () => {
 };
 
 const Prompt = styled.div`
-  padding: 20px;
+  padding: ${(p) => p.theme.space[6]};
   text-align: center;
-  color: ${(p) => p.theme.textDimmed.base};
+  color: ${(p) => p.theme.colors.textDimmed.base};
 `;
 
 const Status = styled.code`
-  color: ${(p) => p.theme.textDimmed.base};
-  font-size: 12px;
+  color: ${(p) => p.theme.colors.textDimmed.base};
+  font-size: ${(p) => p.theme.fontSizes.body.m};
+  line-height: ${(p) => p.theme.lineHeights.body.m};
   display: flex;
   align-items: center;
 `;
 
 const Icon = styled.span`
   display: block;
-  margin-right: 7px;
-  width: 9px;
-  height: 9px;
+  margin-right: ${(p) => p.theme.space[3]};
+  width: ${rem(9)};
+  height: ${rem(9)};
   box-sizing: border-box;
   border: solid 1px;
   border-radius: 50%;
 
   &[data-state="idle"] {
-    border-color: ${(p) => p.theme.divider.base};
+    border-color: ${(p) => p.theme.colors.divider.base};
   }
 
   &[data-state="fetching"] {
-    border-color: ${(p) => p.theme.pending.base};
+    border-color: ${(p) => p.theme.colors.pending.base};
   }
 
   &[data-state="success"] {
-    border-color: ${(p) => p.theme.success.base};
-    background-color: ${(p) => p.theme.success.base};
+    border-color: ${(p) => p.theme.colors.success.base};
+    background-color: ${(p) => p.theme.colors.success.base};
   }
 
   &[data-state="error"] {
-    border-color: ${(p) => p.theme.error.base};
-    background-color: ${(p) => p.theme.error.base};
+    border-color: ${(p) => p.theme.colors.error.base};
+    background-color: ${(p) => p.theme.colors.error.base};
   }
 `;

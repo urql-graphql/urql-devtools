@@ -126,24 +126,25 @@ export const StyledInlineBlock = styled.pre`
 `;
 
 const StyledCodeBlock = styled.pre`
-  background: ${(p) => p.theme.codeblock.background} !important;
-  font-size: 12px !important;
+  background: ${(p) => p.theme.colors.codeblock.background} !important;
+  font-size: ${(p) => p.theme.fontSizes.body.m} !important;
 `;
 
 const CopyButton = styled.button`
-  background: ${(p) => p.theme.canvas.elevated05};
-  color: ${(p) => p.theme.text.base};
-  padding: 0.5rem;
-  border-radius: 4px;
+  background: ${(p) => p.theme.colors.canvas.elevated05};
+  color: ${(p) => p.theme.colors.text.base};
+  padding: ${(p) => p.theme.space[3]};
+  border-radius: ${(p) => p.theme.radii.m};
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: ${(p) => p.theme.space[2]};
+  right: ${(p) => p.theme.space[2]};
 
   &:hover {
-    background: ${(p) => p.theme.canvas.elevated10} !important;
+    background: ${(p) => p.theme.colors.canvas.elevated10} !important;
   }
 `;
 
 const Div = styled.div`
   position: relative;
+  max-width: 100%;
 `;
