@@ -13,30 +13,23 @@ export const Request: FC<ComponentProps<typeof Page>> = (props) => {
         {/* {TODO: Hack to offset the panels so they aren't on top of each other.
        There's definitely better way to do this */}
         <Pane initSize={{ y: 700, x: 400 }}>
-          <PaneBody>
+          <Pane.Body>
             <PaneSection>
               <Response />
             </PaneSection>
-          </PaneBody>
+          </Pane.Body>
           {/* {TODO: Also a hack to make these panes work together, sorry! */}
           <SchemaContainer
             forcedOrientation={{ isPortrait: true }}
             initSize={{ y: 350, x: 400 }}
           >
-            <PaneBody>
-              <Schema />
-            </PaneBody>
+            <Schema />
           </SchemaContainer>
         </Pane>
       </PageContent>
     </Page>
   );
 };
-
-const PaneBody = styled(Pane.Body)`
-  display: flex;
-  flex-grow: 1;
-`;
 
 const PaneSection = styled.section`
   color: ${(p) => p.theme.colors.text.base};
