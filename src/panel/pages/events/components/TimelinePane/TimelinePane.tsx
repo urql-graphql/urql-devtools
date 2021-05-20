@@ -61,7 +61,7 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
   return (
     <PaneSection>
       <Pane.Header>Event</Pane.Header>
-      <ScrollArea>
+      <Pane.Body>
         <Pane.Item>
           <Pane.ItemTitle>Event</Pane.ItemTitle>
           <p>{event.type}</p>
@@ -86,7 +86,7 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
             <CodeHighlight language={"javascript"} code={metadata} />
           </Pane.Item>
         )}
-      </ScrollArea>
+      </Pane.Body>
     </PaneSection>
   );
 };
@@ -94,7 +94,7 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
 const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
   <PaneSection>
     <Pane.Header>Operation</Pane.Header>
-    <ScrollArea>
+    <Pane.Body>
       <Pane.Item>
         <Pane.ItemTitle>Key</Pane.ItemTitle>
         <p>{operation.key}</p>
@@ -119,7 +119,7 @@ const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
           )}
         />
       </Pane.Item>
-    </ScrollArea>
+    </Pane.Body>
   </PaneSection>
 );
 
@@ -177,11 +177,6 @@ const PaneSection = styled.section`
       border-top: solid 1px ${(p) => p.theme.colors.divider.base};
     }
   }
-`;
-
-const ScrollArea = styled.div`
-  flex: 1;
-  overflow: auto;
 `;
 
 const GetStartedSection = styled(PaneSection)`

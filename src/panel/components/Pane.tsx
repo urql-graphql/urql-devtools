@@ -147,6 +147,7 @@ const DraggingEdge = styled.div`
 `;
 
 const Body = styled.div`
+  flex: 1;
   overflow: auto;
 `;
 
