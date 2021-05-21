@@ -147,13 +147,11 @@ const DraggingEdge = styled.div`
 `;
 
 const Body = styled.div`
+  flex: 1;
   overflow: auto;
 `;
 
 const Header = styled.h2`
-  position: sticky;
-  top: 0;
-  z-index: 1;
   margin: 0;
   padding: ${(p) => p.theme.space[3]};
   background: ${(p) => p.theme.colors.codeblock.background};

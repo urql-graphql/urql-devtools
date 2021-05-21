@@ -100,7 +100,7 @@ const TextButton = styled.button`
 const Breadcrumbs = styled.nav`
   display: flex;
   align-items: center;
-  padding: ${(p) => p.theme.space[2]};
+  padding: ${(p) => `${p.theme.space[3]} ${p.theme.space[2]}`};
   margin: 0 ${(p) => p.theme.space[2]};
   color: ${(p) => p.theme.colors.textDimmed.base};
 `;

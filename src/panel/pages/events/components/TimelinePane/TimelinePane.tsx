@@ -61,30 +61,32 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
   return (
     <PaneSection>
       <Pane.Header>Event</Pane.Header>
-      <Pane.Item>
-        <Pane.ItemTitle>Event</Pane.ItemTitle>
-        <p>{event.type}</p>
-      </Pane.Item>
-      <Pane.Item>
-        <Pane.ItemTitle>Message</Pane.ItemTitle>
-        <p>
-          <Icon icon={faQuoteLeft} />
-          {event.message}
-        </p>
-      </Pane.Item>
-      <Pane.Item>
-        <Pane.ItemTitle>Timestamp</Pane.ItemTitle>
-        <p>
-          <Icon icon={faStopwatch} />
-          {timestamp}
-        </p>
-      </Pane.Item>
-      {event.data && (
+      <Pane.Body>
         <Pane.Item>
-          <Pane.ItemTitle>Metadata</Pane.ItemTitle>
-          <CodeHighlight language={"javascript"} code={metadata} />
+          <Pane.ItemTitle>Event</Pane.ItemTitle>
+          <p>{event.type}</p>
         </Pane.Item>
-      )}
+        <Pane.Item>
+          <Pane.ItemTitle>Message</Pane.ItemTitle>
+          <p>
+            <Icon icon={faQuoteLeft} />
+            {event.message}
+          </p>
+        </Pane.Item>
+        <Pane.Item>
+          <Pane.ItemTitle>Timestamp</Pane.ItemTitle>
+          <p>
+            <Icon icon={faStopwatch} />
+            {timestamp}
+          </p>
+        </Pane.Item>
+        {event.data && (
+          <Pane.Item>
+            <Pane.ItemTitle>Metadata</Pane.ItemTitle>
+            <CodeHighlight language={"javascript"} code={metadata} />
+          </Pane.Item>
+        )}
+      </Pane.Body>
     </PaneSection>
   );
 };
@@ -92,30 +94,32 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
 const SourceSection: FC<{ operation: Operation }> = ({ operation }) => (
   <PaneSection>
     <Pane.Header>Operation</Pane.Header>
-    <Pane.Item>
-      <Pane.ItemTitle>Key</Pane.ItemTitle>
-      <p>{operation.key}</p>
-    </Pane.Item>
-    <Pane.Item>
-      <Pane.ItemTitle>Operation type</Pane.ItemTitle>
-      <p>{operation.kind}</p>
-    </Pane.Item>
-    <Pane.Item>
-      <Pane.ItemTitle>Query</Pane.ItemTitle>
-      <CodeHighlight
-        language={"graphql"}
-        code={removeTrailingNewline(print(operation.query))}
-      />
-    </Pane.Item>
-    <Pane.Item>
-      <Pane.ItemTitle>Variables</Pane.ItemTitle>
-      <CodeHighlight
-        language={"javascript"}
-        code={JSONtoJavascriptString(
-          (operation.variables || {}) as Record<string, unknown>
-        )}
-      />
-    </Pane.Item>
+    <Pane.Body>
+      <Pane.Item>
+        <Pane.ItemTitle>Key</Pane.ItemTitle>
+        <p>{operation.key}</p>
+      </Pane.Item>
+      <Pane.Item>
+        <Pane.ItemTitle>Operation type</Pane.ItemTitle>
+        <p>{operation.kind}</p>
+      </Pane.Item>
+      <Pane.Item>
+        <Pane.ItemTitle>Query</Pane.ItemTitle>
+        <CodeHighlight
+          language={"graphql"}
+          code={removeTrailingNewline(print(operation.query))}
+        />
+      </Pane.Item>
+      <Pane.Item>
+        <Pane.ItemTitle>Variables</Pane.ItemTitle>
+        <CodeHighlight
+          language={"javascript"}
+          code={JSONtoJavascriptString(
+            (operation.variables || {}) as Record<string, unknown>
+          )}
+        />
+      </Pane.Item>
+    </Pane.Body>
   </PaneSection>
 );
 
@@ -134,10 +138,12 @@ const Body = styled(Pane.Body)`
 `;
 
 const PaneSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   color: ${(p) => p.theme.colors.textDimmed.base};
   box-sizing: border-box;
   background: ${(p) => p.theme.colors.canvas.base};
-  overflow: auto;
 
   p {
     font-size: ${(p) => p.theme.fontSizes.body.m};

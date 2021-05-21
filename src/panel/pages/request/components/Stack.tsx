@@ -98,7 +98,6 @@ const StackWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${(p) => p.theme.colors.canvas.elevated05};
 `;
 
 export const Box = styled.div`
