@@ -69,6 +69,7 @@ export const lightTheme = {
     },
     tooltip: {
       background: darken(0.1, "#fff"),
+      active: darken(0.2, "#fff"),
     },
     text: {
       base: colors.black,
@@ -145,6 +146,7 @@ export const darkTheme = {
     },
     tooltip: {
       background: darken(0.03, colors.black),
+      active: lighten(0.03, colors.black),
     },
     text: {
       base: lighten(0.8, colors.black),
@@ -228,8 +230,18 @@ export const GlobalStyle = createGlobalStyle`
     border-color: ${(p) => p.theme.colors.text.base};
   }
 
-  .CodeMirror-hints li.CodeMirror-hint-active {
-    background: ${(p) => p.theme.colors.canvas.base};
+  .CodeMirror-hints.default {
+    color: ${(p) => p.theme.colors.text.base};
+    background: ${(p) => p.theme.colors.tooltip.background};
+    border-color: ${(p) => p.theme.colors.tooltip.background};
+  }
+
+  .CodeMirror-hints.default > .CodeMirror-hint {
+    color: ${(p) => p.theme.colors.text.base};
+  }
+
+  .CodeMirror-hints.default > .CodeMirror-hint.CodeMirror-hint-active {
+    background: ${(p) => p.theme.colors.tooltip.active};
   }
 
   .CodeMirror-matchingbracket {
