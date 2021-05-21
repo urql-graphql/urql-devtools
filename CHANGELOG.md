@@ -1,5 +1,34 @@
 # Changelog
 
+## [v2.6.0](https://github.com/FormidableLabs/urql-devtools/tree/v2.6.0) (2021-05-21)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.5.0...v2.6.0)
+
+**Added enhancements:**
+
+- Add object syntax highlighting for default arguments [\#342](https://github.com/FormidableLabs/urql-devtools/issues/342)
+- Persist query state between reloads [\#328](https://github.com/FormidableLabs/urql-devtools/issues/328)
+
+**Fixed bugs:**
+
+- Code blocks don't clean up when code content changes [\#351](https://github.com/FormidableLabs/urql-devtools/issues/351)
+
+**Merged pull requests:**
+
+- Update codemirror hint colors [\#368](https://github.com/FormidableLabs/urql-devtools/pull/368) ([KenanYusuf](https://github.com/KenanYusuf))
+- Remove pane header from scroll area in timeline view [\#367](https://github.com/FormidableLabs/urql-devtools/pull/367) ([KenanYusuf](https://github.com/KenanYusuf))
+- Dark theme tweaks [\#365](https://github.com/FormidableLabs/urql-devtools/pull/365) ([andyrichardson](https://github.com/andyrichardson))
+- Added dedicated zoom in/out buttons to timeline toolbar [\#363](https://github.com/FormidableLabs/urql-devtools/pull/363) ([KenanYusuf](https://github.com/KenanYusuf))
+- Refactor cosmos theme toggle to use built in control panel [\#362](https://github.com/FormidableLabs/urql-devtools/pull/362) ([KenanYusuf](https://github.com/KenanYusuf))
+- Refactor to use space, fontSize, lineHeight and radii from theme [\#360](https://github.com/FormidableLabs/urql-devtools/pull/360) ([KenanYusuf](https://github.com/KenanYusuf))
+- Bump lodash from 4.17.19 to 4.17.21 [\#359](https://github.com/FormidableLabs/urql-devtools/pull/359) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Theme refactor [\#358](https://github.com/FormidableLabs/urql-devtools/pull/358) ([KenanYusuf](https://github.com/KenanYusuf))
+- Bump ssri from 6.0.1 to 6.0.2 [\#356](https://github.com/FormidableLabs/urql-devtools/pull/356) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Type, colour and spacing UI improvements [\#355](https://github.com/FormidableLabs/urql-devtools/pull/355) ([KenanYusuf](https://github.com/KenanYusuf))
+- Add syntax highlighting for default args in fields [\#354](https://github.com/FormidableLabs/urql-devtools/pull/354) ([KenanYusuf](https://github.com/KenanYusuf))
+- fix: reset code snippet when try to append a new code [\#352](https://github.com/FormidableLabs/urql-devtools/pull/352) ([ValGeorgiev](https://github.com/ValGeorgiev))
+- feat: store last sent request in localstorage [\#350](https://github.com/FormidableLabs/urql-devtools/pull/350) ([ValGeorgiev](https://github.com/ValGeorgiev))
+
 ## [v2.5.0](https://github.com/FormidableLabs/urql-devtools/tree/v2.5.0) (2021-04-20)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.4.3...v2.5.0)
