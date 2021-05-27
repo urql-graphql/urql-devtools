@@ -26,7 +26,7 @@
 <br />
 
 <div align="center">
-  <img width="500" src="https://github.com/FormidableLabs/urql-devtools/raw/aef5570a698023ef01f355c2c802f93d7f2bf006/assets/preview.gif" />
+  <img width="500" src="https://raw.githubusercontent.com/FormidableLabs/urql-devtools/ed4391cefc94bb0394e00cf4e405838ddc8e854d/assets/preview.gif" />
 </div>
 
 ## Features
