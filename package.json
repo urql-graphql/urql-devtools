@@ -57,7 +57,7 @@
     ]
   },
   "dependencies": {
-    "electron": "^9.0.4",
+    "electron": "^13.1.5",
     "prismjs": "^1.21.0",
     "ws": "^7.3.1"
   },
