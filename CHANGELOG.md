@@ -1,5 +1,21 @@
 # Changelog
 
+## [v2.6.1](https://github.com/FormidableLabs/urql-devtools/tree/v2.6.1) (2021-08-02)
+
+[Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.6.0...v2.6.1)
+
+**Fixed bugs:**
+
+- Cannot launch via Windows \(Powershell or Command prompt\) [\#377](https://github.com/FormidableLabs/urql-devtools/issues/377)
+
+**Merged pull requests:**
+
+- chore: Update Electron to support Apple Silicon \(M1\) [\#376](https://github.com/FormidableLabs/urql-devtools/pull/376) ([manosim](https://github.com/manosim))
+- Bump normalize-url from 4.5.0 to 4.5.1 [\#373](https://github.com/FormidableLabs/urql-devtools/pull/373) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump ws from 7.3.1 to 7.4.6 [\#372](https://github.com/FormidableLabs/urql-devtools/pull/372) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+# Changelog
+
 ## [v2.6.0](https://github.com/FormidableLabs/urql-devtools/tree/v2.6.0) (2021-05-21)
 
 [Full Changelog](https://github.com/FormidableLabs/urql-devtools/compare/v2.5.0...v2.6.0)
