@@ -45,7 +45,7 @@ jobs:
   run-visual-regression:
     name: Visual Regression
     runs-on: ubuntu-latest
-    # needs: run-tests # FIXME: Remove comment - wait for run-tests first
+    needs: run-tests
 
     steps:
       - uses: actions/checkout@v2
@@ -68,16 +68,18 @@ jobs:
       - name: Run Cosmos
         run: yarn run cosmos &
 
+      - name: Wait for Cosmos
+        run: yarn wait-on http://localhost:5000
+
       - name: Run Puppeteer
-        run: yarn run visual-regression:exec
+        run: yarn run visual-regression:ci
+        env:
+          COSMOS_HOST: locahost
+          COSMOS_PORT: 5000
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ failure() }}
-        timeout-minutes: 15
-
-      - name: Store image snapshots
+      - name: Store image diffs
         uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
         with:
           name: image-snapshots
           path: src/panel/__image_snapshots__/__diff_output__/

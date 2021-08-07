@@ -2,11 +2,9 @@ import { detectCosmosConfig, getFixtures2, FixtureApi } from "react-cosmos";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 expect.extend({ toMatchImageSnapshot });
 
-const fixtures = getFixtures2({
-  ...detectCosmosConfig(),
-  hostname: process.env.COSMOS_HOST,
-  port: Number(process.env.COSMOS_PORT),
-}).reduce<[string, FixtureApi][]>(
+const cosmosConfig = detectCosmosConfig();
+
+const fixtures = getFixtures2(cosmosConfig).reduce<[string, FixtureApi][]>(
   (p, c) => [...p, [`${c.fileName} - ${c.name}`, c]],
   []
 );
@@ -49,7 +47,7 @@ describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
     const element = await page.$("[data-snapshot=true]");
 
     if (element === null) {
-      console.warn(`No snapshot for fixture: ${id}`);
+      console.info(`No snapshot for fixture: ${id}`);
       return;
     }
 

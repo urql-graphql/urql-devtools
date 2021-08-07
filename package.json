@@ -33,7 +33,7 @@
     "start": "electron dist/electron/main.js",
     "test": "jest --testPathIgnorePatterns visual-regression",
     "visual-regression": "./scripts/regression.sh --watch",
-    "visual-regression:exec": "jest --no-cache visual-regression --runInBand",
+    "visual-regression:ci": "jest --no-cache visual-regression --runInBand",
     "webpack:electron": "webpack --config webpack/webpack.electron.config.js",
     "webpack:extension": "webpack --config webpack/webpack.extension.config.js",
     "type-check": "yarn tsc"
@@ -144,6 +144,7 @@
     "terser-webpack-plugin": "^4.2.2",
     "ts-jest": "^26.3.0",
     "typescript": "^4.0.3",
+    "wait-on": "^6.0.0",
     "web-ext": "^5.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",

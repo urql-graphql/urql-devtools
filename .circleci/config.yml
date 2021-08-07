@@ -90,7 +90,7 @@ jobs:
           command: yarn cosmos
           background: true
       - run:
-          command: sleep 5 && yarn run visual-regression:exec
+          command: sleep 5 && yarn run visual-regression:ci
           environment:
             PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
       - store_artifacts:
