@@ -3,9 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches:
-      - main
-      - migrate-gh-actions # FIXME: Remove before merging
+    branches: main
 
 jobs:
   run-tests:
