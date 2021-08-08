@@ -3,7 +3,9 @@ name: CI
 on:
   pull_request:
   push:
-    branches: main
+    branches:
+      - main
+      - gh-actions-regression-mac # FIXME: Remove before merging
 
 jobs:
   run-tests:
@@ -42,7 +44,7 @@ jobs:
 
   run-visual-regression:
     name: Visual Regression
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     needs: run-tests
 
     steps:
