@@ -31,7 +31,6 @@ yarn
 
 from your command-line at the root of this repository.
 
-### Development environments
 
 #### Fixture environment (panel)
 
