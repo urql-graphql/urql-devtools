@@ -16,6 +16,23 @@ Here are a few useful approaches to get started developing.
 
 ### Development environments
 
+You'll need these installations to get started, these should work on Linux/Windows/MacOS.
+
+- [Node](https://nodejs.org/en/) LTS or Current
+- [Yarn](https://yarnpkg.com/)
+
+#### Installation
+
+We use `yarn` to manage our dependencies, to initially install all of them you need to run:
+
+```sh
+yarn
+```
+
+from your command-line at the root of this repository.
+
+### Development environments
+
 #### Fixture environment (panel)
 
 The easiest way to get started on a change in the devtools panel is in the fixture environment.
