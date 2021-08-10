@@ -1,4 +1,4 @@
--# Development guide
+# Development guide
 
 There are a lot of moving parts to devtools so here's a quick run-through to make your life easier!
 
