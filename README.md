@@ -78,4 +78,4 @@ Visit the [debugging docs](https://formidable.com/open-source/urql/docs/advanced
 
 ## Contributing
 
-Have experience working with devtools extensions or want to get involved? Check out our [contributing](./CONTRIBUTING.md) docs to get started.
+Have experience working with devtools extensions or want to get involved? Check out our [contributing](./CONTRIBUTING.md) docs to get started, information on setting up the project can be found [here](https://github.com/FormidableLabs/urql-devtools/blob/master/DEVELOPMENT.md).
