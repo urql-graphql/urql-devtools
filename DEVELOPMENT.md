@@ -173,3 +173,22 @@ Finally, navigate to [releases](https://github.com/FormidableLabs/urql-devtools/
 
 - You can copy and paste the release notes from the changelog you just generated
 - Attatching the published assets from [the chrome store](https://stackoverflow.com/questions/7184793/how-to-download-a-crx-file-from-the-chrome-web-store-for-a-given-id), [mozilla addons](https://superuser.com/questions/440999/how-to-download-firefox-extensions-from-addons-mozilla-org-without-installing-th/441011), and npm (`wget $(npm view urql-devtools dist.tarball)`) is also a good idea
+
+#### 6. Upload the source-code
+
+Go to your [tag](https://github.com/FormidableLabs/urql-devtools/releases), download the `.zip` file, upload it on your [FireFox version](https://addons.mozilla.org/en-GB/developers/addon/urql-devtools/versions) with the instructions to build the package.
+
+An example description:
+
+```
+You'll need these installations to get started, these should work on Linux/Windows/MacOS.
+
+- [Node](https://nodejs.org/en/) LTS or Current
+- [Yarn](https://yarnpkg.com/)
+
+Steps to produce a build:
+
+- run yarn from your cli
+- run yarn build from your cli
+- navigate to dist/extension to see the published build
+```
