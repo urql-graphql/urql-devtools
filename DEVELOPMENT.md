@@ -31,6 +31,24 @@ yarn
 
 from your command-line at the root of this repository.
 
+### Producing a build
+
+By running the build command we produce the final build that is uploaded when we create a release.
+
+```sh
+yarn build
+```
+
+This build will be located in `dist/extension`.
+
+When you want to create the build for a specific version you can use our `tags`.
+
+```sh
+git fetch --all --tags && git checkout vx.x.x && yarn && yarn build
+```
+
+This will ensure that you have the dependencies we used at that tag and produce a build.
+
 #### Fixture environment (panel)
 
 The easiest way to get started on a change in the devtools panel is in the fixture environment.
