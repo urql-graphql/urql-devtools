@@ -41,6 +41,14 @@ yarn build
 
 This build will be located in `dist/extension`.
 
+When you want to create the build for a specific version you can use our `tags`.
+
+```sh
+git fetch --all --tags && git checkout vx.x.x && yarn && yarn build
+```
+
+This will ensure that you have the dependencies we used at that tag and produce a build.
+
 #### Fixture environment (panel)
 
 The easiest way to get started on a change in the devtools panel is in the fixture environment.
