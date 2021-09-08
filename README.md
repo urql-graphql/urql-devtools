@@ -56,7 +56,7 @@ Install the extension for your browser of choice
 - [Chrome extension](https://chrome.google.com/webstore/detail/urql-devtools/mcfphkbpmkbeofnkjehahlmidmceblmm)
 - [Firefox addon](https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools)
 
-Open the [devtools panel](https://developers.google.com/web/tools/chrome-devtools/open) in your browser and click on the _Urql_ tab
+Open the [devtools panel](https://developers.google.com/web/tools/chrome-devtools/open) in your browser and click on the _Urql_ tab (Make sure to restart the browser if you are unable to find _Urql_ tab)
 
 ### 📱 React Native
 
