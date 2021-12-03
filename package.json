@@ -1,6 +1,6 @@
 {
   "name": "urql-devtools",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "description": "The official devtools utility for urql",
   "homepage": "https://www.github.com/FormidableLabs/urql-devtools",
   "bugs": {
