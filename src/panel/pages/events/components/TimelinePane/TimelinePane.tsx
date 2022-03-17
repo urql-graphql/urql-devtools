@@ -14,7 +14,7 @@ import { useTimelineContext } from "../../../../context";
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
 export const TimelinePane: FC<
-  ({ event: DebugEvent & { duration?: number } } | { source?: Operation }) &
+  ({ event: DebugEvent } | { source?: Operation }) &
     ComponentProps<typeof Container>
 > = ({ event, source, ...props }) => {
   const content = useMemo(() => {
@@ -50,7 +50,9 @@ export const TimelinePane: FC<
 };
 
 /** Info about the event clicked by the user. */
-const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
+const EventSection: FC<{ event: DebugEvent & { duration?: number } }> = ({
+  event,
+}) => {
   const { startTime } = useTimelineContext();
 
   const timestamp = useMemo(() => `${event.timestamp - startTime} ms`, [
