@@ -50,9 +50,7 @@ export const TimelinePane: FC<
 };
 
 /** Info about the event clicked by the user. */
-const EventSection: FC<{ event: DebugEvent & { duration?: number } }> = ({
-  event,
-}) => {
+const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
   const { startTime } = useTimelineContext();
 
   const timestamp = useMemo(() => `${event.timestamp - startTime} ms`, [
