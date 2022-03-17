@@ -2,7 +2,11 @@ import React, { FC, ComponentProps, useMemo } from "react";
 import styled from "styled-components";
 import { DebugEvent, Operation } from "@urql/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuoteLeft, faStopwatch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faQuoteLeft,
+  faStopwatch,
+  faClock,
+} from "@fortawesome/free-solid-svg-icons";
 import { print } from "graphql";
 import { Pane, CodeHighlight } from "../../../../components";
 import { useTimelineContext } from "../../../../context";
@@ -10,7 +14,7 @@ import { useTimelineContext } from "../../../../context";
 /** Pane shows additional information about a selected timeline item. */
 // TODO: update data structure
 export const TimelinePane: FC<
-  ({ event: DebugEvent } | { source?: Operation }) &
+  ({ event: DebugEvent & { duration?: number } } | { source?: Operation }) &
     ComponentProps<typeof Container>
 > = ({ event, source, ...props }) => {
   const content = useMemo(() => {
@@ -46,10 +50,12 @@ export const TimelinePane: FC<
 };
 
 /** Info about the event clicked by the user. */
-const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
+const EventSection: FC<{ event: DebugEvent & { duration?: number } }> = ({
+  event,
+}) => {
   const { startTime } = useTimelineContext();
 
-  const timestamp = useMemo(() => `${event.timestamp - startTime}ms`, [
+  const timestamp = useMemo(() => `${event.timestamp - startTime} ms`, [
     startTime,
   ]);
 
@@ -80,6 +86,15 @@ const EventSection: FC<{ event: DebugEvent }> = ({ event }) => {
             {timestamp}
           </p>
         </Pane.Item>
+        {event.duration && (
+          <Pane.Item>
+            <Pane.ItemTitle>Duration</Pane.ItemTitle>
+            <p>
+              <Icon icon={faClock} />
+              {(event.duration / 1000).toFixed(2)} seconds
+            </p>
+          </Pane.Item>
+        )}
         {event.data && (
           <Pane.Item>
             <Pane.ItemTitle>Metadata</Pane.ItemTitle>
