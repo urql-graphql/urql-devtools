@@ -81,7 +81,7 @@ jobs:
         user: node
         environment:
           COSMOS_HOST: localhost
-          COSMOS_PORT: 5000
+          COSMOS_PORT: 5001
     parallelism: 4
     steps:
       - checkout
