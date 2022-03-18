@@ -80,7 +80,6 @@ Visit the [debugging docs](https://formidable.com/open-source/urql/docs/advanced
 
 Have experience working with devtools extensions or want to get involved? Check out our [contributing](./CONTRIBUTING.md) docs to get started, information on setting up the project can be found [here](https://github.com/FormidableLabs/urql-devtools/blob/master/DEVELOPMENT.md).
 
-
 ## Maintenance Status
 
 **Active:** Formidable is actively working on this project, and we expect to continue for work for the foreseeable future. Bug reports, feature requests and pull requests are welcome.
