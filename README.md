@@ -20,6 +20,9 @@
   <a href="https://github.com/FormidableLabs/urql-devtools/blob/master/LICENSE">
     <img alt="Licence MIT" src="https://badgen.net/github/license/FormidableLabs/urql-devtools" />
   </a>
+  <a href="https://github.com/FormidableLabs/urql-devtools#maintenance-status">
+    <img alt="Maintenance Status" src="https://img.shields.io/badge/maintenance-active-green.svg?color=brightgreen&style=flat" />
+  </a>
 </div>
 
 <br />
