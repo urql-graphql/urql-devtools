@@ -36,7 +36,11 @@ declare const jasmine: jest.MatcherContext;
       unobserve: jest.fn(),
     };
   } as any;
-  global.matchMedia = jest.fn();
+  global.matchMedia = jest.fn(() => {
+    return {
+      matches: false,
+    } as any;
+  });
   global.chrome = {
     devtools: {
       inspectedWindow: {

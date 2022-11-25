@@ -60,7 +60,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@urql/core": "^3.0.5",
+    "@urql/core": "^2.0.5",
     "@urql/devtools": "^2.0.3",
     "codemirror": "^5.57.0",
     "codemirror-graphql": "^2.0.2",

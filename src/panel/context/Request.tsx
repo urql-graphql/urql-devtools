@@ -70,10 +70,15 @@ export const RequestProvider: FC = ({ children }) => {
         return;
       }
 
-      if (
-        debugEvent.type === "update" &&
-        isIntrospectionQuery(debugEvent.operation.query)
-      ) {
+      let isIntrospection;
+      try {
+        // Starting at GQL 16 this can throw for invalid queries
+        isIntrospection = isIntrospectionQuery(debugEvent.operation.query);
+      } catch (e) {
+        isIntrospection = false;
+      }
+
+      if (debugEvent.type === "update" && isIntrospection) {
         setSchema(
           appendPopulateDirective(buildClientSchema(debugEvent.data.value))
         );
