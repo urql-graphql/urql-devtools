@@ -22,7 +22,7 @@
     "build:extension": "export NODE_ENV=production; export BUILD_ENV=extension; yarn webpack:extension",
     "bundle": "cd dist/extension && bestzip ../../extension.zip *",
     "changelog": "docker run -it --rm -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator",
-    "cosmos": "cross-env BUILD_ENV=electron cosmos",
+    "cosmos": "BUILD_ENV=electron cosmos",
     "cosmos:build": "export BUILD_ENV=electron; yarn cosmos-export && node scripts/cosmos-add-badge.js",
     "dev": "concurrently \"npm:dev:extension\" \"npm:dev:electron\"",
     "dev:electron": "export BUILD_ENV=electron; concurrently \"yarn webpack:extension --watch\" \"yarn webpack:electron --watch\"",
