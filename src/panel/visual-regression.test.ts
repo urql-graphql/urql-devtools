@@ -44,7 +44,7 @@ describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
     const element = await page.$("[data-snapshot=true]");
 
     if (element === null) {
-      console.warn(`No snapshot for fixture: ${id}`);
+      console.info(`No snapshot for fixture: ${id}`);
       return;
     }
 
