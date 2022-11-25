@@ -20,7 +20,7 @@ version: 2
     working_directory: /mnt/ramdisk
   - &node_env
     docker:
-      - image: node:13-alpine
+      - image: node:16-alpine
         user: node
 
 jobs:
