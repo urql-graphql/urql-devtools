@@ -2,14 +2,9 @@ import { detectCosmosConfig, getFixtures2, FixtureApi } from "react-cosmos";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 expect.extend({ toMatchImageSnapshot });
 
-const fixtures = getFixtures2({
-  ...detectCosmosConfig(),
-  hostname: process.env.COSMOS_HOST,
-  port: Number(process.env.COSMOS_PORT),
-}).reduce<[string, FixtureApi][]>(
-  (p, c) => [...p, [`${c.fileName} - ${c.name}`, c]],
-  []
-);
+const fixtures = getFixtures2(detectCosmosConfig()).reduce<
+  [string, FixtureApi][]
+>((p, c) => [...p, [`${c.fileName} - ${c.name}`, c]], []);
 
 beforeAll(async () => {
   jest.retryTimes(5);
