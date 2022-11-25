@@ -1,2 +1,3 @@
 *.html
 *.js
+node_modules
