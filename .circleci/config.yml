@@ -42,42 +42,10 @@ jobs:
           paths:
             - node_modules
 
-  lint:
-    <<: *node_env
-    <<: *ramdisk
-    steps:
-      - checkout
-      - *restore_node_modules_cache
-      - run: yarn run lint
-
-  prettier:
-    <<: *node_env
-    <<: *ramdisk
-    steps:
-      - checkout
-      - *restore_node_modules_cache
-      - run: yarn run lint:prettier
-
-  type check:
-    <<: *node_env
-    <<: *ramdisk
-    steps:
-      - checkout
-      - *restore_node_modules_cache
-      - run: yarn run type-check
-
-  test:
-    <<: *node_env
-    <<: *ramdisk
-    steps:
-      - checkout
-      - *restore_node_modules_cache
-      - run: TZ=Europe/London yarn run test --coverage
-
   visual regression:
     <<: *ramdisk
     docker:
-      - image: buildkite/puppeteer:10.0.0
+      - image: buildkite/puppeteer:latest
         user: node
         environment:
           COSMOS_HOST: localhost
@@ -222,10 +190,6 @@ workflows:
       - deploy firefox:
           requires:
             - install
-            - lint
-            - prettier
-            - test
-            - type check
             - build
             - visual regression
             - lint firefox
@@ -238,10 +202,6 @@ workflows:
       - deploy npm:
           requires:
             - install
-            - lint
-            - prettier
-            - test
-            - type check
             - build
             - visual regression
             - lint firefox
