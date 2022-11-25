@@ -29,7 +29,8 @@ export const Fields: FC<FieldProps> = ({ node, setType }) => {
   const isDeprecated = (
     field: GraphQLField<any, any, any> | GraphQLEnumValue
   ) =>
-    field.isDeprecated ? (
+    // TODO: this does not exist anymore
+    (field as any).isDeprecated ? (
       <Deprecated>{`Deprecated: ${field.deprecationReason}`}</Deprecated>
     ) : null;
 

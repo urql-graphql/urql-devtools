@@ -153,7 +153,7 @@ const appendPopulateDirective = (schema: GraphQLSchema): GraphQLSchema => {
         directive @populate on FIELD
       `
     );
-  } catch (err) {
+  } catch (err: any) {
     if (
       err.message.startsWith(
         'Directive "populate" already exists in the schema'

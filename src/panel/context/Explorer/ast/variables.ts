@@ -19,7 +19,7 @@ export const getFieldArguments = (
   return node.arguments.reduce<Operation["variables"]>(
     (p, arg) => ({
       ...p,
-      [arg.name.value]: valueFromASTUntyped(arg.value, vars),
+      [arg.name.value]: valueFromASTUntyped(arg.value, vars as any),
     }),
     {}
   ) as Record<string, unknown>;
