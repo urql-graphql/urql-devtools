@@ -1,6 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
-import { DebugEvent } from "@urql/core";
+import { DebugEvent, gql } from "@urql/core";
 import { TimelineContext } from "../../../../context";
 import { TimelinePane } from "./TimelinePane";
 

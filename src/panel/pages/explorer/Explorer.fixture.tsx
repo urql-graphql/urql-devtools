@@ -1,5 +1,5 @@
 import React, { FC, useMemo } from "react";
-import gql from "graphql-tag";
+import { gql } from "@urql/core";
 import { ExchangeDebugEventMessage } from "@urql/devtools";
 import {
   DevtoolsContext,

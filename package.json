@@ -65,7 +65,6 @@
     "electron": "^13.1.5",
     "fast-json-stable-stringify": "^2.1.0",
     "graphql": "^14.7.0",
-    "graphql-tag": "^2.11.0",
     "prismjs": "^1.21.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

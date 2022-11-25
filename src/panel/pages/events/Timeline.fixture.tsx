@@ -1,6 +1,5 @@
 import React, { FC, useMemo } from "react";
-import { DebugEvent } from "@urql/core";
-import gql from "graphql-tag";
+import { DebugEvent, gql } from "@urql/core";
 import { TimelineProvider, DevtoolsContext } from "../../context";
 import { Timeline } from "./Timeline";
 

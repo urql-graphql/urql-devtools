@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { print } from "graphql";
-import gql from "graphql-tag";
+import { gql } from "@urql/core";
 import { CodeHighlight, InlineCodeHighlight } from "./CodeHighlight";
 
 const query = gql`

@@ -7,9 +7,15 @@ import React, {
   useMemo,
   useContext,
 } from "react";
-import { visit, buildClientSchema, DocumentNode, extendSchema } from "graphql";
-import { GraphQLSchema, getIntrospectionQuery } from "graphql";
-import gql from "graphql-tag";
+import {
+  visit,
+  buildClientSchema,
+  DocumentNode,
+  extendSchema,
+  GraphQLSchema,
+  getIntrospectionQuery,
+} from "graphql";
+import { gql } from "@urql/core";
 import { useDevtoolsContext } from "./Devtools";
 
 interface RequestContextValue {
