@@ -149,7 +149,7 @@ jobs:
   deploy firefox:
     <<: *ramdisk
     docker:
-      - image: node:13
+      - image: node:16
         user: node
     steps:
       - checkout
@@ -178,30 +178,6 @@ workflows:
   build_and_test:
     jobs:
       - install:
-          filters:
-            tags:
-              only: /.*/
-      - lint:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
-      - prettier:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
-      - type check:
-          requires:
-            - install
-          filters:
-            tags:
-              only: /.*/
-      - test:
-          requires:
-            - install
           filters:
             tags:
               only: /.*/
@@ -234,10 +210,6 @@ workflows:
       - deploy chrome:
           requires:
             - install
-            - lint
-            - prettier
-            - test
-            - type check
             - build
             - visual regression
             - lint firefox
