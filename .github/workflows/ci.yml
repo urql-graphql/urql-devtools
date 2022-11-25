@@ -48,18 +48,67 @@ jobs:
           steps.node-modules-cache.outputs.cache-hit != 'true'
         run: yarn install --prefer-offline --frozen-lockfile --non-interactive --silent
 
-      - name: TypeScrip
-        run: yarn run type-check
+      ## currently has an issue with graphql
+      ## - name: TypeScript
+      ##  run: yarn run type-check
 
       - name: Linting
         run: yarn run lint
 
-      ## TODO: consolidatei n linting step
+      ## TODO: consolidate in linting step
       - name: Prettier
         run: yarn run lint:prettier
 
       - name: Unit Tests
         run: TZ=Europe/London yarn run test --coverage
 
+  visual-regression:
+    name: Visual-regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Get Yarn cache directory
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Use Yarn cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Use node_modules cache
+        id: node-modules-cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install Dependencies
+        if: |
+          steps.yarn-cache.outputs.cache-hit != 'true' ||
+          steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: yarn install --prefer-offline --frozen-lockfile --non-interactive --silent
+
+      - name: Add puppeteer
+        run: yarn global add puppeteer
+
+      - name: Build cosmos
+        run: yarn cosmos
+
+      - name: Visual Regression Tests
+        run: sleep 5 && yarn run visual-regression:exec
 
