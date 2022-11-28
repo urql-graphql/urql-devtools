@@ -118,7 +118,7 @@ jobs:
         run: yarn run visual-regression:exec
         env:
           COSMOS_HOST: locahost
-          COSMOS_PORT: 5000
+          COSMOS_PORT: 5001
 
       - name: Store image diffs
         uses: actions/upload-artifact@v2
