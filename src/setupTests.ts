@@ -23,8 +23,6 @@ declare const global: {
   ResizeObserver: ResizeObserver;
 };
 
-declare const jasmine: jest.MatcherContext;
-
 (() => {
   // Setup enzyme
   configure({ adapter: new Adapter() });
@@ -51,11 +49,6 @@ declare const jasmine: jest.MatcherContext;
       },
     },
   };
-
-  // Exit if not visual regression
-  if (!jasmine.testPath.includes("visual-regression")) {
-    return;
-  }
 
   // Start browser
   beforeAll(async () => {

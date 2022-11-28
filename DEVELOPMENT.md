@@ -63,16 +63,6 @@ With a fixture environment, you can:
 - quickly make visual changes to the panel (with hot reloading)
 - increase test coverage
 
-##### Updating fixture snapshots
-
-Make sure to run the following command after making any visual changes/additions to fixtures
-
-> Note: Check the diff output in `src/panel/__image_snapshots__/__diff_output__` before updating snapshots
-
-```
-yarn visual-regression
-```
-
 #### Shallow environment (panel/extension/electron)
 
 When working on functional changes (such as messaging, event handling, etc), the easiest way is going to be in a shallow/test environment.
