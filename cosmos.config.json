@@ -1,0 +1,8 @@
+{
+  "watchDirs": ["src/panel/!__image_snapshots__"],
+  "port": 5001,
+  "webpack": {
+    "configPath": "",
+    "overridePath": "cosmos.override.js"
+  }
+}
