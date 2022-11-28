@@ -59,7 +59,8 @@ describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
     });
     expect(image).toMatchImageSnapshot({
       customSnapshotIdentifier: `${id}-${viewport}`,
-      failureThreshold: 0.0001,
+      comparisonMethod: "ssim",
+      failureThreshold: 0.01,
       failureThresholdType: "percent",
     });
   };
@@ -72,9 +73,8 @@ describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
         return;
       }
 
-      await page.goto(rendererUrl, { waitUntil: "load" });
       await page.mouse.move(0, 0);
-      await delay(500);
+      await page.goto(rendererUrl, { waitUntil: "networkidle0" });
       pageRendered = true;
     });
 
@@ -89,5 +89,3 @@ describe.each(parallelize(fixtures))("%s", (id, { rendererUrl }) => {
     });
   });
 });
-
-const delay = (t: number) => new Promise((resolve) => setTimeout(resolve, t));
