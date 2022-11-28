@@ -12,6 +12,12 @@ const FixtureStyle = createGlobalStyle`
     height: 100%;
     margin: 0;
     background: ${(p) => p.theme.colors.canvas.base};
+    font-family: "Roboto", "Arial", sans-serif;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
   }
 
   #root {
