@@ -60,15 +60,6 @@ jobs:
       - store_artifacts:
           path: dist/electron
 
-  lint firefox:
-    <<: *node_env
-    <<: *ramdisk
-    steps:
-      - checkout
-      - *restore_node_modules_cache
-      - *restore_build_cache
-      - run: yarn run lint:firefox
-
   verify version:
     <<: *node_env
     <<: *ramdisk
@@ -141,17 +132,10 @@ workflows:
               only: /.*/
             branches:
               ignore: /.*/
-      - lint firefox:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /.*/
       - deploy chrome:
           requires:
             - install
             - build
-            - lint firefox
             - verify version
           filters:
             tags:
@@ -162,7 +146,6 @@ workflows:
           requires:
             - install
             - build
-            - lint firefox
             - verify version
           filters:
             tags:
@@ -173,7 +156,6 @@ workflows:
           requires:
             - install
             - build
-            - lint firefox
             - verify version
           filters:
             tags:
