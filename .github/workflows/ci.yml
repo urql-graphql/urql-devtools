@@ -49,7 +49,7 @@ jobs:
         run: yarn run lint:prettier
 
       - name: Unit Tests
-        run: TZ=Europe/London yarn run test --coverage
+        run: yarn run test --coverage
         env:
           TZ: Europe/London
           HEADLESS: true
