@@ -55,7 +55,7 @@ declare const global: {
     // Aim to render fonts consistently between invocations
     const args = ["--font-render-hinting=none"];
     global.browser = await puppeteer.launch({
-      args: process.env.USER === "root" ? [...args, "--no-sandbox"] : args,
+      args: [...args, "--no-sandbox"],
       headless: process.env.HEADLESS !== "false",
     });
   });
