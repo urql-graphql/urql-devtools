@@ -7,15 +7,15 @@ import React, {
   useEffect,
   useRef,
 } from "react";
-import { GraphQLNamedType } from "graphql";
 import styled from "styled-components";
-import { TypeMap } from "graphql/type/schema";
+import { GraphQLNamedType } from "graphql";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { rem } from "polished";
 
 interface SearchProps {
-  typeMap: TypeMap;
+  // TODO: replacement for TypeMap
+  typeMap: any;
   setType: (type: GraphQLNamedType) => void;
 }
 

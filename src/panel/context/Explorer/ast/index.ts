@@ -69,7 +69,7 @@ export const handleResponse = ({
   return parseNodes({
     variables: getNormalizedVariables(
       opNode.variableDefinitions,
-      operation.variables
+      operation.variables as any
     ),
     selections: opNode.selectionSet.selections,
     fragments,

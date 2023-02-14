@@ -6,9 +6,13 @@ html {
 }
 
 body {
-  font-family: "Helvetica", "Roboto", sans-serif;
-  font-weight: 300;
+  font-family: "Roboto", "Helvetica", sans-serif;
+  font-weight: 400;
   margin: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
 }
 
 code,

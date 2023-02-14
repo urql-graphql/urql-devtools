@@ -235,18 +235,18 @@ describe("on debug message", () => {
             "query": undefined,
             "response": undefined,
             "schema": GraphQLSchema {
-              "__allowedLegacyNames": Array [],
               "__validationErrors": undefined,
               "_directives": Array [
-                "@skip",
                 "@include",
+                "@skip",
                 "@deprecated",
+                "@specifiedBy",
                 "@populate",
               ],
-              "_implementations": Object {},
+              "_implementationsMap": Object {},
               "_mutationType": null,
-              "_possibleTypeMap": Object {},
               "_queryType": "Simple",
+              "_subTypeMap": Object {},
               "_subscriptionType": null,
               "_typeMap": Object {
                 "Boolean": "Boolean",
@@ -262,8 +262,9 @@ describe("on debug message", () => {
                 "__TypeKind": "__TypeKind",
               },
               "astNode": undefined,
+              "description": undefined,
               "extensionASTNodes": Array [],
-              "extensions": undefined,
+              "extensions": Object {},
             },
             "setQuery": [Function],
           }

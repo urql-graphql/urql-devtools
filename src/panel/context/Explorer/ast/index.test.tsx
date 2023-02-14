@@ -1,6 +1,5 @@
 import { DocumentNode } from "graphql";
-import { Operation } from "@urql/core";
-import gql from "graphql-tag";
+import { Operation, gql } from "@urql/core";
 import { handleResponse } from "./index";
 
 jest.mock("nanoid", () => ({

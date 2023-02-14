@@ -1,3 +1,4 @@
 .vscode/
 cosmos-export/
 dist/
+*.yml

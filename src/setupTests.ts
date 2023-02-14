@@ -1,6 +1,6 @@
 import "jest-styled-components";
 import { configure } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import puppeteer from "puppeteer";
 
 process.env.BUILD_ENV = "extension";
@@ -23,8 +23,6 @@ declare const global: {
   ResizeObserver: ResizeObserver;
 };
 
-declare const jasmine: jest.MatcherContext;
-
 (() => {
   // Setup enzyme
   configure({ adapter: new Adapter() });
@@ -36,7 +34,11 @@ declare const jasmine: jest.MatcherContext;
       unobserve: jest.fn(),
     };
   } as any;
-  global.matchMedia = jest.fn();
+  global.matchMedia = jest.fn(() => {
+    return {
+      matches: false,
+    } as any;
+  });
   global.chrome = {
     devtools: {
       inspectedWindow: {
@@ -48,17 +50,12 @@ declare const jasmine: jest.MatcherContext;
     },
   };
 
-  // Exit if not visual regression
-  if (!jasmine.testPath.includes("visual-regression")) {
-    return;
-  }
-
   // Start browser
   beforeAll(async () => {
     // Aim to render fonts consistently between invocations
     const args = ["--font-render-hinting=none"];
     global.browser = await puppeteer.launch({
-      args: process.env.USER === "root" ? [...args, "--no-sandbox"] : args,
+      args: [...args, "--no-sandbox"],
       headless: process.env.HEADLESS !== "false",
     });
   });

@@ -4,8 +4,6 @@ import { mount } from "enzyme";
 import { ThemeDecorator } from "../../../cosmos.decorator";
 import fixtures from "./Settings.fixture";
 
-beforeEach(jest.clearAllMocks);
-
 describe("on icon click", () => {
   it("expands content", () => {
     const wrapper = mount(<ThemeDecorator>{fixtures.settings}</ThemeDecorator>);

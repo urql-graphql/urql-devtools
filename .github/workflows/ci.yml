@@ -1,0 +1,61 @@
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: master
+
+jobs:
+  check:
+    name: Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Get Yarn cache directory
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Use Yarn cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --non-interactive --silent
+
+      - name: TypeScript
+        run: yarn run type-check
+
+      - name: Lint
+        run: yarn run lint
+
+      ## TODO: consolidate in linting step
+      - name: Prettier
+        run: yarn run lint:prettier
+
+      - name: Unit Tests
+        run: yarn run test --coverage
+        env:
+          TZ: Europe/London
+          HEADLESS: true
+
+      - name: Build
+        run: yarn build && yarn bundle
+
+      - name: Lint FireFox
+        run: yarn run lint:firefox

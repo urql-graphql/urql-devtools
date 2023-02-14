@@ -7,9 +7,15 @@ import React, {
   useMemo,
   useContext,
 } from "react";
-import { visit, buildClientSchema, DocumentNode, extendSchema } from "graphql";
-import { GraphQLSchema, getIntrospectionQuery } from "graphql";
-import gql from "graphql-tag";
+import {
+  visit,
+  buildClientSchema,
+  DocumentNode,
+  extendSchema,
+  GraphQLSchema,
+  getIntrospectionQuery,
+} from "graphql";
+import { gql } from "@urql/core";
 import { useDevtoolsContext } from "./Devtools";
 
 interface RequestContextValue {
@@ -64,10 +70,15 @@ export const RequestProvider: FC = ({ children }) => {
         return;
       }
 
-      if (
-        debugEvent.type === "update" &&
-        isIntrospectionQuery(debugEvent.operation.query)
-      ) {
+      let isIntrospection;
+      try {
+        // Starting at GQL 16 this can throw for invalid queries
+        isIntrospection = isIntrospectionQuery(debugEvent.operation.query);
+      } catch (e) {
+        isIntrospection = false;
+      }
+
+      if (debugEvent.type === "update" && isIntrospection) {
         setSchema(
           appendPopulateDirective(buildClientSchema(debugEvent.data.value))
         );
@@ -147,7 +158,7 @@ const appendPopulateDirective = (schema: GraphQLSchema): GraphQLSchema => {
         directive @populate on FIELD
       `
     );
-  } catch (err) {
+  } catch (err: any) {
     if (
       err.message.startsWith(
         'Directive "populate" already exists in the schema'

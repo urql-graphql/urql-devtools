@@ -4,7 +4,8 @@ import {
   valueFromASTUntyped,
 } from "graphql";
 import { Operation } from "@urql/core";
-import Maybe from "graphql/tsutils/Maybe";
+
+type Maybe<T> = null | undefined | T;
 
 /** Evaluates a fields arguments taking vars into account */
 export const getFieldArguments = (
@@ -18,7 +19,7 @@ export const getFieldArguments = (
   return node.arguments.reduce<Operation["variables"]>(
     (p, arg) => ({
       ...p,
-      [arg.name.value]: valueFromASTUntyped(arg.value, vars),
+      [arg.name.value]: valueFromASTUntyped(arg.value, vars as any),
     }),
     {}
   ) as Record<string, unknown>;
