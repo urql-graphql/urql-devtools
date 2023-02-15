@@ -3,40 +3,40 @@
 exports[`App on mount matches snapshot 1`] = `
 <ThemeProvider
   theme={
-    Object {
-      "colors": Object {
-        "canvas": Object {
+    {
+      "colors": {
+        "canvas": {
           "active": "#2a2a38",
           "base": "#1d1d1d",
           "elevated05": "#303030",
           "elevated10": "#373737",
           "hover": "#26252f",
         },
-        "codeblock": Object {
+        "codeblock": {
           "background": "#252525",
         },
-        "divider": Object {
+        "divider": {
           "base": "#434343",
         },
-        "error": Object {
+        "error": {
           "base": "#F65151",
         },
-        "pending": Object {
+        "pending": {
           "base": "#00A1FF",
         },
-        "primary": Object {
+        "primary": {
           "active": "#9d9cdf",
           "base": "#7776D2",
           "contrast": "#fff",
           "hover": "#8a89d8",
         },
-        "secondary": Object {
+        "secondary": {
           "base": "#FFE248",
         },
-        "success": Object {
+        "success": {
           "base": "#2DAF7E",
         },
-        "syntax": Object {
+        "syntax": {
           "atom": "#e8e8e8",
           "attrName": "#33b3ff",
           "base": "#33b3ff",
@@ -64,51 +64,51 @@ exports[`App on mount matches snapshot 1`] = `
           "union": "#44b9cb",
           "variable": "#33b3ff",
         },
-        "text": Object {
+        "text": {
           "base": "#e9e9e9",
         },
-        "textDimmed": Object {
+        "textDimmed": {
           "active": "#d0d0d0",
           "base": "#d0d0d0",
           "hover": "#fff",
         },
-        "tooltip": Object {
+        "tooltip": {
           "active": "#252525",
           "background": "#151515",
         },
       },
-      "fontSizes": Object {
-        "body": Object {
+      "fontSizes": {
+        "body": {
           "l": "0.8125rem",
           "m": "0.75rem",
           "s": "0.6875rem",
           "xl": "1rem",
         },
-        "display": Object {
+        "display": {
           "l": "5rem",
           "m": "3.75rem",
           "s": "2.5rem",
         },
       },
-      "lineHeights": Object {
-        "body": Object {
+      "lineHeights": {
+        "body": {
           "l": "1rem",
           "m": "0.9375rem",
           "s": "0.875rem",
           "xl": "1.25rem",
         },
-        "display": Object {
+        "display": {
           "l": "6rem",
           "m": "4.5rem",
           "s": "3rem",
         },
       },
-      "radii": Object {
+      "radii": {
         "m": "0.25rem",
         "round": "50%",
         "s": "0.125rem",
       },
-      "space": Object {
+      "space": {
         "0": 0,
         "1": "0.125rem",
         "10": "4rem",
@@ -137,16 +137,16 @@ exports[`App routes on mount on connected matches snapshot 1`] = `
 <HashRouter>
   <Navigation
     items={
-      Array [
-        Object {
+      [
+        {
           "label": "Explorer",
           "link": "/explorer",
         },
-        Object {
+        {
           "label": "Events",
           "link": "/events",
         },
-        Object {
+        {
           "label": "Request",
           "link": "/request",
         },

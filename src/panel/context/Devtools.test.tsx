@@ -2,7 +2,6 @@ jest.mock("../util/Connection");
 import React from "react";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
-import { mocked } from "ts-jest/utils";
 import { createConnection } from "../util";
 import { DevtoolsProvider, useDevtoolsContext } from "./Devtools";
 
@@ -13,7 +12,7 @@ const connection = {
   },
   postMessage: jest.fn(),
 };
-mocked(createConnection).mockReturnValue(connection);
+(createConnection  as jest.Mocked<any>).mockReturnValue(connection);
 
 let state: ReturnType<typeof useDevtoolsContext>;
 

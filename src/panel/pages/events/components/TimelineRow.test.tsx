@@ -33,7 +33,7 @@ describe("on fetching", () => {
 
       const duration = wrapper.find("NetworkDuration");
       expect(duration.props().style).toMatchInlineSnapshot(`
-        Object {
+        {
           "bottom": 0,
           "left": 0,
           "position": "absolute",
