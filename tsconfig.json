@@ -5,7 +5,7 @@
     "lib": ["dom", "esnext"],
     "jsx": "react",
     "strict": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "resolveJsonModule": true,
