@@ -2,3 +2,4 @@
 cosmos-export/
 dist/
 *.yml
+*.yaml
