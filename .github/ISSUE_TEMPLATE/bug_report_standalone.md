@@ -18,8 +18,8 @@ Devtools is unresponsive when using on an Android device with expo.
 
 1.  Clone [this example](https://github.com/kadikraman/UrqlTest) react native project
 2.  Plug in Android phone via USB
-3.  Run `yarn install`
-4.  Run `yarn start`
+3.  Run `pnpm install`
+4.  Run `pnpm start`
 5.  Open devtools using npx `npx urql-devtools`
 
 ## Expected result

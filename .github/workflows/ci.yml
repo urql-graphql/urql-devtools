@@ -22,40 +22,46 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Get Yarn cache directory
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      - name: Use Yarn cache
-        uses: actions/cache@v3
-        id: yarn-cache
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.2
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-store
+        run: echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+      - name: Use pnpm store
+        uses: actions/cache@v3
+        id: pnpm-cache
+        with:
+          path: ${{ steps.pnpm-store.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-pnpm-
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --non-interactive --silent
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - name: TypeScript
-        run: yarn run type-check
+        run: pnpm run type-check
 
       - name: Lint
-        run: yarn run lint
+        run: pnpm run lint
 
       ## TODO: consolidate in linting step
       - name: Prettier
-        run: yarn run lint:prettier
+        run: pnpm run lint:prettier
 
       - name: Unit Tests
-        run: yarn run test --coverage
+        run: pnpm run test --coverage
         env:
           TZ: Europe/London
           HEADLESS: true
 
       - name: Build
-        run: yarn build && yarn bundle
+        run: pnpm run build && pnpm run bundle
 
       - name: Lint FireFox
-        run: yarn run lint:firefox
+        run: pnpm run lint:firefox
