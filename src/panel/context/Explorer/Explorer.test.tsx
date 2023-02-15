@@ -11,7 +11,7 @@ const sendMessage = jest.fn();
 const addMessageHandler = jest.fn();
 
 beforeEach(() => {
-  (useDevtoolsContext  as jest.Mocked<any>).mockReturnValue({
+  (useDevtoolsContext as jest.Mocked<any>).mockReturnValue({
     client: {
       connected: true,
       version: {
@@ -89,8 +89,8 @@ describe("unknown message", () => {
   beforeEach(() => {
     addMessageHandler.mockImplementationOnce((cb) => cb({ type: "unknown" }));
   });
-  it("doesn't call handleResponse", async (done) => {
-    await act(async () => {
+  it("doesn't call handleResponse", (done) => {
+    act(() => {
       mount(
         <ExplorerProvider>
           <Fixture />

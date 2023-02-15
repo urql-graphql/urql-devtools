@@ -12,7 +12,7 @@ const connection = {
   },
   postMessage: jest.fn(),
 };
-(createConnection  as jest.Mocked<any>).mockReturnValue(connection);
+(createConnection as jest.Mocked<any>).mockReturnValue(connection);
 
 let state: ReturnType<typeof useDevtoolsContext>;
 

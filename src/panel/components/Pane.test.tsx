@@ -7,7 +7,7 @@ import { shallow } from "enzyme";
 import { useOrientationWatcher } from "../hooks";
 import { Pane } from "./Pane";
 
-const useOrientation = (useOrientationWatcher as jest.Mocked<any>);
+const useOrientation = useOrientationWatcher as jest.Mocked<any>;
 const addEventListener = jest.spyOn(window, "addEventListener");
 
 beforeEach(jest.clearAllMocks);

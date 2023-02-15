@@ -1,7 +1,7 @@
 import "jest-styled-components";
 import { configure } from "enzyme";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import puppeteer from "puppeteer";
+import puppeteer, { Browser, Page } from "puppeteer";
 
 process.env.BUILD_ENV = "extension";
 process.env.PKG_VERSION = "200.0.0";
@@ -17,8 +17,8 @@ declare const global: {
       };
     };
   };
-  browser: puppeteer.Browser;
-  page: puppeteer.Page;
+  browser: Browser;
+  page: Page;
   matchMedia: any;
   ResizeObserver: ResizeObserver;
 };

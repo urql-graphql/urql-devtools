@@ -17,7 +17,7 @@ const getItem = jest.spyOn(Storage.prototype, "getItem");
 const setItem = jest.spyOn(Storage.prototype, "setItem");
 
 beforeEach(() => {
-  (useDevtoolsContext  as jest.Mocked<any>).mockReturnValue({
+  (useDevtoolsContext as jest.Mocked<any>).mockReturnValue({
     client: {
       connected: true,
       version: {
