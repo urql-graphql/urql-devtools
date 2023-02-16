@@ -17,7 +17,7 @@
     "react native"
   ],
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "node ./scripts/postinstall.js",
     "build": "pnpm run build:extension && pnpm run build:electron",
     "build:electron": "export NODE_ENV=production; export BUILD_ENV=electron; pnpm run webpack:extension && pnpm run webpack:electron",
     "build:extension": "export NODE_ENV=production; export BUILD_ENV=extension; pnpm run webpack:extension",
@@ -126,7 +126,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-react": "^7.20.6",
     "html-webpack-plugin": "^4.4.1",
-    "husky": "^8.0.0",
+    "husky-v4": "^4.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.4.0",
     "jest-styled-components": "^7.1.0",
