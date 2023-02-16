@@ -22,7 +22,6 @@
     "build:electron": "export NODE_ENV=production; export BUILD_ENV=electron; pnpm run webpack:extension && pnpm run webpack:electron",
     "build:extension": "export NODE_ENV=production; export BUILD_ENV=extension; pnpm run webpack:extension",
     "bundle": "cd dist/extension && bestzip ../../extension.zip *",
-    "changelog": "docker run -it --rm -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator",
     "cosmos": "export BUILD_ENV=electron; cosmos",
     "cosmos:build": "export BUILD_ENV=electron; pnpm run cosmos-export && node scripts/cosmos-add-badge.js",
     "dev": "concurrently \"npm:dev:extension\" \"npm:dev:electron\"",
