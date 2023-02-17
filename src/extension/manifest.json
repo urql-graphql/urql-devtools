@@ -35,7 +35,7 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
-  "application": {
+  "browser_specific_settings": {
     "gecko": {
       "id": "{c11f3a69-f159-4708-b044-853066c2d2fe}",
       "strict_min_version": "42.0"
