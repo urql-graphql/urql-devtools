@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Urql Devtools",
   "description": "The official Urql chrome extension",
   "icons": {
@@ -12,8 +12,7 @@
     "512": "/assets/icon-512.png"
   },
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
@@ -23,7 +22,7 @@
       "run_at": "document_start"
     }
   ],
-  "page_action": {
+  "action": {
     "default_title": "Urql Devtools",
     "default_icon": {
       "32": "/assets/icon-disabled-32.png",
@@ -32,8 +31,10 @@
     }
   },
   "devtools_page": "devtools.html",
-  "permissions": ["file:///*", "http://*/*", "https://*/*"],
-  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "host_permissions": ["file:///*", "http://*/*", "https://*/*"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
   "application": {
     "gecko": {
       "id": "{c11f3a69-f159-4708-b044-853066c2d2fe}",
