@@ -121,27 +121,11 @@ If you don't already have a React Native app that uses @urql/devtools, you could
 
 Anyone with write access to the repository can publish a release. The steps are as follows.
 
-#### 1. Update the version
+#### 1. Merge the "Version Packages" PR
 
-Set the version attribute in the _package.json_
+This will increment all the versions on the `master` branch
 
-#### 2. Build the new changelog
-
-> Note: This step requires docker
-
-```
-pnpm run changelog --future-release v0.0.0[release number] --token [your github oauth token]
-```
-
-#### 3. Push/merge new version to master
-
-```
-git add package.json CHANGELOG.md
-git commit -m "Version v0.0.0"
-git push origin master
-```
-
-#### 4. Publish new release
+#### 2. Publish new release
 
 _(replace v0.0.0 with your new version)_
 
@@ -157,14 +141,14 @@ git push origin v0.0.0
 > - [Mozilla addons](https://addons.mozilla.org/en-GB/firefox/addon/urql-devtools/)
 > - [Npm (standalone for React Native)](https://www.npmjs.com/package/urql-devtools)
 
-#### 5. Create a new release on Github
+#### 3. Create a new release on Github
 
 Finally, navigate to [releases](https://github.com/FormidableLabs/urql-devtools/releases) and choose _draft a new release_.
 
 - You can copy and paste the release notes from the changelog you just generated
 - Attatching the published assets from [the chrome store](https://stackoverflow.com/questions/7184793/how-to-download-a-crx-file-from-the-chrome-web-store-for-a-given-id), [mozilla addons](https://superuser.com/questions/440999/how-to-download-firefox-extensions-from-addons-mozilla-org-without-installing-th/441011), and npm (`wget $(npm view urql-devtools dist.tarball)`) is also a good idea
 
-#### 6. Upload the source-code
+#### 4. Upload the source-code
 
 Go to your [tag](https://github.com/FormidableLabs/urql-devtools/releases), download the `.zip` file, upload it on your [FireFox version](https://addons.mozilla.org/en-GB/developers/addon/urql-devtools/versions) with the instructions to build the package.
 

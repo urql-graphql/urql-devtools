@@ -1,7 +1,0 @@
-user=FormidableLabs
-project=urql-devtools
-exclude-labels=Maintenance
-enhancement-label=**Added enhancements:**
-enhancement-labels=Feature
-breaking-labels=Breaking
-base=CHANGELOG.md

@@ -2,7 +2,6 @@
 name: CI
 
 on:
-  pull_request:
   push:
     branches: master
 
@@ -44,27 +43,8 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install chromium
-        run: node ./node_modules/puppeteer/install.js
-
-      - name: TypeScript
-        run: pnpm run type-check
-
-      - name: Lint
-        run: pnpm run lint
-
-      ## TODO: consolidate in linting step
-      - name: Prettier
-        run: pnpm run lint:prettier
-
-      - name: Unit Tests
-        run: pnpm run test --coverage
+      - name: PR or Publish
+        id: changesets
+        uses: changesets/action@v1.4.1
         env:
-          TZ: Europe/London
-          HEADLESS: true
-
-      - name: Build
-        run: pnpm run build && pnpm run bundle
-
-      - name: Lint FireFox
-        run: pnpm run lint:firefox
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
