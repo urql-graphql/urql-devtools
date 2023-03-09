@@ -136,7 +136,7 @@
     "nanoid": "^3.0.0",
     "polished": "^3.6.6",
     "prettier": "^2.1.1",
-    "puppeteer": "^19.7.0",
+    "puppeteer": "^19.7.3",
     "react-cosmos": "5.6.2",
     "semver": "^7.3.2",
     "style-loader": "^1.2.1",
