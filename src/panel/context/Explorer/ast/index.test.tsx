@@ -35,19 +35,19 @@ it("int on query", () => {
     `,
     data: { __typename: "Query", int: 42 },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "int": Object {
+      "int": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "int",
@@ -112,139 +112,139 @@ it("complex query", () => {
       },
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "feed({\\"first\\":10,\\"orderBy\\":\\"DESC\\",\\"skip\\":1})": Object {
+    {
+      "feed({"first":10,"orderBy":"DESC","skip":1})": {
         "_id": "[nanoid]",
-        "_owner": Object {},
-        "args": Object {
+        "_owner": {},
+        "args": {
           "first": 10,
           "orderBy": "DESC",
           "skip": 1,
         },
         "cacheOutcome": "hit",
-        "children": Object {
-          "__typename": Object {
+        "children": {
+          "__typename": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Feed",
           },
-          "count": Object {
+          "count": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "count",
             "name": "count",
             "value": 5,
           },
-          "links": Object {
+          "links": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
-            "children": Array [
-              Object {
-                "__typename": Object {
+            "children": [
+              {
+                "__typename": {
                   "_id": "[nanoid]",
-                  "_owner": Object {},
+                  "_owner": {},
                   "args": undefined,
                   "cacheOutcome": "hit",
                   "key": "__typename",
                   "name": "__typename",
                   "value": "Link",
                 },
-                "createdAt": Object {
+                "createdAt": {
                   "_id": "[nanoid]",
-                  "_owner": Object {},
+                  "_owner": {},
                   "args": undefined,
                   "cacheOutcome": "hit",
                   "key": "createdAt",
                   "name": "createdAt",
                   "value": "2019-09-03T15:28:04.052Z",
                 },
-                "description": Object {
+                "description": {
                   "_id": "[nanoid]",
-                  "_owner": Object {},
+                  "_owner": {},
                   "args": undefined,
                   "cacheOutcome": "hit",
                   "key": "description",
                   "name": "description",
                   "value": "Prisma turns your database into a GraphQL API 😎",
                 },
-                "id": Object {
+                "id": {
                   "_id": "[nanoid]",
-                  "_owner": Object {},
+                  "_owner": {},
                   "args": undefined,
                   "cacheOutcome": "hit",
                   "key": "id",
                   "name": "id",
                   "value": "ck03zlsr8qg4o0b53x2z7drw8",
                 },
-                "postedBy": Object {
+                "postedBy": {
                   "_id": "[nanoid]",
-                  "_owner": Object {},
+                  "_owner": {},
                   "args": undefined,
                   "cacheOutcome": "hit",
                   "key": "postedBy",
                   "name": "postedBy",
                   "value": null,
                 },
-                "url": Object {
+                "url": {
                   "_id": "[nanoid]",
-                  "_owner": Object {},
+                  "_owner": {},
                   "args": undefined,
                   "cacheOutcome": "hit",
                   "key": "url",
                   "name": "url",
                   "value": "https://www.prismagraphql.com",
                 },
-                "votes": Object {
+                "votes": {
                   "_id": "[nanoid]",
-                  "_owner": Object {},
+                  "_owner": {},
                   "args": undefined,
                   "cacheOutcome": "hit",
-                  "children": Array [
-                    Object {
-                      "__typename": Object {
+                  "children": [
+                    {
+                      "__typename": {
                         "_id": "[nanoid]",
-                        "_owner": Object {},
+                        "_owner": {},
                         "args": undefined,
                         "cacheOutcome": "hit",
                         "key": "__typename",
                         "name": "__typename",
                         "value": "Vote",
                       },
-                      "id": Object {
+                      "id": {
                         "_id": "[nanoid]",
-                        "_owner": Object {},
+                        "_owner": {},
                         "args": undefined,
                         "cacheOutcome": "hit",
                         "key": "id",
                         "name": "id",
                         "value": "ck06q9uikf5iw0b53dyjb0fbf",
                       },
-                      "user": Object {
+                      "user": {
                         "_id": "[nanoid]",
-                        "_owner": Object {},
+                        "_owner": {},
                         "args": undefined,
                         "cacheOutcome": "hit",
-                        "children": Object {
-                          "__typename": Object {
+                        "children": {
+                          "__typename": {
                             "_id": "[nanoid]",
-                            "_owner": Object {},
+                            "_owner": {},
                             "args": undefined,
                             "cacheOutcome": "hit",
                             "key": "__typename",
                             "name": "__typename",
                             "value": "User",
                           },
-                          "id": Object {
+                          "id": {
                             "_id": "[nanoid]",
-                            "_owner": Object {},
+                            "_owner": {},
                             "args": undefined,
                             "cacheOutcome": "hit",
                             "key": "id",
@@ -266,7 +266,7 @@ it("complex query", () => {
             "name": "links",
           },
         },
-        "key": "feed({\\"first\\":10,\\"orderBy\\":\\"DESC\\",\\"skip\\":1})",
+        "key": "feed({"first":10,"orderBy":"DESC","skip":1})",
         "name": "feed",
       },
     }
@@ -283,19 +283,19 @@ it("aliased field on query", () => {
     `,
     data: { __typename: "Query", anotherName: 42 },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "int": Object {
+      "int": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "int",
@@ -320,24 +320,24 @@ it("json on query", () => {
       json: { __typename: "Misleading", test: true },
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "json": Object {
+      "json": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "json",
         "name": "json",
-        "value": Object {
+        "value": {
           "__typename": "Misleading",
           "test": true,
         },
@@ -356,19 +356,19 @@ it("nullable field on query", () => {
     `,
     data: { __typename: "Query", missing: null },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "missing": Object {
+      "missing": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "missing",
@@ -389,24 +389,24 @@ it("int field with arguments on query", () => {
     `,
     data: { __typename: "Query", int: 42 },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "int({\\"test\\":true})": Object {
+      "int({"test":true})": {
         "_id": "[nanoid]",
-        "_owner": Object {},
-        "args": Object {
+        "_owner": {},
+        "args": {
           "test": true,
         },
         "cacheOutcome": "hit",
-        "key": "int({\\"test\\":true})",
+        "key": "int({"test":true})",
         "name": "int",
         "value": 42,
       },
@@ -428,34 +428,34 @@ it("non-keyable entity on query", () => {
     // This entity has no `id` or `_id` field
     data: { __typename: "Query", item: { __typename: "Item", name: "Test" } },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "item": Object {
+      "item": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Object {
-          "__typename": Object {
+        "children": {
+          "__typename": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
-          "name": Object {
+          "name": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "name",
@@ -488,43 +488,43 @@ it("invalid entity on query", () => {
       item: { __typename: null, id: "123", name: "Test" },
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "item": Object {
+      "item": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Object {
-          "__typename": Object {
+        "children": {
+          "__typename": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": null,
           },
-          "id": Object {
+          "id": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": "123",
           },
-          "name": Object {
+          "name": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "name",
@@ -553,34 +553,34 @@ it("non-IDable entity on query", () => {
     // This entity has a `__typename` but no ID fields
     data: { __typename: "Query", item: { __typename: "Item", name: "Test" } },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "item": Object {
+      "item": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Object {
-          "__typename": Object {
+        "children": {
+          "__typename": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
-          "name": Object {
+          "name": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "name",
@@ -612,43 +612,43 @@ it("entity on query", () => {
       item: { __typename: "Item", id: "1", name: "Test" },
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "item": Object {
+      "item": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Object {
-          "__typename": Object {
+        "children": {
+          "__typename": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
-          "id": Object {
+          "id": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": "1",
           },
-          "name": Object {
+          "name": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "name",
@@ -680,43 +680,43 @@ it("entity on aliased field on query", () => {
       anotherName: { __typename: "Item", id: "1", name: "Test" },
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "item": Object {
+      "item": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Object {
-          "__typename": Object {
+        "children": {
+          "__typename": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
-          "id": Object {
+          "id": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": "1",
           },
-          "name": Object {
+          "name": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "name",
@@ -748,45 +748,45 @@ it("entity with arguments on query", () => {
       item: { __typename: "Item", id: "1", name: "Test" },
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "item({\\"test\\":true})": Object {
+      "item({"test":true})": {
         "_id": "[nanoid]",
-        "_owner": Object {},
-        "args": Object {
+        "_owner": {},
+        "args": {
           "test": true,
         },
         "cacheOutcome": "hit",
-        "children": Object {
-          "__typename": Object {
+        "children": {
+          "__typename": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
-          "id": Object {
+          "id": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": "1",
           },
-          "name": Object {
+          "name": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "name",
@@ -794,7 +794,7 @@ it("entity with arguments on query", () => {
             "value": "Test",
           },
         },
-        "key": "item({\\"test\\":true})",
+        "key": "item({"test":true})",
         "name": "item",
       },
     }
@@ -819,43 +819,43 @@ it("entity with Int-like ID on query", () => {
       item: { __typename: "Item", id: 1, name: "Test" },
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "item": Object {
+      "item": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Object {
-          "__typename": Object {
+        "children": {
+          "__typename": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
-          "id": Object {
+          "id": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "id",
             "name": "id",
             "value": 1,
           },
-          "name": Object {
+          "name": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "name",
@@ -889,35 +889,35 @@ it("entity list on query", () => {
       ],
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "items": Object {
+      "items": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Array [
-          Object {
-            "__typename": Object {
+        "children": [
+          {
+            "__typename": {
               "_id": "[nanoid]",
-              "_owner": Object {},
+              "_owner": {},
               "args": undefined,
               "cacheOutcome": "hit",
               "key": "__typename",
               "name": "__typename",
               "value": "Item",
             },
-            "id": Object {
+            "id": {
               "_id": "[nanoid]",
-              "_owner": Object {},
+              "_owner": {},
               "args": undefined,
               "cacheOutcome": "hit",
               "key": "id",
@@ -925,19 +925,19 @@ it("entity list on query", () => {
               "value": 1,
             },
           },
-          Object {
-            "__typename": Object {
+          {
+            "__typename": {
               "_id": "[nanoid]",
-              "_owner": Object {},
+              "_owner": {},
               "args": undefined,
               "cacheOutcome": "hit",
               "key": "__typename",
               "name": "__typename",
               "value": "Item",
             },
-            "id": Object {
+            "id": {
               "_id": "[nanoid]",
-              "_owner": Object {},
+              "_owner": {},
               "args": undefined,
               "cacheOutcome": "hit",
               "key": "id",
@@ -974,44 +974,44 @@ it("entity list on query and inline fragment", () => {
       items: [{ __typename: "Item", id: 1, test: true }, null],
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "items": Object {
+      "items": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Array [
-          Object {
-            "__typename": Object {
+        "children": [
+          {
+            "__typename": {
               "_id": "[nanoid]",
-              "_owner": Object {},
+              "_owner": {},
               "args": undefined,
               "cacheOutcome": "hit",
               "key": "__typename",
               "name": "__typename",
               "value": "Item",
             },
-            "id": Object {
+            "id": {
               "_id": "[nanoid]",
-              "_owner": Object {},
+              "_owner": {},
               "args": undefined,
               "cacheOutcome": "hit",
               "key": "id",
               "name": "id",
               "value": 1,
             },
-            "test": Object {
+            "test": {
               "_id": "[nanoid]",
-              "_owner": Object {},
+              "_owner": {},
               "args": undefined,
               "cacheOutcome": "hit",
               "key": "test",
@@ -1051,44 +1051,44 @@ it("entity list on query and spread fragment", () => {
       items: [{ __typename: "Item", id: 1, test: true }, null],
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "items": Object {
+      "items": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Array [
-          Object {
-            "__typename": Object {
+        "children": [
+          {
+            "__typename": {
               "_id": "[nanoid]",
-              "_owner": Object {},
+              "_owner": {},
               "args": undefined,
               "cacheOutcome": "hit",
               "key": "__typename",
               "name": "__typename",
               "value": "Item",
             },
-            "id": Object {
+            "id": {
               "_id": "[nanoid]",
-              "_owner": Object {},
+              "_owner": {},
               "args": undefined,
               "cacheOutcome": "hit",
               "key": "id",
               "name": "id",
               "value": 1,
             },
-            "test": Object {
+            "test": {
               "_id": "[nanoid]",
-              "_owner": Object {},
+              "_owner": {},
               "args": undefined,
               "cacheOutcome": "hit",
               "key": "test",
@@ -1132,49 +1132,49 @@ it("embedded invalid object on entity", () => {
       },
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "item": Object {
+      "item": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Object {
-          "__typename": Object {
+        "children": {
+          "__typename": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
-          "author": Object {
+          "author": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
-            "children": Object {
-              "__typename": Object {
+            "children": {
+              "__typename": {
                 "_id": "[nanoid]",
-                "_owner": Object {},
+                "_owner": {},
                 "args": undefined,
                 "cacheOutcome": "hit",
                 "key": "__typename",
                 "name": "__typename",
                 "value": "Author",
               },
-              "name": Object {
+              "name": {
                 "_id": "[nanoid]",
-                "_owner": Object {},
+                "_owner": {},
                 "args": undefined,
                 "cacheOutcome": "hit",
                 "key": "name",
@@ -1185,9 +1185,9 @@ it("embedded invalid object on entity", () => {
             "key": "author",
             "name": "author",
           },
-          "id": Object {
+          "id": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "id",
@@ -1231,58 +1231,58 @@ it("embedded object on entity", () => {
       },
     },
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": "Query",
       },
-      "item": Object {
+      "item": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
-        "children": Object {
-          "__typename": Object {
+        "children": {
+          "__typename": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "__typename",
             "name": "__typename",
             "value": "Item",
           },
-          "author": Object {
+          "author": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
-            "children": Object {
-              "__typename": Object {
+            "children": {
+              "__typename": {
                 "_id": "[nanoid]",
-                "_owner": Object {},
+                "_owner": {},
                 "args": undefined,
                 "cacheOutcome": "hit",
                 "key": "__typename",
                 "name": "__typename",
                 "value": "Author",
               },
-              "id": Object {
+              "id": {
                 "_id": "[nanoid]",
-                "_owner": Object {},
+                "_owner": {},
                 "args": undefined,
                 "cacheOutcome": "hit",
                 "key": "id",
                 "name": "id",
                 "value": 1,
               },
-              "name": Object {
+              "name": {
                 "_id": "[nanoid]",
-                "_owner": Object {},
+                "_owner": {},
                 "args": undefined,
                 "cacheOutcome": "hit",
                 "key": "name",
@@ -1293,9 +1293,9 @@ it("embedded object on entity", () => {
             "key": "author",
             "name": "author",
           },
-          "id": Object {
+          "id": {
             "_id": "[nanoid]",
-            "_owner": Object {},
+            "_owner": {},
             "args": undefined,
             "cacheOutcome": "hit",
             "key": "id",
@@ -1320,19 +1320,19 @@ it("Handles empty data", () => {
     `,
     data: null,
   }).toMatchInlineSnapshot(`
-    Object {
-      "__typename": Object {
+    {
+      "__typename": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "__typename",
         "name": "__typename",
         "value": undefined,
       },
-      "int": Object {
+      "int": {
         "_id": "[nanoid]",
-        "_owner": Object {},
+        "_owner": {},
         "args": undefined,
         "cacheOutcome": "hit",
         "key": "int",

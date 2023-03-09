@@ -1,7 +1,7 @@
 /**
  * Post-process Cosmos output.
  *
- * Run after `yarn cosmos-export`
+ * Run after `pnpm run cosmos-export`
  */
 const fs = require("fs");
 const path = require("path");

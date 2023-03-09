@@ -9,7 +9,6 @@ jest.mock("./context/Devtools.tsx", () => {
 });
 import React from "react";
 import { shallow } from "enzyme";
-import { mocked } from "ts-jest/utils";
 import { App, AppRoutes } from "./App";
 import { useDevtoolsContext } from "./context";
 import { darkTheme, lightTheme } from "./theme";
@@ -64,7 +63,7 @@ describe("App routes", () => {
   describe("on mount", () => {
     describe("on connected", () => {
       beforeEach(() => {
-        mocked(useDevtoolsContext).mockReturnValue({
+        (useDevtoolsContext as jest.Mocked<any>).mockReturnValue({
           client: {
             connected: true,
             version: {
@@ -81,7 +80,7 @@ describe("App routes", () => {
 
     describe("on version mismatch", () => {
       beforeEach(() => {
-        mocked(useDevtoolsContext).mockReturnValue({
+        (useDevtoolsContext as jest.Mocked<any>).mockReturnValue({
           client: {
             connected: true,
             version: {
@@ -100,7 +99,7 @@ describe("App routes", () => {
 
     describe("on disconnected", () => {
       beforeEach(() => {
-        mocked(useDevtoolsContext).mockReturnValue({
+        (useDevtoolsContext as jest.Mocked<any>).mockReturnValue({
           client: {
             connected: false,
           },

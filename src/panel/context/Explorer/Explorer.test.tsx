@@ -3,7 +3,6 @@ jest.mock("./ast");
 import React, { useContext } from "react";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
-import { mocked } from "ts-jest/utils";
 import { useDevtoolsContext } from "../Devtools";
 import { ExplorerProvider, ExplorerContext } from "../Explorer";
 import { defaultEvents } from "../../pages/explorer/Explorer.fixture";
@@ -12,7 +11,7 @@ const sendMessage = jest.fn();
 const addMessageHandler = jest.fn();
 
 beforeEach(() => {
-  mocked(useDevtoolsContext).mockReturnValue({
+  (useDevtoolsContext as jest.Mocked<any>).mockReturnValue({
     client: {
       connected: true,
       version: {
@@ -51,10 +50,10 @@ describe("on mount", () => {
   describe("state", () => {
     it("matches snapshot", () => {
       expect(state).toMatchInlineSnapshot(`
-        Object {
-          "expandedNodes": Array [],
+        {
+          "expandedNodes": [],
           "focusedNode": undefined,
-          "operations": Object {},
+          "operations": {},
           "setExpandedNodes": [Function],
           "setFocusedNode": [Function],
         }
@@ -90,8 +89,8 @@ describe("unknown message", () => {
   beforeEach(() => {
     addMessageHandler.mockImplementationOnce((cb) => cb({ type: "unknown" }));
   });
-  it("doesn't call handleResponse", async (done) => {
-    await act(async () => {
+  it("doesn't call handleResponse", (done) => {
+    act(() => {
       mount(
         <ExplorerProvider>
           <Fixture />

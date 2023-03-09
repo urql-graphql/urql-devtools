@@ -17,8 +17,8 @@ Devtools does not detect a running instance of urql.
 <!-- Replace the below steps with your reproduction. -->
 
 1.  Clone [this example](https://github.com/FormidableLabs/urql/tree/main/packages/react-urql/examples/1-getting-started) project
-2.  Run `yarn install`
-3.  Run `yarn start`
+2.  Run `pnpm install`
+3.  Run `pnpm start`
 4.  Open chrome and navigate to [http://localhost:8080](http://localhost:8080)
 5.  Open the urql devtools panel
 

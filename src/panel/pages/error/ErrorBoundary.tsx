@@ -73,8 +73,8 @@ const generateErrorTemplate = (err: Error) => {
   <!-- Replace the below steps with your reproduction. -->
 
   1.  Clone [this example](https://github.com/FormidableLabs/urql/tree/main/packages/react-urql/examples/1-getting-started) project
-  2.  Run \`yarn install\`
-  3.  Run \`yarn start\`
+  2.  Run \`pnpm install\`
+  3.  Run \`pnpm start\`
   4.  Open chrome and navigate to [http://localhost:8080](http://localhost:8080)
   5.  Open the urql devtools panel
 
@@ -120,8 +120,8 @@ const generateErrorTemplate = (err: Error) => {
 
   1.  Clone [this example](https://github.com/kadikraman/UrqlTest) react native project
   2.  Plug in Android phone via USB
-  3.  Run \`yarn install\`
-  4.  Run \`yarn start\`
+  3.  Run \`pnpm install\`
+  4.  Run \`pnpm start\`
   5.  Open devtools using npx \`npx urql-devtools\`
 
   ## Expected result

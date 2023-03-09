@@ -2,7 +2,6 @@ jest.mock("./Devtools");
 import React, { useContext } from "react";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
-import { mocked } from "ts-jest/utils";
 import {
   getIntrospectionQuery,
   parse,
@@ -18,7 +17,7 @@ const getItem = jest.spyOn(Storage.prototype, "getItem");
 const setItem = jest.spyOn(Storage.prototype, "setItem");
 
 beforeEach(() => {
-  mocked(useDevtoolsContext).mockReturnValue({
+  (useDevtoolsContext as jest.Mocked<any>).mockReturnValue({
     client: {
       connected: true,
       version: {
@@ -71,7 +70,7 @@ describe("on mount", () => {
   describe("state", () => {
     it("matches snapshot", () => {
       expect(state).toMatchInlineSnapshot(`
-        Object {
+        {
           "error": undefined,
           "execute": [Function],
           "fetching": false,
@@ -102,7 +101,7 @@ describe("on remount", () => {
   describe("state", () => {
     it("matches snapshot", () => {
       expect(state).toMatchInlineSnapshot(`
-        Object {
+        {
           "error": undefined,
           "execute": [Function],
           "fetching": false,
@@ -228,7 +227,7 @@ describe("on debug message", () => {
     describe("state", () => {
       it("matches snapshot", () => {
         expect(state).toMatchInlineSnapshot(`
-          Object {
+          {
             "error": undefined,
             "execute": [Function],
             "fetching": true,
@@ -236,19 +235,19 @@ describe("on debug message", () => {
             "response": undefined,
             "schema": GraphQLSchema {
               "__validationErrors": undefined,
-              "_directives": Array [
+              "_directives": [
                 "@include",
                 "@skip",
                 "@deprecated",
                 "@specifiedBy",
                 "@populate",
               ],
-              "_implementationsMap": Object {},
+              "_implementationsMap": {},
               "_mutationType": null,
               "_queryType": "Simple",
-              "_subTypeMap": Object {},
+              "_subTypeMap": {},
               "_subscriptionType": null,
-              "_typeMap": Object {
+              "_typeMap": {
                 "Boolean": "Boolean",
                 "Simple": "Simple",
                 "String": "String",
@@ -263,8 +262,8 @@ describe("on debug message", () => {
               },
               "astNode": undefined,
               "description": undefined,
-              "extensionASTNodes": Array [],
-              "extensions": Object {},
+              "extensionASTNodes": [],
+              "extensions": {},
             },
             "setQuery": [Function],
           }
@@ -303,11 +302,11 @@ describe("on debug message", () => {
     describe("state", () => {
       it("matches snapshot", () => {
         expect(state).toMatchInlineSnapshot(`
-          Object {
+          {
             "execute": [Function],
             "fetching": false,
             "query": undefined,
-            "response": Object {
+            "response": {
               "test": "response",
             },
             "schema": undefined,
@@ -348,8 +347,8 @@ describe("on debug message", () => {
     describe("state", () => {
       it("matches snapshot", () => {
         expect(state).toMatchInlineSnapshot(`
-          Object {
-            "error": Object {
+          {
+            "error": {
               "test": "error",
             },
             "execute": [Function],

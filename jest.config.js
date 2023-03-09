@@ -1,8 +1,11 @@
+/** @type {import('jest').Config} */
 module.exports = {
-  preset: "ts-jest",
+  preset: "ts-jest/presets/default-esm",
   transform: {
-    "^.+\\.tsx?$": "babel-jest",
+    "^.+\\.[t|j]sx?$": "babel-jest",
+    "^.+\\.js$": "babel-jest",
   },
+  transformIgnorePatterns: ["node_modules/.pnpm/(?!nanoid)"],
   setupFiles: ["dotenv/config"],
   setupFilesAfterEnv: ["<rootDir>src/setupTests.ts"],
   snapshotSerializers: ["enzyme-to-json/serializer"],

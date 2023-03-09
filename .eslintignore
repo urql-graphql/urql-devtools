@@ -1,3 +1,4 @@
 *.html
 *.js
+*.yaml
 node_modules

@@ -19,14 +19,14 @@ Here are a few useful approaches to get started developing.
 You'll need these installations to get started, these should work on Linux/Windows/MacOS.
 
 - [Node](https://nodejs.org/en/) LTS or Current
-- [Yarn](https://yarnpkg.com/)
+- [pnpm](https://pnpm.io/)
 
 #### Installation
 
-We use `yarn` to manage our dependencies, to initially install all of them you need to run:
+We use `pnpm` to manage our dependencies, to initially install all of them you need to run:
 
 ```sh
-yarn
+pnpm i
 ```
 
 from your command-line at the root of this repository.
@@ -36,7 +36,7 @@ from your command-line at the root of this repository.
 By running the build command we produce the final build that is uploaded when we create a release.
 
 ```sh
-yarn build
+pnpm run build
 ```
 
 This build will be located in `dist/extension`.
@@ -44,7 +44,7 @@ This build will be located in `dist/extension`.
 When you want to create the build for a specific version you can use our `tags`.
 
 ```sh
-git fetch --all --tags && git checkout vx.x.x && yarn && yarn build
+git fetch --all --tags && git checkout vx.x.x && pnpm i && pnpm run build
 ```
 
 This will ensure that you have the dependencies we used at that tag and produce a build.
@@ -54,7 +54,7 @@ This will ensure that you have the dependencies we used at that tag and produce 
 The easiest way to get started on a change in the devtools panel is in the fixture environment.
 
 ```sh
-yarn cosmos
+pnpm run cosmos
 ```
 
 With a fixture environment, you can:
@@ -70,7 +70,7 @@ When working on functional changes (such as messaging, event handling, etc), the
 Tests environments can be spun up using the following command.
 
 ```sh
-yarn test --watch
+pnpm run test --watch
 ```
 
 ### Integration environments
@@ -84,7 +84,7 @@ Running an devtools in an integrated environment can be useful for working on/te
 Run the following command to start a watched build.
 
 ```sh
-yarn dev:extension
+pnpm run dev:extension
 ```
 
 ##### Load the extension
@@ -102,7 +102,7 @@ Visit the [live urql project](https://urql-devtools-exchange.netlify.app/) - or 
 Run the following command to start a watched build.
 
 ```sh
-yarn dev:electron
+pnpm run dev:electron
 ```
 
 ##### Start devtools
@@ -110,7 +110,7 @@ yarn dev:electron
 Run the following command in a separate shell to start the built app.
 
 ```sh
-yarn start
+pnpm run start
 ```
 
 ##### Start an app
@@ -130,7 +130,7 @@ Set the version attribute in the _package.json_
 > Note: This step requires docker
 
 ```
-yarn changelog --future-release v0.0.0[release number] --token [your github oauth token]
+pnpm run changelog --future-release v0.0.0[release number] --token [your github oauth token]
 ```
 
 #### 3. Push/merge new version to master
@@ -174,11 +174,11 @@ An example description:
 You'll need these installations to get started, these should work on Linux/Windows/MacOS.
 
 - [Node](https://nodejs.org/en/) LTS or Current
-- [Yarn](https://yarnpkg.com/)
+- [pnpm](https://pnpm.io/)
 
 Steps to produce a build:
 
-- run yarn from your cli
-- run yarn build from your cli
+- run pnpm i from your cli
+- run pnpm run build from your cli
 - navigate to dist/extension to see the published build
 ```

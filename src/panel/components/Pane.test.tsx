@@ -4,11 +4,10 @@ jest.mock("../hooks", () => ({
 
 import React from "react";
 import { shallow } from "enzyme";
-import { mocked } from "ts-jest/utils";
 import { useOrientationWatcher } from "../hooks";
 import { Pane } from "./Pane";
 
-const useOrientation = mocked(useOrientationWatcher);
+const useOrientation = useOrientationWatcher as jest.Mocked<any>;
 const addEventListener = jest.spyOn(window, "addEventListener");
 
 beforeEach(jest.clearAllMocks);
