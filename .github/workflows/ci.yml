@@ -44,6 +44,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install chromium
+        run: node ./node_modules/puppeteer/install.js
+
       - name: TypeScript
         run: pnpm run type-check
 
